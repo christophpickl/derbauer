@@ -8,12 +8,17 @@ class HomeScreen(
     private val state: State
 ) : ChooseScreen<HomeChoice> {
 
-    override val message = "What do you wanna do now?"
+    private val messages = listOf(
+        "What are we up to today?",
+        "What can I do for you, master?",
+        "Your wish is my command."
+    )
+    override val message = messages.random()
 
     override val choices
         get() = listOf(
-            HomeChoice(HomeEnum.Trade, "Trade resources"),
-            HomeChoice(HomeEnum.Build, "Build buildings"),
+            HomeChoice(HomeEnum.Trade, "Trade"),
+            HomeChoice(HomeEnum.Build, "Build${if (state.player.landAvailable == 0) " (no land available)" else ""}"),
             HomeChoice(HomeEnum.Upgrade, "Upgrade"),
             HomeChoice(HomeEnum.Army, "Military"),
             HomeChoice(HomeEnum.EndTurn, "End Turn")
@@ -48,7 +53,7 @@ class MainController @Inject constructor(
             HomeEnum.Trade -> TradeScreen(state)
             HomeEnum.Build -> BuildScreen(state)
             HomeEnum.Upgrade -> UpgradeScreen(state)
-            HomeEnum.Army -> ArmyScreen(state)
+            HomeEnum.Army -> ArmyScreen()
             HomeEnum.EndTurn -> turnFinisher.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

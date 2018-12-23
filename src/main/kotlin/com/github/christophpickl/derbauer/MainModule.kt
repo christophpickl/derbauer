@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer
 
+import com.github.christophpickl.derbauer.logic.AchievementHappener
+import com.github.christophpickl.derbauer.logic.EndTurnHappener
 import com.github.christophpickl.derbauer.logic.Router
 import com.github.christophpickl.derbauer.logic.ScreenControllerRegistry
 import com.github.christophpickl.derbauer.logic.TurnFinisher
@@ -18,6 +20,7 @@ class MainModule : AbstractModule() {
         bind(MainController::class.java).asEagerSingleton()
         bind(ScreenControllerRegistry::class.java).asEagerSingleton()
         bind(TurnFinisher::class.java).asEagerSingleton()
-        
+        bind(AchievementHappener::class.java).asEagerSingleton()
+        bind(EndTurnHappener::class.java).asEagerSingleton()
     }
 }

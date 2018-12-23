@@ -43,8 +43,9 @@ class TurnFinisher @Inject constructor(
     }
 
     private fun calcFood(): Int {
-        return (state.player.buildings.farms * state.buildings.farmProduces) - // farm production 
+        val calc = (state.player.buildings.farms * state.buildings.farmProduces) - // farm production 
             state.player.people // each persons eats one food per day
+        return limitCalc(calc, state.player.food, state.maxFood)
     }
 
     private fun calcPeople(): Int {
@@ -56,11 +57,14 @@ class TurnFinisher @Inject constructor(
             calc += food / 500 // gain one people per +x food
         }
         calc += (state.player.people * state.meta.reproductionRate).toInt() // reproduction rate by x% people
-        if (Random.nextDouble(0.0, 1.0) < 0.3) {
+        if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.3) {
             calc += 1
         }
-        return if (state.player.people + calc <= state.playerPeopleMax) calc else state.playerPeopleMax - state.player.people
+        return limitCalc(calc, state.player.people, state.maxPeople)
     }
+
+    private fun limitCalc(calc: Int, current: Int, max: Int) =
+        if (calc + current <= max) calc else max - current
 
     private fun calcGold(): Int {
         return (state.player.people * 0.5).toInt()

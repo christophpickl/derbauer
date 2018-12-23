@@ -4,6 +4,7 @@ import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.decrement
 import com.github.christophpickl.derbauer.logic.randomize
 import com.github.christophpickl.derbauer.model.Armies
+import com.github.christophpickl.derbauer.model.CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.derbauer.view.RenderEvent
 import com.google.common.eventbus.EventBus
@@ -12,13 +13,18 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 
-class ArmyScreen(state: State) : ChooseScreen<ArmyChoice> {
+class ArmyScreen() : ChooseScreen<ArmyChoice> {
+
+    private val messages = listOf(
+        "Hey, don't look at me dude.",
+        "Gonna kick some ass!",
+        "Any problem can be solved with brute force and violence."
+    )
+    override val message = messages.random()
 
     override val choices = listOf(
         ArmyChoice(ArmyEnum.Attack, "Attack")
     )
-
-    override val message = "What do you wanna build?"
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onArmy(this)
@@ -103,13 +109,25 @@ private class AttackThread(
 
     private val log = logger {}
 
+    private fun playerWonNextBattle(): Boolean {
+        var playerRange = 0.5
+        val baseSoldier = when (state.player.armies.soldiers) {
+            in 0..10 -> 0.05
+            in 11..25 -> 0.10
+            in 25..50 -> 0.15
+            else -> 0.20
+        }
+        playerRange += baseSoldier * state.army.soldierAttackStrength
+        log.trace { "Player attack range: $playerRange" }
+        return Random.nextDouble(0.0, 1.0) < playerRange
+    }
+
     override fun run() {
         while (!isAttackOver()) {
-            val playerLost = Random.nextBoolean()
-            if (playerLost) {
-                state.player.armies.killRandom()
-            } else {
+            if (playerWonNextBattle()) {
                 context.enemies--
+            } else {
+                state.player.armies.killRandom()
             }
             context.message = """
                 Ongoing war ...
@@ -119,7 +137,7 @@ private class AttackThread(
                   Enemies: ${context.enemies}
                 """.trimIndent()
             bus.post(RenderEvent)
-            Thread.sleep(600)
+            Thread.sleep(if (CHEAT_MODE) 200 else 600)
         }
         val won = context.enemies == 0
         val additionalText = if (won) {
@@ -133,8 +151,9 @@ private class AttackThread(
         }
         context.message = "You ${if (won) "won" else "lost"}!$additionalText"
         bus.post(RenderEvent)
-        Thread.sleep(2_000)
+        Thread.sleep(if (CHEAT_MODE) 400 else 2_000)
 
+        state.history.attacked++
         state.screen = HomeScreen(state)
         bus.post(RenderEvent)
     }

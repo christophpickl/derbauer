@@ -32,8 +32,8 @@ class Renderer @Inject constructor(
     fun render(): String {
         log.debug { "Rendering: $state" }
         val headerStats = listOf(
-            Pair("Food", state.player.foodFormatted),
-            Pair("People", formatRightBound("${state.player.people}/${state.playerPeopleMax}", ResourceFormats.peopleDigits + 4)),
+            Pair("Food", formatRightBound("${state.player.food}/${state.maxFood}", ResourceFormats.peopleDigits + 5)),
+            Pair("People", formatRightBound("${state.player.people}/${state.maxPeople}", ResourceFormats.peopleDigits + 4)),
             Pair("Gold", state.player.goldFormatted),
             Pair("Land", formatRightBound("${state.player.buildings.totalCount}/${state.player.land}", ResourceFormats.landDigits + 3))
         ).joinToString("  ") {

@@ -1,7 +1,8 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.beepReturn
+import com.github.christophpickl.derbauer.logic.beep
 import com.github.christophpickl.derbauer.logic.decrement
+import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.logic.increment
 import com.github.christophpickl.derbauer.model.Player
 import com.github.christophpickl.derbauer.model.State
@@ -12,15 +13,22 @@ class TradeScreen(
     private val state: State
 ) : ChooseScreen<TradeChoice> {
 
-    override val message = "Gonna get cheap, huh?! What kind of resource you wanna trade mate?"
+    private val messages = listOf(
+        "Try not to get broke, huh?!",
+        "Got anything useful?",
+        "Psssst, over here! Looking for something?"
+    )
+    override val message = messages.random()
 
+    //@formatter:off
     override val choices
         get() = listOf(
-            TradeChoice(TradeEnum.BuyLand, "Buy land (${state.prices.landBuy}$)"),
-            TradeChoice(TradeEnum.SellLand, "Sell land (${state.prices.landSell}$)"),
-            TradeChoice(TradeEnum.BuyFood, "Buy food (${state.prices.foodBuy}$)"),
-            TradeChoice(TradeEnum.SellFood, "Sell food (${state.prices.foodSell}$)")
+            TradeChoice(TradeEnum.BuyLand,  "Buy land  ... ${formatNumber(state.prices.trade.landBuy, 2)}$"),
+            TradeChoice(TradeEnum.SellLand, "Sell land ... ${formatNumber(state.prices.trade.landSell, 2)}$"),
+            TradeChoice(TradeEnum.BuyFood,  "Buy food  ... ${formatNumber(state.prices.trade.foodBuy, 2)}$"),
+            TradeChoice(TradeEnum.SellFood, "Sell food ... ${formatNumber(state.prices.trade.foodSell, 2)}$")
         )
+    //@formatter:on
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onTrade(this)
@@ -56,66 +64,75 @@ class TradeController @Inject constructor(
     }
 
     fun buyLand(amount: Int) {
-        buySellOperation(
+        trade(
             isBuying = true,
             amount = amount,
-            costsPerItem = state.prices.landBuy,
+            costsPerItem = state.prices.trade.landBuy,
             targetProperty = Player::land
         )
     }
 
     fun sellLand(amount: Int) {
-        buySellOperation(
+        trade(
             isBuying = false,
             amount = amount,
-            costsPerItem = state.prices.landSell,
-            targetProperty = Player::land
+            costsPerItem = state.prices.trade.landSell,
+            targetProperty = Player::land,
+            additionalCheck = { state.player.landAvailable >= amount }
         )
     }
 
     fun buyFood(amount: Int) {
-        buySellOperation(
+        trade(
             isBuying = true,
             amount = amount,
-            costsPerItem = state.prices.foodBuy,
+            costsPerItem = state.prices.trade.foodBuy,
             targetProperty = Player::food
         )
     }
 
     fun sellFood(amount: Int) {
-        buySellOperation(
+        trade(
             isBuying = false,
             amount = amount,
-            costsPerItem = state.prices.foodSell,
+            costsPerItem = state.prices.trade.foodSell,
             targetProperty = Player::food
         )
     }
 
-    private fun buySellOperation(isBuying: Boolean, amount: Int, targetProperty: KMutableProperty1<Player, Int>, costsPerItem: Int) {
+    private fun trade(
+        isBuying: Boolean,
+        amount: Int,
+        targetProperty: KMutableProperty1<Player, Int>,
+        costsPerItem: Int,
+        additionalCheck: () -> Boolean = { true }
+    ) {
+        if (!additionalCheck()) return beep()
         val goldChanging = if (isBuying) {
-            val costs = canAffordCalcCosts(costsPerItem, amount) ?: return
+            val costs = canAffordCalcCosts(costsPerItem, amount) ?: return beep()
             targetProperty.increment(state.player, amount)
             costs
         } else {
-            val income = hasEnoughCalcIncome(costsPerItem, amount, targetProperty.get(state.player)) ?: return
+            val income = hasEnoughCalcIncome(costsPerItem, amount, targetProperty.get(state.player)) ?: return beep()
             targetProperty.decrement(state.player, amount)
             income
         }
-        state.player.gold = state.player.gold + if (isBuying) (-1 * goldChanging) else goldChanging
+        state.history.traded++
+        state.player.gold += if (isBuying) (-1 * goldChanging) else goldChanging
         state.screen = HomeScreen(state)
     }
 
     private fun canAffordCalcCosts(costsPerItem: Int, amount: Int): Int? {
         val costs = costsPerItem * amount
         if (costs > state.player.gold) {
-            return beepReturn()
+            return null
         }
         return costs
     }
 
     private fun hasEnoughCalcIncome(costsPerItem: Int, amount: Int, has: Int): Int? {
         if (has < amount) {
-            return beepReturn()
+            return null
         }
         return costsPerItem * amount
     }
@@ -127,7 +144,7 @@ class LandBuyScreen(
 ) : NumberInputScreen {
 
     override val message = "How much land do you wanna buy?\n" +
-        "1 costs ${state.prices.landBuy} gold, you can afford ${state.affordableLand} land."
+        "1 costs ${state.prices.trade.landBuy} gold, you can afford ${state.affordableLand} land."
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandBuy(this)
@@ -137,7 +154,7 @@ class LandBuyScreen(
 class LandSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much land do you wanna sell?\n1 for ${state.prices.landSell} gold, you've got ${state.player.land} land."
+    override val message = "How much land do you wanna sell?\n1 for ${state.prices.trade.landSell} gold, you've got ${state.player.landAvailable} land available."
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandSell(this)
     }
@@ -147,7 +164,7 @@ class FoodBuyScreen(
     state: State
 ) : NumberInputScreen {
     override val message = "How much food do you wanna buy?\n" +
-        "1 costs ${state.prices.foodBuy} gold, you can afford ${state.affordableFood} food."
+        "1 costs ${state.prices.trade.foodBuy} gold, you can afford ${state.affordableFood} food."
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onFoodBuy(this)
@@ -157,8 +174,11 @@ class FoodBuyScreen(
 class FoodSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much food do you wanna sell?\n1 for ${state.prices.foodSell} gold, you've got ${state.player.food} food."
+    override val message = "How much food do you wanna sell?\n1 for ${state.prices.trade.foodSell} gold, you've got ${state.player.food} food."
     override fun onCallback(callback: ScreenCallback) {
         callback.onFoodSell(this)
     }
 }
+
+val State.affordableLand get() = player.gold / prices.trade.landBuy
+val State.affordableFood get() = player.gold / prices.trade.foodBuy

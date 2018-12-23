@@ -16,13 +16,24 @@ class State {
     val player = Player()
     val prices = Prices()
     val buildings = BuildingsMeta()
+    val army = ArmyMeta()
     val meta = StateMeta()
+    val history = History()
 
-    val affordableLand get() = player.gold / prices.landBuy
-    val affordableFood get() = player.gold / prices.foodBuy
-    val playerPeopleMax get() = player.buildings.houses * buildings.houseCapacity
+    val maxFood get() = player.buildings.granaries * buildings.granaryCapacity
+    val freeFood get() = maxFood - player.food
+    val maxPeople get() = player.buildings.houses * buildings.houseCapacity
+    val freePeople get() = maxPeople - player.people
 
-    override fun toString() = "State{day=$day, screen=${screen.javaClass.simpleName}, buildings=$buildings, player=$player}"
+    override fun toString() = "State{" +
+        "day=$day, " +
+        "screen=${screen.javaClass.simpleName}, " +
+        "buildings=$buildings, " +
+        "player=$player, " +
+        "prices=$prices, " +
+        "meta=$meta, " +
+        "history=$history" +
+        "}"
 
     init {
         reset()
@@ -33,7 +44,9 @@ class State {
         player.reset()
         prices.reset()
         buildings.reset()
+        army.reset()
         meta.reset()
+        history.reset()
     }
 }
 
@@ -43,4 +56,20 @@ class StateMeta {
     fun reset() {
         reproductionRate = 0.1
     }
+
+    override fun toString() = "StateMeta{reproductionRate=$reproductionRate}"
+
+}
+
+class History {
+
+    var traded = 0
+    var attacked = 0
+
+    fun reset() {
+        traded = 0
+        attacked = 0
+    }
+
+    override fun toString() = "History{traded=$traded, attacked=$attacked}"
 }

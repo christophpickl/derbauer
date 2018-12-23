@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.logic.screens
 
 import com.github.christophpickl.derbauer.logic.beepReturn
+import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.logic.increment
 import com.github.christophpickl.derbauer.model.Buildings
 import com.github.christophpickl.derbauer.model.State
@@ -9,12 +10,21 @@ import javax.inject.Inject
 import kotlin.reflect.KMutableProperty1
 
 class BuildScreen(state: State) : ChooseScreen<BuildChoice> {
-    override val choices = listOf(
-        BuildChoice(BuildEnum.House, "House (costs: ${state.prices.house})"),
-        BuildChoice(BuildEnum.Farm, "Farm (costs: ${state.prices.farm})")
-    )
 
-    override val message = "What do you wanna build?"
+    private val messages = listOf(
+        "Expand, expand, expand.",
+        "Construction work makes me happy."
+    )
+    override val message = if (state.freePeople <= 3) "The people desperately need more houses!" else messages.random()
+
+    //@formatter:off
+    override val choices = listOf(
+        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(state.prices.house, 2)}$"),
+        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(state.prices.granary, 2)}$"),
+        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(state.prices.farm, 2)}$")
+    )
+    //@formatter:on
+
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onBuild(this)
@@ -24,6 +34,7 @@ class BuildScreen(state: State) : ChooseScreen<BuildChoice> {
 
 enum class BuildEnum {
     House,
+    Granary,
     Farm
 }
 
@@ -41,6 +52,7 @@ class BuildController @Inject constructor(
     override fun select(choice: BuildChoice) {
         val nextScreen: Screen? = when (choice.enum) {
             BuildEnum.House -> maybeBuild(Buildings::houses, state.prices.house)
+            BuildEnum.Granary -> maybeBuild(Buildings::granaries, state.prices.granary)
             BuildEnum.Farm -> maybeBuild(Buildings::farms, state.prices.farm)
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

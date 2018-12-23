@@ -21,10 +21,12 @@ class Player {
     val buildings = Buildings()
     val armies = Armies()
 
+    val landAvailable get() = land - buildings.totalCount
+
     fun reset() {
         gold = if (CHEAT_MODE) 500 else 100
         land = 5
-        food = if (CHEAT_MODE) 2 else 300
+        food = if (CHEAT_MODE) 800 else 300
         people = 2
 
         buildings.reset()

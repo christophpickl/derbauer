@@ -18,3 +18,12 @@ class Armies {
 
     override fun toString() = "Armies{soldiers=$soldiers}"
 }
+
+class ArmyMeta {
+    var soldierAttackStrength = 0.0
+
+    fun reset() {
+        soldierAttackStrength = 1.0
+    }
+
+}
