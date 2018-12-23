@@ -1,8 +1,9 @@
 package com.github.christophpickl.derbauer
 
-import com.github.christophpickl.derbauer.logic.GameEngine
-import com.github.christophpickl.derbauer.logic.GameState
+import com.github.christophpickl.derbauer.logic.Router
 import com.github.christophpickl.derbauer.logic.ScreenControllerRegistry
+import com.github.christophpickl.derbauer.logic.State
+import com.github.christophpickl.derbauer.logic.TurnFinisher
 import com.github.christophpickl.derbauer.logic.screens.MainController
 import com.github.christophpickl.derbauer.view.Keyboard
 import com.google.common.eventbus.EventBus
@@ -11,11 +12,12 @@ import com.google.inject.AbstractModule
 class MainModule : AbstractModule() {
     override fun configure() {
         bind(EventBus::class.java).toInstance(EventBus())
-        bind(GameState::class.java).asEagerSingleton()
-        bind(GameEngine::class.java).asEagerSingleton()
+        bind(State::class.java).asEagerSingleton()
+        bind(Router::class.java).asEagerSingleton()
         bind(Keyboard::class.java).asEagerSingleton()
         bind(MainController::class.java).asEagerSingleton()
         bind(ScreenControllerRegistry::class.java).asEagerSingleton()
+        bind(TurnFinisher::class.java).asEagerSingleton()
         
     }
 }

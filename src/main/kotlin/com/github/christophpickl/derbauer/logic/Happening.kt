@@ -5,7 +5,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class EndTurnHappener @Inject constructor(
-    private val state: GameState
+    private val state: State
 ) {
 
     private val log = logger {}
@@ -34,7 +34,7 @@ class EndTurnHappener @Inject constructor(
 }
 
 private class GoldBagHappening(
-    private val state: GameState
+    private val state: State
 ) : Happening() {
     private val goldBagSizes = listOf(10, 20, 50)
     override fun execute(): String {
@@ -45,7 +45,7 @@ private class GoldBagHappening(
 }
 
 private class RatsHappening(
-    private val state: GameState
+    private val state: State
 ) : Happening() {
 
     private val eatenSizes = listOf(10, 20, 30)

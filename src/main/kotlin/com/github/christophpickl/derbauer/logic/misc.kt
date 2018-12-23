@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.logic
 
+import com.github.christophpickl.kpotpourri.common.string.times
+
 val VIEW_SIZE = Size(width = 100, height = 30)
 
 data class Size(
@@ -7,18 +9,9 @@ data class Size(
     val height: Int
 )
 
-data class Pos(
-    val x: Int,
-    val y: Int
-) {
-    init {
-        require(x >= 0 && x < (VIEW_SIZE.width - 1))
-        require(y >= 0 && y < (VIEW_SIZE.height - 1))
-    }
-}
-
 fun beep() {
-    println("beep")// TODO
+    java.awt.Toolkit.getDefaultToolkit().beep()
+    println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
 }
 
 fun <T> beepReturn(): T? {
@@ -26,6 +19,10 @@ fun <T> beepReturn(): T? {
     return null
 }
 
+fun formatRightBound(string: String, length: Int): String {
+    if (string.length >= length) return string
+    return " ".times(length - string.length) + string
+}
 fun formatNumber(number: Int, length: Int, addPlusSign: Boolean = false): String {
     val realLength = if (addPlusSign) length - 1 else length
     val prefix = if (addPlusSign && number > 0) "+" else ""

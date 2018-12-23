@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.GameState
+import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
 import com.google.common.eventbus.EventBus
 import javafx.scene.input.KeyCode
@@ -8,7 +8,7 @@ import javafx.scene.input.KeyEvent
 import javax.inject.Inject
 
 class Keyboard @Inject constructor(
-    private val state: GameState,
+    private val state: State,
     private val bus: EventBus
 ) {
 

@@ -1,56 +1,55 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.GameState
 import com.github.christophpickl.derbauer.logic.Player
+import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.decrement
 import com.github.christophpickl.derbauer.logic.increment
 import javax.inject.Inject
 import kotlin.reflect.KMutableProperty1
 
-class BuySellResourcesScreen(
-    private val state: GameState
-) : ChooseScreen<BuySellResourcesChoice> {
+class TradeScreen(
+    private val state: State
+) : ChooseScreen<TradeChoice> {
 
     override val message = "Gonna get cheap, huh?! What kind of resource you wanna trade mate?"
 
     override val choices
         get() = listOf(
-            BuySellResourcesChoice(BuySellResourcesEnum.BuyLand, "Buy land (${state.prizes.landBuy}$)"),
-            BuySellResourcesChoice(BuySellResourcesEnum.SellLand, "Sell land (${state.prizes.landSell}$)"),
-            BuySellResourcesChoice(BuySellResourcesEnum.BuyFood, "Buy food (${state.prizes.foodBuy}$)"),
-            BuySellResourcesChoice(BuySellResourcesEnum.SellFood, "Sell food (${state.prizes.foodSell}$)"),
-            BuySellResourcesChoice(BuySellResourcesEnum.EndTurn, "End Turn")
+            TradeChoice(TradeEnum.BuyLand, "Buy land (${state.prizes.landBuy}$)"),
+            TradeChoice(TradeEnum.SellLand, "Sell land (${state.prizes.landSell}$)"),
+            TradeChoice(TradeEnum.BuyFood, "Buy food (${state.prizes.foodBuy}$)"),
+            TradeChoice(TradeEnum.SellFood, "Sell food (${state.prizes.foodSell}$)")
         )
 
     override fun onCallback(callback: ScreenCallback) {
-        callback.onBuySellResources(this)
+        callback.onTrade(this)
     }
 
-    enum class BuySellResourcesEnum {
-        BuyLand,
-        SellLand,
-        BuyFood,
-        SellFood,
-        EndTurn
-    }
 }
 
-class BuySellResourcesChoice(
-    override val enum: Enum<BuySellResourcesScreen.BuySellResourcesEnum>,
+enum class TradeEnum {
+    BuyLand,
+    SellLand,
+    BuyFood,
+    SellFood
+}
+
+class TradeChoice(
+    override val enum: Enum<TradeEnum>,
     override val label: String
-) : EnummedChoice<BuySellResourcesScreen.BuySellResourcesEnum>
+) : EnummedChoice<TradeEnum>
 
-class BuySellResourcesController @Inject constructor(
-    private val state: GameState
-) : ChooseScreenController<BuySellResourcesChoice, BuySellResourcesScreen> {
+class TradeController @Inject constructor(
+    private val state: State
+) : ChooseScreenController<TradeChoice, TradeScreen> {
 
-    override fun select(choice: BuySellResourcesChoice) {
+    override fun select(choice: TradeChoice) {
         val nextScreen = when (choice.enum) {
-            BuySellResourcesScreen.BuySellResourcesEnum.BuyLand -> LandBuyScreen(state)
-            BuySellResourcesScreen.BuySellResourcesEnum.SellLand -> LandSellScreen(state)
-            BuySellResourcesScreen.BuySellResourcesEnum.BuyFood -> FoodBuyScreen(state)
-            BuySellResourcesScreen.BuySellResourcesEnum.SellFood -> FoodSellScreen(state)
+            TradeEnum.BuyLand -> LandBuyScreen(state)
+            TradeEnum.SellLand -> LandSellScreen(state)
+            TradeEnum.BuyFood -> FoodBuyScreen(state)
+            TradeEnum.SellFood -> FoodSellScreen(state)
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         state.screen = nextScreen
@@ -124,8 +123,9 @@ class BuySellResourcesController @Inject constructor(
 }
 
 class LandBuyScreen(
-    state: GameState
+    state: State
 ) : NumberInputScreen {
+
     override val message = "How much land do you wanna buy?\n" +
         "1 costs ${state.prizes.landBuy} gold, you can afford ${state.affordableLand} land."
 
@@ -135,7 +135,7 @@ class LandBuyScreen(
 }
 
 class LandSellScreen(
-    state: GameState
+    state: State
 ) : NumberInputScreen {
     override val message = "How much land do you wanna sell?\n1 for ${state.prizes.landSell} gold, you've got ${state.player.land} land."
     override fun onCallback(callback: ScreenCallback) {
@@ -144,7 +144,7 @@ class LandSellScreen(
 }
 
 class FoodBuyScreen(
-    state: GameState
+    state: State
 ) : NumberInputScreen {
     override val message = "How much food do you wanna buy?\n" +
         "1 costs ${state.prizes.foodBuy} gold, you can afford ${state.affordableFood} food."
@@ -155,7 +155,7 @@ class FoodBuyScreen(
 }
 
 class FoodSellScreen(
-    state: GameState
+    state: State
 ) : NumberInputScreen {
     override val message = "How much food do you wanna sell?\n1 for ${state.prizes.foodSell} gold, you've got ${state.player.food} food."
     override fun onCallback(callback: ScreenCallback) {

@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.GameState
+import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.screens.HomeScreen
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
@@ -16,6 +16,7 @@ class MainView : View() {
     lateinit var mainTextArea: TextArea
 
     override val root = borderpane {
+        title = "Der Bauer"
         prefWidth = 1235.0
         prefHeight = 825.0
         center {
@@ -33,7 +34,7 @@ class MainViewFxController : Controller() {
     private val view: MainView by inject()
     private val keyboard: Keyboard by di()
     private val renderer: Renderer by di()
-    private val state: GameState by di()
+    private val state: State by di()
     private val bus: EventBus by di()
 
     init {

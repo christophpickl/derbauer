@@ -1,23 +1,28 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.GameState
 import com.github.christophpickl.derbauer.logic.Prompt
+import com.github.christophpickl.derbauer.logic.ResourceMeta
+import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.VIEW_SIZE
-import com.github.christophpickl.derbauer.logic.screens.BuySellResourcesScreen
+import com.github.christophpickl.derbauer.logic.formatRightBound
+import com.github.christophpickl.derbauer.logic.screens.BuildScreen
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
 import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
+import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
 import com.github.christophpickl.derbauer.logic.screens.HomeScreen
 import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
+import com.github.christophpickl.derbauer.logic.screens.TradeScreen
+import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 
 class Renderer @Inject constructor(
-    private val state: GameState
+    private val state: State
 ) : ScreenCallback {
 
     private val log = logger {}
@@ -27,9 +32,9 @@ class Renderer @Inject constructor(
         log.debug { "Rendering: $state" }
         val headerStats = listOf(
             Pair("Food", state.player.foodFormatted),
-            Pair("People", state.player.peopleFormatted),
+            Pair("People", formatRightBound("${state.player.people}/${state.playerPeopleMax}", ResourceMeta.peopleDigits + 4)),
             Pair("Gold", state.player.goldFormatted),
-            Pair("Land", state.player.landFormatted)
+            Pair("Land", formatRightBound("${state.player.buildings.totalCount}/${state.player.land}", ResourceMeta.landDigits + 3))
         ).joinToString("  ") {
             "${it.first}: ${it.second}"
         }
@@ -41,9 +46,7 @@ class Renderer @Inject constructor(
     }
 
     private fun renderScreen() {
-        state.screen.message.split("\n").forEach { line ->
-            board.printRow(line)
-        }
+        board.printRow(state.screen.message)
         board.printRow("")
         state.screen.onCallback(this)
     }
@@ -68,18 +71,35 @@ class Renderer @Inject constructor(
         onNumberInputScreen()
     }
 
+    override fun onBuild(screen: BuildScreen) {
+        onChooseScreen(screen)
+        board.printRow("")
+        board.printRow("You've got the following:")
+        board.printRow(state.player.buildings.formatAll().joinToString("\n") {
+            "  $it"
+        })
+    }
+
+    override fun onTrade(screen: TradeScreen) {
+        onChooseScreen(screen)
+    }
+
+    override fun onUpgrade(screen: UpgradeScreen) {
+        onChooseScreen(screen)
+    }
+
+    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {
+        // no op
+    }
+
+    override fun onGameOver(@Suppress("UNUSED_PARAMETER") screen: GameOverScreen) {
+        // no op
+    }
+
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->
             board.printRow("[${index + 1}] ${choice.label}")
         }
-    }
-
-    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {
-        log.trace { "Doing nothing special here on end turn." }
-    }
-
-    override fun onBuySellResources(screen: BuySellResourcesScreen) {
-        onChooseScreen(screen)
     }
 
     private fun onNumberInputScreen() {
@@ -97,8 +117,8 @@ private class Board {
     }.toMutableList()
 
     private val skipRowsAboveContent = 2
-
     private var currentContentRow = 0
+
     fun convertAndReset(): String {
         val result = rows.joinToString("\n") { cols ->
             cols.fold("") { acc, col -> "$acc$col" }
@@ -109,8 +129,9 @@ private class Board {
     }
 
     fun printRow(text: String) {
-        rows[skipRowsAboveContent + currentContentRow].write(text)
-        currentContentRow++
+        text.split("\n").forEach { row ->
+            printSingleRow(row)
+        }
     }
 
     fun printHeader(left: String, right: String) {
@@ -121,6 +142,11 @@ private class Board {
     fun printPrompt(prompt: Prompt) {
         rows[height - 2].writeHr()
         rows.last().write("> ${prompt.enteredText}⌷")
+    }
+
+    private fun printSingleRow(text: String) {
+        rows[skipRowsAboveContent + currentContentRow].write(text)
+        currentContentRow++
     }
 
     private fun MutableList<Char>.writeHr() {
