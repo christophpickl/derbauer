@@ -3,7 +3,7 @@ package com.github.christophpickl.derbauer.logic
 class GameState {
 
     lateinit var screen: Screen
-    var round = 1
+    var day = 1
     val prompt = Prompt()
     val player = Player()
     val prizes = Prizes()

@@ -43,7 +43,7 @@ class GameEngine @Inject constructor(
     }
 
     override fun onEndTurn(screen: EndTurnScreen) {
-        state.round++
+        state.day++
         state.screen = MainScreen(state)
     }
 

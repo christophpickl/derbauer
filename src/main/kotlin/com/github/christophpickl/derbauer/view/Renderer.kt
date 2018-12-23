@@ -27,7 +27,7 @@ class Renderer @Inject constructor(
         ).joinToString("  ") {
             "${it.first}: ${it.second}"
         }
-        board.printHeader("Round ${state.round}", headerStats)
+        board.printHeader("Day: ${state.day}", headerStats)
         renderScreen()
         board.printPrompt(state.prompt)
 

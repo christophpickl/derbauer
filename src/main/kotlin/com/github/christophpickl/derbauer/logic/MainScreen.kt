@@ -32,7 +32,8 @@ class MainScreenChoice(
 ) : EnummedChoice<MainScreen.MainScreenChoiceEnum>
 
 class MainScreenController @Inject constructor(
-    private val state: GameState
+    private val state: GameState,
+    private val happener: EndTurnHappener
 ) : ChooseScreenController<MainScreenChoice, MainScreen> {
 
     private val numberWidth = 6
@@ -49,6 +50,7 @@ class MainScreenController @Inject constructor(
     }
 
     private fun calculateEndTurn(): EndTurnScreen {
+        val maybeHappenedMessage = happener.letItHappen()
         val foodIncome = state.player.people / 3
         val peopleIncome = state.player.land / 10
         val goldIncome = 2
@@ -58,7 +60,7 @@ class MainScreenController @Inject constructor(
             |${formatGrowth("People growth  ", state.player.people, peopleIncome)}
             |${formatGrowth("Gold income    ", state.player.gold, goldIncome)}
             | 
-            |It was quiet and calm.
+            |${maybeHappenedMessage ?: "It was quiet and calm."}
             |
             |Hit ENTER to continue.
         """.trimMargin()
@@ -72,8 +74,8 @@ class MainScreenController @Inject constructor(
         "$label: ${formatNumber(current, numberWidth)} => " +
             "${formatNumber(growth, numberWidthGrow, addPlusSign = true)} => " +
             formatNumber(current + growth, numberWidth)
-    
-    
+
+
     fun buyLand(amount: Int) {
         val costs = state.prizes.landBuy * amount
         if (costs > state.player.gold) {
@@ -100,6 +102,7 @@ class LandBuyScreen(
 ) : NumberInputScreen {
     override val message = "How much land do you wanna buy?\n" +
         "1 costs ${state.prizes.landBuy} gold, you can afford ${state.affordableLand} land."
+
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandBuy(this)
     }
