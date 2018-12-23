@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.logic
 
+import com.github.christophpickl.derbauer.logic.screens.Screen
+
 class GameState {
 
     lateinit var screen: Screen
@@ -9,8 +11,9 @@ class GameState {
     val prizes = Prizes()
 
     val affordableLand get() = player.gold / prizes.landBuy
-    val affordableFood get() = player.gold / prizes.foodBuy 
+    val affordableFood get() = player.gold / prizes.foodBuy
 
+    override fun toString() = "State{day=$day, screen=${screen.javaClass.simpleName}, player=$player}"
 }
 
 class Prizes {
@@ -47,6 +50,16 @@ class Player {
     var people = 10
     val peopleFormatted get() = ResourceMeta.formatPeople(people)
     val peopleAll get() = Triple(people, peopleFormatted, ResourceMeta.peopleDigits)
+
+    val buildings = Buildings()
+
+    override fun toString() = "Player{gold=$gold, land=$land, food=$food, people=$people, buildings=$buildings}"
+}
+
+class Buildings {
+    var farms = 1
+
+    override fun toString() = "Buildings{farms=$farms}"
 }
 
 class Prompt {

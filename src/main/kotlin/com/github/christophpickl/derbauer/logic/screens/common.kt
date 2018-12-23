@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.logic
+package com.github.christophpickl.derbauer.logic.screens
 
 
 interface Screen {
@@ -11,12 +11,13 @@ interface Choice {
 }
 
 interface ScreenCallback {
-    fun onMainScreen(screen: MainScreen)
+    fun onHomeScreen(screen: HomeScreen)
     fun onLandBuy(screen: LandBuyScreen)
     fun onLandSell(screen: LandSellScreen)
     fun onFoodBuy(screen: FoodBuyScreen)
     fun onFoodSell(screen: FoodSellScreen)
     fun onEndTurn(screen: EndTurnScreen)
+    fun onBuySellResources(screen: BuySellResourcesScreen)
 }
 
 interface ChooseScreen<C : Choice> : Screen {

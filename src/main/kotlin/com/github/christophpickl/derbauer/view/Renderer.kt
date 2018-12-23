@@ -1,26 +1,30 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.ChooseScreen
-import com.github.christophpickl.derbauer.logic.EndTurnScreen
-import com.github.christophpickl.derbauer.logic.FoodBuyScreen
-import com.github.christophpickl.derbauer.logic.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.GameState
-import com.github.christophpickl.derbauer.logic.LandBuyScreen
-import com.github.christophpickl.derbauer.logic.LandSellScreen
-import com.github.christophpickl.derbauer.logic.MainScreen
 import com.github.christophpickl.derbauer.logic.Prompt
-import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.VIEW_SIZE
+import com.github.christophpickl.derbauer.logic.screens.BuySellResourcesScreen
+import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
+import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
+import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
+import com.github.christophpickl.derbauer.logic.screens.HomeScreen
+import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
+import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
+import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.kpotpourri.common.string.times
+import mu.KotlinLogging.logger
 import javax.inject.Inject
 
 class Renderer @Inject constructor(
     private val state: GameState
 ) : ScreenCallback {
 
+    private val log = logger {}
     private val board = Board()
 
     fun render(): String {
+        log.debug { "Rendering: $state" }
         val headerStats = listOf(
             Pair("Food", state.player.foodFormatted),
             Pair("People", state.player.peopleFormatted),
@@ -44,7 +48,7 @@ class Renderer @Inject constructor(
         state.screen.onCallback(this)
     }
 
-    override fun onMainScreen(screen: MainScreen) {
+    override fun onHomeScreen(screen: HomeScreen) {
         onChooseScreen(screen)
     }
 
@@ -70,8 +74,12 @@ class Renderer @Inject constructor(
         }
     }
 
-    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") endTurnScreen: EndTurnScreen) {
-        // no-op
+    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {
+        log.trace { "Doing nothing special here on end turn." }
+    }
+
+    override fun onBuySellResources(screen: BuySellResourcesScreen) {
+        onChooseScreen(screen)
     }
 
     private fun onNumberInputScreen() {

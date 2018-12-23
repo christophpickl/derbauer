@@ -1,5 +1,15 @@
 package com.github.christophpickl.derbauer.logic
 
+import com.github.christophpickl.derbauer.logic.screens.BuySellResourcesScreen
+import com.github.christophpickl.derbauer.logic.screens.Choice
+import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
+import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
+import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
+import com.github.christophpickl.derbauer.logic.screens.HomeScreen
+import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
+import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
+import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.view.KeyboardEnterEvent
 import com.github.christophpickl.derbauer.view.RenderEvent
 import com.google.common.eventbus.EventBus
@@ -27,34 +37,39 @@ class GameEngine @Inject constructor(
         bus.post(RenderEvent)
     }
 
-    override fun onMainScreen(screen: MainScreen) {
+    override fun onHomeScreen(screen: HomeScreen) {
         val choice = maybeChoosenInput(screen) ?: return
-        controllerRegistry.mainScreen.select(choice)
+        controllerRegistry.main.select(choice)
+    }
+
+    override fun onBuySellResources(screen: BuySellResourcesScreen) {
+        val choice = maybeChoosenInput(screen) ?: return
+        controllerRegistry.buySell.select(choice)
     }
 
     override fun onLandBuy(screen: LandBuyScreen) {
         val input = maybeNumberInput() ?: return
-        controllerRegistry.mainScreen.buyLand(input)
+        controllerRegistry.buySell.buyLand(input)
     }
 
     override fun onLandSell(screen: LandSellScreen) {
         val input = maybeNumberInput() ?: return
-        controllerRegistry.mainScreen.sellLand(input)
+        controllerRegistry.buySell.sellLand(input)
     }
 
     override fun onFoodBuy(screen: FoodBuyScreen) {
         val input = maybeNumberInput() ?: return
-        controllerRegistry.mainScreen.buyFood(input)
+        controllerRegistry.buySell.buyFood(input)
     }
 
     override fun onFoodSell(screen: FoodSellScreen) {
         val input = maybeNumberInput() ?: return
-        controllerRegistry.mainScreen.sellFood(input)
+        controllerRegistry.buySell.sellFood(input)
     }
     
     override fun onEndTurn(screen: EndTurnScreen) {
         state.day++
-        state.screen = MainScreen(state)
+        state.screen = HomeScreen(state)
     }
 
     private fun maybeNumberInput(): Int? =

@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
 import com.github.christophpickl.derbauer.logic.GameState
-import com.github.christophpickl.derbauer.logic.MainScreen
+import com.github.christophpickl.derbauer.logic.screens.HomeScreen
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.scene.control.TextArea
@@ -38,7 +38,7 @@ class MainViewFxController : Controller() {
 
     init {
         bus.register(this)
-        state.screen = MainScreen(state)
+        state.screen = HomeScreen(state)
         onRenderEvent()
         view.root.addEventFilter(KeyEvent.ANY) { event ->
             keyboard.onKeyEvent(event)
