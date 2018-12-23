@@ -18,10 +18,12 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
+    implementation("no.tornado:tornadofx:1.7.17") {
+        exclude(group = "org.jetbrain.kotlin", module = "kotlin-stdlib-jdk8")
+    }
 
     // misc
     implementation("io.github.microutils:kotlin-logging:1.6.20")
-    implementation("com.github.christophpickl.kpotpourri:logback4k:1.12")
 
     // TODO test: testng, assertj
 }
