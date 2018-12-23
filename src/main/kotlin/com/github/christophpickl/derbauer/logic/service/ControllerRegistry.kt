@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.logic
+package com.github.christophpickl.derbauer.logic.service
 
 import com.github.christophpickl.derbauer.logic.screens.ArmyController
 import com.github.christophpickl.derbauer.logic.screens.BuildController

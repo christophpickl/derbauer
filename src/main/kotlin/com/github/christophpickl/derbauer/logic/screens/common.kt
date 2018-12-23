@@ -1,5 +1,10 @@
 package com.github.christophpickl.derbauer.logic.screens
 
+import com.github.christophpickl.derbauer.logic.service.AchievementScreen
+import com.github.christophpickl.derbauer.logic.service.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.service.HappeningScreen
+import com.github.christophpickl.derbauer.model.State
+
 
 interface Screen {
     val message: String
@@ -24,12 +29,12 @@ interface ScreenCallback {
 
     fun onBuild(screen: BuildScreen)
     fun onUpgrade(screen: UpgradeScreen)
-
     fun onArmy(screen: ArmyScreen)
-    
-    fun onEndTurn(screen: EndTurnScreen)
-    fun onGameOver(screen: GameOverScreen)
 
+    fun onAchievement(screen: AchievementScreen)
+    fun onEndTurn(screen: EndTurnScreen)
+    fun onHappening(screen: HappeningScreen)
+    fun onGameOver(screen: GameOverScreen)
 }
 
 interface ChooseScreen<C : Choice> : Screen {
@@ -51,4 +56,13 @@ interface ChooseScreenController<C : Choice, S : ChooseScreen<C>> : ScreenContro
 
 interface EnummedChoice<E : Enum<E>> : Choice {
     val enum: Enum<E>
+}
+
+abstract class SimpleMessageScreen(
+    private val state: State,
+    override val message: String
+) : Screen {
+
+    override val enableCancelOnEnter = false
+
 }

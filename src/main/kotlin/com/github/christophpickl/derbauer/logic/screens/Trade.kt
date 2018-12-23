@@ -23,10 +23,10 @@ class TradeScreen(
     //@formatter:off
     override val choices
         get() = listOf(
-            TradeChoice(TradeEnum.BuyLand,  "Buy land  ... ${formatNumber(state.prices.trade.landBuy, 2)}$"),
-            TradeChoice(TradeEnum.SellLand, "Sell land ... ${formatNumber(state.prices.trade.landSell, 2)}$"),
-            TradeChoice(TradeEnum.BuyFood,  "Buy food  ... ${formatNumber(state.prices.trade.foodBuy, 2)}$"),
-            TradeChoice(TradeEnum.SellFood, "Sell food ... ${formatNumber(state.prices.trade.foodSell, 2)}$")
+            TradeChoice(TradeEnum.BuyLand,  "Buy land  ... ${formatNumber(state.prices.trade.landBuy, 2)} $"),
+            TradeChoice(TradeEnum.SellLand, "Sell land ... ${formatNumber(state.prices.trade.landSell, 2)} $"),
+            TradeChoice(TradeEnum.BuyFood,  "Buy food  ... ${formatNumber(state.prices.trade.foodBuy, 2)} $"),
+            TradeChoice(TradeEnum.SellFood, "Sell food ... ${formatNumber(state.prices.trade.foodSell, 2)} $")
         )
     //@formatter:on
 

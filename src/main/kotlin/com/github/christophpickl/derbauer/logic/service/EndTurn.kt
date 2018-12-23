@@ -1,36 +1,44 @@
-package com.github.christophpickl.derbauer.logic
+package com.github.christophpickl.derbauer.logic.service
 
-import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
 import com.github.christophpickl.derbauer.logic.screens.Screen
+import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 import kotlin.random.Random
 
-class TurnFinisher @Inject constructor(
-    private val state: State,
-    private val happener: EndTurnHappener
+
+class EndTurnScreen(
+    override val message: String
+) : Screen {
+
+    override val enableCancelOnEnter = false
+
+    override fun onCallback(callback: ScreenCallback) {
+        callback.onEndTurn(this)
+    }
+}
+
+class EndTurn @Inject constructor(
+    private val state: State
 ) {
 
     private val numberWidth = 6
     private val numberWidthGrow = 5 // plus sign
 
     fun calculateEndTurn(): Screen {
-        val maybeHappenedMessage = happener.letItHappen()
-
         val peopleIncome = calcPeople()
         val foodIncome = calcFood()
         val goldIncome = calcGold()
 
-        val message = """Your daily end turn report:
+        val message = """So, this is what happened over night:
             |
             |${formatGrowth("Food production", state.player.food, foodIncome)}
             |${formatGrowth("People growth  ", state.player.people, peopleIncome)}
             |${formatGrowth("Gold income    ", state.player.gold, goldIncome)}
             | 
-            |${maybeHappenedMessage ?: "It was quiet and calm."}
-            |
-            |Hit ENTER to continue.
+            |Hit ENTER to go on with your miserable existence.
         """.trimMargin()
         state.player.food += foodIncome
         state.player.people += peopleIncome
@@ -39,6 +47,7 @@ class TurnFinisher @Inject constructor(
         if (state.player.people <= 0) {
             return GameOverScreen()
         }
+
         return EndTurnScreen(message)
     }
 

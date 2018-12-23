@@ -49,9 +49,16 @@ class MainViewFxController : Controller() {
     @Subscribe
     fun onRenderEvent(@Suppress("UNUSED_PARAMETER") event: RenderEvent = RenderEvent) {
         logg.trace("onRenderEvent()")
+        val root = Exception("Just to get the stacktrace")
         runLater {
             // assure running on UI thread
-            view.mainTextArea.text = renderer.render()
+            try {
+                view.mainTextArea.text = renderer.render()
+            } catch (e: Exception) {
+                logg.error(e) { "Unexpected exception while rendering." }
+                logg.error(root) { "Root cause." }
+
+            }
         }
     }
 

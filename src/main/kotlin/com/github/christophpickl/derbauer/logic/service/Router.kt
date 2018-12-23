@@ -1,10 +1,10 @@
-package com.github.christophpickl.derbauer.logic
+package com.github.christophpickl.derbauer.logic.service
 
+import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
 import com.github.christophpickl.derbauer.logic.screens.BuildScreen
 import com.github.christophpickl.derbauer.logic.screens.Choice
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
-import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
@@ -25,7 +25,10 @@ import javax.inject.Inject
 class Router @Inject constructor(
     private val state: State,
     private val bus: EventBus,
-    private val controllerRegistry: ScreenControllerRegistry
+    private val controllerRegistry: ScreenControllerRegistry,
+    private val endTurn: EndTurn,
+    private val happener: EndTurnHappener
+
 ) : ScreenCallback {
 
     private val log = logger {}
@@ -39,6 +42,7 @@ class Router @Inject constructor(
         log.info("Entered: '${state.prompt.enteredText}'")
 
         if (state.screen.enableCancelOnEnter && state.prompt.enteredText.isEmpty()) {
+            log.debug { "Empty entered, going to cancel back to home screen." }
             state.screen = HomeScreen(state)
         } else {
             state.screen.onCallback(this)
@@ -94,7 +98,16 @@ class Router @Inject constructor(
     }
 
     override fun onEndTurn(screen: EndTurnScreen) {
+        log.trace { "onEndTurn()" }
         state.day++
+        state.screen = happener.letItHappen() ?: HomeScreen(state)
+    }
+
+    override fun onAchievement(screen: AchievementScreen) {
+        state.screen = endTurn.calculateEndTurn()
+    }
+
+    override fun onHappening(screen: HappeningScreen) {
         state.screen = HomeScreen(state)
     }
 

@@ -1,12 +1,10 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.Prompt
 import com.github.christophpickl.derbauer.logic.VIEW_SIZE
 import com.github.christophpickl.derbauer.logic.formatRightBound
 import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
 import com.github.christophpickl.derbauer.logic.screens.BuildScreen
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
-import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
@@ -16,12 +14,17 @@ import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.logic.screens.TradeScreen
 import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
+import com.github.christophpickl.derbauer.logic.service.AchievementScreen
+import com.github.christophpickl.derbauer.logic.service.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.service.HappeningScreen
+import com.github.christophpickl.derbauer.logic.service.Prompt
 import com.github.christophpickl.derbauer.model.ResourceFormats
 import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 
+@Suppress("UNUSED_PARAMETER")
 class Renderer @Inject constructor(
     private val state: State
 ) : ScreenCallback {
@@ -100,8 +103,10 @@ class Renderer @Inject constructor(
         })
     }
 
-    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {}
-    override fun onGameOver(@Suppress("UNUSED_PARAMETER") screen: GameOverScreen) {}
+    override fun onAchievement(screen: AchievementScreen) {}
+    override fun onEndTurn(screen: EndTurnScreen) {}
+    override fun onHappening(screen: HappeningScreen) {}
+    override fun onGameOver(screen: GameOverScreen) {}
 
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->
@@ -162,7 +167,7 @@ private class Board {
 
     private fun MutableList<Char>.write(text: String) {
         require(text.length <= width) {
-            "writing text length (${text.length}) exceeds maximum of: $width"
+            "writing text length (${text.length}) exceeds maximum of: $width\nText: $text"
         }
         text.forEachIndexed { index, c ->
             this[index] = c

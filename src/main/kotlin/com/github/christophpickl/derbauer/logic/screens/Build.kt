@@ -19,9 +19,9 @@ class BuildScreen(state: State) : ChooseScreen<BuildChoice> {
 
     //@formatter:off
     override val choices = listOf(
-        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(state.prices.house, 2)}$"),
-        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(state.prices.granary, 2)}$"),
-        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(state.prices.farm, 2)}$")
+        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(state.prices.house, 2)} $"),
+        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(state.prices.granary, 2)} $"),
+        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(state.prices.farm, 2)} $")
     )
     //@formatter:on
 

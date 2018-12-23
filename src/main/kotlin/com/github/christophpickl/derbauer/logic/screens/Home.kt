@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.TurnFinisher
+import com.github.christophpickl.derbauer.logic.service.AchievementHappener
+import com.github.christophpickl.derbauer.logic.service.EndTurn
 import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 
@@ -45,7 +46,8 @@ class HomeChoice(
 
 class MainController @Inject constructor(
     private val state: State,
-    private val turnFinisher: TurnFinisher
+    private val endTurn: EndTurn,
+    private val happening: AchievementHappener
 ) : ChooseScreenController<HomeChoice, HomeScreen> {
 
     override fun select(choice: HomeChoice) {
@@ -54,20 +56,10 @@ class MainController @Inject constructor(
             HomeEnum.Build -> BuildScreen(state)
             HomeEnum.Upgrade -> UpgradeScreen(state)
             HomeEnum.Army -> ArmyScreen()
-            HomeEnum.EndTurn -> turnFinisher.calculateEndTurn()
+            HomeEnum.EndTurn -> happening.anyHappened()?.let { it } ?: endTurn.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         state.screen = nextScreen
     }
 
-}
-
-class EndTurnScreen(
-    override val message: String
-) : Screen {
-    override val enableCancelOnEnter = true
-
-    override fun onCallback(callback: ScreenCallback) {
-        callback.onEndTurn(this)
-    }
 }

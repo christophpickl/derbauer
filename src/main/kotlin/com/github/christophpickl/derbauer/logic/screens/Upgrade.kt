@@ -16,7 +16,7 @@ class UpgradeScreen(state: State) : ChooseScreen<UpgradeChoice> {
     override val message = messages.random()
 
     override val choices = listOf(
-        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity ... ${formatNumber(state.prices.upgrades.farmProductivity, 3)}$")
+        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity ... ${formatNumber(state.prices.upgrades.farmProductivity, 3)} $")
     )
     override fun onCallback(callback: ScreenCallback) {
         callback.onUpgrade(this)
