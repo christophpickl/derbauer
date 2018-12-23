@@ -8,7 +8,6 @@ import com.google.inject.AbstractModule
 
 class MainModule : AbstractModule() {
     override fun configure() {
-        @Suppress("UnstableApiUsage")
         bind(EventBus::class.java).toInstance(EventBus())
         bind(GameState::class.java).asEagerSingleton()
         bind(GameEngine::class.java).asEagerSingleton()

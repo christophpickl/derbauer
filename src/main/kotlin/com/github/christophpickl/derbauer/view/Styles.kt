@@ -13,7 +13,6 @@ class Styles : Stylesheet() {
 
     init {
         mainTextArea {
-            //                        backgroundColor += colorBlack
             textFill = colorGreen
             fontFamily = "Monaco"
             fontSize = 20.px

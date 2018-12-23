@@ -19,6 +19,6 @@ class DerBauerFxApp : App(
     }
 
     private fun registerEagerSingletons() {
-//        find(MainViewController::class)
+        find(MainViewController::class)
     }
 }
