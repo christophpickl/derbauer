@@ -55,7 +55,7 @@ class MainController @Inject constructor(
             HomeEnum.Trade -> TradeScreen(state)
             HomeEnum.Build -> BuildScreen(state)
             HomeEnum.Upgrade -> UpgradeScreen(state)
-            HomeEnum.Army -> ArmyScreen()
+            HomeEnum.Army -> ArmyScreen(state)
             HomeEnum.EndTurn -> happening.anyHappened()?.let { it } ?: endTurn.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

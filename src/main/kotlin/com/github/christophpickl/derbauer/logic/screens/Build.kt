@@ -19,9 +19,9 @@ class BuildScreen(state: State) : ChooseScreen<BuildChoice> {
 
     //@formatter:off
     override val choices = listOf(
-        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(state.prices.house, 2)} $"),
-        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(state.prices.granary, 2)} $"),
-        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(state.prices.farm, 2)} $")
+        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(state.prices.buildings.house, 2)} $"),
+        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(state.prices.buildings.granary, 2)} $"),
+        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(state.prices.buildings.farm, 2)} $")
     )
     //@formatter:on
 
@@ -51,9 +51,9 @@ class BuildController @Inject constructor(
     private val log = logger {}
     override fun select(choice: BuildChoice) {
         val nextScreen: Screen? = when (choice.enum) {
-            BuildEnum.House -> maybeBuild(Buildings::houses, state.prices.house)
-            BuildEnum.Granary -> maybeBuild(Buildings::granaries, state.prices.granary)
-            BuildEnum.Farm -> maybeBuild(Buildings::farms, state.prices.farm)
+            BuildEnum.House -> maybeBuild(Buildings::houses, state.prices.buildings.house)
+            BuildEnum.Granary -> maybeBuild(Buildings::granaries, state.prices.buildings.granary)
+            BuildEnum.Farm -> maybeBuild(Buildings::farms, state.prices.buildings.farm)
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         nextScreen?.let {

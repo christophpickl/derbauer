@@ -4,23 +4,44 @@ import com.github.christophpickl.derbauer.logic.multiplyBy
 import mu.KotlinLogging.logger
 
 class Prices {
+    val buildings = BuildingPrices()
+    val trade = TradePrices()
+    val upgrades = UpgradePrices()
+    val army = ArmyPrices()
+
+    fun reset() {
+        buildings.reset()
+        trade.reset()
+        upgrades.reset()
+        army.reset()
+    }
+
+    override fun toString() = "Prices{buildings=$buildings, trade=$trade, upgrades=$upgrades, army=$army}"
+
+}
+
+class BuildingPrices {
     var house = 0
     var granary = 0
     var farm = 0
-
-    val trade = TradePrices()
-    val upgrades = UpgradePrices()
 
     fun reset() {
         house = 15
         granary = 30
         farm = 50
-        trade.reset()
-        upgrades.reset()
     }
 
-    override fun toString() = "Prices{house=$house, granary=$granary, farm=$farm, trade=$trade, upgrades=$upgrades}"
+    override fun toString() = "BuildingPrices{house=$house, granary=$granary, farm=$farm}"
+}
 
+class ArmyPrices {
+    var soldier = 0
+
+    fun reset() {
+        soldier = 20
+    }
+
+    override fun toString() = "ArmyPrices{soldier=$soldier}"
 }
 
 class TradePrices {

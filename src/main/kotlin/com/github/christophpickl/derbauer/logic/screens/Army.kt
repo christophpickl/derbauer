@@ -2,6 +2,8 @@ package com.github.christophpickl.derbauer.logic.screens
 
 import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.decrement
+import com.github.christophpickl.derbauer.logic.formatNumber
+import com.github.christophpickl.derbauer.logic.increment
 import com.github.christophpickl.derbauer.logic.randomize
 import com.github.christophpickl.derbauer.model.Armies
 import com.github.christophpickl.derbauer.model.CHEAT_MODE
@@ -11,9 +13,10 @@ import com.google.common.eventbus.EventBus
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlin.reflect.KMutableProperty1
 
 
-class ArmyScreen() : ChooseScreen<ArmyChoice> {
+class ArmyScreen(state: State) : ChooseScreen<ArmyChoice> {
 
     private val messages = listOf(
         "Hey, don't look at me dude.",
@@ -22,9 +25,12 @@ class ArmyScreen() : ChooseScreen<ArmyChoice> {
     )
     override val message = messages.random()
 
+    //@formatter:off
     override val choices = listOf(
-        ArmyChoice(ArmyEnum.Attack, "Attack")
+        ArmyChoice(ArmyEnum.Attack, "Attack"),
+        ArmyChoice(ArmyEnum.HireSoldiers, "Buy soldiers ... ${formatNumber(state.prices.army.soldier, 3)} $")
     )
+    //@formatter:on
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onArmy(this)
@@ -33,7 +39,8 @@ class ArmyScreen() : ChooseScreen<ArmyChoice> {
 }
 
 enum class ArmyEnum {
-    Attack
+    Attack,
+    HireSoldiers
 }
 
 class ArmyChoice(
@@ -52,6 +59,7 @@ class ArmyController @Inject constructor(
     override fun select(choice: ArmyChoice) {
         val nextScreen: Screen? = when (choice.enum) {
             ArmyEnum.Attack -> maybeAttack()
+            ArmyEnum.HireSoldiers -> HireSoldiersScreen(state)
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         nextScreen?.let {
@@ -68,7 +76,41 @@ class ArmyController @Inject constructor(
         }
     }
 
+    fun hireSoldier(amount: Int) {
+        maybeHire(Armies::soldiers, amount, state.prices.army.soldier)?.let {
+            state.screen = it
+        }
+    }
+
+    private fun maybeHire(targetProperty: KMutableProperty1<Armies, Int>, amount: Int, pricePerUnit: Int): Screen? {
+        val price = amount * pricePerUnit
+        return if (state.player.gold < price) {
+            log.trace { "Not enough gold (${state.player.gold}), needed: $price for $amount ${targetProperty.name}(s)." }
+            beepReturn<Screen>()
+        } else if (state.player.people < amount) {
+            log.trace { "Not enough people!" }
+            beepReturn<Screen>()
+        } else {
+            targetProperty.increment(state.player.armies, amount)
+            state.player.gold -= price
+            state.player.people -= amount
+            HomeScreen(state)
+        }
+    }
 }
+
+class HireSoldiersScreen(state: State) : NumberInputScreen {
+
+    override val message = "How many soldiers do you wanna hire?\n\n" +
+        "1 costs ${state.prices.army.soldier} gold and 1 person, you can afford ${state.affordableSoldiers} of them."
+
+    override fun onCallback(callback: ScreenCallback) {
+        callback.onHireSoldiers(this)
+    }
+
+}
+
+val State.affordableSoldiers get() = Math.min(player.gold / prices.army.soldier, player.people)
 
 class AttackOngoingScreen(
     private val state: State,

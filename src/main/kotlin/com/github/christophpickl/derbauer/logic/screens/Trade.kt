@@ -143,7 +143,7 @@ class LandBuyScreen(
     state: State
 ) : NumberInputScreen {
 
-    override val message = "How much land do you wanna buy?\n" +
+    override val message = "How much land do you wanna buy?\n\n" +
         "1 costs ${state.prices.trade.landBuy} gold, you can afford ${state.affordableLand} land."
 
     override fun onCallback(callback: ScreenCallback) {
@@ -154,7 +154,8 @@ class LandBuyScreen(
 class LandSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much land do you wanna sell?\n1 for ${state.prices.trade.landSell} gold, you've got ${state.player.landAvailable} land available."
+    override val message = "How much land do you wanna sell?\n\n" +
+        "1 for ${state.prices.trade.landSell} gold, you've got ${state.player.landAvailable} land available."
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandSell(this)
     }
@@ -163,7 +164,7 @@ class LandSellScreen(
 class FoodBuyScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much food do you wanna buy?\n" +
+    override val message = "How much food do you wanna buy?\n\n" +
         "1 costs ${state.prices.trade.foodBuy} gold, you can afford ${state.affordableFood} food."
 
     override fun onCallback(callback: ScreenCallback) {
@@ -174,7 +175,8 @@ class FoodBuyScreen(
 class FoodSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much food do you wanna sell?\n1 for ${state.prices.trade.foodSell} gold, you've got ${state.player.food} food."
+    override val message = "How much food do you wanna sell?\n\n" +
+        "1 for ${state.prices.trade.foodSell} gold, you've got ${state.player.food} food."
     override fun onCallback(callback: ScreenCallback) {
         callback.onFoodSell(this)
     }

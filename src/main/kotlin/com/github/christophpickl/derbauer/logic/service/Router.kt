@@ -8,6 +8,7 @@ import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
+import com.github.christophpickl.derbauer.logic.screens.HireSoldiersScreen
 import com.github.christophpickl.derbauer.logic.screens.HomeScreen
 import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
@@ -62,14 +63,16 @@ class Router @Inject constructor(
         controllerRegistry.upgrade.select(choice)
     }
 
-    override fun onTrade(screen: TradeScreen) {
-        val choice = maybeChoosenInput(screen) ?: return
-        controllerRegistry.trade.select(choice)
-    }
-
     override fun onBuild(screen: BuildScreen) {
         val choice = maybeChoosenInput(screen) ?: return
         controllerRegistry.build.select(choice)
+    }
+
+    // TRADE ===========================================================================================================
+
+    override fun onTrade(screen: TradeScreen) {
+        val choice = maybeChoosenInput(screen) ?: return
+        controllerRegistry.trade.select(choice)
     }
 
     override fun onLandBuy(screen: LandBuyScreen) {
@@ -92,11 +95,20 @@ class Router @Inject constructor(
         controllerRegistry.trade.sellFood(input)
     }
 
+    // ARMY ============================================================================================================
+    
     override fun onArmy(screen: ArmyScreen) {
         val choice = maybeChoosenInput(screen) ?: return
         controllerRegistry.army.select(choice)
     }
 
+    override fun onHireSoldiers(screen: HireSoldiersScreen) {
+        val input = maybeNumberInput() ?: return
+        controllerRegistry.army.hireSoldier(input)
+    }
+
+    // END =============================================================================================================
+    
     override fun onEndTurn(screen: EndTurnScreen) {
         log.trace { "onEndTurn()" }
         state.day++
@@ -116,6 +128,9 @@ class Router @Inject constructor(
         state.screen = HomeScreen(state)
     }
 
+
+    // =================================================================================================================
+    
     private fun maybeNumberInput(): Int? =
         state.prompt.enteredText.toIntOrNull() ?: beepReturn()
 

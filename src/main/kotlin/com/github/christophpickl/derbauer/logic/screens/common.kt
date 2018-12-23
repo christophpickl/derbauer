@@ -29,7 +29,9 @@ interface ScreenCallback {
 
     fun onBuild(screen: BuildScreen)
     fun onUpgrade(screen: UpgradeScreen)
+
     fun onArmy(screen: ArmyScreen)
+    fun onHireSoldiers(screen: HireSoldiersScreen)
 
     fun onAchievement(screen: AchievementScreen)
     fun onEndTurn(screen: EndTurnScreen)

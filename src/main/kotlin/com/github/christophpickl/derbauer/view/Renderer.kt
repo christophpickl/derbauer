@@ -8,6 +8,7 @@ import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
+import com.github.christophpickl.derbauer.logic.screens.HireSoldiersScreen
 import com.github.christophpickl.derbauer.logic.screens.HomeScreen
 import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
 import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
@@ -102,6 +103,8 @@ class Renderer @Inject constructor(
             "  $it"
         })
     }
+
+    override fun onHireSoldiers(screen: HireSoldiersScreen) {}
 
     override fun onAchievement(screen: AchievementScreen) {}
     override fun onEndTurn(screen: EndTurnScreen) {}
