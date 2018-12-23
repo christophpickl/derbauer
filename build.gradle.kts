@@ -19,10 +19,9 @@ dependencies {
     implementation(kotlin("reflect"))
 
     implementation("no.tornado:tornadofx:1.7.17") {
-        exclude(group = "org.jetbrain.kotlin", module = "kotlin-stdlib-jdk8")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
     }
-
-    // misc
+    implementation("com.google.inject:guice:4.2.2")
     implementation("io.github.microutils:kotlin-logging:1.6.20")
 
     // TODO test: testng, assertj
