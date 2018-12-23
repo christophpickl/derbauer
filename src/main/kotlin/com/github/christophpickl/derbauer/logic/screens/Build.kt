@@ -22,9 +22,9 @@ class BuildScreen() : ChooseScreen<BuildChoice> {
 
     //@formatter:off
     override val choices = listOf(
-        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(State.prices.buildings.house, 2)} $"),
-        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(State.prices.buildings.granary, 2)} $"),
-        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(State.prices.buildings.farm, 2)} $")
+        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(State.prices.buildings.house, 2)} $ (adds ${State.buildings.houseCapacity} more space for your people)"),
+        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(State.prices.buildings.granary, 2)} $ (adds ${State.buildings.granaryCapacity} more food storage)"),
+        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(State.prices.buildings.farm, 2)} $ (produces +${State.buildings.farmProduction} food each day)")
     )
     //@formatter:on
 

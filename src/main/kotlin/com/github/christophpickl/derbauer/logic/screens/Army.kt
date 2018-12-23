@@ -28,7 +28,7 @@ class ArmyScreen() : ChooseScreen<ArmyChoice> {
     //@formatter:off
     override val choices = listOf(
         ArmyChoice(ArmyEnum.Attack, "Attack"),
-        ArmyChoice(ArmyEnum.HireSoldiers, "Buy soldiers ... ${formatNumber(State.prices.army.soldier, 3)} $")
+        ArmyChoice(ArmyEnum.HireSoldiers, "Buy soldiers ... ${formatNumber(State.prices.army.soldier, 3)} $ (simple ground unit, attack: ${State.army.soldierAttackStrength})")
     )
     //@formatter:on
 

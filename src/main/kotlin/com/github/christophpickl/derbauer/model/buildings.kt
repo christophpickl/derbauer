@@ -24,13 +24,13 @@ class Buildings {
 class BuildingsMeta {
     var houseCapacity = 0
     var granaryCapacity = 0
-    var farmProduces = 0
+    var farmProduction = 0
 
     fun reset() {
         houseCapacity = 5
         granaryCapacity = 100
-        farmProduces = 2
+        farmProduction = 2
     }
 
-    override fun toString() = "BuildingsMeta{houseCapacity=$houseCapacity, granaryCapacity=$granaryCapacity, farmProduces=$farmProduces}"
+    override fun toString() = "BuildingsMeta{houseCapacity=$houseCapacity, granaryCapacity=$granaryCapacity, farmProduces=$farmProduction}"
 }

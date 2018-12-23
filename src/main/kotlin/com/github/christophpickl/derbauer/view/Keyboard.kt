@@ -15,8 +15,7 @@ class Keyboard @Inject constructor(
         if (!State.screen.promptEnabled || event.eventType != KeyEvent.KEY_PRESSED) {
             return
         }
-        if (event.isPrintable) {
-            if (!isValid(event)) return
+        if (event.isPrintable && isValidInput(event)) {
             State.prompt.append(event.text!!.first())
             bus.post(RenderEvent)
 
@@ -30,15 +29,12 @@ class Keyboard @Inject constructor(
         }
     }
 
-    private fun isValid(event: KeyEvent): Boolean {
-        val screen = State.screen
-        if (screen is ChooseScreen<*> && !event.code.isDigitKey) {
-            return false
-        }
-        return true
-    }
+    private fun isValidInput(event: KeyEvent) =
+        State.screen !is ChooseScreen<*> || event.text.toIntOrNull() != null
 
-    private val KeyEvent.isPrintable: Boolean get() = code.isLetterKey || code.isDigitKey || code == KeyCode.SPACE
+    private val KeyEvent.isPrintable: Boolean
+        get() =
+            code.isLetterKey || code.isDigitKey || code == KeyCode.SPACE
 
 }
 

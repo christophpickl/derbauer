@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.logic.service
 import com.github.christophpickl.derbauer.logic.screens.Screen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.logic.screens.SimpleMessageScreen
+import com.github.christophpickl.derbauer.model.CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging.logger
 import kotlin.random.Random
@@ -16,20 +17,21 @@ class HappeningScreen(message: String) : SimpleMessageScreen(message) {
 class EndTurnHappener {
 
     private val log = logger {}
-    private val randomHappenings = listOf(
+    private val happenings = listOf(
         GoldBagHappening(),
         RatsHappening()
     )
     private var turnsNothingHappened = 999
-    private val baseProb = 90.0
+    private val baseProb = 10.0
 
     fun letItHappen(): Screen? {
-        // TODO cool down for happening
-        val prob = Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
+        happenings.forEach { it.coolUpWarmUp() }
+
+        val prob = if (CHEAT_MODE) 100.0 else Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
         if (nextRandom0To100() < prob) {
             turnsNothingHappened = 0
-            val happening = randomHappenings.random()
+            val happening = happenings.sortedBy { it.currentCooldown }.first()
             return HappeningScreen(happening.execute())
         }
 
@@ -41,9 +43,11 @@ class EndTurnHappener {
 }
 
 
-private class GoldBagHappening : Happening() {
+private class GoldBagHappening : Happening(
+    cooldownDays = 7
+) {
     private val goldBagSizes = listOf(10, 20, 50)
-    override fun execute(): String {
+    override fun internalExecute(): String {
         val bagSize = goldBagSizes.random()
         State.player.gold += bagSize
         return """
@@ -65,7 +69,9 @@ private class GoldBagHappening : Happening() {
     }
 }
 
-private class RatsHappening : Happening() {
+private class RatsHappening : Happening(
+    cooldownDays = 14
+) {
 
     private val eatenSizes = listOf(10, 20, 30) // TODO each of them got different prob
 
@@ -76,7 +82,7 @@ private class RatsHappening : Happening() {
         " ` " "
         """.trimIndent()
 
-    override fun execute(): String {
+    override fun internalExecute(): String {
         val eatenProposal = eatenSizes.random()
         val (message, foodEaten) = if (State.player.food <= 0) {
             "Lucky you, although there were some rats,\n" +
@@ -95,6 +101,22 @@ private class RatsHappening : Happening() {
 
 }
 
-private abstract class Happening {
-    abstract fun execute(): String
+private abstract class Happening(
+    val cooldownDays: Int
+) {
+
+    var currentCooldown = 0
+
+    abstract fun internalExecute(): String
+
+    fun execute(): String {
+        currentCooldown = cooldownDays
+        return internalExecute()
+    }
+
+    fun coolUpWarmUp() {
+        if (currentCooldown > 0) {
+            currentCooldown--
+        }
+    }
 }

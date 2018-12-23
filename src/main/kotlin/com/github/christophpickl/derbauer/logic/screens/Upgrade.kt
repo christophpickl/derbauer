@@ -15,7 +15,8 @@ class UpgradeScreen() : ChooseScreen<UpgradeChoice> {
     override val message = messages.random()
 
     override val choices = listOf(
-        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity ... ${formatNumber(State.prices.upgrades.farmProductivity, 3)} $")
+        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity ... " +
+            "${formatNumber(State.prices.upgrades.farmProductivity, 3)} $ (increases food output by +${State.upgrades.increaseFarmProduction})")
     )
     override fun onCallback(callback: ScreenCallback) {
         callback.onUpgrade(this)
@@ -39,7 +40,7 @@ class UpgradeController : ChooseScreenController<UpgradeChoice, UpgradeScreen> {
     override fun select(choice: UpgradeChoice) {
         val nextScreen: Screen? = when (choice.enum) {
             UpgradeEnum.FarmProductivity -> maybeUpgrade(State.prices.upgrades.farmProductivity) {
-                State.buildings.farmProduces += 1
+                State.buildings.farmProduction += State.upgrades.increaseFarmProduction
                 State.prices.upgrades.farmProductivity *= 2
             }
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
@@ -60,4 +61,12 @@ class UpgradeController : ChooseScreenController<UpgradeChoice, UpgradeScreen> {
         }
     }
 
+}
+
+class UpgradeMeta {
+    var increaseFarmProduction = 0
+
+    fun reset() {
+        increaseFarmProduction = 1
+    }
 }

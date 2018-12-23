@@ -49,7 +49,7 @@ class EndTurn {
     }
 
     private fun calcFood(): Int {
-        val calc = (State.player.buildings.farms * State.buildings.farmProduces) - // farm production 
+        val calc = (State.player.buildings.farms * State.buildings.farmProduction) - // farm production 
             State.player.people // each persons eats one food per day
         return limitCalc(calc, State.player.food, State.maxFood)
     }

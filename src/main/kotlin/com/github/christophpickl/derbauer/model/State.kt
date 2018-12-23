@@ -3,6 +3,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.github.christophpickl.derbauer.logic.screens.Screen
+import com.github.christophpickl.derbauer.logic.screens.UpgradeMeta
 import com.github.christophpickl.derbauer.logic.service.Prompt
 
 const val CHEAT_MODE = true
@@ -19,6 +20,7 @@ object State {
     val army = ArmyMeta()
     val meta = StateMeta()
     val history = History()
+    val upgrades = UpgradeMeta()
 
     val maxFood get() = player.buildings.granaries * buildings.granaryCapacity
     val freeFood get() = maxFood - player.food
@@ -32,7 +34,8 @@ object State {
         "player=$player, " +
         "prices=$prices, " +
         "meta=$meta, " +
-        "history=$history" +
+        "history=$history," +
+        "upgrades=$upgrades" +
         "}"
 
     init {
@@ -47,6 +50,7 @@ object State {
         army.reset()
         meta.reset()
         history.reset()
+        upgrades.reset()
     }
 }
 
