@@ -9,30 +9,6 @@ import tornadofx.*
 
 object RenderEvent
 
-class MainViewController : Controller() {
-
-    private val logg = logger {}
-    private val view: MainView by inject()
-    private val keyboard: Keyboard by di()
-    private val renderer: Renderer by di()
-    private val bus: EventBus by di()
-
-    init {
-        bus.register(this)
-        onRerenderEvent()
-        view.root.addEventFilter(KeyEvent.ANY) { event ->
-            keyboard.onKeyEvent(event)
-        }
-    }
-
-    @Subscribe
-    fun onRerenderEvent(@Suppress("UNUSED_PARAMETER") event: RenderEvent = RenderEvent) {
-        logg.debug("onRerenderEvent()")
-        view.mainTextArea.text = renderer.render()
-    }
-
-}
-
 class MainView : View() {
 
     lateinit var mainTextArea: TextArea
@@ -47,4 +23,28 @@ class MainView : View() {
             }
         }
     }
+}
+
+class MainViewFxController : Controller() {
+
+    private val logg = logger {}
+    private val view: MainView by inject()
+    private val keyboard: Keyboard by di()
+    private val renderer: Renderer by di()
+    private val bus: EventBus by di()
+
+    init {
+        bus.register(this)
+        onRenderEvent()
+        view.root.addEventFilter(KeyEvent.ANY) { event ->
+            keyboard.onKeyEvent(event)
+        }
+    }
+
+    @Subscribe
+    fun onRenderEvent(@Suppress("UNUSED_PARAMETER") event: RenderEvent = RenderEvent) {
+        logg.trace("onRenderEvent()")
+        view.mainTextArea.text = renderer.render()
+    }
+
 }

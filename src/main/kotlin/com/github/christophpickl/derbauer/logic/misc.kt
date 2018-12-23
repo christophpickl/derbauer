@@ -16,3 +16,12 @@ data class Pos(
         require(y >= 0 && y < (VIEW_SIZE.height - 1))
     }
 }
+
+fun beep() {
+    println("beep")// TODO
+}
+
+fun <T> beepReturn(): T? {
+    beep()
+    return null
+}

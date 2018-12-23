@@ -5,7 +5,14 @@ class GameState {
     var round = 1
     val prompt = Prompt()
     val player = Player()
+    var screen: Screen = MainScreen()
+    val prizes = Prizes()
 
+}
+
+class Prizes {
+    val landBuy = 10
+    val landSell = 8
 }
 
 class Player {

@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.view
 
+import com.github.christophpickl.derbauer.logic.ChooseScreen
 import com.github.christophpickl.derbauer.logic.GameState
 import com.google.common.eventbus.EventBus
 import javafx.scene.input.KeyCode
@@ -15,17 +16,33 @@ class Keyboard @Inject constructor(
         if (event.eventType != KeyEvent.KEY_PRESSED) {
             return
         }
-        if (event.code.isLetterKey || event.code.isDigitKey || event.code == KeyCode.SPACE) {
+
+        if (event.isPrintable) {
+            if (!isValid(event)) return
             state.prompt.append(event.text!!.first())
             bus.post(RenderEvent)
+
         } else if (event.code == KeyCode.ENTER) {
-            bus.post(KeyboardEnterEvent)
+            if (state.prompt.enteredText.isNotEmpty()) {
+                bus.post(KeyboardEnterEvent)
+            }
+            
         } else if (event.code == KeyCode.BACK_SPACE) {
             if (state.prompt.maybeRemoveLast()) {
                 bus.post(RenderEvent)
             }
         }
     }
+
+    private fun isValid(event: KeyEvent): Boolean {
+        val screen = state.screen
+        if (screen is ChooseScreen<*> && !event.code.isDigitKey) {
+            return false
+        }
+        return true
+    }
+
+    private val KeyEvent.isPrintable: Boolean get() = code.isLetterKey || code.isDigitKey || code == KeyCode.SPACE
 
 }
 

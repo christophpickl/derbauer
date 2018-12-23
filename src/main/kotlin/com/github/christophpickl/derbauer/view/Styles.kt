@@ -1,25 +1,26 @@
 package com.github.christophpickl.derbauer.view
 
+import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class Styles : Stylesheet() {
     companion object {
         val mainTextArea by cssclass()
 
-        val colorBlack = c("#000000")
-        val colorGreen = c("#4DFF52")
+        val colorBackground = c("#C2B137")
+        val colorFont = c("#000000")
 
     }
 
     init {
         mainTextArea {
-            textFill = colorGreen
+            textFill = colorFont
+            fontWeight = FontWeight.BOLD
             fontFamily = "Monaco"
             fontSize = 20.px
             content {
-                backgroundColor += Styles.colorBlack
+                backgroundColor += Styles.colorBackground
             }
         }
     }
 }
-
