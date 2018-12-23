@@ -25,3 +25,9 @@ fun <T> beepReturn(): T? {
     beep()
     return null
 }
+
+fun formatNumber(number: Int, length: Int, addPlusSign: Boolean = false): String {
+    val realLength = if (addPlusSign) length - 1 else length
+    val prefix = if (addPlusSign && number > 0) "+" else ""
+    return String.format("%$prefix${realLength}d", number)
+}

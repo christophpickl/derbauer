@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
 import com.github.christophpickl.derbauer.logic.ChooseScreen
+import com.github.christophpickl.derbauer.logic.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.GameState
 import com.github.christophpickl.derbauer.logic.LandBuyScreen
 import com.github.christophpickl.derbauer.logic.LandSellScreen
@@ -18,18 +19,25 @@ class Renderer @Inject constructor(
     private val board = Board()
 
     fun render(): String {
-
-        val gold = String.format("%6d", state.player.gold)
-        val land = String.format("%4d", state.player.land)
-        board.printHeader("Round ${state.round}", "Gold: $gold Land: $land")
+        val headerStats = listOf(
+            Pair("Food", state.player.foodFormatted),
+            Pair("People", state.player.peopleFormatted),
+            Pair("Gold", state.player.goldFormatted),
+            Pair("Land", state.player.landFormatted)
+        ).joinToString("  ") {
+            "${it.first}: ${it.second}"
+        }
+        board.printHeader("Round ${state.round}", headerStats)
         renderScreen()
         board.printPrompt(state.prompt)
 
         return board.convertAndReset()
     }
-
     private fun renderScreen() {
-        board.printRow(0, state.screen.message)
+        state.screen.message.split("\n").forEach { line ->
+            board.printRow(line)
+        }
+        board.printRow("")
         state.screen.onCallback(this)
     }
 
@@ -47,12 +55,16 @@ class Renderer @Inject constructor(
 
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->
-            board.printRow(2 + index, "[${index + 1}] ${choice.label}")
+            board.printRow("[${index + 1}] ${choice.label}")
         }
     }
 
+    override fun onEndTurn(endTurnScreen: EndTurnScreen) {
+        // no-op
+    }
+
     private fun onNumberInputScreen() {
-        board.printRow(2, "Enter a valid number.")
+        board.printRow("Enter number")
     }
 
 }
@@ -66,20 +78,20 @@ private class Board {
     }.toMutableList()
 
     private val skipRowsAboveContent = 2
-    private val skipRowsBelowContent = 2
-    private val skipRowsForContent = skipRowsAboveContent + skipRowsBelowContent
 
+    private var currentContentRow = 0
     fun convertAndReset(): String {
         val result = rows.joinToString("\n") { cols ->
             cols.fold("") { acc, col -> "$acc$col" }
         }
         rows.forEach { it.forEachIndexed { i, _ -> it[i] = ' ' } }
+        currentContentRow = 0
         return result
     }
 
-    fun printRow(relativeRowIndex: Int, text: String, startIndex: Int = 0) {
-        require(relativeRowIndex >= 0 && skipRowsForContent + relativeRowIndex <= height)
-        rows[skipRowsAboveContent + relativeRowIndex].write(text, startIndex)
+    fun printRow(text: String) {
+        rows[skipRowsAboveContent + currentContentRow].write(text)
+        currentContentRow++
     }
 
     fun printHeader(left: String, right: String) {
@@ -96,12 +108,12 @@ private class Board {
         write("--${"=".times(width - 4)}--")
     }
 
-    private fun MutableList<Char>.write(text: String, startIndex: Int = 0) {
-        require((text.length + startIndex) <= width) {
-            "writing text length (${text.length}, start: $startIndex) exceeds maximum of: $width"
+    private fun MutableList<Char>.write(text: String) {
+        require(text.length <= width) {
+            "writing text length (${text.length}) exceeds maximum of: $width"
         }
         text.forEachIndexed { index, c ->
-            this[index + startIndex] = c
+            this[index] = c
         }
     }
 

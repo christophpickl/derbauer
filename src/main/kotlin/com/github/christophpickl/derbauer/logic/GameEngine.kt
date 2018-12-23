@@ -42,6 +42,11 @@ class GameEngine @Inject constructor(
         controllerRegistry.mainScreen.sellLand(input)
     }
 
+    override fun onEndTurn(screen: EndTurnScreen) {
+        state.round++
+        state.screen = MainScreen(state)
+    }
+
     private fun maybeNumberInput(): Int? =
         state.prompt.enteredText.toIntOrNull() ?: beepReturn()
 

@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
+import com.github.christophpickl.derbauer.logic.GameState
+import com.github.christophpickl.derbauer.logic.MainScreen
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.scene.control.TextArea
@@ -31,10 +33,12 @@ class MainViewFxController : Controller() {
     private val view: MainView by inject()
     private val keyboard: Keyboard by di()
     private val renderer: Renderer by di()
+    private val state: GameState by di()
     private val bus: EventBus by di()
 
     init {
         bus.register(this)
+        state.screen = MainScreen(state)
         onRenderEvent()
         view.root.addEventFilter(KeyEvent.ANY) { event ->
             keyboard.onKeyEvent(event)

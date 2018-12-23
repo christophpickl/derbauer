@@ -23,10 +23,8 @@ class Keyboard @Inject constructor(
             bus.post(RenderEvent)
 
         } else if (event.code == KeyCode.ENTER) {
-            if (state.prompt.enteredText.isNotEmpty()) {
-                bus.post(KeyboardEnterEvent)
-            }
-            
+            bus.post(KeyboardEnterEvent)
+
         } else if (event.code == KeyCode.BACK_SPACE) {
             if (state.prompt.maybeRemoveLast()) {
                 bus.post(RenderEvent)
