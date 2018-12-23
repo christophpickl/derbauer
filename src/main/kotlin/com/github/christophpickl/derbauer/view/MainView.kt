@@ -34,12 +34,11 @@ class MainViewFxController : Controller() {
     private val view: MainView by inject()
     private val keyboard: Keyboard by di()
     private val renderer: Renderer by di()
-    private val state: State by di()
     private val bus: EventBus by di()
 
     init {
         bus.register(this)
-        state.screen = HomeScreen(state)
+        State.screen = HomeScreen()
         onRenderEvent()
         view.root.addEventFilter(KeyEvent.ANY) { event ->
             keyboard.onKeyEvent(event)

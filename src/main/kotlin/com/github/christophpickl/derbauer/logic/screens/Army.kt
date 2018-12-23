@@ -16,7 +16,7 @@ import kotlin.random.Random
 import kotlin.reflect.KMutableProperty1
 
 
-class ArmyScreen(state: State) : ChooseScreen<ArmyChoice> {
+class ArmyScreen() : ChooseScreen<ArmyChoice> {
 
     private val messages = listOf(
         "Hey, don't look at me dude.",
@@ -28,7 +28,7 @@ class ArmyScreen(state: State) : ChooseScreen<ArmyChoice> {
     //@formatter:off
     override val choices = listOf(
         ArmyChoice(ArmyEnum.Attack, "Attack"),
-        ArmyChoice(ArmyEnum.HireSoldiers, "Buy soldiers ... ${formatNumber(state.prices.army.soldier, 3)} $")
+        ArmyChoice(ArmyEnum.HireSoldiers, "Buy soldiers ... ${formatNumber(State.prices.army.soldier, 3)} $")
     )
     //@formatter:on
 
@@ -50,7 +50,6 @@ class ArmyChoice(
 
 
 class ArmyController @Inject constructor(
-    private val state: State,
     private val bus: EventBus
 ) : ChooseScreenController<ArmyChoice, ArmyScreen> {
 
@@ -59,50 +58,50 @@ class ArmyController @Inject constructor(
     override fun select(choice: ArmyChoice) {
         val nextScreen: Screen? = when (choice.enum) {
             ArmyEnum.Attack -> maybeAttack()
-            ArmyEnum.HireSoldiers -> HireSoldiersScreen(state)
+            ArmyEnum.HireSoldiers -> HireSoldiersScreen()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         nextScreen?.let {
-            state.screen = it
+            State.screen = it
         }
     }
 
     private fun maybeAttack(): Screen? {
-        return if (state.player.armies.totalCount == 0) {
+        return if (State.player.armies.totalCount == 0) {
             log.trace { "No army available!" }
             beepReturn<Screen>()
         } else {
-            AttackOngoingScreen(state, bus)
+            AttackOngoingScreen(bus)
         }
     }
 
     fun hireSoldier(amount: Int) {
-        maybeHire(Armies::soldiers, amount, state.prices.army.soldier)?.let {
-            state.screen = it
+        maybeHire(Armies::soldiers, amount, State.prices.army.soldier)?.let {
+            State.screen = it
         }
     }
 
     private fun maybeHire(targetProperty: KMutableProperty1<Armies, Int>, amount: Int, pricePerUnit: Int): Screen? {
         val price = amount * pricePerUnit
-        return if (state.player.gold < price) {
-            log.trace { "Not enough gold (${state.player.gold}), needed: $price for $amount ${targetProperty.name}(s)." }
+        return if (State.player.gold < price) {
+            log.trace { "Not enough gold (${State.player.gold}), needed: $price for $amount ${targetProperty.name}(s)." }
             beepReturn<Screen>()
-        } else if (state.player.people < amount) {
+        } else if (State.player.people < amount) {
             log.trace { "Not enough people!" }
             beepReturn<Screen>()
         } else {
-            targetProperty.increment(state.player.armies, amount)
-            state.player.gold -= price
-            state.player.people -= amount
-            HomeScreen(state)
+            targetProperty.increment(State.player.armies, amount)
+            State.player.gold -= price
+            State.player.people -= amount
+            HomeScreen()
         }
     }
 }
 
-class HireSoldiersScreen(state: State) : NumberInputScreen {
+class HireSoldiersScreen() : NumberInputScreen {
 
     override val message = "How many soldiers do you wanna hire?\n\n" +
-        "1 costs ${state.prices.army.soldier} gold and 1 person, you can afford ${state.affordableSoldiers} of them."
+        "1 costs ${State.prices.army.soldier} gold and 1 person, you can afford ${State.affordableSoldiers} of them."
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onHireSoldiers(this)
@@ -113,14 +112,13 @@ class HireSoldiersScreen(state: State) : NumberInputScreen {
 val State.affordableSoldiers get() = Math.min(player.gold / prices.army.soldier, player.people)
 
 class AttackOngoingScreen(
-    private val state: State,
     private val bus: EventBus
 ) : Screen {
 
     override val promptEnabled = false
     override val enableCancelOnEnter: Boolean = false
     val context = AttackContext(
-        enemies = (Random.nextDouble(0.4, 1.1) * state.player.armies.totalCount).toInt(),
+        enemies = (Random.nextDouble(0.4, 1.1) * State.player.armies.totalCount).toInt(),
         message = ""
     )
 
@@ -129,7 +127,7 @@ class AttackOngoingScreen(
     override fun onCallback(callback: ScreenCallback) {
         if (!context.warStarted) {
             context.warStarted = true
-            Thread(AttackThread(state, context, bus)).start()
+            Thread(AttackThread(context, bus)).start()
         }
     }
 
@@ -144,7 +142,6 @@ class AttackContext(
 }
 
 private class AttackThread(
-    private val state: State,
     private val context: AttackContext,
     private val bus: EventBus
 ) : Runnable {
@@ -153,13 +150,13 @@ private class AttackThread(
 
     private fun playerWonNextBattle(): Boolean {
         var playerRange = 0.5
-        val baseSoldier = when (state.player.armies.soldiers) {
+        val baseSoldier = when (State.player.armies.soldiers) {
             in 0..10 -> 0.05
             in 11..25 -> 0.10
             in 25..50 -> 0.15
             else -> 0.20
         }
-        playerRange += baseSoldier * state.army.soldierAttackStrength
+        playerRange += baseSoldier * State.army.soldierAttackStrength
         log.trace { "Player attack range: $playerRange" }
         return Random.nextDouble(0.0, 1.0) < playerRange
     }
@@ -169,12 +166,12 @@ private class AttackThread(
             if (playerWonNextBattle()) {
                 context.enemies--
             } else {
-                state.player.armies.killRandom()
+                State.player.armies.killRandom()
             }
             context.message = """
                 Ongoing war ...
                 
-                ${state.player.armies.formatAll().joinToString("\n                ") { "  $it" }}
+                ${State.player.armies.formatAll().joinToString("\n                ") { "  $it" }}
                 
                   Enemies: ${context.enemies}
                 """.trimIndent()
@@ -184,9 +181,9 @@ private class AttackThread(
         val won = context.enemies == 0
         val additionalText = if (won) {
             val goldEarning = randomize(context.originalEnemies / 20, 0.5, 1.3)
-            state.player.gold += goldEarning
+            State.player.gold += goldEarning
             val landEarning = randomize(context.originalEnemies / 10, 0.3, 1.0)
-            state.player.land += landEarning
+            State.player.land += landEarning
             "\n\n  Gold stolen: $goldEarning\n  Land captured: $landEarning"
         } else {
             ""
@@ -195,8 +192,8 @@ private class AttackThread(
         bus.post(RenderEvent)
         Thread.sleep(if (CHEAT_MODE) 400 else 2_000)
 
-        state.history.attacked++
-        state.screen = HomeScreen(state)
+        State.history.attacked++
+        State.screen = HomeScreen()
         bus.post(RenderEvent)
     }
 
@@ -209,6 +206,6 @@ private class AttackThread(
         log.trace { "Army unit killed of type: ${armyType.name}" }
     }
 
-    private fun isAttackOver() = state.player.armies.totalCount == 0 || context.enemies == 0
+    private fun isAttackOver() = State.player.armies.totalCount == 0 || context.enemies == 0
 
 }

@@ -5,9 +5,7 @@ import com.github.christophpickl.derbauer.logic.service.EndTurn
 import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 
-class HomeScreen(
-    private val state: State
-) : ChooseScreen<HomeChoice> {
+class HomeScreen : ChooseScreen<HomeChoice> {
 
     private val messages = listOf(
         "What are we up to today?",
@@ -19,7 +17,7 @@ class HomeScreen(
     override val choices
         get() = listOf(
             HomeChoice(HomeEnum.Trade, "Trade"),
-            HomeChoice(HomeEnum.Build, "Build${if (state.player.landAvailable == 0) " (no land available)" else ""}"),
+            HomeChoice(HomeEnum.Build, "Build${if (State.player.landAvailable == 0) " (no land available)" else ""}"),
             HomeChoice(HomeEnum.Upgrade, "Upgrade"),
             HomeChoice(HomeEnum.Army, "Military"),
             HomeChoice(HomeEnum.EndTurn, "End Turn")
@@ -45,21 +43,20 @@ class HomeChoice(
 ) : EnummedChoice<HomeEnum>
 
 class MainController @Inject constructor(
-    private val state: State,
     private val endTurn: EndTurn,
     private val happening: AchievementHappener
 ) : ChooseScreenController<HomeChoice, HomeScreen> {
 
     override fun select(choice: HomeChoice) {
         val nextScreen = when (choice.enum) {
-            HomeEnum.Trade -> TradeScreen(state)
-            HomeEnum.Build -> BuildScreen(state)
-            HomeEnum.Upgrade -> UpgradeScreen(state)
-            HomeEnum.Army -> ArmyScreen(state)
+            HomeEnum.Trade -> TradeScreen()
+            HomeEnum.Build -> BuildScreen()
+            HomeEnum.Upgrade -> UpgradeScreen()
+            HomeEnum.Army -> ArmyScreen()
             HomeEnum.EndTurn -> happening.anyHappened()?.let { it } ?: endTurn.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
-        state.screen = nextScreen
+        State.screen = nextScreen
     }
 
 }

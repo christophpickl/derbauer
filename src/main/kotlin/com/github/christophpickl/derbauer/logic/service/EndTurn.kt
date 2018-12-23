@@ -5,7 +5,6 @@ import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
 import com.github.christophpickl.derbauer.logic.screens.Screen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.model.State
-import javax.inject.Inject
 import kotlin.random.Random
 
 
@@ -20,9 +19,7 @@ class EndTurnScreen(
     }
 }
 
-class EndTurn @Inject constructor(
-    private val state: State
-) {
+class EndTurn {
 
     private val numberWidth = 6
     private val numberWidthGrow = 5 // plus sign
@@ -34,17 +31,17 @@ class EndTurn @Inject constructor(
 
         val message = """So, this is what happened over night:
             |
-            |${formatGrowth("Food production", state.player.food, foodIncome)}
-            |${formatGrowth("People growth  ", state.player.people, peopleIncome)}
-            |${formatGrowth("Gold income    ", state.player.gold, goldIncome)}
+            |${formatGrowth("Food production", State.player.food, foodIncome)}
+            |${formatGrowth("People growth  ", State.player.people, peopleIncome)}
+            |${formatGrowth("Gold income    ", State.player.gold, goldIncome)}
             | 
             |Hit ENTER to go on with your miserable existence.
         """.trimMargin()
-        state.player.food += foodIncome
-        state.player.people += peopleIncome
-        state.player.gold += goldIncome
+        State.player.food += foodIncome
+        State.player.people += peopleIncome
+        State.player.gold += goldIncome
 
-        if (state.player.people <= 0) {
+        if (State.player.people <= 0) {
             return GameOverScreen()
         }
 
@@ -52,31 +49,31 @@ class EndTurn @Inject constructor(
     }
 
     private fun calcFood(): Int {
-        val calc = (state.player.buildings.farms * state.buildings.farmProduces) - // farm production 
-            state.player.people // each persons eats one food per day
-        return limitCalc(calc, state.player.food, state.maxFood)
+        val calc = (State.player.buildings.farms * State.buildings.farmProduces) - // farm production 
+            State.player.people // each persons eats one food per day
+        return limitCalc(calc, State.player.food, State.maxFood)
     }
 
     private fun calcPeople(): Int {
         var calc = 0
-        val food = state.player.food
+        val food = State.player.food
         if (food < -10) {
             calc += food / 10 // lose one people per -x food
         } else if (food >= 500) {
             calc += food / 500 // gain one people per +x food
         }
-        calc += (state.player.people * state.meta.reproductionRate).toInt() // reproduction rate by x% people
+        calc += (State.player.people * State.meta.reproductionRate).toInt() // reproduction rate by x% people
         if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.3) {
             calc += 1
         }
-        return limitCalc(calc, state.player.people, state.maxPeople)
+        return limitCalc(calc, State.player.people, State.maxPeople)
     }
 
     private fun limitCalc(calc: Int, current: Int, max: Int) =
         if (calc + current <= max) calc else max - current
 
     private fun calcGold(): Int {
-        return (state.player.people * 0.5).toInt()
+        return (State.player.people * 0.5).toInt()
     }
 
     private fun formatGrowth(label: String, current: Int, growth: Int) =

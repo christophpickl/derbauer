@@ -23,39 +23,36 @@ import com.github.christophpickl.derbauer.model.ResourceFormats
 import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
-import javax.inject.Inject
 
 @Suppress("UNUSED_PARAMETER")
-class Renderer @Inject constructor(
-    private val state: State
-) : ScreenCallback {
+class Renderer : ScreenCallback {
 
     private val log = logger {}
     private val board = Board()
 
     fun render(): String {
-        log.debug { "Rendering: $state" }
+        log.debug { "render()" }
         val headerStats = listOf(
-            Pair("Food", formatRightBound("${state.player.food}/${state.maxFood}", ResourceFormats.peopleDigits + 5)),
-            Pair("People", formatRightBound("${state.player.people}/${state.maxPeople}", ResourceFormats.peopleDigits + 4)),
-            Pair("Gold", state.player.goldFormatted),
-            Pair("Land", formatRightBound("${state.player.buildings.totalCount}/${state.player.land}", ResourceFormats.landDigits + 3))
+            Pair("Food", formatRightBound("${State.player.food}/${State.maxFood}", ResourceFormats.peopleDigits + 5)),
+            Pair("People", formatRightBound("${State.player.people}/${State.maxPeople}", ResourceFormats.peopleDigits + 4)),
+            Pair("Gold", State.player.goldFormatted),
+            Pair("Land", formatRightBound("${State.player.buildings.totalCount}/${State.player.land}", ResourceFormats.landDigits + 3))
         ).joinToString("  ") {
             "${it.first}: ${it.second}"
         }
-        board.printHeader("Day: ${state.day}", headerStats)
+        board.printHeader("Day: ${State.day}", headerStats)
         renderScreen()
-        if (state.screen.promptEnabled) {
-            board.printPrompt(state.prompt)
+        if (State.screen.promptEnabled) {
+            board.printPrompt(State.prompt)
         }
 
         return board.convertAndReset()
     }
 
     private fun renderScreen() {
-        board.printRow(state.screen.message)
+        board.printRow(State.screen.message)
         board.printRow("")
-        state.screen.onCallback(this)
+        State.screen.onCallback(this)
     }
 
     override fun onHomeScreen(screen: HomeScreen) {
@@ -80,11 +77,6 @@ class Renderer @Inject constructor(
 
     override fun onBuild(screen: BuildScreen) {
         onChooseScreen(screen)
-        board.printRow("")
-        board.printRow("You've got the following buildings:")
-        board.printRow(state.player.buildings.formatAll().joinToString("\n") {
-            "  $it"
-        })
     }
 
     override fun onTrade(screen: TradeScreen) {
@@ -99,7 +91,7 @@ class Renderer @Inject constructor(
         onChooseScreen(screen)
         board.printRow("")
         board.printRow("You've got the following armies:")
-        board.printRow(state.player.armies.formatAll().joinToString("\n") {
+        board.printRow(State.player.armies.formatAll().joinToString("\n") {
             "  $it"
         })
     }

@@ -8,31 +8,30 @@ import javafx.scene.input.KeyEvent
 import javax.inject.Inject
 
 class Keyboard @Inject constructor(
-    private val state: State,
     private val bus: EventBus
 ) {
 
     fun onKeyEvent(event: KeyEvent) {
-        if (!state.screen.promptEnabled || event.eventType != KeyEvent.KEY_PRESSED) {
+        if (!State.screen.promptEnabled || event.eventType != KeyEvent.KEY_PRESSED) {
             return
         }
         if (event.isPrintable) {
             if (!isValid(event)) return
-            state.prompt.append(event.text!!.first())
+            State.prompt.append(event.text!!.first())
             bus.post(RenderEvent)
 
         } else if (event.code == KeyCode.ENTER) {
             bus.post(KeyboardEnterEvent)
 
         } else if (event.code == KeyCode.BACK_SPACE) {
-            if (state.prompt.maybeRemoveLast()) {
+            if (State.prompt.maybeRemoveLast()) {
                 bus.post(RenderEvent)
             }
         }
     }
 
     private fun isValid(event: KeyEvent): Boolean {
-        val screen = state.screen
+        val screen = State.screen
         if (screen is ChooseScreen<*> && !event.code.isDigitKey) {
             return false
         }

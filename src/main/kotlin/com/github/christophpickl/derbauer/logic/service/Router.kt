@@ -24,7 +24,6 @@ import mu.KotlinLogging.logger
 import javax.inject.Inject
 
 class Router @Inject constructor(
-    private val state: State,
     private val bus: EventBus,
     private val controllerRegistry: ScreenControllerRegistry,
     private val endTurn: EndTurn,
@@ -40,16 +39,16 @@ class Router @Inject constructor(
 
     @Subscribe
     fun onKeyboardEnterEvent(@Suppress("UNUSED_PARAMETER") event: KeyboardEnterEvent) {
-        log.info("Entered: '${state.prompt.enteredText}'")
+        log.info("Entered: '${State.prompt.enteredText}'")
 
-        if (state.screen.enableCancelOnEnter && state.prompt.enteredText.isEmpty()) {
+        if (State.screen.enableCancelOnEnter && State.prompt.enteredText.isEmpty()) {
             log.debug { "Empty entered, going to cancel back to home screen." }
-            state.screen = HomeScreen(state)
+            State.screen = HomeScreen()
         } else {
-            state.screen.onCallback(this)
+            State.screen.onCallback(this)
         }
 
-        state.prompt.clear()
+        State.prompt.clear()
         bus.post(RenderEvent)
     }
 
@@ -111,31 +110,31 @@ class Router @Inject constructor(
     
     override fun onEndTurn(screen: EndTurnScreen) {
         log.trace { "onEndTurn()" }
-        state.day++
-        state.screen = happener.letItHappen() ?: HomeScreen(state)
+        State.day++
+        State.screen = happener.letItHappen() ?: HomeScreen()
     }
 
     override fun onAchievement(screen: AchievementScreen) {
-        state.screen = endTurn.calculateEndTurn()
+        State.screen = endTurn.calculateEndTurn()
     }
 
     override fun onHappening(screen: HappeningScreen) {
-        state.screen = HomeScreen(state)
+        State.screen = HomeScreen()
     }
 
     override fun onGameOver(screen: GameOverScreen) {
-        state.reset()
-        state.screen = HomeScreen(state)
+        State.reset()
+        State.screen = HomeScreen()
     }
 
 
     // =================================================================================================================
     
     private fun maybeNumberInput(): Int? =
-        state.prompt.enteredText.toIntOrNull() ?: beepReturn()
+        State.prompt.enteredText.toIntOrNull() ?: beepReturn()
 
     private fun <C : Choice> maybeChoosenInput(screen: ChooseScreen<C>): C? {
-        val index = state.prompt.enteredText.toIntOrNull() ?: return beepReturn()
+        val index = State.prompt.enteredText.toIntOrNull() ?: return beepReturn()
         if (!(index >= 1 && index <= screen.choices.size)) return beepReturn()
         return screen.choices[index - 1]
     }

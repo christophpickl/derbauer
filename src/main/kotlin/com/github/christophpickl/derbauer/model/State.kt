@@ -7,7 +7,7 @@ import com.github.christophpickl.derbauer.logic.service.Prompt
 
 const val CHEAT_MODE = true
 
-class State {
+object State {
 
     lateinit var screen: Screen
 

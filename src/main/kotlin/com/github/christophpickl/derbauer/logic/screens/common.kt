@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer.logic.screens
 import com.github.christophpickl.derbauer.logic.service.AchievementScreen
 import com.github.christophpickl.derbauer.logic.service.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.service.HappeningScreen
-import com.github.christophpickl.derbauer.model.State
 
 
 interface Screen {
@@ -61,7 +60,6 @@ interface EnummedChoice<E : Enum<E>> : Choice {
 }
 
 abstract class SimpleMessageScreen(
-    private val state: State,
     override val message: String
 ) : Screen {
 

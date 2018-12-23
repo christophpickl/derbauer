@@ -5,57 +5,54 @@ import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.logic.screens.SimpleMessageScreen
 import com.github.christophpickl.derbauer.model.CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
-import javax.inject.Inject
 
-class AchievementScreen(state: State, message: String) : SimpleMessageScreen(state, message) {
+class AchievementScreen(message: String) : SimpleMessageScreen(message) {
     override fun onCallback(callback: ScreenCallback) {
         callback.onAchievement(this)
     }
 }
 
-class AchievementHappener @Inject constructor(
-    private val state: State
-) {
+class AchievementHappener {
 
     private val allAchievements: List<Achievement> = listOf(
-        Trade1Achievement(state),
-        Army1Achievement(state)
+        Trade1Achievement(),
+        Army1Achievement()
     )
 
     fun anyHappened(): Screen? {
         val achievements = allAchievements.mapNotNull { it.check() }
         return if (achievements.isEmpty()) null else {
-            AchievementScreen(state, message = "Congratulations!\nNew achievement${if (achievements.size == 1) "" else "s"} unlocked:\n\n" +
+            AchievementScreen(message = "Congratulations!\nNew achievement${if (achievements.size == 1) "" else "s"} unlocked:\n\n" +
                 achievements.joinToString("\n"))
         }
     }
 
 }
 
-class Trade1Achievement(private val state: State) : Achievement(
+class Trade1Achievement() : Achievement(
     message = "Trade Mastery I: Cheaper trade rates"
 ) {
     private val tradeThreshold = if (CHEAT_MODE) 1 else 10
 
     override fun condition() =
-        state.history.traded >= tradeThreshold
+        State.history.traded >= tradeThreshold
 
     override fun changeState() {
-        state.prices.trade.decreaseAllBy(0.2)
+        State.prices.trade.decreaseAllBy(0.2)
     }
 
 }
 
-class Army1Achievement(private val state: State) : Achievement(
+class Army1Achievement() : Achievement(
     message = "Military Mastery I: Soldier attack +30%"
 ) {
     private val attackThreshold = if (CHEAT_MODE) 1 else 10
 
     override fun condition() =
-        state.history.attacked >= attackThreshold
+        State.history.attacked >= attackThreshold
 
     override fun changeState() {
-        state.army.soldierAttackStrength += 0.3
+        State.army.soldierAttackStrength += 0.3
     }
 
 }
