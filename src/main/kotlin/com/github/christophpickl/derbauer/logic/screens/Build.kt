@@ -1,17 +1,17 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.Buildings
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.increment
+import com.github.christophpickl.derbauer.model.Buildings
+import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 import kotlin.reflect.KMutableProperty1
 
 class BuildScreen(state: State) : ChooseScreen<BuildChoice> {
     override val choices = listOf(
-        BuildChoice(BuildEnum.House, "House (costs: ${state.prizes.house})"),
-        BuildChoice(BuildEnum.Farm, "Farm (costs: ${state.prizes.farm})")
+        BuildChoice(BuildEnum.House, "House (costs: ${state.prices.house})"),
+        BuildChoice(BuildEnum.Farm, "Farm (costs: ${state.prices.farm})")
     )
 
     override val message = "What do you wanna build?"
@@ -40,8 +40,8 @@ class BuildController @Inject constructor(
     private val log = logger {}
     override fun select(choice: BuildChoice) {
         val nextScreen: Screen? = when (choice.enum) {
-            BuildEnum.House -> maybeBuild(Buildings::houses, state.prizes.house)
-            BuildEnum.Farm -> maybeBuild(Buildings::farms, state.prizes.farm)
+            BuildEnum.House -> maybeBuild(Buildings::houses, state.prices.house)
+            BuildEnum.Farm -> maybeBuild(Buildings::farms, state.prices.farm)
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
         nextScreen?.let {

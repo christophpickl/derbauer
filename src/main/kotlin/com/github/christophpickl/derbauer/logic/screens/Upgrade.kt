@@ -1,13 +1,13 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.beepReturn
+import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 
 class UpgradeScreen(state: State) : ChooseScreen<UpgradeChoice> {
     override val choices = listOf(
-        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity (costs: ${state.prizes.upgrades.farmProductivity})")
+        UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity (costs: ${state.prices.upgrades.farmProductivity})")
     )
     override val message = "What do you wanna upgrade?"
     override fun onCallback(callback: ScreenCallback) {
@@ -33,9 +33,9 @@ class UpgradeController @Inject constructor(
 
     override fun select(choice: UpgradeChoice) {
         val nextScreen: Screen? = when (choice.enum) {
-            UpgradeEnum.FarmProductivity -> maybeUpgrade(state.prizes.upgrades.farmProductivity) {
+            UpgradeEnum.FarmProductivity -> maybeUpgrade(state.prices.upgrades.farmProductivity) {
                 state.buildings.farmProduces += 1
-                state.prizes.upgrades.farmProductivity += 50
+                state.prices.upgrades.farmProductivity += 50
             }
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

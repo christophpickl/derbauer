@@ -4,6 +4,7 @@ package com.github.christophpickl.derbauer.logic.screens
 interface Screen {
     val message: String
     val enableCancelOnEnter: Boolean
+    val promptEnabled: Boolean get() = true
 
     fun onCallback(callback: ScreenCallback)
 }
@@ -23,10 +24,12 @@ interface ScreenCallback {
 
     fun onBuild(screen: BuildScreen)
     fun onUpgrade(screen: UpgradeScreen)
+
+    fun onArmy(screen: ArmyScreen)
     
     fun onEndTurn(screen: EndTurnScreen)
     fun onGameOver(screen: GameOverScreen)
-    
+
 }
 
 interface ChooseScreen<C : Choice> : Screen {

@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.logic
 
+import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
 import com.github.christophpickl.derbauer.logic.screens.BuildScreen
 import com.github.christophpickl.derbauer.logic.screens.Choice
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
@@ -13,6 +14,7 @@ import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.logic.screens.TradeScreen
 import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
+import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.derbauer.view.KeyboardEnterEvent
 import com.github.christophpickl.derbauer.view.RenderEvent
 import com.google.common.eventbus.EventBus
@@ -25,6 +27,7 @@ class Router @Inject constructor(
     private val bus: EventBus,
     private val controllerRegistry: ScreenControllerRegistry
 ) : ScreenCallback {
+
     private val log = logger {}
 
     init {
@@ -40,11 +43,10 @@ class Router @Inject constructor(
         } else {
             state.screen.onCallback(this)
         }
-        
+
         state.prompt.clear()
         bus.post(RenderEvent)
     }
-
 
     override fun onHomeScreen(screen: HomeScreen) {
         val choice = maybeChoosenInput(screen) ?: return
@@ -85,7 +87,12 @@ class Router @Inject constructor(
         val input = maybeNumberInput() ?: return
         controllerRegistry.trade.sellFood(input)
     }
-    
+
+    override fun onArmy(screen: ArmyScreen) {
+        val choice = maybeChoosenInput(screen) ?: return
+        controllerRegistry.army.select(choice)
+    }
+
     override fun onEndTurn(screen: EndTurnScreen) {
         state.day++
         state.screen = HomeScreen(state)

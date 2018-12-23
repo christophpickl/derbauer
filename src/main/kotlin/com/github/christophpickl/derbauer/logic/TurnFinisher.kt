@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.logic
 import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
 import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
 import com.github.christophpickl.derbauer.logic.screens.Screen
+import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -36,7 +37,7 @@ class TurnFinisher @Inject constructor(
         state.player.gold += goldIncome
 
         if (state.player.people <= 0) {
-            return GameOverScreen(state)
+            return GameOverScreen()
         }
         return EndTurnScreen(message)
     }
@@ -54,7 +55,7 @@ class TurnFinisher @Inject constructor(
         } else if (food >= 500) {
             calc += food / 500 // gain one people per +x food
         }
-        calc += (state.player.people * state.system.reproductionRate).toInt() // reproduction rate by x% people
+        calc += (state.player.people * state.meta.reproductionRate).toInt() // reproduction rate by x% people
         if (Random.nextDouble(0.0, 1.0) < 0.3) {
             calc += 1
         }

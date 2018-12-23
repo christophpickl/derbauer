@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.logic
 
+import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 import kotlin.random.Random

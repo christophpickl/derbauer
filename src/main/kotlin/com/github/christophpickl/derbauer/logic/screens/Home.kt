@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.TurnFinisher
+import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 
 class HomeScreen(
@@ -15,6 +15,7 @@ class HomeScreen(
             HomeChoice(HomeEnum.Trade, "Trade resources"),
             HomeChoice(HomeEnum.Build, "Build buildings"),
             HomeChoice(HomeEnum.Upgrade, "Upgrade"),
+            HomeChoice(HomeEnum.Army, "Military"),
             HomeChoice(HomeEnum.EndTurn, "End Turn")
         )
 
@@ -28,6 +29,7 @@ enum class HomeEnum {
     Trade,
     Build,
     Upgrade,
+    Army,
     EndTurn
 }
 
@@ -46,6 +48,7 @@ class MainController @Inject constructor(
             HomeEnum.Trade -> TradeScreen(state)
             HomeEnum.Build -> BuildScreen(state)
             HomeEnum.Upgrade -> UpgradeScreen(state)
+            HomeEnum.Army -> ArmyScreen(state)
             HomeEnum.EndTurn -> turnFinisher.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.Player
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.beepReturn
 import com.github.christophpickl.derbauer.logic.decrement
 import com.github.christophpickl.derbauer.logic.increment
+import com.github.christophpickl.derbauer.model.Player
+import com.github.christophpickl.derbauer.model.State
 import javax.inject.Inject
 import kotlin.reflect.KMutableProperty1
 
@@ -16,10 +16,10 @@ class TradeScreen(
 
     override val choices
         get() = listOf(
-            TradeChoice(TradeEnum.BuyLand, "Buy land (${state.prizes.landBuy}$)"),
-            TradeChoice(TradeEnum.SellLand, "Sell land (${state.prizes.landSell}$)"),
-            TradeChoice(TradeEnum.BuyFood, "Buy food (${state.prizes.foodBuy}$)"),
-            TradeChoice(TradeEnum.SellFood, "Sell food (${state.prizes.foodSell}$)")
+            TradeChoice(TradeEnum.BuyLand, "Buy land (${state.prices.landBuy}$)"),
+            TradeChoice(TradeEnum.SellLand, "Sell land (${state.prices.landSell}$)"),
+            TradeChoice(TradeEnum.BuyFood, "Buy food (${state.prices.foodBuy}$)"),
+            TradeChoice(TradeEnum.SellFood, "Sell food (${state.prices.foodSell}$)")
         )
 
     override fun onCallback(callback: ScreenCallback) {
@@ -59,7 +59,7 @@ class TradeController @Inject constructor(
         buySellOperation(
             isBuying = true,
             amount = amount,
-            costsPerItem = state.prizes.landBuy,
+            costsPerItem = state.prices.landBuy,
             targetProperty = Player::land
         )
     }
@@ -68,7 +68,7 @@ class TradeController @Inject constructor(
         buySellOperation(
             isBuying = false,
             amount = amount,
-            costsPerItem = state.prizes.landSell,
+            costsPerItem = state.prices.landSell,
             targetProperty = Player::land
         )
     }
@@ -77,7 +77,7 @@ class TradeController @Inject constructor(
         buySellOperation(
             isBuying = true,
             amount = amount,
-            costsPerItem = state.prizes.foodBuy,
+            costsPerItem = state.prices.foodBuy,
             targetProperty = Player::food
         )
     }
@@ -86,7 +86,7 @@ class TradeController @Inject constructor(
         buySellOperation(
             isBuying = false,
             amount = amount,
-            costsPerItem = state.prizes.foodSell,
+            costsPerItem = state.prices.foodSell,
             targetProperty = Player::food
         )
     }
@@ -127,7 +127,7 @@ class LandBuyScreen(
 ) : NumberInputScreen {
 
     override val message = "How much land do you wanna buy?\n" +
-        "1 costs ${state.prizes.landBuy} gold, you can afford ${state.affordableLand} land."
+        "1 costs ${state.prices.landBuy} gold, you can afford ${state.affordableLand} land."
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandBuy(this)
@@ -137,7 +137,7 @@ class LandBuyScreen(
 class LandSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much land do you wanna sell?\n1 for ${state.prizes.landSell} gold, you've got ${state.player.land} land."
+    override val message = "How much land do you wanna sell?\n1 for ${state.prices.landSell} gold, you've got ${state.player.land} land."
     override fun onCallback(callback: ScreenCallback) {
         callback.onLandSell(this)
     }
@@ -147,7 +147,7 @@ class FoodBuyScreen(
     state: State
 ) : NumberInputScreen {
     override val message = "How much food do you wanna buy?\n" +
-        "1 costs ${state.prizes.foodBuy} gold, you can afford ${state.affordableFood} food."
+        "1 costs ${state.prices.foodBuy} gold, you can afford ${state.affordableFood} food."
 
     override fun onCallback(callback: ScreenCallback) {
         callback.onFoodBuy(this)
@@ -157,7 +157,7 @@ class FoodBuyScreen(
 class FoodSellScreen(
     state: State
 ) : NumberInputScreen {
-    override val message = "How much food do you wanna sell?\n1 for ${state.prizes.foodSell} gold, you've got ${state.player.food} food."
+    override val message = "How much food do you wanna sell?\n1 for ${state.prices.foodSell} gold, you've got ${state.player.food} food."
     override fun onCallback(callback: ScreenCallback) {
         callback.onFoodSell(this)
     }

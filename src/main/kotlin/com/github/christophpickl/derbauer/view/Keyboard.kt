@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
+import com.github.christophpickl.derbauer.model.State
 import com.google.common.eventbus.EventBus
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
@@ -13,10 +13,9 @@ class Keyboard @Inject constructor(
 ) {
 
     fun onKeyEvent(event: KeyEvent) {
-        if (event.eventType != KeyEvent.KEY_PRESSED) {
+        if (!state.screen.promptEnabled || event.eventType != KeyEvent.KEY_PRESSED) {
             return
         }
-
         if (event.isPrintable) {
             if (!isValid(event)) return
             state.prompt.append(event.text!!.first())

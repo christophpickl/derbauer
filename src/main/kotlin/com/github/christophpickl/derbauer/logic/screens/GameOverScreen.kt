@@ -1,10 +1,6 @@
 package com.github.christophpickl.derbauer.logic.screens
 
-import com.github.christophpickl.derbauer.logic.State
-
-class GameOverScreen(
-    private val state: State
-) : Screen {
+class GameOverScreen : Screen {
     override val message = "Tadaaaaa! Game Over!"
 
     override val enableCancelOnEnter = false

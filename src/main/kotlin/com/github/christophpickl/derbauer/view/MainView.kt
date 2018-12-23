@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.screens.HomeScreen
+import com.github.christophpickl.derbauer.model.State
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.scene.control.TextArea
@@ -49,7 +49,10 @@ class MainViewFxController : Controller() {
     @Subscribe
     fun onRenderEvent(@Suppress("UNUSED_PARAMETER") event: RenderEvent = RenderEvent) {
         logg.trace("onRenderEvent()")
-        view.mainTextArea.text = renderer.render()
+        runLater {
+            // assure running on UI thread
+            view.mainTextArea.text = renderer.render()
+        }
     }
 
 }

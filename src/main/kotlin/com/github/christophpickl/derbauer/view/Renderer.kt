@@ -1,10 +1,9 @@
 package com.github.christophpickl.derbauer.view
 
 import com.github.christophpickl.derbauer.logic.Prompt
-import com.github.christophpickl.derbauer.logic.ResourceMeta
-import com.github.christophpickl.derbauer.logic.State
 import com.github.christophpickl.derbauer.logic.VIEW_SIZE
 import com.github.christophpickl.derbauer.logic.formatRightBound
+import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
 import com.github.christophpickl.derbauer.logic.screens.BuildScreen
 import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
 import com.github.christophpickl.derbauer.logic.screens.EndTurnScreen
@@ -17,6 +16,8 @@ import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
 import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.logic.screens.TradeScreen
 import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
+import com.github.christophpickl.derbauer.model.ResourceFormats
+import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 import javax.inject.Inject
@@ -32,15 +33,17 @@ class Renderer @Inject constructor(
         log.debug { "Rendering: $state" }
         val headerStats = listOf(
             Pair("Food", state.player.foodFormatted),
-            Pair("People", formatRightBound("${state.player.people}/${state.playerPeopleMax}", ResourceMeta.peopleDigits + 4)),
+            Pair("People", formatRightBound("${state.player.people}/${state.playerPeopleMax}", ResourceFormats.peopleDigits + 4)),
             Pair("Gold", state.player.goldFormatted),
-            Pair("Land", formatRightBound("${state.player.buildings.totalCount}/${state.player.land}", ResourceMeta.landDigits + 3))
+            Pair("Land", formatRightBound("${state.player.buildings.totalCount}/${state.player.land}", ResourceFormats.landDigits + 3))
         ).joinToString("  ") {
             "${it.first}: ${it.second}"
         }
         board.printHeader("Day: ${state.day}", headerStats)
         renderScreen()
-        board.printPrompt(state.prompt)
+        if (state.screen.promptEnabled) {
+            board.printPrompt(state.prompt)
+        }
 
         return board.convertAndReset()
     }
@@ -74,7 +77,7 @@ class Renderer @Inject constructor(
     override fun onBuild(screen: BuildScreen) {
         onChooseScreen(screen)
         board.printRow("")
-        board.printRow("You've got the following:")
+        board.printRow("You've got the following buildings:")
         board.printRow(state.player.buildings.formatAll().joinToString("\n") {
             "  $it"
         })
@@ -88,13 +91,17 @@ class Renderer @Inject constructor(
         onChooseScreen(screen)
     }
 
-    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {
-        // no op
+    override fun onArmy(screen: ArmyScreen) {
+        onChooseScreen(screen)
+        board.printRow("")
+        board.printRow("You've got the following armies:")
+        board.printRow(state.player.armies.formatAll().joinToString("\n") {
+            "  $it"
+        })
     }
 
-    override fun onGameOver(@Suppress("UNUSED_PARAMETER") screen: GameOverScreen) {
-        // no op
-    }
+    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") screen: EndTurnScreen) {}
+    override fun onGameOver(@Suppress("UNUSED_PARAMETER") screen: GameOverScreen) {}
 
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->
@@ -116,7 +123,7 @@ private class Board {
         1.rangeTo(width).map { ' ' }.toMutableList()
     }.toMutableList()
 
-    private val skipRowsAboveContent = 2
+    private val skipRowsAboveContent = 3
     private var currentContentRow = 0
 
     fun convertAndReset(): String {
