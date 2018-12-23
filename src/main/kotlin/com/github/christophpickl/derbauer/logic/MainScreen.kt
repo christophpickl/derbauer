@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.logic
 
 import javax.inject.Inject
+import kotlin.reflect.KMutableProperty1
 
 class MainScreen(
     private val state: GameState
@@ -12,6 +13,8 @@ class MainScreen(
         get() = listOf(
             MainScreenChoice(MainScreenChoiceEnum.BuyLand, "Buy land (${state.prizes.landBuy}$)"),
             MainScreenChoice(MainScreenChoiceEnum.SellLand, "Sell land (${state.prizes.landSell}$)"),
+            MainScreenChoice(MainScreenChoiceEnum.BuyFood, "Buy food (${state.prizes.foodBuy}$)"),
+            MainScreenChoice(MainScreenChoiceEnum.SellFood, "Sell food (${state.prizes.foodSell}$)"),
             MainScreenChoice(MainScreenChoiceEnum.EndTurn, "End Turn")
         )
 
@@ -22,6 +25,8 @@ class MainScreen(
     enum class MainScreenChoiceEnum {
         BuyLand,
         SellLand,
+        BuyFood,
+        SellFood,
         EndTurn
     }
 }
@@ -43,6 +48,8 @@ class MainScreenController @Inject constructor(
         val nextScreen = when (choice.enum) {
             MainScreen.MainScreenChoiceEnum.BuyLand -> LandBuyScreen(state)
             MainScreen.MainScreenChoiceEnum.SellLand -> LandSellScreen(state)
+            MainScreen.MainScreenChoiceEnum.BuyFood -> FoodBuyScreen(state)
+            MainScreen.MainScreenChoiceEnum.SellFood -> FoodSellScreen(state)
             MainScreen.MainScreenChoiceEnum.EndTurn -> calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }
@@ -77,44 +84,71 @@ class MainScreenController @Inject constructor(
 
 
     fun buyLand(amount: Int) {
-        val costs = state.prizes.landBuy * amount
-        if (costs > state.player.gold) {
-            return beep()
-        }
-        state.player.land += amount
-        state.player.gold -= costs
-        state.screen = MainScreen(state)
+        buySellOperation(
+            isBuying = true,
+            amount = amount,
+            costsPerItem = state.prizes.landBuy,
+            targetProperty = Player::land
+        )
     }
 
     fun sellLand(amount: Int) {
-        if (state.player.land < amount) {
-            return beep()
+        buySellOperation(
+            isBuying = false,
+            amount = amount,
+            costsPerItem = state.prizes.landSell,
+            targetProperty = Player::land
+        )
+    }
+
+    fun buyFood(amount: Int) {
+        buySellOperation(
+            isBuying = true,
+            amount = amount,
+            costsPerItem = state.prizes.foodBuy,
+            targetProperty = Player::food
+        )
+    }
+
+    fun sellFood(amount: Int) {
+        buySellOperation(
+            isBuying = false,
+            amount = amount,
+            costsPerItem = state.prizes.foodSell,
+            targetProperty = Player::food
+        )
+    }
+
+    private fun buySellOperation(isBuying: Boolean, amount: Int, targetProperty: KMutableProperty1<Player, Int>, costsPerItem: Int) {
+        val goldChanging = if (isBuying) {
+            val costs = canAffordCalcCosts(costsPerItem, amount) ?: return
+            targetProperty.increment(state.player, amount)
+            costs
+        } else {
+            val income = hasEnoughCalcIncome(costsPerItem, amount, targetProperty.get(state.player)) ?: return
+            targetProperty.decrement(state.player, amount)
+            income
         }
-        state.player.land -= amount
-        state.player.gold += state.prizes.landSell * amount
+        state.player.gold = state.player.gold + if (isBuying) (-1 * goldChanging) else goldChanging
         state.screen = MainScreen(state)
     }
 
-}
-
-class LandBuyScreen(
-    state: GameState
-) : NumberInputScreen {
-    override val message = "How much land do you wanna buy?\n" +
-        "1 costs ${state.prizes.landBuy} gold, you can afford ${state.affordableLand} land."
-
-    override fun onCallback(callback: ScreenCallback) {
-        callback.onLandBuy(this)
+    private fun canAffordCalcCosts(costsPerItem: Int, amount: Int): Int? {
+        val costs = costsPerItem * amount
+        if (costs > state.player.gold) {
+            return beepReturn()
+        }
+        return costs
     }
-}
 
-class LandSellScreen(
-    state: GameState
-) : NumberInputScreen {
-    override val message = "How much land do you wanna sell?\n1 for ${state.prizes.landSell} gold, you've got ${state.player.land} land."
-    override fun onCallback(callback: ScreenCallback) {
-        callback.onLandSell(this)
+    private fun hasEnoughCalcIncome(costsPerItem: Int, amount: Int, has: Int): Int? {
+        if (has < amount) {
+            return beepReturn()
+        }
+        return costsPerItem * amount
     }
+
+
 }
 
 class EndTurnScreen(

@@ -14,6 +14,8 @@ interface ScreenCallback {
     fun onMainScreen(screen: MainScreen)
     fun onLandBuy(screen: LandBuyScreen)
     fun onLandSell(screen: LandSellScreen)
+    fun onFoodBuy(screen: FoodBuyScreen)
+    fun onFoodSell(screen: FoodSellScreen)
     fun onEndTurn(screen: EndTurnScreen)
 }
 

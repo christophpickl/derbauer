@@ -8,14 +8,16 @@ class GameState {
     val player = Player()
     val prizes = Prizes()
 
-    val affordableLand get() = player.gold / prizes.landBuy 
+    val affordableLand get() = player.gold / prizes.landBuy
+    val affordableFood get() = player.gold / prizes.foodBuy 
 
 }
 
 class Prizes {
-    val landBuy = 10
-    val landSell = 7
-    // TODO food buy/sell
+    val landBuy = 20
+    val landSell = 15
+    val foodBuy = 4
+    val foodSell = 2
 }
 
 object ResourceMeta {

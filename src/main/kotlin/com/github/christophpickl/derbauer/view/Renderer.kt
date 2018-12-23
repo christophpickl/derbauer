@@ -2,6 +2,8 @@ package com.github.christophpickl.derbauer.view
 
 import com.github.christophpickl.derbauer.logic.ChooseScreen
 import com.github.christophpickl.derbauer.logic.EndTurnScreen
+import com.github.christophpickl.derbauer.logic.FoodBuyScreen
+import com.github.christophpickl.derbauer.logic.FoodSellScreen
 import com.github.christophpickl.derbauer.logic.GameState
 import com.github.christophpickl.derbauer.logic.LandBuyScreen
 import com.github.christophpickl.derbauer.logic.LandSellScreen
@@ -33,6 +35,7 @@ class Renderer @Inject constructor(
 
         return board.convertAndReset()
     }
+
     private fun renderScreen() {
         state.screen.message.split("\n").forEach { line ->
             board.printRow(line)
@@ -53,13 +56,21 @@ class Renderer @Inject constructor(
         onNumberInputScreen()
     }
 
+    override fun onFoodBuy(screen: FoodBuyScreen) {
+        onNumberInputScreen()
+    }
+
+    override fun onFoodSell(screen: FoodSellScreen) {
+        onNumberInputScreen()
+    }
+
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->
             board.printRow("[${index + 1}] ${choice.label}")
         }
     }
 
-    override fun onEndTurn(endTurnScreen: EndTurnScreen) {
+    override fun onEndTurn(@Suppress("UNUSED_PARAMETER") endTurnScreen: EndTurnScreen) {
         // no-op
     }
 

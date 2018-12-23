@@ -10,11 +10,11 @@ class EndTurnHappener @Inject constructor(
 
     private val log = logger {}
     private val happenings = listOf(
-//        GoldBagHappening(state),
+        GoldBagHappening(state),
         RatsHappening(state)
     )
     private var turnsNothingHappened = 999
-    private val baseProb = 100.0
+    private val baseProb = 10.0
 
     fun letItHappen(): String? {
         val prob = Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))

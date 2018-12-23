@@ -42,6 +42,16 @@ class GameEngine @Inject constructor(
         controllerRegistry.mainScreen.sellLand(input)
     }
 
+    override fun onFoodBuy(screen: FoodBuyScreen) {
+        val input = maybeNumberInput() ?: return
+        controllerRegistry.mainScreen.buyFood(input)
+    }
+
+    override fun onFoodSell(screen: FoodSellScreen) {
+        val input = maybeNumberInput() ?: return
+        controllerRegistry.mainScreen.sellFood(input)
+    }
+    
     override fun onEndTurn(screen: EndTurnScreen) {
         state.day++
         state.screen = MainScreen(state)
