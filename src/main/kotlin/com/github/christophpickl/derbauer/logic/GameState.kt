@@ -3,8 +3,14 @@ package com.github.christophpickl.derbauer.logic
 class GameState {
 
     var round = 1
-    var prompt = Prompt()
+    val prompt = Prompt()
+    val player = Player()
 
+}
+
+class Player {
+    var gold = 500
+    var land = 10
 }
 
 class Prompt {
