@@ -1,23 +1,23 @@
 package com.github.christophpickl.derbauer2.endturn.achievement
 
-import com.github.christophpickl.derbauer2.CHEAT_MODE
+import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.model.Model
 
 class Trade1Achievement(
 ) : AbstractAchievement(message = "Trade Mastery I: Cheaper trade rates") {
-    override fun condition() = Model.history.traded >= if (CHEAT_MODE) 1 else 10
+    override fun condition() = Model.history.traded >= VALUES.achievementTrade1HistoryNeed
     override fun execute() {
         Model.player.resources.allTradeables.forEach {
-            it.priceModifier -= if (CHEAT_MODE) 0.4 else 0.1
+            it.priceModifier -= VALUES.achievementTrade1PriceModifier
         }
     }
 }
 
 class Attack1Achievement(
 ) : AbstractAchievement(message = "Military Mastery I: Soldier attack +30%") {
-    override fun condition() = Model.history.attacked >= if (CHEAT_MODE) 1 else 5
+    override fun condition() = Model.history.attacked >= VALUES.achievementAttack1HistoryNeed
     override fun execute() {
-        // FIXME increase achievement
+        // FIXME increase achievement: VALUES.achievementAttack1AttackModifier
     }
 }
 

@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.build
 
-import com.github.christophpickl.derbauer2.INIT_VALUES
+import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
@@ -64,7 +64,7 @@ interface ConditionalBuilding {
 class HouseBuilding : AbstractBuilding(
     labelSingular = "house",
     labelPlural = "houses",
-    amount = INIT_VALUES.houses,
+    amount = VALUES.houses,
     landNeeded = 1,
     buyPrice = 15
 ), PeopleCapacityBuilding {
@@ -77,7 +77,7 @@ class GranaryBuilding : AbstractBuilding(
     labelPlural = "granaries",
     landNeeded = 1,
     buyPrice = 30,
-    amount = INIT_VALUES.granaries
+    amount = VALUES.granaries
 ), FoodCapacityBuilding {
     override var foodCapacity = 100
     override val descriptionProvider get() = { "stores +$foodCapacity food" }
@@ -88,7 +88,7 @@ class FarmBuilding : AbstractBuilding(
     labelPlural = "farms",
     landNeeded = 2,
     buyPrice = 50,
-    amount = INIT_VALUES.farms
+    amount = VALUES.farms
 ), FoodProducingBuilding {
     override var foodProduction = 2
     override val descriptionProvider get() = { "produces +$foodProduction food" }
@@ -99,7 +99,7 @@ class CastleBuilding : AbstractBuilding(
     labelPlural = "castles",
     landNeeded = 4,
     buyPrice = 200,
-    amount = INIT_VALUES.castles
+    amount = VALUES.castles
 ), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalBuilding {
     override var foodCapacity = 500
     override var peopleCapacity = 50

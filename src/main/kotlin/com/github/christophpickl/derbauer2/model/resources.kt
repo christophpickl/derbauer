@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.model
 
-import com.github.christophpickl.derbauer2.INIT_VALUES
+import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.trade.Tradeable
@@ -46,7 +46,7 @@ abstract class PlayerResource(
 class FoodResource : PlayerResource(
     labelSingular = "food",
     labelPlural = "food",
-    amount = INIT_VALUES.food
+    amount = VALUES.food
 ), LimitedBuyableAmount, TradeableResource {
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
     override var priceModifier = 1.0
@@ -59,7 +59,7 @@ class FoodResource : PlayerResource(
 class GoldResource : PlayerResource(
     labelSingular = "gold",
     labelPlural = "gold",
-    amount = INIT_VALUES.gold
+    amount = VALUES.gold
 ) {
     override fun toString() = Stringifier.stringify(this)
 }
@@ -67,7 +67,7 @@ class GoldResource : PlayerResource(
 class PeopleResource : PlayerResource(
     labelSingular = "people",
     labelPlural = "people",
-    amount = INIT_VALUES.people
+    amount = VALUES.people
 ), LimitedAmount {
     override val limitAmount get() = Model.player.buildings.houses.totalPeopleCapacity
     override fun toString() = Stringifier.stringify(this)
@@ -76,7 +76,7 @@ class PeopleResource : PlayerResource(
 class LandResource : PlayerResource(
     labelSingular = "land",
     labelPlural = "land",
-    amount = INIT_VALUES.land
+    amount = VALUES.land
 ), UsableResource, TradeableResource {
     override val unusedAmount get() = amount - usedAmount
     override val usedAmount get() = Model.player.buildings.all.sumBy { it.totalLandNeeded }

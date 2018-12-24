@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
-import com.github.christophpickl.derbauer2.CHEAT_MODE
 import com.github.christophpickl.derbauer2.ScreenCallback
+import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Rand
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
@@ -22,15 +22,16 @@ class Happener {
         GoldBagHappening(),
         RatsHappening()
     )
+    
     private var turnsNothingHappened = 999
-    private val baseProb = 0.1
+    private val baseProb = VALUES.happeningBaseProbability
 
     fun letItHappen(): Screen? {
         happenings.forEach { it.coolUpWarmUp() }
 
-        val prob = Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
+        val prob = Math.min(baseProb, (baseProb / VALUES.happeningTurnsCooldown * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
-        if (Rand.rand0to1() < if (CHEAT_MODE) 0.1 else prob) {
+        if (Rand.rand0to1() < prob) {
             turnsNothingHappened = 0
             val happening = happenings.sortedBy { it.currentCooldown }.first()
             return HappeningScreen(happening.execute())

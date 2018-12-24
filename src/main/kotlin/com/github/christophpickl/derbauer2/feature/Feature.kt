@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer2.feature
 
-import com.github.christophpickl.derbauer2.CHEAT_MODE
+import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.model.Model
 
 class Feature {
-    private val castleCondition = Condition { Model.people >= if (CHEAT_MODE) 10 else 100 }
+    private val castleCondition = Condition { Model.people >= VALUES.featureCastlePeopleNeeded }
 
     val isCastleEnabled get() = castleCondition.checkAndGet()
 }
