@@ -44,6 +44,7 @@ data class BuildingsMeta(
     }
 }
 
+@Deprecated(message = "v2")
 class BuildingPrices {
     var house = 0
     var granary = 0
