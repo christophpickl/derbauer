@@ -3,25 +3,14 @@ package com.github.christophpickl.derbauer2.model
 import com.github.christophpickl.derbauer2.HomeScreen
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.ui.screen.Screen
-import mu.KotlinLogging.logger
 
 object Model {
 
-    private val log = logger {}
-    
-    lateinit var screen: Screen
-    lateinit var global: Global
-    lateinit var player: Player
-    lateinit var history: History
+    var screen: Screen = HomeScreen()
+    val global: Global = Global()
+    val player: Player = Player()
+    val history: History = History()
 
-    fun reset() {
-        log.info { "reset()" }
-        screen = HomeScreen()
-        global = Global()
-        player = Player()
-        history = History()
-    }
-    
     //<editor-fold desc="resource shortcuts">
     var food
         get() = player.resources.food.amount
@@ -50,7 +39,7 @@ object Model {
     val foodCapacityLeft get() = player.resources.food.capacityLeft
     val totalFoodCapacity get() = player.buildings.totalFoodCapacity
     //</editor-fold>
-    
+
 
     fun goHome() {
         screen = HomeScreen()
