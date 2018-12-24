@@ -13,6 +13,10 @@ interface Values {
     val farms: Int
     val castles: Int
 
+    val soldiers: Int
+    val attackBattleDelay: Int
+    val attackOverDelay: Int
+
     val upgradeIncreasePriceAfterBought: Double // valid for all upgrades
     val upgradeFarmBuyPrice: Int
     val upgradeFarmIncreaseFarmBuyPrice: Int
@@ -40,11 +44,15 @@ open class DefaultValues : Values {
     override val farms = 1
     override val castles = 0
 
+    override val soldiers = 0
+    override val attackBattleDelay = 600
+    override val attackOverDelay = 2_000
+
     override val upgradeIncreasePriceAfterBought = 2.0
     override val upgradeFarmBuyPrice = 250
     override val upgradeFarmProductionIncrease = 1
     override val upgradeFarmIncreaseFarmBuyPrice = 10
-    
+
     override val achievementTrade1HistoryNeed = 10
     override val achievementTrade1PriceModifier = 0.1
     override val achievementAttack1HistoryNeed = 5
@@ -66,6 +74,8 @@ object CheatValues : DefaultValues() {
     override val granaries = 10
     override val farms = 20
     override val castles = 0
+
+    override val soldiers = 10
 
     override val featureCastlePeopleNeeded = 10
 

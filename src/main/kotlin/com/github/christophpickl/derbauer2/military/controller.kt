@@ -4,21 +4,24 @@ import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.ui.Alert
 import com.github.christophpickl.derbauer2.ui.AlertType
 import com.github.christophpickl.derbauer2.ui.Renderer
 import mu.KotlinLogging.logger
+import kotlin.random.Random
 
 class MilitaryController(
     private val renderer: Renderer
 ) : MilitaryCallback {
-    
-    private val log = logger {}
 
+    private val log = logger {}
+    private var threadId = 0
+    
     override fun onMilitary(choice: MilitaryChoice) {
         log.debug { "military action: $choice" }
         when (choice.enum) {
             MilitaryEnum.Attack -> {
-                Model.screen = AttackScreen()
+                prepareAttack()
             }
             MilitaryEnum.RecruiteSoldiers -> {
                 Model.screen = HireSoldiersScreen()
@@ -27,15 +30,27 @@ class MilitaryController(
         }.enforceWhenBranches()
     }
 
-    override fun doBeginAttack(context: AttackContext) {
-        Thread(AttackThread(context, renderer)).start()
+    private fun prepareAttack() {
+        if (Model.player.militaries.totalCount == 0) {
+            Alert.show(AlertType.NoMilitary)
+            return
+        }
+        val context = AttackContext(
+            enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.soldiers.amount).toInt()
+        )
+        Model.screen = AttackScreen(context)
+        doBeginAttack(context)
     }
 
+    private fun doBeginAttack(context: AttackContext) {
+        log.debug { "begin attack: $context" }
+        Thread(AttackThread(context, renderer), "Attack-${++threadId}").start()
+    }
 
     override fun doHire(militaryUnit: Military, amount: Int) {
         log.debug { "want to hire: $amount $militaryUnit" }
         val totalPrice = militaryUnit.buyPrice * amount
-        val totalPeople = militaryUnit.costsPeople * amount
+        val totalPeople = if (militaryUnit is PeopleMilitary) militaryUnit.costsPeople * amount else 0
         if (isValid(totalPrice, totalPeople)) {
             militaryUnit.amount += amount
             Model.gold -= totalPrice

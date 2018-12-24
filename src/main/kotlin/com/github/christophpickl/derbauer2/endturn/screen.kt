@@ -13,12 +13,24 @@ class EndTurnScreen(message: String) : InfoScreen(message) {
     }
 }
 
-class GameOverScreen : InfoScreen(
-    "Game over!\n\n" +
-        "${AsciiArt.gameOver}\n\n" +
-        "R.I.P. after ${Model.global.day} days of great leadership."
-) {
+class GameOverScreen : InfoScreen(buildMessage()) {
+    companion object {
+        fun buildMessage(): String {
+            val suffix = when (Model.global.day) {
+                in 0..5 -> "you looser!"
+                in 6..10 -> "you beginner."
+                in 11..20 -> "you seem to get the grasp of it."
+                in 21..40 -> "of great leadership!"
+                else -> "of bad ass ruler skills!!!!!!!!11111elf"
+            }
+            return "Game over!\n\n" +
+                "${AsciiArt.gameOver}\n\n" +
+                "R.I.P. after ${Model.global.day} days $suffix"
+        }
+    }
+
     override val promptMode = PromptMode.Off
     override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+        // no-op
     }
 }

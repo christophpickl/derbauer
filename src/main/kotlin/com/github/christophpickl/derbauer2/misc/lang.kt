@@ -29,3 +29,7 @@ class Subscription<L : Listener> {
 @Suppress("unused")
 fun Any?.enforceWhenBranches() {
 }
+
+fun sleep(ms: Int) {
+    Thread.sleep(ms.toLong())
+}

@@ -10,7 +10,6 @@ import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
 import com.github.christophpickl.derbauer2.ui.screen.EnumChoice
 import com.github.christophpickl.derbauer2.ui.screen.InputScreen
 import com.github.christophpickl.derbauer2.ui.screen.Screen
-import kotlin.random.Random
 
 class MilitaryScreen : ChooseScreen<MilitaryChoice>(
     messages = listOf(
@@ -42,23 +41,18 @@ enum class MilitaryEnum {
 interface MilitaryCallback {
     fun onMilitary(choice: MilitaryChoice)
     fun doHire(militaryUnit: Military, amount: Int)
-    fun doBeginAttack(context: AttackContext)
 }
 
-class AttackScreen : Screen {
+class AttackScreen(
+    private val context: AttackContext
+) : Screen {
+    
     override val promptMode = PromptMode.Off
     override val cancelSupport = CancelSupport.Disabled
-
-    private val context = AttackContext(
-        enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.soldiers.amount).toInt()
-    )
     override val renderContent get() = context.message
 
     override fun onCallback(callback: ScreenCallback, input: PromptInput) {
-        if (!context.warStarted) {
-            context.warStarted = true
-            callback.doBeginAttack(context)
-        }
+        // no-op
     }
 }
 

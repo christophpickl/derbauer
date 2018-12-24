@@ -38,7 +38,7 @@ object DerBauer2 {
             rootLevel = Level.WARN
             packageLevel(Level.ALL, "com.github.christophpickl.derbauer2")
             addConsoleAppender {
-                pattern = "%d{HH:mm:ss} [%highlight(%-5level)] %cyan(%logger{30}) - %msg%n"
+                pattern = "%d{HH:mm:ss} [%gray(%thread)] [%highlight(%-5level)] %cyan(%logger{30}) - %msg%n"
             }
         }
     }
