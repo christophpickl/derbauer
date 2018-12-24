@@ -46,9 +46,9 @@ abstract class PlayerResource(
 class FoodResource : PlayerResource(
     labelSingular = "food",
     labelPlural = "food",
-    amount = if (CHEAT_MODE) 800 else 300
+    amount = if (CHEAT_MODE) 0 else 300
 ), LimitedBuyableAmount, TradeableResource {
-    override val limitAmount get() = Model.totalFoodCapacity
+    override val limitAmount get() = Model.player.buildings.totalFoodCapacity
     override var priceModifier = 1.0
     override var buyPrice: Int = 15
     override var sellPrice: Int = 9
@@ -67,7 +67,7 @@ class GoldResource : PlayerResource(
 class PeopleResource : PlayerResource(
     labelSingular = "people",
     labelPlural = "people",
-    amount = if (CHEAT_MODE) 9 else 2
+    amount = if (CHEAT_MODE) 1 else 2
 ), LimitedAmount {
     override val limitAmount get() = Model.player.buildings.houses.totalPeopleCapacity
     override fun toString() = Stringifier.stringify(this)

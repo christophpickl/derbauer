@@ -24,6 +24,7 @@ import com.google.common.eventbus.Subscribe
 import mu.KotlinLogging.logger
 import javax.inject.Inject
 
+@Deprecated(message = "v2")
 class Router @Inject constructor(
     private val bus: EventBus,
     private val controllerRegistry: ScreenControllerRegistry,
@@ -96,7 +97,7 @@ class Router @Inject constructor(
     }
 
     // ARMY ============================================================================================================
-    
+
     override fun onArmy(screen: ArmyScreen) {
         val choice = maybeChoosenInput(screen) ?: return
         controllerRegistry.army.select(choice)
@@ -108,7 +109,7 @@ class Router @Inject constructor(
     }
 
     // END =============================================================================================================
-    
+
     override fun onEndTurn(screen: EndTurnScreen) {
         log.trace { "onEndTurn()" }
         State.day++
@@ -130,7 +131,7 @@ class Router @Inject constructor(
 
 
     // =================================================================================================================
-    
+
     private fun maybeNumberInput(): Int? =
         State.prompt.enteredText.toIntOrNull() ?: beepReturn()
 

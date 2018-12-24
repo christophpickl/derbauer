@@ -29,6 +29,3 @@ class Subscription<L : Listener> {
 @Suppress("unused")
 fun Any?.enforceWhenBranches() {
 }
-
-fun String.indentLinesBy(prefix: String) =
-    lines().joinToString("\n") { "$prefix$it" }

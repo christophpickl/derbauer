@@ -20,10 +20,13 @@ fun <T> beepReturn(): T? {
     return null
 }
 
+@Deprecated(message = "v2")
 fun formatRightBound(string: String, length: Int): String {
     if (string.length >= length) return string
     return " ".times(length - string.length) + string
 }
+
+@Deprecated(message = "v2")
 fun formatNumber(number: Int, length: Int, addPlusSign: Boolean = false): String {
     val realLength = if (addPlusSign) length - 1 else length
     val prefix = if (addPlusSign && number > 0) "+" else ""

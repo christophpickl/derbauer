@@ -60,7 +60,6 @@ class MainController @Inject constructor(
             HomeEnum.Build -> BuildScreen()
             HomeEnum.Upgrade -> UpgradeScreen()
             HomeEnum.Army -> ArmyScreen()
-            // FIXME also react on ENTER! directly
             HomeEnum.EndTurn -> happening.anyHappened()?.let { it } ?: endTurn.calculateEndTurn()
             else -> throw UnsupportedOperationException("Unhandled choice enum: ${choice.enum}")
         }

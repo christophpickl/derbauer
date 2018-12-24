@@ -22,8 +22,11 @@ data class PlayerBuildings(
     var farms: FarmBuilding = FarmBuilding()
 ) {
     val all = propertiesOfType<PlayerBuildings, Building>(this).ordered()
-
     inline fun <reified B : Building> allAs(): List<B> = all.mapNotNull { it as? B }
+
+    val totalFoodCapacity get() = allAs<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
+    val totalFoodProduction get() = allAs<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
+    val totalPeopleCapacity get() = allAs<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
 }
 
 interface FoodCapacityBuilding : Building {
@@ -36,8 +39,9 @@ interface PeopleCapacityBuilding : Building {
     val totalPeopleCapacity get() = peopleCapacity * amount
 }
 
-interface FoodProducerBuilding : Building {
-    var producesFood: Int
+interface FoodProducingBuilding : Building {
+    var foodProduction: Int
+    val totalFoodProduction get() = foodProduction * amount
 }
 
 class HouseBuilding : AbstractBuilding(
@@ -67,10 +71,10 @@ class FarmBuilding : AbstractBuilding(
     labelPlural = "farms",
     landNeeded = 2,
     buyPrice = 50,
-    amount = if (CHEAT_MODE) 10 else 1
-), FoodProducerBuilding {
-    override var producesFood = 2
-    override val descriptionProvider get() = { "produces +$producesFood food each day" }
+    amount = if (CHEAT_MODE) 0 else 1
+), FoodProducingBuilding {
+    override var foodProduction = 2
+    override val descriptionProvider get() = { "produces +$foodProduction food each day" }
 }
 
 abstract class AbstractBuilding(

@@ -32,7 +32,7 @@ class RatsHappening : Happening(
     cooldownDays = 14
 ) {
 
-    private val eatenSizes = listOf(10, 20, 30) // TODO each of them got different prob
+    private val eatenSizes = listOf(10, 20, 30) // wanna do: each of them got different prob
 
     private val ratAscii = """
            .---.

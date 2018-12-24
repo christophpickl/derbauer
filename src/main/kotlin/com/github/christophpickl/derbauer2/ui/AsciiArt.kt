@@ -36,4 +36,14 @@ object AsciiArt {
       \           /
        `=========`
        """.trimIndent()
+
+    val gameOver = """
+          ____
+        ,'   Y`.
+       /        \
+       \ ()  () /
+        `. /\ ,'
+    8====| "" |====8
+         `LLLU'
+    """.trimIndent()
 }

@@ -15,7 +15,7 @@ class HappeningScreen(message: String) : InfoScreen(message) {
     }
 }
 
-object Happener {
+class Happener {
 
     private val log = logger {}
     private val happenings = listOf(
@@ -23,14 +23,14 @@ object Happener {
         RatsHappening()
     )
     private var turnsNothingHappened = 999
-    private val baseProb = 10.0
+    private val baseProb = 0.1
 
     fun letItHappen(): Screen? {
         happenings.forEach { it.coolUpWarmUp() }
 
-        val prob = if (CHEAT_MODE) 100.0 else Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
+        val prob = Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
-        if (nextRandom0To100() < prob) {
+        if (nextRandom0To1() < if (CHEAT_MODE) 0.1 else prob) {
             turnsNothingHappened = 0
             val happening = happenings.sortedBy { it.currentCooldown }.first()
             return HappeningScreen(happening.execute())
@@ -40,7 +40,7 @@ object Happener {
         return null
     }
 
-    private fun nextRandom0To100() = Random.nextDouble(0.0, 100.0)
+    private fun nextRandom0To1() = Random.nextDouble(0.0, 1.0)
 }
 
 
