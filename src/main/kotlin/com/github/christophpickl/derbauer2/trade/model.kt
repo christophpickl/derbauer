@@ -14,8 +14,6 @@ interface Sellable {
 }
 
 interface Tradeable : Buyable, Sellable {
-    
-    // TODO modifier: Double
 
     fun priceFor(buySell: BuySell): Int = when (buySell) {
         BuySell.Buy -> buyPrice

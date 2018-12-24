@@ -21,7 +21,7 @@ class TradeController : TradeCallback {
     override fun doTrade(choice: TradableChoice, amount: Int) {
         log.debug { "doTrade(amount=$amount, choice=$choice)" }
         val resource = choice.resource
-        val pricePerItem = resource.priceFor(choice.buySell)
+        val pricePerItem = resource.effectivePriceFor(choice.buySell)
         val totalPrice = pricePerItem * amount
 
         if (isValid(choice, amount, totalPrice)) {

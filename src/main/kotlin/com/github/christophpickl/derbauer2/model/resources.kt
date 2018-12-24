@@ -20,6 +20,14 @@ interface Resource : Amountable, Ordered, Labeled
 interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int
     var priceModifier: Double
+
+    val effectiveBuyPrice get() = (buyPrice * priceModifier).toInt()
+    val effectiveSellPrice get() = (sellPrice * priceModifier).toInt()
+    
+    fun effectivePriceFor(buySell: BuySell): Int = when (buySell) {
+        BuySell.Buy -> effectiveBuyPrice
+        BuySell.Sell -> effectiveSellPrice
+    }
 }
 
 abstract class PlayerResource(
