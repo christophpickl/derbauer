@@ -7,6 +7,7 @@ import com.github.christophpickl.derbauer.trade.TradeController
 import com.github.christophpickl.derbauer.upgrade.UpgradeController
 import javax.inject.Inject
 
+@Deprecated(message = "v2")
 class ScreenControllerRegistry @Inject constructor(
 
     val main: MainController,

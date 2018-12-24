@@ -4,6 +4,8 @@ import com.github.christophpickl.derbauer2.build.BuildCallback
 import com.github.christophpickl.derbauer2.build.BuildController
 import com.github.christophpickl.derbauer2.endturn.EndTurnCallback
 import com.github.christophpickl.derbauer2.endturn.EndTurnController
+import com.github.christophpickl.derbauer2.home.HomeController
+import com.github.christophpickl.derbauer2.home.HomeScreenCallback
 import com.github.christophpickl.derbauer2.trade.TradeCallback
 import com.github.christophpickl.derbauer2.trade.TradeController
 

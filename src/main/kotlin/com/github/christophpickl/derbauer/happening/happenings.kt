@@ -2,6 +2,7 @@ package com.github.christophpickl.derbauer.happening
 
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 class GoldBagHappening : Happening(
     cooldownDays = 7
 ) {
@@ -28,6 +29,7 @@ class GoldBagHappening : Happening(
     }
 }
 
+@Deprecated(message = "v2")
 class RatsHappening : Happening(
     cooldownDays = 14
 ) {

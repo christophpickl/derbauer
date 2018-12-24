@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.logic
 
+@Deprecated(message = "v2")
 class Prompt {
 
     private var _enteredText = ""

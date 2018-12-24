@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.misc
 import com.github.christophpickl.derbauer.logic.Screen
 import com.github.christophpickl.derbauer.logic.ScreenCallback
 
+@Deprecated(message = "v2")
 class GameOver : Screen {
     override val message = "Tadaaaaa! Game Over!"
 

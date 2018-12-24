@@ -1,11 +1,12 @@
 package com.github.christophpickl.derbauer2.build
 
-import com.github.christophpickl.derbauer2.CHEAT_MODE
+import com.github.christophpickl.derbauer2.INIT_VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Labeled
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
@@ -19,14 +20,26 @@ interface Building : Labeled, Amountable, Ordered, Buyable, Descriptable {
 data class PlayerBuildings(
     var houses: HouseBuilding = HouseBuilding(),
     var granaries: GranaryBuilding = GranaryBuilding(),
-    var farms: FarmBuilding = FarmBuilding()
+    var farms: FarmBuilding = FarmBuilding(),
+    val castles: CastleBuilding = CastleBuilding()
 ) {
-    val all = propertiesOfType<PlayerBuildings, Building>(this).ordered()
-    inline fun <reified B : Building> allAs(): List<B> = all.mapNotNull { it as? B }
+    val all: List<Building>
+        get() {
+            val reallyAll = propertiesOfType<PlayerBuildings, Building>(this).ordered()
+            return reallyAll.filter {
+                if (it is ConditionalBuilding) {
+                    it.checkCondition()
+                } else {
+                    true
+                }
+            }
+        }
 
-    val totalFoodCapacity get() = allAs<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
-    val totalFoodProduction get() = allAs<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
-    val totalPeopleCapacity get() = allAs<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
+    inline fun <reified B : Building> allFiltered(): List<B> = all.mapNotNull { it as? B }
+
+    val totalFoodCapacity get() = allFiltered<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
+    val totalFoodProduction get() = allFiltered<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
+    val totalPeopleCapacity get() = allFiltered<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
 }
 
 interface FoodCapacityBuilding : Building {
@@ -44,15 +57,19 @@ interface FoodProducingBuilding : Building {
     val totalFoodProduction get() = foodProduction * amount
 }
 
+interface ConditionalBuilding {
+    fun checkCondition(): Boolean
+}
+
 class HouseBuilding : AbstractBuilding(
     labelSingular = "house",
     labelPlural = "houses",
-    amount = if (CHEAT_MODE) 5 else 1,
+    amount = INIT_VALUES.houses,
     landNeeded = 1,
     buyPrice = 15
 ), PeopleCapacityBuilding {
     override var peopleCapacity = 5
-    override val descriptionProvider get() = { "adds $peopleCapacity more space for your people" }
+    override val descriptionProvider get() = { "stores +$peopleCapacity people" }
 }
 
 class GranaryBuilding : AbstractBuilding(
@@ -60,10 +77,10 @@ class GranaryBuilding : AbstractBuilding(
     labelPlural = "granaries",
     landNeeded = 1,
     buyPrice = 30,
-    amount = if (CHEAT_MODE) 8 else 1
+    amount = INIT_VALUES.granaries
 ), FoodCapacityBuilding {
     override var foodCapacity = 100
-    override val descriptionProvider get() = { "adds $foodCapacity more food storage" }
+    override val descriptionProvider get() = { "stores +$foodCapacity food" }
 }
 
 class FarmBuilding : AbstractBuilding(
@@ -71,10 +88,23 @@ class FarmBuilding : AbstractBuilding(
     labelPlural = "farms",
     landNeeded = 2,
     buyPrice = 50,
-    amount = if (CHEAT_MODE) 0 else 1
+    amount = INIT_VALUES.farms
 ), FoodProducingBuilding {
     override var foodProduction = 2
-    override val descriptionProvider get() = { "produces +$foodProduction food each day" }
+    override val descriptionProvider get() = { "produces +$foodProduction food" }
+}
+
+class CastleBuilding : AbstractBuilding(
+    labelSingular = "castle",
+    labelPlural = "castles",
+    landNeeded = 4,
+    buyPrice = 200,
+    amount = INIT_VALUES.castles
+), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalBuilding {
+    override var foodCapacity = 500
+    override var peopleCapacity = 50
+    override fun checkCondition() = Model.feature.isCastleEnabled
+    override val descriptionProvider get() = { "stores +$foodCapacity food and and stores +$peopleCapacity people" }
 }
 
 abstract class AbstractBuilding(

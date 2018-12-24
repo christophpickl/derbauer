@@ -15,6 +15,7 @@ import com.github.christophpickl.derbauer.trade.LandSellScreen
 import com.github.christophpickl.derbauer.trade.TradeScreen
 import com.github.christophpickl.derbauer.upgrade.UpgradeScreen
 
+@Deprecated(message = "v2")
 interface Screen {
     val message: String
     val enableCancelOnEnter: Boolean

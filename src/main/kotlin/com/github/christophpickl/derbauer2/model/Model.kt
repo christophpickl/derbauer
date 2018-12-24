@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.model
 
-import com.github.christophpickl.derbauer2.HomeScreen
+import com.github.christophpickl.derbauer2.feature.Feature
+import com.github.christophpickl.derbauer2.home.HomeScreen
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.ui.screen.Screen
 
@@ -10,6 +11,7 @@ object Model {
     val global: Global = Global()
     val player: Player = Player()
     val history: History = History()
+    val feature: Feature = Feature()
 
     //<editor-fold desc="resource shortcuts">
     var food

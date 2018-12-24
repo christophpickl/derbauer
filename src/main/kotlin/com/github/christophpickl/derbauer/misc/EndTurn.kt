@@ -6,6 +6,7 @@ import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.model.State
 import kotlin.random.Random
 
+@Deprecated(message = "v2")
 class EndTurnScreen(
     override val message: String
 ) : Screen {
@@ -17,6 +18,7 @@ class EndTurnScreen(
     }
 }
 
+@Deprecated(message = "v2")
 class EndTurn {
 
     private val numberWidth = 6

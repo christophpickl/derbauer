@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.trade
 
-import com.github.christophpickl.derbauer2.HomeScreen
 import com.github.christophpickl.derbauer2.ScreenCallback
+import com.github.christophpickl.derbauer2.home.HomeScreen
 import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResource
