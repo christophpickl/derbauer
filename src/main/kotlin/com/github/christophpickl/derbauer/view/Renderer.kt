@@ -23,6 +23,7 @@ import com.github.christophpickl.derbauer.upgrade.UpgradeScreen
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 
+@Deprecated(message = "v2")
 @Suppress("UNUSED_PARAMETER")
 class Renderer : ScreenCallback {
 
@@ -114,6 +115,7 @@ class Renderer : ScreenCallback {
 
 }
 
+@Deprecated(message = "v2")
 private class Board {
 
     private val width = VIEW_SIZE.width

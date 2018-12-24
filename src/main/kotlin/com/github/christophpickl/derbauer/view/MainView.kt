@@ -64,4 +64,5 @@ class MainViewFxController : Controller() {
 
 }
 
+@Deprecated(message = "v2")
 val VIEW_SIZE = Size(width = 100, height = 30)

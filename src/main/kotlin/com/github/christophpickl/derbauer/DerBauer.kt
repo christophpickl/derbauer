@@ -7,10 +7,11 @@ import javafx.application.Application
 import mu.KotlinLogging.logger
 import javax.swing.JOptionPane
 
+@Deprecated(message = "v2")
 object DerBauer {
 
     private val log by lazy { logger {} }
-    
+
     @JvmStatic
     fun main(args: Array<String>) {
         initLogging()
@@ -20,7 +21,7 @@ object DerBauer {
             JOptionPane.showMessageDialog(null, "App Crash!!! Aaaaaarg 😱\n(${throwable.javaClass.simpleName}: ${throwable.message})",
                 "DerBauer Crash", JOptionPane.ERROR_MESSAGE)
         }
-        
+
         Application.launch(DerBauerFxApp::class.java, *args)
     }
 

@@ -1,6 +1,9 @@
 package com.github.christophpickl.derbauer2.misc
 
-import com.github.christophpickl.derbauer2.State
+import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.ui.MainTextArea
+import com.github.christophpickl.derbauer2.ui.VIEW_SIZE
+import com.github.christophpickl.kpotpourri.common.string.times
 
 class Renderer(
     private val text: MainTextArea,
@@ -8,11 +11,78 @@ class Renderer(
 ) {
     fun render() {
         val promptText = when (State.screen.promptMode) {
-            PromptMode.Off -> ""
-            PromptMode.Enter -> "\n\nHit ENTER >>"
-            PromptMode.Input -> "\n\n$ ${prompt.enteredText}"
+            PromptMode.Off -> null
+            PromptMode.Enter -> ">> Hit ENTER <<"
+            PromptMode.Input -> "$ ${prompt.enteredText}⌷"
         }
         val content = State.screen.renderContent
-        text.text = "$content$promptText"
+
+        val info = State.player.resources.all.joinToString(" ") { "${it.type.labelPlural}: ${it.amount}" }
+
+        val board = Board()
+        board.printHeader("Day: ${State.global.day}", info)
+        promptText?.let { board.printPrompt(it) }
+        board.printContent(content)
+        text.text = board.convertAndReset()
     }
 }
+
+private class Board {
+
+    private val width = VIEW_SIZE.first
+    private val height = VIEW_SIZE.second
+    private val rows: MutableList<MutableList<Char>> = 1.rangeTo(height).map {
+        1.rangeTo(width).map { ' ' }.toMutableList()
+    }.toMutableList()
+    private val skipRowsAboveContent = 3
+    private var currentContentRow = 0
+
+    fun convertAndReset(): String {
+        val result = rows.joinToString("\n") { cols ->
+            cols.fold("") { acc, col -> "$acc$col" }
+        }
+        reset()
+        return result
+    }
+
+    fun printContent(text: String) {
+        text.split("\n").forEach { row ->
+            printSingleRow(row)
+        }
+    }
+
+    fun printHeader(left: String, right: String) {
+        rows[0].write(left + " ".times(width - left.length - right.length) + right)
+        rows[1].writeHr()
+    }
+
+    fun printPrompt(text: String) {
+        rows[rows.lastIndex - 1].writeHr()
+        rows[rows.lastIndex].write(text)
+    }
+
+    private fun reset() {
+        rows.forEach { it.forEachIndexed { i, _ -> it[i] = ' ' } }
+        currentContentRow = 0
+    }
+
+    private fun printSingleRow(text: String) {
+        rows[skipRowsAboveContent + currentContentRow].write(text)
+        currentContentRow++
+    }
+
+    private fun MutableList<Char>.writeHr() {
+        write("--${"=".times(width - 4)}--")
+    }
+
+    private fun MutableList<Char>.write(text: String) {
+        require(text.length <= width) {
+            "writing text length (${text.length}) exceeds maximum of: $width\nText: $text"
+        }
+        text.forEachIndexed { index, c ->
+            this[index] = c
+        }
+    }
+
+}
+

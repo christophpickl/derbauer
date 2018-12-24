@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.misc
 
-import com.github.christophpickl.derbauer2.State
+import com.github.christophpickl.derbauer2.state.State
 import mu.KotlinLogging.logger
 
 class Router(

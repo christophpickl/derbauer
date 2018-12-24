@@ -9,8 +9,10 @@ import com.github.christophpickl.derbauer.logic.Screen
 import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.upgrade.UpgradeMeta
 
+@Deprecated(message = "v2")
 const val CHEAT_MODE = true
 
+@Deprecated(message = "v2")
 object State {
 
     lateinit var screen: Screen

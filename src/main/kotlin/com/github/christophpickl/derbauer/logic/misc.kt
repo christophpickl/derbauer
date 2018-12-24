@@ -2,16 +2,19 @@ package com.github.christophpickl.derbauer.logic
 
 import com.github.christophpickl.kpotpourri.common.string.times
 
+@Deprecated(message = "v2")
 data class Size(
     val width: Int,
     val height: Int
 )
 
+@Deprecated(message = "v2")
 fun beep() {
     java.awt.Toolkit.getDefaultToolkit().beep()
     println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
 }
 
+@Deprecated(message = "v2")
 fun <T> beepReturn(): T? {
     beep()
     return null

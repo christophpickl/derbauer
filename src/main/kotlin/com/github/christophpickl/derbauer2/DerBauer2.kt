@@ -1,15 +1,22 @@
 package com.github.christophpickl.derbauer2
 
+import ch.qos.logback.classic.Level
 import com.github.christophpickl.derbauer2.misc.Keyboard
-import com.github.christophpickl.derbauer2.misc.MainFrame
-import com.github.christophpickl.derbauer2.misc.MainTextArea
 import com.github.christophpickl.derbauer2.misc.Prompt
 import com.github.christophpickl.derbauer2.misc.Renderer
 import com.github.christophpickl.derbauer2.misc.Router
+import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.ui.MainFrame
+import com.github.christophpickl.derbauer2.ui.MainTextArea
+import com.github.christophpickl.kpotpourri.logback4k.Logback4k
+import javax.swing.SwingUtilities
+
+val CHEAT_MODE = System.getProperty("not_existing") == null
 
 object DerBauer2 {
     @JvmStatic
     fun main(args: Array<String>) {
+        initLogging()
         State.reset()
 
         val prompt = Prompt()
@@ -24,6 +31,18 @@ object DerBauer2 {
         prompt.subscription.add(engine)
 
         renderer.render()
-        MainFrame().buildAndShow(text)
+        SwingUtilities.invokeLater {
+            MainFrame().buildAndShow(text)
+        }
+    }
+
+    private fun initLogging() {
+        Logback4k.reconfigure {
+            rootLevel = Level.WARN
+            packageLevel(Level.ALL, "com.github.christophpickl.derbauer2")
+            addConsoleAppender {
+                pattern = "%d{HH:mm:ss} [%highlight(%-5level)] %cyan(%logger{30}) - %msg%n"
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.view
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
+@Deprecated(message = "v2")
 class Styles : Stylesheet() {
     companion object {
         val mainTextArea by cssclass()

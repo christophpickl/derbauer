@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.misc
 
 import com.github.christophpickl.derbauer.logic.beep
-import com.github.christophpickl.derbauer2.State
+import com.github.christophpickl.derbauer2.state.State
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 
