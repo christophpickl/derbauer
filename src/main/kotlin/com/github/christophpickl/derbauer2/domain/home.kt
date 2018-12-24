@@ -1,11 +1,12 @@
 package com.github.christophpickl.derbauer2.domain
 
-import com.github.christophpickl.derbauer2.misc.CancelSupport
-import com.github.christophpickl.derbauer2.misc.ChooseScreen
-import com.github.christophpickl.derbauer2.misc.EnumChoice
-import com.github.christophpickl.derbauer2.misc.ScreenCallback
+import com.github.christophpickl.derbauer2.CancelSupport
+import com.github.christophpickl.derbauer2.ChooseScreen
+import com.github.christophpickl.derbauer2.EnumChoice
+import com.github.christophpickl.derbauer2.ScreenCallback
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
-import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.trade.TradeScreen
 
 class HomeScreen : ChooseScreen<HomeChoice>(
     messages = listOf(
@@ -42,11 +43,11 @@ interface HomeScreenCallback {
 
 class HomeController : HomeScreenCallback {
     override fun onTrade() {
-        State.screen = TradeScreen()
+        Model.screen = TradeScreen()
     }
 
     override fun onEndTurn() {
-        State.global.day++
-        State.screen = EndTurnScreen()
+        Model.global.day++
+        Model.screen = EndTurnScreen()
     }
 }

@@ -33,7 +33,7 @@ object State {
     val maxPeople get() = player.buildings.houses * buildings.houseCapacity
     val freePeople get() = maxPeople - player.people
 
-    override fun toString() = "State{" +
+    override fun toString() = "Model{" +
         "day=$day, " +
         "screen=${screen.javaClass.simpleName}, " +
         "buildings=$buildings, " +

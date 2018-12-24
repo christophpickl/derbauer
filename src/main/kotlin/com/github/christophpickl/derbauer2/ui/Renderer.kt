@@ -1,8 +1,6 @@
-package com.github.christophpickl.derbauer2.misc
+package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer2.state.State
-import com.github.christophpickl.derbauer2.ui.MainTextArea
-import com.github.christophpickl.derbauer2.ui.VIEW_SIZE
+import com.github.christophpickl.derbauer2.state.Model
 import com.github.christophpickl.kpotpourri.common.string.times
 
 class Renderer(
@@ -10,17 +8,17 @@ class Renderer(
     private val prompt: Prompt
 ) {
     fun render() {
-        val promptText = when (State.screen.promptMode) {
+        val promptText = when (Model.screen.promptMode) {
             PromptMode.Off -> null
             PromptMode.Enter -> ">> Hit ENTER <<"
             PromptMode.Input -> "$ ${prompt.enteredText}⌷"
         }
-        val content = State.screen.renderContent
+        val content = Model.screen.renderContent
 
-        val info = State.player.resources.all.joinToString(" ") { "${it.type.labelPlural}: ${it.amount}" }
+        val info = Model.player.resources.all.joinToString(" ") { "${it.type.labelPlural}: ${it.amount}" }
 
         val board = Board()
-        board.printHeader("Day: ${State.global.day}", info)
+        board.printHeader("Day: ${Model.global.day}", info)
         promptText?.let { board.printPrompt(it) }
         board.printContent(content)
         text.text = board.convertAndReset()

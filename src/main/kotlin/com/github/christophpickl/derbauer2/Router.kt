@@ -1,6 +1,9 @@
-package com.github.christophpickl.derbauer2.misc
+package com.github.christophpickl.derbauer2
 
-import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.ui.PromptInput
+import com.github.christophpickl.derbauer2.ui.PromptListener
+import com.github.christophpickl.derbauer2.ui.Renderer
 import mu.KotlinLogging.logger
 
 class Router(
@@ -16,7 +19,7 @@ class Router(
 
     override fun onEnter(input: PromptInput) {
         log.debug { "onEnter($input)" }
-        State.screen.onCallback(this, input)
+        Model.screen.onCallback(this, input)
         renderer.render()
     }
 

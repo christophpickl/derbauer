@@ -37,6 +37,7 @@ data class PlayerResource(
     val type: ResourceType,
     val order: Int
 ) : Comparable<PlayerResource> {
+
     override fun compareTo(other: PlayerResource) =
         order.compareTo(other.order)
 

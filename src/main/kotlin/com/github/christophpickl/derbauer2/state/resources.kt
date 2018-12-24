@@ -28,7 +28,7 @@ class FoodResourceType : TradeableResourceType {
     override var buyPrice: Int = 15
     override var sellPrice: Int = 9
 
-    override val buyPossible get() = State.gold / buyPrice // TODO granary!
+    override val buyPossible get() = Model.gold / buyPrice // TODO granary!
     override val sellPossible get() = Math.max(0, playerRead().amount)
 
     override fun toString() = Stringifier.stringify(this)
@@ -54,7 +54,7 @@ class LandResourceType : TradeableResourceType {
     override var buyPrice: Int = 50
     override var sellPrice: Int = 40
 
-    override val buyPossible get() = State.gold / buyPrice
+    override val buyPossible get() = Model.gold / buyPrice
     override val sellPossible get() = Math.max(0, playerRead().amount) // TODO calculate available land by subtracting building count (each building has dynamic land consume need)
 
     override fun toString() = Stringifier.stringify(this)
@@ -62,8 +62,8 @@ class LandResourceType : TradeableResourceType {
 
 interface ResourceType : Entity {
     val playerProperty: KMutableProperty1<PlayerResources, PlayerResource>
-    fun playerRead() = playerProperty.get(State.player.resources)
+    fun playerRead() = playerProperty.get(Model.player.resources)
     fun playerChange(changeBy: Int) {
-        playerProperty.set(State.player.resources, playerRead().apply { amount += changeBy })
+        playerProperty.set(Model.player.resources, playerRead().apply { amount += changeBy })
     }
 }

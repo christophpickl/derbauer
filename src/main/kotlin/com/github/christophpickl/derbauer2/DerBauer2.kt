@@ -1,13 +1,12 @@
 package com.github.christophpickl.derbauer2
 
 import ch.qos.logback.classic.Level
-import com.github.christophpickl.derbauer2.misc.Keyboard
-import com.github.christophpickl.derbauer2.misc.Prompt
-import com.github.christophpickl.derbauer2.misc.Renderer
-import com.github.christophpickl.derbauer2.misc.Router
-import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.ui.Keyboard
 import com.github.christophpickl.derbauer2.ui.MainFrame
 import com.github.christophpickl.derbauer2.ui.MainTextArea
+import com.github.christophpickl.derbauer2.ui.Prompt
+import com.github.christophpickl.derbauer2.ui.Renderer
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import javax.swing.SwingUtilities
 
@@ -17,7 +16,7 @@ object DerBauer2 {
     @JvmStatic
     fun main(args: Array<String>) {
         initLogging()
-        State.reset()
+        Model.reset()
 
         val prompt = Prompt()
         val text = MainTextArea()

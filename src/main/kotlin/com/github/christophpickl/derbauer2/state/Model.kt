@@ -1,10 +1,11 @@
 package com.github.christophpickl.derbauer2.state
 
 import com.github.christophpickl.derbauer.model.History
+import com.github.christophpickl.derbauer2.Screen
 import com.github.christophpickl.derbauer2.domain.HomeScreen
-import com.github.christophpickl.derbauer2.misc.Screen
+import com.github.christophpickl.derbauer2.misc.Stringifier
 
-object State {
+object Model {
 
     lateinit var screen: Screen
     lateinit var global: Global
@@ -27,4 +28,6 @@ object State {
         player = Player()
         history = History()
     }
+
+    override fun toString() = Stringifier.stringify(this)
 }

@@ -1,7 +1,10 @@
-package com.github.christophpickl.derbauer2.misc
+package com.github.christophpickl.derbauer2.ui
 
 import com.github.christophpickl.derbauer.logic.beep
-import com.github.christophpickl.derbauer2.state.State
+import com.github.christophpickl.derbauer2.misc.Listener
+import com.github.christophpickl.derbauer2.misc.Subscription
+import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
+import com.github.christophpickl.derbauer2.state.Model
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 
@@ -36,7 +39,7 @@ class Prompt : KeyboardListener {
     var enteredText = ""
 
     override fun onKeyboard(event: KeyboardEvent) {
-        when (State.screen.promptMode) {
+        when (Model.screen.promptMode) {
             PromptMode.Off -> {
                 // do nothing
             }
