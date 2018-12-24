@@ -15,7 +15,7 @@ data class PlayerResources(
     val allTradeables = propertiesOfType<PlayerResources, TradeableResource>(this).ordered()
 }
 
-interface Resource : Amountable, Ordered, Labeled
+interface Resource : Amountable, Ordered, MultiLabeled
 
 interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int

@@ -37,7 +37,7 @@ class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(build
     companion object {
         private fun buildMessage(choice: TradableChoice): String {
             val info = when (choice.buySell) {
-                BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossible}"
+                BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossibleAmount}"
                 BuySell.Sell -> "You have ${choice.resource.sellPossible} available."
             }
             val verb = when (choice.buySell) {

@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javax.inject.Inject
 
+@Deprecated(message = "v2")
 class Keyboard @Inject constructor(
     private val bus: EventBus
 ) {
@@ -38,4 +39,5 @@ class Keyboard @Inject constructor(
 
 }
 
+@Deprecated(message = "v2")
 object KeyboardEnterEvent

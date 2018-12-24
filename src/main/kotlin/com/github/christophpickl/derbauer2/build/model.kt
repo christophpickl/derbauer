@@ -5,13 +5,13 @@ import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Descriptable
-import com.github.christophpickl.derbauer2.model.Labeled
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.model.MultiLabeled
 import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
 
-interface Building : Labeled, Amountable, Ordered, Buyable, Descriptable {
+interface Building : MultiLabeled, Amountable, Ordered, Buyable, Descriptable {
     var landNeeded: Int
 
     val totalLandNeeded get() = landNeeded * amount

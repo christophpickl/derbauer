@@ -10,6 +10,10 @@ data class Global(
 )
 
 interface Labeled {
+    val label: String
+}
+
+interface MultiLabeled {
     val labelSingular: String
     val labelPlural: String
 }
@@ -37,7 +41,7 @@ interface LimitedAmount : Amountable {
 }
 
 interface LimitedBuyableAmount : LimitedAmount, Buyable {
-    override val effectiveBuyPossible get() = Math.min(buyPossible, capacityLeft)
+    override val effectiveBuyPossibleAmount get() = Math.min(buyPossibleAmount, capacityLeft)
 }
 
 interface UsableResource : Amountable {

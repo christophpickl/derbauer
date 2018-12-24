@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.achievement
 import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 class Trade1Achievement() : Achievement(
     message = "Trade Mastery I: Cheaper trade rates"
 ) {
@@ -17,6 +18,7 @@ class Trade1Achievement() : Achievement(
 
 }
 
+@Deprecated(message = "v2")
 class Army1Achievement() : Achievement(
     message = "Military Mastery I: Soldier attack +30%"
 ) {

@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.misc
 import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 class Feature {
     private var castleCondition = Condition({ State.player.people >= if (DEPRECATED_CHEAT_MODE) 10 else 100 })
 
@@ -13,6 +14,7 @@ class Feature {
     }
 }
 
+@Deprecated(message = "v2")
 private class Condition(val predicate: () -> Boolean) {
 
     private var wasEnabled = false

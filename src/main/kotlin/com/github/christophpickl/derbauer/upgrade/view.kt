@@ -6,16 +6,19 @@ import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 enum class UpgradeEnum {
     FarmProductivity
 }
 
+@Deprecated(message = "v2")
 class UpgradeChoice(
     override val enum: Enum<UpgradeEnum>,
     override val label: String
 ) : EnummedChoice<UpgradeEnum>
 
 
+@Deprecated(message = "v2")
 class UpgradeScreen() : ChooseScreen<UpgradeChoice> {
 
     private val messages = listOf(
@@ -29,6 +32,7 @@ class UpgradeScreen() : ChooseScreen<UpgradeChoice> {
         UpgradeChoice(UpgradeEnum.FarmProductivity, "Farm productivity ... " +
             "${formatNumber(State.prices.upgrades.farmProductivity, 3)} $ (increases food output by +${State.upgrades.increaseFarmProduction})")
     )
+
     override fun onCallback(callback: ScreenCallback) {
         callback.onUpgrade(this)
     }

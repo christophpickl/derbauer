@@ -7,6 +7,7 @@ import com.github.christophpickl.derbauer.misc.HomeScreen
 import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging
 
+@Deprecated(message = "v2")
 class UpgradeController : ChooseScreenController<UpgradeChoice, UpgradeScreen> {
 
     private val log = KotlinLogging.logger {}

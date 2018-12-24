@@ -14,6 +14,8 @@ class HomeScreen : ChooseScreen<HomeChoice>(
     choices = listOf(
         EnumChoice(HomeEnum.Trade, "Trade"),
         EnumChoice(HomeEnum.Build, "Build"),
+        EnumChoice(HomeEnum.Upgrade, "Upgrade"),
+        EnumChoice(HomeEnum.Military, "Military"),
         EnumChoice(HomeEnum.EndTurn, "End Turn")
     )
 ) {
@@ -29,6 +31,8 @@ typealias HomeChoice = EnumChoice<HomeEnum>
 enum class HomeEnum {
     Trade,
     Build,
+    Upgrade,
+    Military,
     EndTurn
 }
 

@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.model
 import com.github.christophpickl.derbauer.army.Armies
 import com.github.christophpickl.derbauer.build.Buildings
 
+@Deprecated(message = "v2")
 class Player {
     var gold = 0
     val goldFormatted get() = ResourceFormats.formatGold(gold)

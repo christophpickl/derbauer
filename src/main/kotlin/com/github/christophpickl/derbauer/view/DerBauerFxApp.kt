@@ -5,6 +5,7 @@ import com.google.inject.Guice
 import tornadofx.*
 import kotlin.reflect.KClass
 
+@Deprecated(message = "v2")
 class DerBauerFxApp : App(
     primaryView = MainView::class,
     stylesheet = Styles::class

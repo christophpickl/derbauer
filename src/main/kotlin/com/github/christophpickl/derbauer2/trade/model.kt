@@ -5,8 +5,8 @@ import com.github.christophpickl.derbauer2.model.Model
 
 interface Buyable {
     var buyPrice: Int
-    val buyPossible get() = Math.max(0, Model.gold / buyPrice)
-    val effectiveBuyPossible get() = buyPossible
+    val buyPossibleAmount get() = Math.max(0, Model.gold / buyPrice)
+    val effectiveBuyPossibleAmount get() = buyPossibleAmount
 }
 
 interface Sellable {

@@ -11,7 +11,7 @@ import mu.KotlinLogging.logger
 import tornadofx.*
 
 object RenderEvent
-
+@Deprecated(message = "v2")
 class MainView : View() {
 
     lateinit var mainTextArea: TextArea
@@ -29,6 +29,7 @@ class MainView : View() {
     }
 }
 
+@Deprecated(message = "v2")
 class MainViewFxController : Controller() {
 
     private val logg = logger {}

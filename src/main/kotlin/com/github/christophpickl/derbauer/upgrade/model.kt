@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.upgrade
 
-
+@Deprecated(message = "v2")
 class UpgradePrices {
     var farmProductivity = 0
 
@@ -12,6 +12,7 @@ class UpgradePrices {
 
 }
 
+@Deprecated(message = "v2")
 class UpgradeMeta {
     var increaseFarmProduction = 0
 

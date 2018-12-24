@@ -6,24 +6,32 @@ import com.github.christophpickl.derbauer2.endturn.EndTurnCallback
 import com.github.christophpickl.derbauer2.endturn.EndTurnController
 import com.github.christophpickl.derbauer2.home.HomeController
 import com.github.christophpickl.derbauer2.home.HomeScreenCallback
+import com.github.christophpickl.derbauer2.military.MilitaryCallback
+import com.github.christophpickl.derbauer2.military.MilitaryController
 import com.github.christophpickl.derbauer2.trade.TradeCallback
 import com.github.christophpickl.derbauer2.trade.TradeController
+import com.github.christophpickl.derbauer2.upgrade.UpgradeCallback
+import com.github.christophpickl.derbauer2.upgrade.UpgradeController
 
 interface ScreenCallback :
     HomeScreenCallback,
     TradeCallback,
     BuildCallback,
+    UpgradeCallback,
+    MilitaryCallback,
     EndTurnCallback
-// army
-// upgrade
 
 class Registry(
     private val homeController: HomeController = HomeController(),
     private val tradeController: TradeController = TradeController(),
     private val buildController: BuildController = BuildController(),
+    private val upgradeController: UpgradeController = UpgradeController(),
+    private val militaryController: MilitaryController = MilitaryController(),
     private val endTurnController: EndTurnController = EndTurnController()
 ) : ScreenCallback,
     HomeScreenCallback by homeController,
     TradeCallback by tradeController,
     BuildCallback by buildController,
+    UpgradeCallback by upgradeController,
+    MilitaryCallback by militaryController,
     EndTurnCallback by endTurnController
