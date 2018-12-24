@@ -33,7 +33,9 @@ object Model {
             player.resources.land.amount = value
         }
 
-    val availableLand: Int get() = player.resources.land.unusedAmount
+    val foodCapacityLeft: Int get() = player.resources.food.capacityLeft
+    val peopleCapacityLeft: Int get() = player.resources.people.capacityLeft
+    val landUnused: Int get() = player.resources.land.unusedAmount
     //</editor-fold>
 
     fun goHome() {

@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer2.ui.Alert
 import com.github.christophpickl.derbauer2.ui.AlertType
 import com.github.christophpickl.derbauer2.ui.screen.Choice
 
-fun <C : Choice> validateChoice(validations: List<ChoiceValidation<C>>, choice: C): Boolean {
+fun <C : Choice> validateChoice(choice: C, validations: List<ChoiceValidation<C>>): Boolean {
     val failedValidations = validations.filter { !it.condition(choice) }
     if (failedValidations.isEmpty()) {
         return true

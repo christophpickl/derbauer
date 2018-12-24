@@ -6,6 +6,7 @@ import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 enum class BuildEnum {
     House,
     Granary,
@@ -13,6 +14,7 @@ enum class BuildEnum {
     Castle
 }
 
+@Deprecated(message = "v2")
 class BuildChoice(
     override val enum: Enum<BuildEnum>,
     override val label: String
@@ -32,7 +34,6 @@ class BuildScreen() : ChooseScreen<BuildChoice> {
         }
 
     private val colWidth = 3
-    // TODO make reusable
     override val choices
         get() = mutableListOf(
             //@formatter:off

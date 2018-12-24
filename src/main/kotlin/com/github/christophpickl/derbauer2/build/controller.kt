@@ -1,6 +1,5 @@
 package com.github.christophpickl.derbauer2.build
 
-import com.github.christophpickl.derbauer2.misc.ChoiceValidation
 import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.Model
@@ -8,23 +7,23 @@ import com.github.christophpickl.derbauer2.ui.AlertType
 
 class BuildController : BuildCallback {
 
-    private val validations = listOf<ChoiceValidation<BuildChoice>>(
+    override fun doBuild(choice: BuildChoice) {
+        if (isValid(choice)) {
+            choice.building.amount++
+            Model.gold -= choice.building.buyPrice
+            Model.goHome()
+        }
+    }
+
+    private fun isValid(choice: BuildChoice) = validateChoice(choice, listOf(
         SimpleChoiceValidation(
             condition = { Model.gold >= it.building.buyPrice },
             alertType = AlertType.NotEnoughGold
         ),
         SimpleChoiceValidation(
-            condition = { Model.availableLand >= it.building.landNeeded },
+            condition = { Model.landUnused >= it.building.landNeeded },
             alertType = AlertType.NotEnoughLand
         )
-    )
-
-    override fun doBuild(choice: BuildChoice) {
-        if (validateChoice(validations, choice)) {
-            choice.building.playerChange(+1)
-            Model.gold -= choice.building.buyPrice
-            Model.goHome()
-        }
-    }
+    ))
 
 }

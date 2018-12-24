@@ -24,11 +24,28 @@ class History(
     override fun toString() = Stringifier.stringify(this)
 }
 
-interface Buyable {
-    var buyPrice: Int
-}
-
 // TODO also apply to trade resources
 interface Amountable {
     var amount: Int
+}
+
+interface LimitedAmount : Amountable {
+    val limitAmount: Int
+    val capacityLeft: Int get() = limitAmount - amount
+}
+
+interface UsableResource : Amountable {
+    val unusedAmount: Int
+    val usedAmount: Int
+}
+
+interface Descriptable {
+    val description: String
+}
+
+fun <E : Ordered> List<E>.ordered(): List<E> =
+    sortedBy { it.order }
+
+interface Ordered {
+    val order: Int
 }

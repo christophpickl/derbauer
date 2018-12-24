@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer2.model.LimitedResource
+import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.PlayerResource
 import com.github.christophpickl.derbauer2.model.UsableResource
@@ -17,7 +17,7 @@ class Renderer(
         }
         val content = Model.screen.renderContent
 
-        val info = Model.player.resources.all.joinToString(" ") { it.formatInfo() }
+        val info = Model.player.resources.all.joinToString("  ") { it.formatInfo() }
 
         val board = Board()
         board.printHeader("Day: ${Model.global.day}", info)
@@ -27,9 +27,9 @@ class Renderer(
     }
 
     private fun PlayerResource.formatInfo(): String =
-        "${type.labelPlural}: " + when (this) {
+        "$labelPlural: " + when (this) {
             is UsableResource -> "$usedAmount / $amount"
-            is LimitedResource -> "$amount / $limitAmount"
+            is LimitedAmount -> "$amount / $limitAmount"
             else -> amount
         }
 

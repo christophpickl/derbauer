@@ -9,10 +9,15 @@ import com.github.christophpickl.derbauer2.ui.beep
 
 abstract class ChooseScreen<C : Choice>(
     messages: List<String>,
-    val choices: List<C>
+    val choices: List<C>,
+    val additionalContent: String? = null
 ) : Screen {
 
-    override val renderContent = "${messages.random()}\n\nChoose:\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}"
+    override val renderContent =
+        "${messages.random()}\n\n" +
+            "Choose:\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}" +
+            if (additionalContent != null) "\n\n$additionalContent" else ""
+    
     override val promptMode = PromptMode.Input
 
     abstract fun onCallback(callback: ScreenCallback, choice: C)

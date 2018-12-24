@@ -1,81 +1,82 @@
 package com.github.christophpickl.derbauer2.model
 
-import com.github.christophpickl.derbauer2.misc.ReflectPlayer
-import com.github.christophpickl.derbauer2.misc.ReflectPlayerImpl
+import com.github.christophpickl.derbauer2.CHEAT_MODE
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.trade.Buyable
 import com.github.christophpickl.derbauer2.trade.Tradeable
-import kotlin.reflect.KMutableProperty1
 
-interface ResourceType : Labeled, ReflectPlayer
-
-object ResourceTypes {
-    val gold = GoldResourceType()
-    val food = FoodResourceType()
-    val people = PeopleResourceType()
-    val land = LandResourceType()
-
-    val all = propertiesOfType<ResourceTypes, ResourceType>(this)
-    val tradeables = propertiesOfType<ResourceTypes, TradeableResourceType>(this)
+data class PlayerResources(
+    var gold: GoldResource = GoldResource(),
+    var food: FoodResource = FoodResource(),
+    var people: PeopleResource = PeopleResource(),
+    var land: LandResource = LandResource()
+) {
+    val all = propertiesOfType<PlayerResources, PlayerResource>(this).ordered()
+    val allTradeables = propertiesOfType<PlayerResources, TradeableResourceType>(this).ordered()
 }
 
-interface TradeableResourceType : ResourceType, Tradeable {
-    val buyPossible: Int
+interface IResource : Amountable, Ordered, Labeled
+
+interface TradeableResourceType : IResource, Tradeable {
     val sellPossible: Int
 }
 
-class FoodResourceType : BaseResourceType(
+interface LimitedBuyableResource : Buyable, LimitedAmount {
+    override val effectiveBuyPossible get() = Math.min(buyPossible, capacityLeft)
+}
+
+class FoodResource : PlayerResource(
     labelSingular = "food",
     labelPlural = "food",
-    playerProperty = PlayerResources::food
-), TradeableResourceType {
+    amount = if (CHEAT_MODE) 800 else 300
+), LimitedBuyableResource, TradeableResourceType {
+    override val limitAmount get() = Model.player.buildings.granaries.totalFoodCapacity
     override var buyPrice: Int = 15
     override var sellPrice: Int = 9
-
-    override val buyPossible get() = Model.gold / buyPrice // FIXME granary!
-    override val sellPossible get() = Math.max(0, playerRead())
-
+    override val sellPossible get() = Math.max(0, amount)
     override fun toString() = Stringifier.stringify(this)
 }
 
-class GoldResourceType : BaseResourceType(
+class GoldResource : PlayerResource(
     labelSingular = "gold",
     labelPlural = "gold",
-    playerProperty = PlayerResources::gold
+    amount = if (CHEAT_MODE) 500 else 100
 ) {
     override fun toString() = Stringifier.stringify(this)
 }
 
-class PeopleResourceType : BaseResourceType(
+class PeopleResource : PlayerResource(
     labelSingular = "people",
     labelPlural = "people",
-    playerProperty = PlayerResources::people
-) {
+    amount = if (CHEAT_MODE) 9 else 2
+), LimitedAmount {
+    override val limitAmount get() = Model.player.buildings.houses.totalPeopleCapacity
     override fun toString() = Stringifier.stringify(this)
 }
 
-class LandResourceType(
-) : BaseResourceType(
+class LandResource : PlayerResource(
     labelSingular = "land",
     labelPlural = "land",
-    playerProperty = PlayerResources::land
-), TradeableResourceType {
+    amount = if (CHEAT_MODE) 100 else 5
+), UsableResource, TradeableResourceType {
+    override val unusedAmount get() = amount - usedAmount
+    override val usedAmount get() = Model.player.buildings.all.sumBy { it.totalLandNeeded }
 
     override var buyPrice: Int = 50
     override var sellPrice: Int = 40
-
-    override val buyPossible get() = Model.gold / buyPrice
-    override val sellPossible get() = Model.availableLand
-
+    override val sellPossible get() = Model.landUnused
     override fun toString() = Stringifier.stringify(this)
 }
 
-abstract class BaseResourceType(
-    final override val labelSingular: String,
-    final override val labelPlural: String,
-    playerProperty: KMutableProperty1<PlayerResources, out PlayerResource>,
-    reflect: ReflectPlayer = ReflectPlayerImpl(
-        host = lazy { Model.player.resources },
-        playerProperty = playerProperty
-    )
-) : ResourceType, ReflectPlayer by reflect
+abstract class PlayerResource(
+    override val labelSingular: String,
+    override val labelPlural: String,
+    override var amount: Int
+) : IResource {
+    companion object {
+        private var counter = 0
+    }
+    override val order = counter++
+    override fun toString() = Stringifier.stringify(this)
+}

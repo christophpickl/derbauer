@@ -15,18 +15,21 @@ object Alert {
     private val log = logger {}
     lateinit var glassPane: JPanel
     private var currentTimer: Timer? = null
-    private val label = JLabel("")
+    private val label = JLabel("").apply {
+        font = DEFAULT_FONT
+    }
 
     val panel = JPanel().apply {
         isOpaque = false
         val container = JPanel()
         container.add(label)
         container.background = Color(80, 190, 90, 70)
-        container.border = BorderFactory.createEmptyBorder(4, 0, 0, 0)
+        container.border = BorderFactory.createEmptyBorder(30, 0, 0, 0)
         layout = BorderLayout()
-        add(vgap(225), BorderLayout.NORTH)
+        val vgap = 360
+        add(vgap(vgap), BorderLayout.NORTH)
         add(container, BorderLayout.CENTER)
-        add(vgap(222), BorderLayout.SOUTH)
+        add(vgap(vgap), BorderLayout.SOUTH)
     }
 
     fun show(type: AlertType) {
@@ -59,6 +62,7 @@ object Alert {
 
 sealed class AlertType(val message: String) {
     object NotEnoughGold : AlertType("Not enough gold!")
+    object NotEnoughCapacity : AlertType("Not enough capacity!")
     object NotEnoughLand : AlertType("Not enough land!")
     object NotEnoughResourcesToSell : AlertType("Not resources to sell!")
 //    class CustomAlert(message: String) : AlertType(message)

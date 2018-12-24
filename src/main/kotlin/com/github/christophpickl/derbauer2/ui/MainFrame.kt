@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer2.ui
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Component
-import java.awt.Font
 import javax.swing.BorderFactory
 import javax.swing.JFrame
 import javax.swing.JPanel
@@ -49,6 +48,6 @@ class MainTextArea() : JTextArea() {
         isOpaque = false
         columns = VIEW_SIZE.first
         rows = VIEW_SIZE.second
-        font = Font("Monaco", Font.BOLD, 20)
+        font = DEFAULT_FONT
     }
 }

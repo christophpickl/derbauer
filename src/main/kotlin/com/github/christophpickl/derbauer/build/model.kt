@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.build
 import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 data class Buildings(
     var houses: Int = 0,
     var granaries: Int = 0,
@@ -28,6 +29,7 @@ data class Buildings(
     }
 }
 
+@Deprecated(message = "v2")
 data class BuildingsMeta(
     var houseCapacity: Int = 0,
     var granaryCapacity: Int = 0,

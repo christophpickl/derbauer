@@ -3,7 +3,7 @@ package com.github.christophpickl.derbauer2.trade
 import com.github.christophpickl.derbauer2.HomeScreen
 import com.github.christophpickl.derbauer2.ScreenCallback
 import com.github.christophpickl.derbauer2.model.BuySell
-import com.github.christophpickl.derbauer2.model.ResourceTypes
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResourceType
 import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
 import com.github.christophpickl.derbauer2.ui.screen.Choice
@@ -16,7 +16,7 @@ class TradeScreen : ChooseScreen<TradableChoice>(
         "Got anything useful?",
         "Psssst, over here! Looking for something?"
     ),
-    choices = ResourceTypes.tradeables.flatMap {
+    choices = Model.player.resources.allTradeables.flatMap {
         listOf(TradableChoice(it, BuySell.Buy), TradableChoice(it, BuySell.Sell))
     }
 ) {
@@ -37,7 +37,7 @@ class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(build
     companion object {
         private fun buildMessage(choice: TradableChoice): String {
             val info = when (choice.buySell) {
-                BuySell.Buy -> "You can afford at maximum: ${choice.resource.buyPossible}"
+                BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossible}"
                 BuySell.Sell -> "You have ${choice.resource.sellPossible} available."
             }
             val verb = when (choice.buySell) {
@@ -49,6 +49,7 @@ class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(build
                 info
         }
     }
+
     override val cancelSupport = CancelSupport.Enabled { TradeScreen() }
     override fun onCallback(callback: ScreenCallback, number: Int) {
         callback.doTrade(choice, number)

@@ -1,76 +1,90 @@
 package com.github.christophpickl.derbauer2.build
 
-import com.github.christophpickl.derbauer2.misc.Ordered
-import com.github.christophpickl.derbauer2.misc.ReflectPlayer
-import com.github.christophpickl.derbauer2.misc.ReflectPlayerImpl
+import com.github.christophpickl.derbauer2.CHEAT_MODE
 import com.github.christophpickl.derbauer2.misc.Stringifier
-import com.github.christophpickl.derbauer2.misc.ordered
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
-import com.github.christophpickl.derbauer2.model.Buyable
+import com.github.christophpickl.derbauer2.model.Amountable
+import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Labeled
-import com.github.christophpickl.derbauer2.model.Model
-import kotlin.reflect.KMutableProperty1
+import com.github.christophpickl.derbauer2.model.Ordered
+import com.github.christophpickl.derbauer2.model.ordered
+import com.github.christophpickl.derbauer2.trade.Buyable
 
-interface BuildingType : Buyable, Labeled, ReflectPlayer, Ordered {
+interface Building : Labeled, Amountable, Ordered, Buyable, Descriptable {
     var landNeeded: Int
+
+    val totalLandNeeded get() = landNeeded * amount
 }
 
-object BuildingTypes {
-    val house = HouseType()
-    val granary = GranaryType()
-    val farm = FarmType()
-    // MINOR castle
-
-    val all = propertiesOfType<BuildingTypes, BuildingType>(this).ordered()
+data class PlayerBuildings(
+    var houses: HouseBuilding = HouseBuilding(),
+    var granaries: GranaryBuilding = GranaryBuilding(),
+    var farms: FarmBuilding = FarmBuilding()
+) {
+    val all = propertiesOfType<PlayerBuildings, Building>(this).ordered()
 }
 
-/* FIXME building meta
-farmProduction = 2
-castlePeopleCapacity = 40
- */
-class HouseType : BaseBuildingType<HouseType>(
+interface PeopleCapacityExtender : Amountable {
+    var peopleCapacity: Int
+    val totalPeopleCapacity get() = peopleCapacity * amount
+}
+
+interface FoodCapacityExtender : Amountable {
+    var foodCapacity: Int
+    val totalFoodCapacity get() = foodCapacity * amount
+}
+
+interface FoodProducer {
+    var producesFood: Int
+}
+
+class HouseBuilding : AbstractBuilding(
     labelSingular = "house",
     labelPlural = "houses",
+    amount = if (CHEAT_MODE) 5 else 1,
     landNeeded = 1,
-    buyPrice = 15,
-    playerProperty = PlayerBuildings::houses
-) {
-    var peopleCapacity = 5
+    buyPrice = 15
+), PeopleCapacityExtender {
+    override var peopleCapacity = 5
+    override val descriptionProvider get() = { "adds $peopleCapacity more space for your people" }
 }
 
-class GranaryType : BaseBuildingType<GranaryType>(
+class GranaryBuilding : AbstractBuilding(
     labelSingular = "granary",
     labelPlural = "granaries",
     landNeeded = 1,
     buyPrice = 30,
-    playerProperty = PlayerBuildings::granaries
-) {
-    var foodCapacity = 100
+    amount = if (CHEAT_MODE) 8 else 1
+), FoodCapacityExtender {
+    override var foodCapacity = 100
+    override val descriptionProvider get() = { "adds $foodCapacity more food storage" }
+
 }
 
-class FarmType : BaseBuildingType<FarmType>(
+class FarmBuilding : AbstractBuilding(
     labelSingular = "farm",
     labelPlural = "farms",
     landNeeded = 2,
     buyPrice = 50,
-    playerProperty = PlayerBuildings::farms
-)
+    amount = if (CHEAT_MODE) 10 else 1
+), FoodProducer {
+    override var producesFood = 2
+    override val descriptionProvider get() = { "produces +$producesFood food each day" }
+}
 
-abstract class BaseBuildingType<T : BuildingType>(
+abstract class AbstractBuilding(
     final override val labelSingular: String,
     final override val labelPlural: String,
+    override var amount: Int,
     final override var landNeeded: Int,
-    final override var buyPrice: Int,
-    playerProperty: KMutableProperty1<PlayerBuildings, out PlayerBuilding<T>>,
-    reflect: ReflectPlayer = ReflectPlayerImpl(
-        host = lazy { Model.player.buildings },
-        playerProperty = playerProperty
-    )
-) : BuildingType, ReflectPlayer by reflect {
+    final override var buyPrice: Int
+) : Building {
     companion object {
         private var counter = 0
     }
 
+    protected abstract val descriptionProvider: () -> String
+    final override val description get() = descriptionProvider()
     override val order = counter++
     override fun toString() = Stringifier.stringify(this)
 }
