@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.upgrade
 
 import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Labeled
@@ -39,4 +40,6 @@ class FarmProductivityUpgrade : Upgrade {
     }
 
     var foodProductionIncrease = VALUES.upgradeFarmProductionIncrease
+
+    override fun toString() = Stringifier.stringify(this)
 }

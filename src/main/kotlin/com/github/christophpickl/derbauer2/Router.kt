@@ -8,7 +8,7 @@ import mu.KotlinLogging.logger
 
 class Router(
     private val renderer: Renderer,
-    private val controllerRegistry: Registry = Registry()
+    private val controllerRegistry: Registry = Registry(renderer)
 ) : PromptListener, ScreenCallback by controllerRegistry {
 
     private val log = logger {}

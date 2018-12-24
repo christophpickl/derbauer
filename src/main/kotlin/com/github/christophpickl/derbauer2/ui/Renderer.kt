@@ -5,6 +5,7 @@ import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.PlayerResource
 import com.github.christophpickl.derbauer2.model.UsableResource
 import com.github.christophpickl.kpotpourri.common.string.times
+
 class Renderer(
     private val text: MainTextArea,
     private val prompt: Prompt

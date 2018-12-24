@@ -65,6 +65,7 @@ sealed class AlertType(val message: String) {
     object NotEnoughCapacity : AlertType("Not enough capacity!")
     object NotEnoughUnused : AlertType("Not enough unused!")
     object NotEnoughLand : AlertType("Not enough land!")
+    object NotEnoughPeople : AlertType("Not enough people!")
     object NotEnoughResourcesToSell : AlertType("Not enough resources to sell!")
 //    class CustomAlert(message: String) : AlertType(message)
 }
