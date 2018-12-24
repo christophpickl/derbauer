@@ -3,7 +3,7 @@ package com.github.christophpickl.derbauer.happening
 import com.github.christophpickl.derbauer.logic.Screen
 import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.SimpleMessageScreen
-import com.github.christophpickl.derbauer.model.CHEAT_MODE
+import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import mu.KotlinLogging.logger
 import kotlin.random.Random
 
@@ -26,7 +26,7 @@ class Happener {
     fun letItHappen(): Screen? {
         happenings.forEach { it.coolUpWarmUp() }
 
-        val prob = if (CHEAT_MODE) 100.0 else Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
+        val prob = if (DEPRECATED_CHEAT_MODE) 100.0 else Math.min(baseProb, (baseProb / 10 * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
         if (nextRandom0To100() < prob) {
             turnsNothingHappened = 0

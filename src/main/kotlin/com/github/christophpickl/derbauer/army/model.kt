@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.army
 
-import com.github.christophpickl.derbauer.model.CHEAT_MODE
+import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 
 val State.affordableSoldiers get() = Math.min(player.gold / prices.army.soldier, player.people)
@@ -18,7 +18,7 @@ class Armies {
     fun formatAll() = listOf("Soldiers: $soldiers")
 
     fun reset() {
-        soldiers = if (CHEAT_MODE) 10 else 0
+        soldiers = if (DEPRECATED_CHEAT_MODE) 10 else 0
     }
 
     override fun toString() = "Armies{soldiers=$soldiers}"

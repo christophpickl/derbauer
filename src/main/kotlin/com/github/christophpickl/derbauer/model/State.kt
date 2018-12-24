@@ -8,9 +8,10 @@ import com.github.christophpickl.derbauer.logic.Prompt
 import com.github.christophpickl.derbauer.logic.Screen
 import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.upgrade.UpgradeMeta
+import com.github.christophpickl.derbauer2.misc.Stringifier
 
 @Deprecated(message = "v2")
-const val CHEAT_MODE = true
+const val DEPRECATED_CHEAT_MODE = true
 
 @Deprecated(message = "v2")
 object State {
@@ -33,17 +34,6 @@ object State {
     val maxPeople get() = player.buildings.houses * buildings.houseCapacity
     val freePeople get() = maxPeople - player.people
 
-    override fun toString() = "Model{" +
-        "day=$day, " +
-        "screen=${screen.javaClass.simpleName}, " +
-        "buildings=$buildings, " +
-        "player=$player, " +
-        "prices=$prices, " +
-        "meta=$meta, " +
-        "history=$history," +
-        "upgrades=$upgrades" +
-        "}"
-
     init {
         reset()
     }
@@ -59,6 +49,8 @@ object State {
         upgrades.reset()
         feature.reset()
     }
+
+    override fun toString() = Stringifier.stringify(this)
 }
 
 class StateMeta {
@@ -68,10 +60,11 @@ class StateMeta {
         reproductionRate = 0.1
     }
 
-    override fun toString() = "StateMeta{reproductionRate=$reproductionRate}"
+    override fun toString() = Stringifier.stringify(this)
 
 }
 
+@Deprecated(message = "v2")
 class History {
 
     var traded = 0
@@ -82,5 +75,5 @@ class History {
         attacked = 0
     }
 
-    override fun toString() = "History{traded=$traded, attacked=$attacked}"
+    override fun toString() = Stringifier.stringify(this)
 }

@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.trade
 
-import com.github.christophpickl.derbauer2.state.BuySell
-import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.model.BuySell
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.Alert
 import com.github.christophpickl.derbauer2.ui.AlertType
 import mu.KotlinLogging
@@ -42,7 +42,7 @@ class TradeController : TradeCallback {
                 }
             }
             BuySell.Sell -> {
-                if (choice.resource.playerRead().amount < amount) {
+                if (choice.resource.playerRead() < amount) {
                     Alert.show(AlertType.NotEnoughResourcesToSell)
                     false
                 } else {

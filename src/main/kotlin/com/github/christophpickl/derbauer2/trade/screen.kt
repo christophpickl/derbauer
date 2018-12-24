@@ -1,14 +1,14 @@
 package com.github.christophpickl.derbauer2.trade
 
-import com.github.christophpickl.derbauer2.CancelSupport
-import com.github.christophpickl.derbauer2.Choice
-import com.github.christophpickl.derbauer2.ChooseScreen
-import com.github.christophpickl.derbauer2.InputScreen
+import com.github.christophpickl.derbauer2.HomeScreen
 import com.github.christophpickl.derbauer2.ScreenCallback
-import com.github.christophpickl.derbauer2.domain.HomeScreen
-import com.github.christophpickl.derbauer2.state.BuySell
-import com.github.christophpickl.derbauer2.state.ResourceTypes
-import com.github.christophpickl.derbauer2.state.TradeableResourceType
+import com.github.christophpickl.derbauer2.model.BuySell
+import com.github.christophpickl.derbauer2.model.ResourceTypes
+import com.github.christophpickl.derbauer2.model.TradeableResourceType
+import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
+import com.github.christophpickl.derbauer2.ui.screen.Choice
+import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
+import com.github.christophpickl.derbauer2.ui.screen.InputScreen
 
 class TradeScreen : ChooseScreen<TradableChoice>(
     messages = listOf(
@@ -30,7 +30,7 @@ data class TradableChoice(
     val resource: TradeableResourceType,
     val buySell: BuySell
 ) : Choice {
-    override val label: String = "${buySell.labelCapital} ${resource.labelPlural} ... ${resource.priceFor(buySell)} $"
+    override val label: String = "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.priceFor(buySell)} $"
 }
 
 class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(buildMessage(choice)) {
@@ -44,7 +44,7 @@ class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(build
                 BuySell.Buy -> "costs"
                 BuySell.Sell -> "brings"
             }
-            return "How much ${choice.resource.labelPlural} do you wanna ${choice.buySell.labelSmall}?\n\n" +
+            return "How much ${choice.resource.labelPlural} do you wanna ${choice.buySell.label}?\n\n" +
                 "1 ${choice.resource.labelSingular} $verb ${choice.resource.priceFor(choice.buySell)} gold.\n\n" +
                 info
         }

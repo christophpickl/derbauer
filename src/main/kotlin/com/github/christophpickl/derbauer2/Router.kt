@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2
 
-import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptListener
 import com.github.christophpickl.derbauer2.ui.Renderer

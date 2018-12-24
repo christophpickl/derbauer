@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging
 import kotlin.reflect.KMutableProperty1
 
+@Deprecated(message = "v2")
 class BuildController : ChooseScreenController<BuildChoice, BuildScreen> {
 
     private val log = KotlinLogging.logger {}

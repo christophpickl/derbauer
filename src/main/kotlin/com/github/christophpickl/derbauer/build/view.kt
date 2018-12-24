@@ -18,6 +18,7 @@ class BuildChoice(
     override val label: String
 ) : EnummedChoice<BuildEnum>
 
+@Deprecated(message = "v2")
 class BuildScreen() : ChooseScreen<BuildChoice> {
 
     private val messages = listOf(

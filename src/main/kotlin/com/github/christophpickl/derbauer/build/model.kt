@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.build
 
-import com.github.christophpickl.derbauer.model.CHEAT_MODE
+import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 
 data class Buildings(
@@ -21,9 +21,9 @@ data class Buildings(
     }
 
     fun reset() {
-        houses = if (CHEAT_MODE) 5 else 1
-        granaries = if (CHEAT_MODE) 8 else 1
-        farms = if (CHEAT_MODE) 10 else 1
+        houses = if (DEPRECATED_CHEAT_MODE) 5 else 1
+        granaries = if (DEPRECATED_CHEAT_MODE) 8 else 1
+        farms = if (DEPRECATED_CHEAT_MODE) 10 else 1
         castles = 0
     }
 }

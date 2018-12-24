@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.kpotpourri.common.string.times
 
 class Renderer(

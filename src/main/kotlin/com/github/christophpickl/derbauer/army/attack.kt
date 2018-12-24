@@ -5,7 +5,7 @@ import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.decrement
 import com.github.christophpickl.derbauer.logic.randomize
 import com.github.christophpickl.derbauer.misc.HomeScreen
-import com.github.christophpickl.derbauer.model.CHEAT_MODE
+import com.github.christophpickl.derbauer.model.DEPRECATED_CHEAT_MODE
 import com.github.christophpickl.derbauer.model.State
 import com.github.christophpickl.derbauer.view.RenderEvent
 import com.google.common.eventbus.EventBus
@@ -77,7 +77,7 @@ private class AttackThread(
                   Enemies: ${context.enemies}
                 """.trimIndent()
             bus.post(RenderEvent)
-            Thread.sleep(if (CHEAT_MODE) 200 else 600)
+            Thread.sleep(if (DEPRECATED_CHEAT_MODE) 200 else 600)
         }
         val won = context.enemies == 0
         val additionalText = if (won) {
@@ -91,7 +91,7 @@ private class AttackThread(
         }
         context.message = "You ${if (won) "won" else "lost"}!$additionalText"
         bus.post(RenderEvent)
-        Thread.sleep(if (CHEAT_MODE) 400 else 2_000)
+        Thread.sleep(if (DEPRECATED_CHEAT_MODE) 400 else 2_000)
 
         State.history.attacked++
         State.screen = HomeScreen()

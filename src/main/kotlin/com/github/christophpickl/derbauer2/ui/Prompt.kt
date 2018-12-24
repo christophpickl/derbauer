@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer.logic.beep
 import com.github.christophpickl.derbauer2.misc.Listener
 import com.github.christophpickl.derbauer2.misc.Subscription
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
-import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.model.Model
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 

@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2
 
 import ch.qos.logback.classic.Level
-import com.github.christophpickl.derbauer2.state.Model
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.Keyboard
 import com.github.christophpickl.derbauer2.ui.MainFrame
 import com.github.christophpickl.derbauer2.ui.MainTextArea
