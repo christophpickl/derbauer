@@ -21,7 +21,7 @@ object BuildingTypes {
 
 class HouseType(
     reflect: ReflectPlayerImpl<PlayerBuildings, PlayerBuilding> = ReflectPlayerImpl(
-        host = Model.player.buildings,
+        host = lazy { Model.player.buildings },
         playerProperty = PlayerBuildings::houses
     )
 ) : BuildingType, ReflectPlayer by reflect {

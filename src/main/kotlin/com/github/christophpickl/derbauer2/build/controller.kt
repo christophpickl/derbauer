@@ -10,11 +10,11 @@ class BuildController : BuildCallback {
 
     private val validations = listOf<ChoiceValidation<BuildChoice>>(
         SimpleChoiceValidation(
-            condition = { it.building.buyPrice > Model.gold },
+            condition = { Model.gold >= it.building.buyPrice },
             alertType = AlertType.NotEnoughGold
         ),
         SimpleChoiceValidation(
-            condition = { it.building.landNeeded > Model.availableLand },
+            condition = { Model.availableLand >= it.building.landNeeded },
             alertType = AlertType.NotEnoughLand
         )
     )
@@ -28,22 +28,4 @@ class BuildController : BuildCallback {
         }
     }
 
-    /* 
-    override fun doTrade(choice: TradableChoice, amount: Int) {
-        log.debug { "doTrade(amount=$amount, choice=$choice)" }
-        val resource = choice.resource
-        val pricePerItem = resource.priceFor(choice.buySell)
-        val totalPrice = pricePerItem * amount
-
-        if (canTrade(choice, amount, totalPrice)) {
-            val signator = when (choice.buySell) {
-                BuySell.Buy -> +1
-                BuySell.Sell -> -1
-            }
-            resource.playerChange(signator * amount)
-            Model.gold += -1 * signator * totalPrice
-            
-        }
-    }
-     */
 }

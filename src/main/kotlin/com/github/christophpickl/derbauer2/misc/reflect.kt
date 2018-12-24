@@ -9,14 +9,14 @@ interface ReflectPlayer {
 }
 
 class ReflectPlayerImpl<HOST, TARGET : Amountable>(
-    private val host: HOST,
+    private val host: Lazy<HOST>,
     private val playerProperty: KMutableProperty1<HOST, TARGET>
 ) : ReflectPlayer {
 
     override fun playerRead(): Int =
-        playerProperty.get(host).amount
+        playerProperty.get(host.value).amount
 
     override fun playerChange(changeBy: Int) {
-        playerProperty.get(host).amount += changeBy
+        playerProperty.get(host.value).amount += changeBy
     }
 }

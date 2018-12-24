@@ -75,7 +75,7 @@ abstract class BaseResourceType(
     final override val labelPlural: String,
     playerProperty: KMutableProperty1<PlayerResources, PlayerResource>,
     reflect: ReflectPlayer = ReflectPlayerImpl(
-        host = Model.player.resources,
+        host = lazy { Model.player.resources },
         playerProperty = playerProperty
     )
 ) : ResourceType, ReflectPlayer by reflect
