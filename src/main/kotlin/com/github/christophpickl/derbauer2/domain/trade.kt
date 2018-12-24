@@ -14,7 +14,11 @@ import com.github.christophpickl.derbauer2.ui.AlertType
 import mu.KotlinLogging.logger
 
 class TradeScreen : ChooseScreen<TradableChoice>(
-    message = "What do you wanna trade?",
+    messages = listOf(
+        "Try not to get broke, huh?!",
+        "Got anything useful?",
+        "Psssst, over here! Looking for something?"
+    ),
     choices = ResourceTypes.tradeables.flatMap {
         listOf(TradableChoice(it, BuySell.Buy), TradableChoice(it, BuySell.Sell))
     }

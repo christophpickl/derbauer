@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer.model.Player
 import com.github.christophpickl.derbauer.model.State
 import kotlin.reflect.KMutableProperty1
 
+@Deprecated(message = "v2")
 class TradeController : ChooseScreenController<TradeChoice, TradeScreen> {
 
     override fun select(choice: TradeChoice) {
@@ -22,7 +23,6 @@ class TradeController : ChooseScreenController<TradeChoice, TradeScreen> {
         State.screen = nextScreen
     }
 
-    // TODO je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
     fun buyLand(amount: Int) {
         trade(
             isBuying = true,

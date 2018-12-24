@@ -32,11 +32,11 @@ abstract class InfoScreen(message: String) : Screen {
 }
 
 abstract class ChooseScreen<C : Choice>(
-    message: String,
+    messages: List<String>,
     val choices: List<C>
 ) : Screen {
 
-    override val renderContent = "$message\n\nChoose:\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}"
+    override val renderContent = "${messages.random()}\n\nChoose:\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}"
     override val promptMode = PromptMode.Input
 
     abstract fun onCallback(callback: ScreenCallback, choice: C)

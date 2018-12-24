@@ -8,7 +8,11 @@ import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.state.State
 
 class HomeScreen : ChooseScreen<HomeChoice>(
-    message = "This is home, waiting for input",
+    messages = listOf(
+        "What are we up to today?",
+        "What can I do for you, master?",
+        "Your wish is my command."
+    ),
     choices = listOf(
         EnumChoice(HomeEnum.Trade, "Trade"),
         EnumChoice(HomeEnum.EndTurn, "End Turn")

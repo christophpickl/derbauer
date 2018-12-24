@@ -7,6 +7,7 @@ import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.formatNumber
 import com.github.christophpickl.derbauer.model.State
 
+@Deprecated(message = "v2")
 enum class TradeEnum {
     BuyLand,
     SellLand,
@@ -14,12 +15,13 @@ enum class TradeEnum {
     SellFood
 }
 
+@Deprecated(message = "v2")
 class TradeChoice(
     override val enum: Enum<TradeEnum>,
     override val label: String
 ) : EnummedChoice<TradeEnum>
 
-
+@Deprecated(message = "v2")
 class TradeScreen : ChooseScreen<TradeChoice> {
 
     private val messages = listOf(
@@ -45,6 +47,7 @@ class TradeScreen : ChooseScreen<TradeChoice> {
 
 }
 
+@Deprecated(message = "v2")
 class LandBuyScreen : NumberInputScreen {
 
     override val message = "How much land do you wanna buy?\n\n" +
@@ -55,6 +58,7 @@ class LandBuyScreen : NumberInputScreen {
     }
 }
 
+@Deprecated(message = "v2")
 class LandSellScreen : NumberInputScreen {
     override val message = "How much land do you wanna sell?\n\n" +
         "1 for ${State.prices.trade.landSell} gold, you've got ${State.player.landAvailable} land available."
@@ -63,6 +67,7 @@ class LandSellScreen : NumberInputScreen {
     }
 }
 
+@Deprecated(message = "v2")
 class FoodBuyScreen : NumberInputScreen {
     override val message = "How much food do you wanna buy?\n\n" +
         "1 costs ${State.prices.trade.foodBuy} gold, you can afford ${State.affordableFood} food."
@@ -72,6 +77,7 @@ class FoodBuyScreen : NumberInputScreen {
     }
 }
 
+@Deprecated(message = "v2")
 class FoodSellScreen : NumberInputScreen {
     override val message = "How much food do you wanna sell?\n\n" +
         "1 for ${State.prices.trade.foodSell} gold, you've got ${State.player.food} food."

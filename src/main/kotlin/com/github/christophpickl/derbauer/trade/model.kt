@@ -4,9 +4,12 @@ import com.github.christophpickl.derbauer.logic.multiplyBy
 import com.github.christophpickl.derbauer.model.State
 import mu.KotlinLogging
 
+@Deprecated(message = "v2")
 val State.affordableLand get() = player.gold / prices.trade.landBuy
+@Deprecated(message = "v2")
 val State.affordableFood get() = player.gold / prices.trade.foodBuy
 
+@Deprecated(message = "v2")
 class TradePrices {
     private val log = KotlinLogging.logger {}
     var landBuy = 0
