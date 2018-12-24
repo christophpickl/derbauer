@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.logic.service
+package com.github.christophpickl.derbauer.logic
 
 class Prompt {
 

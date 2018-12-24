@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.screens.HomeScreen
+import com.github.christophpickl.derbauer.logic.Size
+import com.github.christophpickl.derbauer.misc.HomeScreen
 import com.github.christophpickl.derbauer.model.State
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
@@ -62,3 +63,5 @@ class MainViewFxController : Controller() {
     }
 
 }
+
+val VIEW_SIZE = Size(width = 100, height = 30)

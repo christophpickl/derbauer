@@ -2,9 +2,11 @@
 
 package com.github.christophpickl.derbauer.model
 
-import com.github.christophpickl.derbauer.logic.screens.Screen
-import com.github.christophpickl.derbauer.logic.screens.UpgradeMeta
-import com.github.christophpickl.derbauer.logic.service.Prompt
+import com.github.christophpickl.derbauer.army.ArmyMeta
+import com.github.christophpickl.derbauer.build.BuildingsMeta
+import com.github.christophpickl.derbauer.logic.Prompt
+import com.github.christophpickl.derbauer.logic.Screen
+import com.github.christophpickl.derbauer.upgrade.UpgradeMeta
 
 const val CHEAT_MODE = true
 

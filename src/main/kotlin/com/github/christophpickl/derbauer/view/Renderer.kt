@@ -1,26 +1,25 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.VIEW_SIZE
+import com.github.christophpickl.derbauer.achievement.AchievementScreen
+import com.github.christophpickl.derbauer.army.ArmyScreen
+import com.github.christophpickl.derbauer.army.HireSoldiersScreen
+import com.github.christophpickl.derbauer.build.BuildScreen
+import com.github.christophpickl.derbauer.happening.HappeningScreen
+import com.github.christophpickl.derbauer.logic.ChooseScreen
+import com.github.christophpickl.derbauer.logic.Prompt
+import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.formatRightBound
-import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
-import com.github.christophpickl.derbauer.logic.screens.BuildScreen
-import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
-import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
-import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
-import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
-import com.github.christophpickl.derbauer.logic.screens.HireSoldiersScreen
-import com.github.christophpickl.derbauer.logic.screens.HomeScreen
-import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
-import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
-import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
-import com.github.christophpickl.derbauer.logic.screens.TradeScreen
-import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
-import com.github.christophpickl.derbauer.logic.service.AchievementScreen
-import com.github.christophpickl.derbauer.logic.service.EndTurnScreen
-import com.github.christophpickl.derbauer.logic.service.HappeningScreen
-import com.github.christophpickl.derbauer.logic.service.Prompt
+import com.github.christophpickl.derbauer.misc.EndTurnScreen
+import com.github.christophpickl.derbauer.misc.GameOver
+import com.github.christophpickl.derbauer.misc.HomeScreen
 import com.github.christophpickl.derbauer.model.ResourceFormats
 import com.github.christophpickl.derbauer.model.State
+import com.github.christophpickl.derbauer.trade.FoodBuyScreen
+import com.github.christophpickl.derbauer.trade.FoodSellScreen
+import com.github.christophpickl.derbauer.trade.LandBuyScreen
+import com.github.christophpickl.derbauer.trade.LandSellScreen
+import com.github.christophpickl.derbauer.trade.TradeScreen
+import com.github.christophpickl.derbauer.upgrade.UpgradeScreen
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 
@@ -101,7 +100,7 @@ class Renderer : ScreenCallback {
     override fun onAchievement(screen: AchievementScreen) {}
     override fun onEndTurn(screen: EndTurnScreen) {}
     override fun onHappening(screen: HappeningScreen) {}
-    override fun onGameOver(screen: GameOverScreen) {}
+    override fun onGameOver(screen: GameOver) {}
 
     private fun onChooseScreen(screen: ChooseScreen<*>) {
         screen.choices.forEachIndexed { index, choice ->

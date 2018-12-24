@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
+import com.github.christophpickl.derbauer.army.Armies
+import com.github.christophpickl.derbauer.build.Buildings
 
 class Player {
     var gold = 0

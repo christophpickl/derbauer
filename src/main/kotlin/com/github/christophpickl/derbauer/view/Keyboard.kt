@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
+import com.github.christophpickl.derbauer.logic.ChooseScreen
 import com.github.christophpickl.derbauer.model.State
 import com.google.common.eventbus.EventBus
 import javafx.scene.input.KeyCode

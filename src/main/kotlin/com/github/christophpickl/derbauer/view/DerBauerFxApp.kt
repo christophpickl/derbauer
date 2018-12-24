@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.view
 
-import com.github.christophpickl.derbauer.MainModule
+import com.github.christophpickl.derbauer.logic.MainModule
 import com.google.inject.Guice
 import tornadofx.*
 import kotlin.reflect.KClass

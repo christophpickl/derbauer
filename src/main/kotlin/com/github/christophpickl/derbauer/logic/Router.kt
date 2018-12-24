@@ -1,21 +1,22 @@
-package com.github.christophpickl.derbauer.logic.service
+package com.github.christophpickl.derbauer.logic
 
-import com.github.christophpickl.derbauer.logic.beepReturn
-import com.github.christophpickl.derbauer.logic.screens.ArmyScreen
-import com.github.christophpickl.derbauer.logic.screens.BuildScreen
-import com.github.christophpickl.derbauer.logic.screens.Choice
-import com.github.christophpickl.derbauer.logic.screens.ChooseScreen
-import com.github.christophpickl.derbauer.logic.screens.FoodBuyScreen
-import com.github.christophpickl.derbauer.logic.screens.FoodSellScreen
-import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
-import com.github.christophpickl.derbauer.logic.screens.HireSoldiersScreen
-import com.github.christophpickl.derbauer.logic.screens.HomeScreen
-import com.github.christophpickl.derbauer.logic.screens.LandBuyScreen
-import com.github.christophpickl.derbauer.logic.screens.LandSellScreen
-import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
-import com.github.christophpickl.derbauer.logic.screens.TradeScreen
-import com.github.christophpickl.derbauer.logic.screens.UpgradeScreen
+import com.github.christophpickl.derbauer.achievement.AchievementScreen
+import com.github.christophpickl.derbauer.army.ArmyScreen
+import com.github.christophpickl.derbauer.army.HireSoldiersScreen
+import com.github.christophpickl.derbauer.build.BuildScreen
+import com.github.christophpickl.derbauer.happening.Happener
+import com.github.christophpickl.derbauer.happening.HappeningScreen
+import com.github.christophpickl.derbauer.misc.EndTurn
+import com.github.christophpickl.derbauer.misc.EndTurnScreen
+import com.github.christophpickl.derbauer.misc.GameOver
+import com.github.christophpickl.derbauer.misc.HomeScreen
 import com.github.christophpickl.derbauer.model.State
+import com.github.christophpickl.derbauer.trade.FoodBuyScreen
+import com.github.christophpickl.derbauer.trade.FoodSellScreen
+import com.github.christophpickl.derbauer.trade.LandBuyScreen
+import com.github.christophpickl.derbauer.trade.LandSellScreen
+import com.github.christophpickl.derbauer.trade.TradeScreen
+import com.github.christophpickl.derbauer.upgrade.UpgradeScreen
 import com.github.christophpickl.derbauer.view.KeyboardEnterEvent
 import com.github.christophpickl.derbauer.view.RenderEvent
 import com.google.common.eventbus.EventBus
@@ -27,7 +28,7 @@ class Router @Inject constructor(
     private val bus: EventBus,
     private val controllerRegistry: ScreenControllerRegistry,
     private val endTurn: EndTurn,
-    private val happener: EndTurnHappener
+    private val happener: Happener
 
 ) : ScreenCallback {
 
@@ -122,7 +123,7 @@ class Router @Inject constructor(
         State.screen = HomeScreen()
     }
 
-    override fun onGameOver(screen: GameOverScreen) {
+    override fun onGameOver(screen: GameOver) {
         State.reset()
         State.screen = HomeScreen()
     }

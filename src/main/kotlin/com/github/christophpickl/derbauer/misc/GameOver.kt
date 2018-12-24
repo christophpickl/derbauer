@@ -1,6 +1,9 @@
-package com.github.christophpickl.derbauer.logic.screens
+package com.github.christophpickl.derbauer.misc
 
-class GameOverScreen : Screen {
+import com.github.christophpickl.derbauer.logic.Screen
+import com.github.christophpickl.derbauer.logic.ScreenCallback
+
+class GameOver : Screen {
     override val message = "Tadaaaaa! Game Over!"
 
     override val enableCancelOnEnter = false

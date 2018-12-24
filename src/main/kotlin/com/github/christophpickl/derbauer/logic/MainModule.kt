@@ -1,11 +1,9 @@
-package com.github.christophpickl.derbauer
+package com.github.christophpickl.derbauer.logic
 
-import com.github.christophpickl.derbauer.logic.screens.MainController
-import com.github.christophpickl.derbauer.logic.service.AchievementHappener
-import com.github.christophpickl.derbauer.logic.service.EndTurn
-import com.github.christophpickl.derbauer.logic.service.EndTurnHappener
-import com.github.christophpickl.derbauer.logic.service.Router
-import com.github.christophpickl.derbauer.logic.service.ScreenControllerRegistry
+import com.github.christophpickl.derbauer.achievement.AchievementHappener
+import com.github.christophpickl.derbauer.happening.Happener
+import com.github.christophpickl.derbauer.misc.EndTurn
+import com.github.christophpickl.derbauer.misc.MainController
 import com.github.christophpickl.derbauer.view.Keyboard
 import com.google.common.eventbus.EventBus
 import com.google.inject.AbstractModule
@@ -19,6 +17,6 @@ class MainModule : AbstractModule() {
         bind(ScreenControllerRegistry::class.java).asEagerSingleton()
         bind(EndTurn::class.java).asEagerSingleton()
         bind(AchievementHappener::class.java).asEagerSingleton()
-        bind(EndTurnHappener::class.java).asEagerSingleton()
+        bind(Happener::class.java).asEagerSingleton()
     }
 }

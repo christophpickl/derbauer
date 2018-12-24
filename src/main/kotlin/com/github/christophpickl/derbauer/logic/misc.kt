@@ -2,8 +2,6 @@ package com.github.christophpickl.derbauer.logic
 
 import com.github.christophpickl.kpotpourri.common.string.times
 
-val VIEW_SIZE = Size(width = 100, height = 30)
-
 data class Size(
     val width: Int,
     val height: Int

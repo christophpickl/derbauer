@@ -1,12 +1,10 @@
-package com.github.christophpickl.derbauer.logic.service
+package com.github.christophpickl.derbauer.misc
 
+import com.github.christophpickl.derbauer.logic.Screen
+import com.github.christophpickl.derbauer.logic.ScreenCallback
 import com.github.christophpickl.derbauer.logic.formatNumber
-import com.github.christophpickl.derbauer.logic.screens.GameOverScreen
-import com.github.christophpickl.derbauer.logic.screens.Screen
-import com.github.christophpickl.derbauer.logic.screens.ScreenCallback
 import com.github.christophpickl.derbauer.model.State
 import kotlin.random.Random
-
 
 class EndTurnScreen(
     override val message: String
@@ -42,7 +40,7 @@ class EndTurn {
         State.player.gold += goldIncome
 
         if (State.player.people <= 0) {
-            return GameOverScreen()
+            return GameOver()
         }
 
         return EndTurnScreen(message)

@@ -1,5 +1,4 @@
-package com.github.christophpickl.derbauer.model
-
+package com.github.christophpickl.derbauer.build
 
 class Buildings {
     var houses = 0
@@ -33,4 +32,18 @@ class BuildingsMeta {
     }
 
     override fun toString() = "BuildingsMeta{houseCapacity=$houseCapacity, granaryCapacity=$granaryCapacity, farmProduces=$farmProduction}"
+}
+
+class BuildingPrices {
+    var house = 0
+    var granary = 0
+    var farm = 0
+
+    fun reset() {
+        house = 15
+        granary = 30
+        farm = 50
+    }
+
+    override fun toString() = "BuildingPrices{house=$house, granary=$granary, farm=$farm}"
 }

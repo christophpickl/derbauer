@@ -1,9 +1,19 @@
-package com.github.christophpickl.derbauer.logic.screens
+package com.github.christophpickl.derbauer.logic
 
-import com.github.christophpickl.derbauer.logic.service.AchievementScreen
-import com.github.christophpickl.derbauer.logic.service.EndTurnScreen
-import com.github.christophpickl.derbauer.logic.service.HappeningScreen
-
+import com.github.christophpickl.derbauer.achievement.AchievementScreen
+import com.github.christophpickl.derbauer.army.ArmyScreen
+import com.github.christophpickl.derbauer.army.HireSoldiersScreen
+import com.github.christophpickl.derbauer.build.BuildScreen
+import com.github.christophpickl.derbauer.happening.HappeningScreen
+import com.github.christophpickl.derbauer.misc.EndTurnScreen
+import com.github.christophpickl.derbauer.misc.GameOver
+import com.github.christophpickl.derbauer.misc.HomeScreen
+import com.github.christophpickl.derbauer.trade.FoodBuyScreen
+import com.github.christophpickl.derbauer.trade.FoodSellScreen
+import com.github.christophpickl.derbauer.trade.LandBuyScreen
+import com.github.christophpickl.derbauer.trade.LandSellScreen
+import com.github.christophpickl.derbauer.trade.TradeScreen
+import com.github.christophpickl.derbauer.upgrade.UpgradeScreen
 
 interface Screen {
     val message: String
@@ -35,7 +45,7 @@ interface ScreenCallback {
     fun onAchievement(screen: AchievementScreen)
     fun onEndTurn(screen: EndTurnScreen)
     fun onHappening(screen: HappeningScreen)
-    fun onGameOver(screen: GameOverScreen)
+    fun onGameOver(screen: GameOver)
 }
 
 interface ChooseScreen<C : Choice> : Screen {

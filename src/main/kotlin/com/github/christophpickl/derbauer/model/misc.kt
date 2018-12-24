@@ -2,7 +2,6 @@ package com.github.christophpickl.derbauer.model
 
 import com.github.christophpickl.derbauer.logic.formatNumber
 
-
 object ResourceFormats {
     const val foodDigits = 4
     const val goldDigits = 4
