@@ -9,7 +9,8 @@ import com.github.christophpickl.derbauer.model.State
 enum class BuildEnum {
     House,
     Granary,
-    Farm
+    Farm,
+    Castle
 }
 
 class BuildChoice(
@@ -23,18 +24,25 @@ class BuildScreen() : ChooseScreen<BuildChoice> {
         "Expand, expand, expand.",
         "Construction work makes me happy."
     )
-    override val message = if (State.freePeople <= 3) "The people desperately need more houses!" else messages.random() + "\n\n" +
+    override val message = (if (State.freePeople <= 3) "The people desperately need more houses!" else messages.random()) + "\n\n" +
         "You've got the following buildings:\n" +
         State.player.buildings.formatAll().joinToString("\n") {
             "  $it"
         }
 
-    //@formatter:off
-    override val choices = listOf(
-        BuildChoice(BuildEnum.House,   "House   ... ${formatNumber(State.prices.buildings.house, 2)} $ (adds ${State.buildings.houseCapacity} more space for your people)"),
-        BuildChoice(BuildEnum.Granary, "Granary ... ${formatNumber(State.prices.buildings.granary, 2)} $ (adds ${State.buildings.granaryCapacity} more food storage)"),
-        BuildChoice(BuildEnum.Farm,    "Farm    ... ${formatNumber(State.prices.buildings.farm, 2)} $ (produces +${State.buildings.farmProduction} food each day)")
-    )
+    private val colWidth = 3
+    // TODO make reusable
+    override val choices
+        get() = mutableListOf(
+            //@formatter:off
+        BuildChoice(BuildEnum.House,          "House   ... ${formatNumber(State.prices.buildings.house, colWidth)} $ (adds ${State.buildings.houseCapacity} more space for your people)"),
+        BuildChoice(BuildEnum.Granary,        "Granary ... ${formatNumber(State.prices.buildings.granary, colWidth)} $ (adds ${State.buildings.granaryCapacity} more food storage)"),
+        BuildChoice(BuildEnum.Farm,           "Farm    ... ${formatNumber(State.prices.buildings.farm, colWidth)} $ (produces +${State.buildings.farmProduction} food each day)")
+    ).apply { //                              "        ...
+        if (State.feature.isCastleEnabled) { //      "        ...
+            add(BuildChoice(BuildEnum.Castle, "Castle  ... ${formatNumber(State.prices.buildings.castle, colWidth)} $ (biiig building)"))
+        }
+    }
     //@formatter:on
 
     override fun onCallback(callback: ScreenCallback) {

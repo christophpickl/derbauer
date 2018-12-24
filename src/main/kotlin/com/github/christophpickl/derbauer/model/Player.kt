@@ -27,9 +27,9 @@ class Player {
 
     fun reset() {
         gold = if (CHEAT_MODE) 500 else 100
-        land = 5
+        land = if (CHEAT_MODE) 100 else 5
         food = if (CHEAT_MODE) 800 else 300
-        people = 2
+        people = if (CHEAT_MODE) 9 else 2
 
         buildings.reset()
         armies.reset()

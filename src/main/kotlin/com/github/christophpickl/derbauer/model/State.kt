@@ -6,6 +6,7 @@ import com.github.christophpickl.derbauer.army.ArmyMeta
 import com.github.christophpickl.derbauer.build.BuildingsMeta
 import com.github.christophpickl.derbauer.logic.Prompt
 import com.github.christophpickl.derbauer.logic.Screen
+import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.upgrade.UpgradeMeta
 
 const val CHEAT_MODE = true
@@ -23,6 +24,7 @@ object State {
     val meta = StateMeta()
     val history = History()
     val upgrades = UpgradeMeta()
+    val feature = Feature()
 
     val maxFood get() = player.buildings.granaries * buildings.granaryCapacity
     val freeFood get() = maxFood - player.food
@@ -53,6 +55,7 @@ object State {
         meta.reset()
         history.reset()
         upgrades.reset()
+        feature.reset()
     }
 }
 

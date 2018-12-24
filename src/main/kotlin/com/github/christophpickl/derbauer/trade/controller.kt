@@ -22,6 +22,7 @@ class TradeController : ChooseScreenController<TradeChoice, TradeScreen> {
         State.screen = nextScreen
     }
 
+    // TODO je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
     fun buyLand(amount: Int) {
         trade(
             isBuying = true,
