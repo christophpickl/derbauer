@@ -22,7 +22,6 @@ class BuildController : BuildCallback {
     override fun doBuild(choice: BuildChoice) {
         if (validateChoice(validations, choice)) {
             choice.building.playerChange(+1)
-            Model.land -= choice.building.landNeeded
             Model.gold -= choice.building.buyPrice
             Model.goHome()
         }

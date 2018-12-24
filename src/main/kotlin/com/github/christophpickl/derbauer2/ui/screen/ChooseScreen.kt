@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer2.ui.screen
 
-import com.github.christophpickl.derbauer.logic.beep
 import com.github.christophpickl.derbauer2.ScreenCallback
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
+import com.github.christophpickl.derbauer2.ui.beep
 
 
 abstract class ChooseScreen<C : Choice>(

@@ -1,8 +1,10 @@
 package com.github.christophpickl.derbauer2.ui
 
+import com.github.christophpickl.derbauer2.model.LimitedResource
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.model.PlayerResource
+import com.github.christophpickl.derbauer2.model.UsableResource
 import com.github.christophpickl.kpotpourri.common.string.times
-
 class Renderer(
     private val text: MainTextArea,
     private val prompt: Prompt
@@ -15,7 +17,7 @@ class Renderer(
         }
         val content = Model.screen.renderContent
 
-        val info = Model.player.resources.all.joinToString(" ") { "${it.type.labelPlural}: ${it.amount}" }
+        val info = Model.player.resources.all.joinToString(" ") { it.formatInfo() }
 
         val board = Board()
         board.printHeader("Day: ${Model.global.day}", info)
@@ -23,7 +25,16 @@ class Renderer(
         board.printContent(content)
         text.text = board.convertAndReset()
     }
+
+    private fun PlayerResource.formatInfo(): String =
+        "${type.labelPlural}: " + when (this) {
+            is UsableResource -> "$usedAmount / $amount"
+            is LimitedResource -> "$amount / $limitAmount"
+            else -> amount
+        }
+
 }
+
 
 private class Board {
 

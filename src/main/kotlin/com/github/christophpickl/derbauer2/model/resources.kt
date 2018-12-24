@@ -73,7 +73,7 @@ class LandResourceType(
 abstract class BaseResourceType(
     final override val labelSingular: String,
     final override val labelPlural: String,
-    playerProperty: KMutableProperty1<PlayerResources, PlayerResource>,
+    playerProperty: KMutableProperty1<PlayerResources, out PlayerResource>,
     reflect: ReflectPlayer = ReflectPlayerImpl(
         host = lazy { Model.player.resources },
         playerProperty = playerProperty

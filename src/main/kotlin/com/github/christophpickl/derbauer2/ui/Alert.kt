@@ -61,10 +61,10 @@ sealed class AlertType(val message: String) {
     object NotEnoughGold : AlertType("Not enough gold!")
     object NotEnoughLand : AlertType("Not enough land!")
     object NotEnoughResourcesToSell : AlertType("Not resources to sell!")
-    class CustomAlert(message: String) : AlertType(message)
+//    class CustomAlert(message: String) : AlertType(message)
 }
 
-private fun beep() {
+fun beep() {
     Toolkit.getDefaultToolkit().beep()
     println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
 }

@@ -32,9 +32,9 @@ object Model {
         set(value) {
             player.resources.land.amount = value
         }
-    //</editor-fold>
 
-    val availableLand get() = player.resources.land.amount - player.buildings.all.sumBy { it.totalLandNeeded }
+    val availableLand: Int get() = player.resources.land.unusedAmount
+    //</editor-fold>
 
     fun goHome() {
         screen = HomeScreen()
