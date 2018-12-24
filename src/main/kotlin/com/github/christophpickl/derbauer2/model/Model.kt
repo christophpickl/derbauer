@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.model
 
 import com.github.christophpickl.derbauer2.HomeScreen
+import com.github.christophpickl.derbauer2.build.FoodCapacityBuilding
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.ui.screen.Screen
 
@@ -33,10 +34,11 @@ object Model {
             player.resources.land.amount = value
         }
 
-    val foodCapacityLeft: Int get() = player.resources.food.capacityLeft
-    val peopleCapacityLeft: Int get() = player.resources.people.capacityLeft
-    val landUnused: Int get() = player.resources.land.unusedAmount
+    val peopleCapacityLeft get() = player.resources.people.capacityLeft
+    val landUnused get() = player.resources.land.unusedAmount
     //</editor-fold>
+    val foodCapacityLeft get() = player.resources.food.capacityLeft
+    val totalFoodCapacity get() = Model.player.buildings.allAs<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
 
     fun goHome() {
         screen = HomeScreen()

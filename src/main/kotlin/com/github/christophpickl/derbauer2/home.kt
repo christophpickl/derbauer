@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2
 
 import com.github.christophpickl.derbauer2.build.BuildScreen
+import com.github.christophpickl.derbauer2.endturn.achievement.AchievementChecker
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.trade.TradeScreen
@@ -50,9 +51,10 @@ class HomeController : HomeScreenCallback {
             }
             HomeEnum.EndTurn -> {
                 Model.global.day++
-                Model.screen = EndTurnScreen()
+                Model.screen = AchievementChecker.nextScreen()
             }
         }.enforceWhenBranches()
     }
 
 }
+

@@ -22,19 +22,21 @@ data class PlayerBuildings(
     var farms: FarmBuilding = FarmBuilding()
 ) {
     val all = propertiesOfType<PlayerBuildings, Building>(this).ordered()
+
+    inline fun <reified B : Building> allAs(): List<B> = all.mapNotNull { it as? B }
 }
 
-interface PeopleCapacityExtender : Amountable {
-    var peopleCapacity: Int
-    val totalPeopleCapacity get() = peopleCapacity * amount
-}
-
-interface FoodCapacityExtender : Amountable {
+interface FoodCapacityBuilding : Building {
     var foodCapacity: Int
     val totalFoodCapacity get() = foodCapacity * amount
 }
 
-interface FoodProducer {
+interface PeopleCapacityBuilding : Building {
+    var peopleCapacity: Int
+    val totalPeopleCapacity get() = peopleCapacity * amount
+}
+
+interface FoodProducerBuilding : Building {
     var producesFood: Int
 }
 
@@ -44,7 +46,7 @@ class HouseBuilding : AbstractBuilding(
     amount = if (CHEAT_MODE) 5 else 1,
     landNeeded = 1,
     buyPrice = 15
-), PeopleCapacityExtender {
+), PeopleCapacityBuilding {
     override var peopleCapacity = 5
     override val descriptionProvider get() = { "adds $peopleCapacity more space for your people" }
 }
@@ -55,10 +57,9 @@ class GranaryBuilding : AbstractBuilding(
     landNeeded = 1,
     buyPrice = 30,
     amount = if (CHEAT_MODE) 8 else 1
-), FoodCapacityExtender {
+), FoodCapacityBuilding {
     override var foodCapacity = 100
     override val descriptionProvider get() = { "adds $foodCapacity more food storage" }
-
 }
 
 class FarmBuilding : AbstractBuilding(
@@ -67,7 +68,7 @@ class FarmBuilding : AbstractBuilding(
     landNeeded = 2,
     buyPrice = 50,
     amount = if (CHEAT_MODE) 10 else 1
-), FoodProducer {
+), FoodProducerBuilding {
     override var producesFood = 2
     override val descriptionProvider get() = { "produces +$producesFood food each day" }
 }

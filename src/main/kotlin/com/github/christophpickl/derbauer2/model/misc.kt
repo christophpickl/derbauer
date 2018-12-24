@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.model
 
 import com.github.christophpickl.derbauer2.misc.Stringifier
+import com.github.christophpickl.derbauer2.trade.Buyable
 
 data class Global(
     var day: Int = 1
@@ -14,7 +15,7 @@ interface Labeled {
 
 enum class BuySell(val label: String) {
     Buy("buy"),
-    Sell("bell")
+    Sell("sell")
 }
 
 class History(
@@ -32,6 +33,10 @@ interface Amountable {
 interface LimitedAmount : Amountable {
     val limitAmount: Int
     val capacityLeft: Int get() = limitAmount - amount
+}
+
+interface LimitedBuyableAmount : LimitedAmount, Buyable {
+    override val effectiveBuyPossible get() = Math.min(buyPossible, capacityLeft)
 }
 
 interface UsableResource : Amountable {

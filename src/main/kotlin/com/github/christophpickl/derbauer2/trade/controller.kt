@@ -1,9 +1,12 @@
 package com.github.christophpickl.derbauer2.trade
 
+import com.github.christophpickl.derbauer2.misc.ChoiceValidation
 import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.BuySell
+import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.model.UsableResource
 import com.github.christophpickl.derbauer2.ui.AlertType
 import mu.KotlinLogging.logger
 
@@ -32,20 +35,36 @@ class TradeController : TradeCallback {
         }
     }
 
-    private fun isValid(choice: TradableChoice, amount: Int, totalPrice: Int) =
-        validateChoice(choice, listOf(
-            SimpleChoiceValidation(
-                condition = { it.buySell != BuySell.Buy || Model.gold >= totalPrice },
+    private fun isValid(choice: TradableChoice, amount: Int, totalPrice: Int): Boolean {
+        val validations = mutableListOf<ChoiceValidation>()
+        if (choice.buySell == BuySell.Buy) {
+            // enough gold
+            validations.add(SimpleChoiceValidation(
+                condition = { Model.gold >= totalPrice },
                 alertType = AlertType.NotEnoughGold
-            ),
-            SimpleChoiceValidation(
-                condition = { it.buySell != BuySell.Buy || Model.foodCapacityLeft >= amount },
-                alertType = AlertType.NotEnoughCapacity
-            ),
-            SimpleChoiceValidation(
-                condition = { it.buySell != BuySell.Sell || choice.resource.amount >= amount },
-                alertType = AlertType.NotEnoughResourcesToSell
-            )
-        ))
+            ))
+            // within capacity limit
+            if (choice.resource is LimitedAmount) {
+                validations.add(SimpleChoiceValidation(
+                    condition = { choice.resource.capacityLeft >= amount },
+                    alertType = AlertType.NotEnoughCapacity
+                ))
+            }
 
+        } else {
+            // enough amount
+            validations.add(SimpleChoiceValidation(
+                condition = { choice.resource.amount >= amount },
+                alertType = AlertType.NotEnoughResourcesToSell
+            ))
+            // unused amount
+            if (choice.resource is UsableResource) {
+                validations.add(SimpleChoiceValidation(
+                    condition = { choice.resource.unusedAmount >= amount },
+                    alertType = AlertType.NotEnoughUnused
+                ))
+            }
+        }
+        return validateChoice(validations)
+    }
 }

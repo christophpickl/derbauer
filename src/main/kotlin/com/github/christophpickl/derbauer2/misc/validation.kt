@@ -2,10 +2,9 @@ package com.github.christophpickl.derbauer2.misc
 
 import com.github.christophpickl.derbauer2.ui.Alert
 import com.github.christophpickl.derbauer2.ui.AlertType
-import com.github.christophpickl.derbauer2.ui.screen.Choice
 
-fun <C : Choice> validateChoice(choice: C, validations: List<ChoiceValidation<C>>): Boolean {
-    val failedValidations = validations.filter { !it.condition(choice) }
+fun validateChoice(validations: List<ChoiceValidation>): Boolean {
+    val failedValidations = validations.filter { !it.condition() }
     if (failedValidations.isEmpty()) {
         return true
     }
@@ -14,13 +13,12 @@ fun <C : Choice> validateChoice(choice: C, validations: List<ChoiceValidation<C>
     return false
 }
 
-interface ChoiceValidation<C : Choice> {
-
-    val condition: (choice: C) -> Boolean
+interface ChoiceValidation {
+    val condition: () -> Boolean
     val alertType: AlertType
 }
 
-class SimpleChoiceValidation<C : Choice>(
-    override val condition: (choice: C) -> Boolean,
+class SimpleChoiceValidation(
+    override val condition: () -> Boolean,
     override val alertType: AlertType
-) : ChoiceValidation<C>
+) : ChoiceValidation

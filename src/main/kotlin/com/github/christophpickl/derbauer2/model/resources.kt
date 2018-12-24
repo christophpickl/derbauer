@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer2.model
 import com.github.christophpickl.derbauer2.CHEAT_MODE
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
-import com.github.christophpickl.derbauer2.trade.Buyable
 import com.github.christophpickl.derbauer2.trade.Tradeable
 
 data class PlayerResources(
@@ -13,25 +12,36 @@ data class PlayerResources(
     var land: LandResource = LandResource()
 ) {
     val all = propertiesOfType<PlayerResources, PlayerResource>(this).ordered()
-    val allTradeables = propertiesOfType<PlayerResources, TradeableResourceType>(this).ordered()
+    val allTradeables = propertiesOfType<PlayerResources, TradeableResource>(this).ordered()
 }
 
-interface IResource : Amountable, Ordered, Labeled
+interface Resource : Amountable, Ordered, Labeled
 
-interface TradeableResourceType : IResource, Tradeable {
+interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int
+    var priceModifier: Double
 }
 
-interface LimitedBuyableResource : Buyable, LimitedAmount {
-    override val effectiveBuyPossible get() = Math.min(buyPossible, capacityLeft)
+abstract class PlayerResource(
+    override val labelSingular: String,
+    override val labelPlural: String,
+    override var amount: Int
+) : Resource {
+    companion object {
+        private var counter = 0
+    }
+
+    override val order = counter++
+    override fun toString() = Stringifier.stringify(this)
 }
 
 class FoodResource : PlayerResource(
     labelSingular = "food",
     labelPlural = "food",
     amount = if (CHEAT_MODE) 800 else 300
-), LimitedBuyableResource, TradeableResourceType {
-    override val limitAmount get() = Model.player.buildings.granaries.totalFoodCapacity
+), LimitedBuyableAmount, TradeableResource {
+    override val limitAmount get() = Model.totalFoodCapacity
+    override var priceModifier = 1.0
     override var buyPrice: Int = 15
     override var sellPrice: Int = 9
     override val sellPossible get() = Math.max(0, amount)
@@ -59,24 +69,12 @@ class LandResource : PlayerResource(
     labelSingular = "land",
     labelPlural = "land",
     amount = if (CHEAT_MODE) 100 else 5
-), UsableResource, TradeableResourceType {
+), UsableResource, TradeableResource {
     override val unusedAmount get() = amount - usedAmount
     override val usedAmount get() = Model.player.buildings.all.sumBy { it.totalLandNeeded }
-
+    override var priceModifier = 1.0
     override var buyPrice: Int = 50
     override var sellPrice: Int = 40
     override val sellPossible get() = Model.landUnused
-    override fun toString() = Stringifier.stringify(this)
-}
-
-abstract class PlayerResource(
-    override val labelSingular: String,
-    override val labelPlural: String,
-    override var amount: Int
-) : IResource {
-    companion object {
-        private var counter = 0
-    }
-    override val order = counter++
     override fun toString() = Stringifier.stringify(this)
 }

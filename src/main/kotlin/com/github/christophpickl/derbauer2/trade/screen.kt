@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer2.HomeScreen
 import com.github.christophpickl.derbauer2.ScreenCallback
 import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.model.TradeableResourceType
+import com.github.christophpickl.derbauer2.model.TradeableResource
 import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
 import com.github.christophpickl.derbauer2.ui.screen.Choice
 import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
@@ -27,7 +27,7 @@ class TradeScreen : ChooseScreen<TradableChoice>(
 }
 
 data class TradableChoice(
-    val resource: TradeableResourceType,
+    val resource: TradeableResource,
     val buySell: BuySell
 ) : Choice {
     override val label: String = "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.priceFor(buySell)} $"

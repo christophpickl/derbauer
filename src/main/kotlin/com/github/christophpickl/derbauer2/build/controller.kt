@@ -4,10 +4,14 @@ import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AlertType
+import mu.KotlinLogging.logger
 
 class BuildController : BuildCallback {
 
+    private val log = logger {}
+    
     override fun doBuild(choice: BuildChoice) {
+        log.debug { "try building: $choice" }
         if (isValid(choice)) {
             choice.building.amount++
             Model.gold -= choice.building.buyPrice
@@ -15,13 +19,13 @@ class BuildController : BuildCallback {
         }
     }
 
-    private fun isValid(choice: BuildChoice) = validateChoice(choice, listOf(
+    private fun isValid(choice: BuildChoice) = validateChoice(listOf(
         SimpleChoiceValidation(
-            condition = { Model.gold >= it.building.buyPrice },
+            condition = { Model.gold >= choice.building.buyPrice },
             alertType = AlertType.NotEnoughGold
         ),
         SimpleChoiceValidation(
-            condition = { Model.landUnused >= it.building.landNeeded },
+            condition = { Model.landUnused >= choice.building.landNeeded },
             alertType = AlertType.NotEnoughLand
         )
     ))

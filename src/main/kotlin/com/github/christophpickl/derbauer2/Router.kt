@@ -18,7 +18,7 @@ class Router(
     }
 
     override fun onEnter(input: PromptInput) {
-        log.debug { "onEnter($input)" }
+        log.debug { "onEnter($input) => ${Model.screen::class.simpleName}" }
         Model.screen.onCallback(this, input)
         renderer.render()
     }
