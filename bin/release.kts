@@ -12,6 +12,8 @@ val currentVersion = versionFile.let {
 val nextVersion = currentVersion.incrementMinor()
 
 execute("git", "status")
+
+println()
 println("Is everything checked in?")
 confirmOrExit()
 
