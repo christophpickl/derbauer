@@ -1,6 +1,6 @@
-package com.github.christophpickl.derbauer2.ui.screen
+package com.github.christophpickl.derbauer2.ui.view
 
-import com.github.christophpickl.derbauer2.ScreenCallback
+import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Labeled
 import com.github.christophpickl.derbauer2.ui.PromptInput
@@ -8,11 +8,11 @@ import com.github.christophpickl.derbauer2.ui.PromptMode
 import com.github.christophpickl.derbauer2.ui.beep
 
 
-abstract class ChooseScreen<C : Choice>(
+abstract class ChooseView<C : Choice>(
     messages: List<String>,
     val choices: List<C>,
     val additionalContent: String? = null
-) : Screen {
+) : View {
 
     override val renderContent =
         "${messages.random()}\n\n" +
@@ -21,9 +21,9 @@ abstract class ChooseScreen<C : Choice>(
     
     override val promptMode = PromptMode.Input
 
-    abstract fun onCallback(callback: ScreenCallback, choice: C)
+    abstract fun onCallback(callback: ViewCallback, choice: C)
 
-    override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+    override fun onCallback(callback: ViewCallback, input: PromptInput) {
         when (input) {
             PromptInput.Empty -> {
                 handleCancel()

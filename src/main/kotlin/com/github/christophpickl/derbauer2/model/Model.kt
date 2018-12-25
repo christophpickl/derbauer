@@ -1,13 +1,13 @@
 package com.github.christophpickl.derbauer2.model
 
 import com.github.christophpickl.derbauer2.feature.Feature
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.misc.Stringifier
-import com.github.christophpickl.derbauer2.ui.screen.Screen
+import com.github.christophpickl.derbauer2.ui.view.View
 
 object Model : ResourceHolder {
 
-    var screen: Screen = HomeScreen()
+    var view: View = HomeView()
     var global: Global = Global()
     var player: Player = Player()
     var history: History = History()
@@ -19,7 +19,7 @@ object Model : ResourceHolder {
     val totalFoodCapacity get() = player.buildings.totalFoodCapacity
 
     fun goHome() {
-        screen = HomeScreen()
+        view = HomeView()
     }
 
     override fun toString() = Stringifier.stringify(this)

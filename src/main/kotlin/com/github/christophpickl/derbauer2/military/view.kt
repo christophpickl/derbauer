@@ -1,17 +1,17 @@
 package com.github.christophpickl.derbauer2.military
 
-import com.github.christophpickl.derbauer2.ScreenCallback
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
-import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
-import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
-import com.github.christophpickl.derbauer2.ui.screen.EnumChoice
-import com.github.christophpickl.derbauer2.ui.screen.InputScreen
-import com.github.christophpickl.derbauer2.ui.screen.Screen
+import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.ChooseView
+import com.github.christophpickl.derbauer2.ui.view.EnumChoice
+import com.github.christophpickl.derbauer2.ui.view.InputView
+import com.github.christophpickl.derbauer2.ui.view.View
 
-class MilitaryScreen : ChooseScreen<MilitaryChoice>(
+class MilitaryView : ChooseView<MilitaryChoice>(
     messages = listOf(
         "Hey, don't look at me dude.",
         "Gonna kick some ass!",
@@ -25,8 +25,8 @@ class MilitaryScreen : ChooseScreen<MilitaryChoice>(
         "  ${it.labelPlural.capitalize()}: ${it.amount}"
     }}"
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeScreen() }
-    override fun onCallback(callback: ScreenCallback, choice: MilitaryChoice) {
+    override val cancelSupport = CancelSupport.Enabled { HomeView() }
+    override fun onCallback(callback: ViewCallback, choice: MilitaryChoice) {
         callback.onMilitary(choice)
     }
 }
@@ -43,28 +43,28 @@ interface MilitaryCallback {
     fun doHire(militaryUnit: Military, amount: Int)
 }
 
-class AttackScreen(
+class AttackView(
     private val context: AttackContext
-) : Screen {
+) : View {
     
     override val promptMode = PromptMode.Off
     override val cancelSupport = CancelSupport.Disabled
     override val renderContent get() = context.message
 
-    override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+    override fun onCallback(callback: ViewCallback, input: PromptInput) {
         // no-op
     }
 }
 
-class HireSoldiersScreen : InputScreen(
+class HireSoldiersView : InputView(
     "How many soldiers do you wanna hire?\n\n" +
         "1 soldier costs ${Model.player.militaries.soldiers.buyPrice} gold and ${Model.player.militaries.soldiers.costsPeople} people.\n\n" +
         "You can afford for ${Model.player.militaries.soldiers.effectiveBuyPossibleAmount} soldiers."
 ) {
 
-    override fun onCallback(callback: ScreenCallback, number: Int) {
+    override fun onCallback(callback: ViewCallback, number: Int) {
         callback.doHire(Model.player.militaries.soldiers, number)
     }
 
-    override val cancelSupport = CancelSupport.Enabled { MilitaryScreen() }
+    override val cancelSupport = CancelSupport.Enabled { MilitaryView() }
 }

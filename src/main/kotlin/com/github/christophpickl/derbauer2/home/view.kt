@@ -1,11 +1,11 @@
 package com.github.christophpickl.derbauer2.home
 
-import com.github.christophpickl.derbauer2.ScreenCallback
-import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
-import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
-import com.github.christophpickl.derbauer2.ui.screen.EnumChoice
+import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.ChooseView
+import com.github.christophpickl.derbauer2.ui.view.EnumChoice
 
-class HomeScreen : ChooseScreen<HomeChoice>(
+class HomeView : ChooseView<HomeChoice>(
     messages = listOf(
         "What are we up to today?",
         "What can I do for you, master?",
@@ -21,7 +21,7 @@ class HomeScreen : ChooseScreen<HomeChoice>(
 ) {
     override val cancelSupport = CancelSupport.Disabled
 
-    override fun onCallback(callback: ScreenCallback, choice: HomeChoice) {
+    override fun onCallback(callback: ViewCallback, choice: HomeChoice) {
         callback.onHomeEnum(choice)
     }
 }
@@ -36,7 +36,7 @@ enum class HomeEnum {
     EndTurn
 }
 
-interface HomeScreenCallback {
+interface HomeCallback {
     fun onHomeEnum(choice: HomeChoice)
     fun goEndTurnReport()
 }

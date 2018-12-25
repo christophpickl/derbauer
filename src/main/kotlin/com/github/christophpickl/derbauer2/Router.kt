@@ -9,7 +9,7 @@ import mu.KotlinLogging.logger
 class Router(
     private val renderer: Renderer,
     private val controllerRegistry: Registry = Registry(renderer)
-) : PromptListener, ScreenCallback by controllerRegistry {
+) : PromptListener, ViewCallback by controllerRegistry {
 
     private val log = logger {}
 
@@ -18,8 +18,8 @@ class Router(
     }
 
     override fun onEnter(input: PromptInput) {
-        log.debug { "onEnter($input) => ${Model.screen::class.simpleName}" }
-        Model.screen.onCallback(this, input)
+        log.debug { "onEnter($input) => ${Model.view::class.simpleName}" }
+        Model.view.onCallback(this, input)
         renderer.render()
     }
 

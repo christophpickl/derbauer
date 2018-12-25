@@ -38,7 +38,7 @@ class Prompt : KeyboardListener {
     var enteredText = ""
 
     override fun onKeyboard(event: KeyboardEvent) {
-        when (Model.screen.promptMode) {
+        when (Model.view.promptMode) {
             PromptMode.Off -> {
                 // do nothing
             }

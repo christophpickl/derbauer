@@ -1,13 +1,13 @@
 package com.github.christophpickl.derbauer2.build
 
-import com.github.christophpickl.derbauer2.ScreenCallback
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
-import com.github.christophpickl.derbauer2.ui.screen.Choice
-import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
+import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.Choice
+import com.github.christophpickl.derbauer2.ui.view.ChooseView
 
-class BuildScreen : ChooseScreen<BuildChoice>(
+class BuildView : ChooseView<BuildChoice>(
     messages = listOf(
         "Expand, expand, expand.",
         "Construction work makes us happyyyy..."
@@ -19,8 +19,8 @@ class BuildScreen : ChooseScreen<BuildChoice>(
         "  ${it.labelPlural.capitalize()}: ${it.amount}"
     }}"
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeScreen() }
-    override fun onCallback(callback: ScreenCallback, choice: BuildChoice) {
+    override val cancelSupport = CancelSupport.Enabled { HomeView() }
+    override fun onCallback(callback: ViewCallback, choice: BuildChoice) {
         callback.doBuild(choice)
     }
 }

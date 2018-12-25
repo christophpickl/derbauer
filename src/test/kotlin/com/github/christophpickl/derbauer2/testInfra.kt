@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2
 
 import com.github.christophpickl.derbauer2.feature.Feature
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Global
 import com.github.christophpickl.derbauer2.model.History
@@ -25,7 +25,7 @@ class TestModelListener : TestListenerAdapter() {
 }
 
 fun Model.reset() {
-    screen = HomeScreen()
+    view = HomeView()
     global = Global()
     player = Player()
     history = History()

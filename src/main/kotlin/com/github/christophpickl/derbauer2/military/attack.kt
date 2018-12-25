@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.military
 
 import com.github.christophpickl.derbauer2.VALUES
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.misc.Rand
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.sleep
@@ -48,7 +48,7 @@ class AttackThread(
         sleep(VALUES.attackOverDelay)
 
         Model.history.attacked++
-        Model.screen = HomeScreen()
+        Model.view = HomeView()
         renderer.render()
     }
 

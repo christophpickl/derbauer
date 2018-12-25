@@ -12,14 +12,14 @@ class EndTurnController : EndTurnCallback {
     override fun onEndTurn() {
         if (isGameOver()) {
             log.info { "game over" }
-            Model.screen = GameOverScreen()
+            Model.view = GameOverView()
             return
         }
         log.info { "end turn" }
         val happening = happener.letItHappen()
         if (happening != null) {
             log.info { "happening occured: $happening" }
-            Model.screen = happening
+            Model.view = happening
         } else {
             Model.goHome()
         }

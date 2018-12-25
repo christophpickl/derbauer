@@ -1,16 +1,16 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
-import com.github.christophpickl.derbauer2.ScreenCallback
+import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Rand
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
-import com.github.christophpickl.derbauer2.ui.screen.InfoScreen
-import com.github.christophpickl.derbauer2.ui.screen.Screen
+import com.github.christophpickl.derbauer2.ui.view.InfoView
+import com.github.christophpickl.derbauer2.ui.view.View
 import mu.KotlinLogging.logger
 
-class HappeningScreen(message: String) : InfoScreen(message) {
-    override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+class HappeningView(message: String) : InfoView(message) {
+    override fun onCallback(callback: ViewCallback, input: PromptInput) {
         Model.goHome()
     }
 }
@@ -26,7 +26,7 @@ class Happener {
     private var turnsNothingHappened = 999
     private val baseProb = VALUES.happeningBaseProbability
 
-    fun letItHappen(): Screen? {
+    fun letItHappen(): View? {
         happenings.forEach { it.coolUpWarmUp() }
 
         val prob = Math.min(baseProb, (baseProb / VALUES.happeningTurnsCooldown * turnsNothingHappened))
@@ -34,7 +34,7 @@ class Happener {
         if (Rand.rand0to1() < prob) {
             turnsNothingHappened = 0
             val happening = happenings.sortedBy { it.currentCooldown }.first()
-            return HappeningScreen(happening.execute())
+            return HappeningView(happening.execute())
         }
 
         turnsNothingHappened++

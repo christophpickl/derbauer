@@ -1,39 +1,39 @@
 package com.github.christophpickl.derbauer2.home
 
-import com.github.christophpickl.derbauer2.build.BuildScreen
+import com.github.christophpickl.derbauer2.build.BuildView
 import com.github.christophpickl.derbauer2.endturn.EndTurnExecutor
-import com.github.christophpickl.derbauer2.endturn.EndTurnScreen
+import com.github.christophpickl.derbauer2.endturn.EndTurnView
 import com.github.christophpickl.derbauer2.endturn.achievement.AchievementChecker
-import com.github.christophpickl.derbauer2.military.MilitaryScreen
+import com.github.christophpickl.derbauer2.military.MilitaryView
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.trade.TradeScreen
-import com.github.christophpickl.derbauer2.upgrade.UpgradeScreen
+import com.github.christophpickl.derbauer2.trade.TradeView
+import com.github.christophpickl.derbauer2.upgrade.UpgradeView
 
-class HomeController : HomeScreenCallback {
+class HomeController : HomeCallback {
     override fun goEndTurnReport() {
         val message = EndTurnExecutor.execute()
-        Model.screen = EndTurnScreen(message)
+        Model.view = EndTurnView(message)
     }
 
     override fun onHomeEnum(choice: HomeChoice) {
         when (choice.enum) {
             HomeEnum.Trade -> {
-                Model.screen = TradeScreen()
+                Model.view = TradeView()
             }
             HomeEnum.Build -> {
-                Model.screen = BuildScreen()
+                Model.view = BuildView()
             }
             HomeEnum.Upgrade -> {
-                Model.screen = UpgradeScreen()
+                Model.view = UpgradeView()
             }
             HomeEnum.Military -> {
-                Model.screen = MilitaryScreen()
+                Model.view = MilitaryView()
             }
             HomeEnum.EndTurn -> {
-                val achievement = AchievementChecker.nextScreen()
+                val achievement = AchievementChecker.nextView()
                 if (achievement != null) {
-                    Model.screen = achievement
+                    Model.view = achievement
                 } else {
                     goEndTurnReport()
                 }

@@ -15,7 +15,7 @@ class TradeController : TradeCallback {
     private val log = logger {}
 
     override fun onTrade(choice: TradableChoice) {
-        Model.screen = ExecuteTradeScreen(choice)
+        Model.view = ExecuteTradeView(choice)
     }
 
     override fun doTrade(choice: TradableChoice, amount: Int) {

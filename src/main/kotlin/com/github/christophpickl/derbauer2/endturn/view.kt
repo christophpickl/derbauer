@@ -1,19 +1,19 @@
 package com.github.christophpickl.derbauer2.endturn
 
-import com.github.christophpickl.derbauer2.ScreenCallback
+import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AsciiArt
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
-import com.github.christophpickl.derbauer2.ui.screen.InfoScreen
+import com.github.christophpickl.derbauer2.ui.view.InfoView
 
-class EndTurnScreen(message: String) : InfoScreen(message) {
-    override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+class EndTurnView(message: String) : InfoView(message) {
+    override fun onCallback(callback: ViewCallback, input: PromptInput) {
         callback.onEndTurn()
     }
 }
 
-class GameOverScreen : InfoScreen(buildMessage()) {
+class GameOverView : InfoView(buildMessage()) {
     companion object {
         fun buildMessage(): String {
             val suffix = when (Model.global.day) {
@@ -30,7 +30,7 @@ class GameOverScreen : InfoScreen(buildMessage()) {
     }
 
     override val promptMode = PromptMode.Off
-    override fun onCallback(callback: ScreenCallback, input: PromptInput) {
+    override fun onCallback(callback: ViewCallback, input: PromptInput) {
         // no-op
     }
 }

@@ -1,16 +1,16 @@
 package com.github.christophpickl.derbauer2.trade
 
-import com.github.christophpickl.derbauer2.ScreenCallback
-import com.github.christophpickl.derbauer2.home.HomeScreen
+import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResource
-import com.github.christophpickl.derbauer2.ui.screen.CancelSupport
-import com.github.christophpickl.derbauer2.ui.screen.Choice
-import com.github.christophpickl.derbauer2.ui.screen.ChooseScreen
-import com.github.christophpickl.derbauer2.ui.screen.InputScreen
+import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.Choice
+import com.github.christophpickl.derbauer2.ui.view.ChooseView
+import com.github.christophpickl.derbauer2.ui.view.InputView
 
-class TradeScreen : ChooseScreen<TradableChoice>(
+class TradeView : ChooseView<TradableChoice>(
     messages = listOf(
         "Try not to get broke, huh?!",
         "Got anything useful?",
@@ -20,8 +20,8 @@ class TradeScreen : ChooseScreen<TradableChoice>(
         listOf(TradableChoice(it, BuySell.Buy), TradableChoice(it, BuySell.Sell))
     }
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeScreen() }
-    override fun onCallback(callback: ScreenCallback, choice: TradableChoice) {
+    override val cancelSupport = CancelSupport.Enabled { HomeView() }
+    override fun onCallback(callback: ViewCallback, choice: TradableChoice) {
         callback.onTrade(choice)
     }
 }
@@ -34,7 +34,7 @@ data class TradableChoice(
         "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.effectivePriceFor(buySell)} gold"
 }
 
-class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(buildMessage(choice)) {
+class ExecuteTradeView(private val choice: TradableChoice) : InputView(buildMessage(choice)) {
     companion object {
         private fun buildMessage(choice: TradableChoice): String {
             val info = when (choice.buySell) {
@@ -51,8 +51,8 @@ class ExecuteTradeScreen(private val choice: TradableChoice) : InputScreen(build
         }
     }
 
-    override val cancelSupport = CancelSupport.Enabled { TradeScreen() }
-    override fun onCallback(callback: ScreenCallback, number: Int) {
+    override val cancelSupport = CancelSupport.Enabled { TradeView() }
+    override fun onCallback(callback: ViewCallback, number: Int) {
         callback.doTrade(choice, number)
     }
 }
