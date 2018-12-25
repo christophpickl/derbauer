@@ -19,7 +19,8 @@ data class Buildings(
     var houses: HouseBuilding = HouseBuilding(),
     var granaries: GranaryBuilding = GranaryBuilding(),
     var farms: FarmBuilding = FarmBuilding(),
-    val castles: CastleBuilding = CastleBuilding()
+    val castles: CastleBuilding = CastleBuilding(),
+    val barracks: BarrackBuilding = BarrackBuilding()
 ) {
     @get:JsonIgnore val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
 
@@ -27,6 +28,7 @@ data class Buildings(
     val totalFoodCapacity get() = all.filterIsInstance<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
     val totalFoodProduction get() = all.filterIsInstance<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
     val totalPeopleCapacity get() = all.filterIsInstance<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
+    val totalMilitaryCapacity get() = all.filterIsInstance<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
 }
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable {
@@ -49,12 +51,18 @@ interface FoodProducingBuilding : Building {
     val totalFoodProduction get() = foodProduction * amount
 }
 
+interface MilitaryCapacityBuilding : Building {
+    var militaryCapacity: Int
+    val totalMilitaryCapacity get() = militaryCapacity * amount
+
+}
+
 class HouseBuilding : AbstractBuilding(
     labelSingular = "house",
     labelPlural = "houses",
     values = Values.buildings.houses
 ), PeopleCapacityBuilding {
-    override var peopleCapacity = 5
+    override var peopleCapacity = Values.buildings.housePeopleCapacity
 }
 
 class GranaryBuilding : AbstractBuilding(
@@ -62,7 +70,7 @@ class GranaryBuilding : AbstractBuilding(
     labelPlural = "granaries",
     values = Values.buildings.granaries
 ), FoodCapacityBuilding {
-    override var foodCapacity = 100
+    override var foodCapacity = Values.buildings.granaryFoodCapacity
 }
 
 class FarmBuilding : AbstractBuilding(
@@ -70,7 +78,16 @@ class FarmBuilding : AbstractBuilding(
     labelPlural = "farms",
     values = Values.buildings.farms
 ), FoodProducingBuilding {
-    override var foodProduction = 2
+    override var foodProduction = Values.buildings.farmFoodProduction
+}
+
+class BarrackBuilding : AbstractBuilding(
+    labelSingular = "barrack",
+    labelPlural = "barracks",
+    values = Values.buildings.barrack
+), MilitaryCapacityBuilding, ConditionalEntity {
+    override var militaryCapacity = Values.buildings.barrackMilitaryCapacity
+    override fun checkCondition() = Model.feature.military.isMilitaryEnabled
 }
 
 class CastleBuilding : AbstractBuilding(
@@ -78,9 +95,9 @@ class CastleBuilding : AbstractBuilding(
     labelPlural = "castles",
     values = Values.buildings.castles
 ), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalEntity {
-    override var foodCapacity = 500
-    override var peopleCapacity = 50
-    override fun checkCondition() = Model.feature.isCastleEnabled
+    override var foodCapacity = Values.buildings.castleFoodCapacity
+    override var peopleCapacity = Values.buildings.castlePeopleCapacity
+    override fun checkCondition() = Model.feature.building.isCastleEnabled
 }
 
 abstract class AbstractBuilding(
@@ -98,12 +115,15 @@ abstract class AbstractBuilding(
 
     final override val order = counter++
 
-    final override fun description() = listOfNotNull(
-        if (this is FoodCapacityBuilding) "stores +$foodCapacity food" else null,
-        if (this is PeopleCapacityBuilding) "stores +$peopleCapacity people" else null,
-        if (this is FoodProducingBuilding) "produces +$foodProduction food" else null
-    ).joinToString(" and ")
+    // TODO support additional description for subtypes
+    final override val description
+        get() = listOfNotNull(
+            if (this is FoodCapacityBuilding) "stores +$foodCapacity food" else null,
+            if (this is PeopleCapacityBuilding) "stores +$peopleCapacity people" else null,
+            if (this is FoodProducingBuilding) "produces +$foodProduction food" else null,
+            if (this is MilitaryCapacityBuilding) "stores +$militaryCapacity units" else null
+        ).also { require(it.isNotEmpty()) { "No description could be computed for ${this::class.simpleName}!" } }.joinToString(" and ")
 
-    override fun buyDescription() = "$buyPrice gold and $landNeeded land" 
+    override val buyDescription get() = "$buyPrice gold and $landNeeded land"
     override fun toString() = Stringifier.stringify(this)
 }

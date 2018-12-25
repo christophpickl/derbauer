@@ -4,6 +4,7 @@
 * (4) MILIATRY: getting attacked end of turn
 * (2) upcome costs (some buildings, all military)
 * (2) if food/people are over capacity => decrease it slowly!
+* (1) END TURN always with key 0
 
 # minor
 

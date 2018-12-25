@@ -19,9 +19,10 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     ).apply {
         addAll(Model.player.militaries.all.map { MilitaryChoice.Hire(it) })
     },
-    additionalContent = "You've got:\n${Model.player.militaries.all.joinToString("\n") {
-        "  ${it.labelPlural.capitalize()}: ${it.amount}"
-    }}"
+    additionalContent = "You've got (used capacity ${Model.player.militaries.totalAmount}/${Model.player.buildings.totalMilitaryCapacity}):\n" +
+        Model.player.militaries.all.joinToString("\n") {
+            "  ${it.labelPlural.capitalize()}: ${it.amount}"
+        }
 ) {
     override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: MilitaryChoice) {
@@ -34,7 +35,7 @@ sealed class MilitaryChoice(
 ) : Choice {
     object Attack : MilitaryChoice("Attack")
     class Hire(val military: Military) : MilitaryChoice(
-        label = "Hire ${military.label} ... ${military.buyDescription()} (${military.description()})"
+        label = "Hire ${military.label} ... ${military.buyDescription} (${military.description})"
     )
 }
 
@@ -49,7 +50,7 @@ class HireView(
 ) : InputView(
     "How many ${military.labelPlural} do you wanna hire?\n\n" +
         "1 ${military.labelSingular} costs ${military.buyPrice} gold and ${military.costsPeople} people.\n\n" +
-        "You can afford for ${military.effectiveBuyPossibleAmount} ${military.labelPlural}."
+        "You can hire ${military.effectiveBuyPossibleAmount} ${military.labelPlural} maximum."
 ) {
 
     override fun onCallback(callback: ViewCallback, number: Int) {

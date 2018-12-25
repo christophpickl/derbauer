@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 
 interface Buyable {
-    fun buyDescription(): String
+    val buyDescription: String
     var buyPrice: Int
     val buyPossibleAmount get() = Math.max(0, Model.gold / buyPrice)
     val effectiveBuyPossibleAmount get() = buyPossibleAmount
@@ -12,7 +12,7 @@ interface Buyable {
 
 interface Sellable {
     var sellPrice: Int
-    fun sellDescription(): String
+    val sellDescription: String
 }
 
 interface Tradeable : Buyable, Sellable {
@@ -22,8 +22,8 @@ interface Tradeable : Buyable, Sellable {
     }
 
     fun descriptionFor(buySell: BuySell) = when (buySell) {
-        BuySell.Buy -> buyDescription()
-        BuySell.Sell -> sellDescription()
+        BuySell.Buy -> buyDescription
+        BuySell.Sell -> sellDescription
     }
 }
 

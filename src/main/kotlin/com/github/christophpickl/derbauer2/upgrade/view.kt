@@ -28,7 +28,7 @@ data class UpgradeChoice(
     val upgrade: Upgrade
 ) : Choice, Labeled {
     override val label =
-        "${upgrade.label} ... ${upgrade.buyDescription()} (${upgrade.description()})"
+        "${upgrade.label} ${upgrade.currentLevel}/${upgrade.maxLevel} ... ${upgrade.buyDescription} (${upgrade.description})"
 }
 
 interface UpgradeCallback {

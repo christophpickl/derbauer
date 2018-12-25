@@ -1,9 +1,11 @@
 package com.github.christophpickl.derbauer2.home
 
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
 import com.github.christophpickl.derbauer2.ui.view.EnumChoice
+import java.util.*
 
 class HomeView : ChooseView<HomeChoice>(
     messages = listOf(
@@ -11,14 +13,16 @@ class HomeView : ChooseView<HomeChoice>(
         "What can I do for you, master?",
         "Your wish is my command."
     ),
-    choices = listOf(
-        EnumChoice(HomeEnum.Trade, "Trade"),
-        EnumChoice(HomeEnum.Build, "Build"),
-        EnumChoice(HomeEnum.Upgrade, "Upgrade"),
-        EnumChoice(HomeEnum.Military, "Military"),
-        EnumChoice(HomeEnum.Action, "Action"),
-        EnumChoice(HomeEnum.EndTurn, "End Turn")
-    )
+    choices = LinkedList<HomeChoice>().apply {
+        this += EnumChoice(HomeEnum.Trade, "Trade")
+        this += EnumChoice(HomeEnum.Build, "Build")
+        this += EnumChoice(HomeEnum.Upgrade, "Upgrade")
+        if (Model.feature.military.isMilitaryEnabled) {
+            this += EnumChoice(HomeEnum.Military, "Military")
+        }
+        this += EnumChoice(HomeEnum.Action, "Action")
+        this += EnumChoice(HomeEnum.EndTurn, "End Turn")
+    }
 ) {
     override val cancelSupport = CancelSupport.Disabled
 

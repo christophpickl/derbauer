@@ -29,7 +29,7 @@ data class BuildChoice(
     val building: Building
 ) : Choice {
     override val label =
-        "${building.labelSingular} ... ${building.buyDescription()} (${building.description()})"
+        "${building.labelSingular} ... ${building.buyDescription} (${building.description})"
 }
 
 interface BuildCallback {

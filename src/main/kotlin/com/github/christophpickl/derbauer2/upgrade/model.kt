@@ -13,21 +13,28 @@ import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
 
 data class Upgrades(
-    val farmProductivity: FarmProductivityUpgrade = FarmProductivityUpgrade()
+    val farmProductivity: FarmProductivityUpgrade = FarmProductivityUpgrade(),
+    val militaryUpgrade: MilitaryUpgrade = MilitaryUpgrade()
 ) {
     @get:JsonIgnore val all get() = propertiesOfType<Upgrades, Upgrade>(this).ordered().filterConditional()
 }
 
 interface Upgrade : Entity, Descriptable, Buyable {
+    var currentLevel: Int
+    val maxLevel: Int
+
+    val isMaxLevelReached get() = currentLevel == maxLevel
     fun execute()
 }
 
 abstract class AbstractUpgrade(
     override val label: String,
-    override var buyPrice: Int
+    override var buyPrice: Int,
+    override val maxLevel: Int
 ) : Upgrade {
 
-    final override fun buyDescription() = "$buyPrice gold"
+    override var currentLevel = 0
+    final override val buyDescription get() = "$buyPrice gold"
 
     companion object {
         var counter = 0
@@ -39,16 +46,28 @@ abstract class AbstractUpgrade(
 
 class FarmProductivityUpgrade : AbstractUpgrade(
     label = "Farm Productivity",
-    buyPrice = Values.upgrades.farmBuyPrice
+    buyPrice = Values.upgrades.farmBuyPrice,
+    maxLevel = 3
 ) {
 
     var foodProductionIncrease = Values.upgrades.farmProductionIncrease
-    override fun description() = "increases food production by $foodProductionIncrease"
+    override val description get() = "increases food production by $foodProductionIncrease"
 
     override fun execute() {
         Model.player.buildings.all.filterIsInstance<FoodProducingBuilding>().forEach {
             it.foodProduction += foodProductionIncrease
         }
         buyPrice = (buyPrice * Values.upgrades.increasePriceAfterBought).toInt()
+    }
+}
+
+class MilitaryUpgrade : AbstractUpgrade(
+    label = "Military Expertise",
+    buyPrice = Values.upgrades.militaryBuyPrice,
+    maxLevel = 1
+) {
+    override val description get() = "enables military actions"
+    override fun execute() {
+        Model.feature.military.isMilitaryEnabled = true
     }
 }

@@ -2,7 +2,7 @@ package com.github.christophpickl.derbauer2
 
 class ValuesResources {
     val gold = if (CHEAT_MODE) 900 else 100
-    val food = if (CHEAT_MODE) 400 else 300
+    val food = if (CHEAT_MODE) 400 else 50
     val people = if (CHEAT_MODE) 9 else 2
     val land = if (CHEAT_MODE) 100 else 5
 }
@@ -13,21 +13,32 @@ class ValuesBuildings {
         landNeeded = 1,
         buyPrice = 15
     )
+    val housePeopleCapacity = 5
     val granaries = ValueBuilding(
         amount = if (CHEAT_MODE) 20 else 1,
         landNeeded = 1,
         buyPrice = 30
     )
+    val granaryFoodCapacity = 100
     val farms = ValueBuilding(
         amount = if (CHEAT_MODE) 10 else 1,
         landNeeded = 2,
         buyPrice = 50
     )
+    val farmFoodProduction = 2
+    val barrack = ValueBuilding(
+        amount = if (CHEAT_MODE) 0 else 0,
+        landNeeded = 1,
+        buyPrice = 40
+    )
+    val barrackMilitaryCapacity = 10
     val castles = ValueBuilding(
         amount = if (CHEAT_MODE) 0 else 0,
         landNeeded = 4,
         buyPrice = 200
     )
+    val castlePeopleCapacity = 50
+    val castleFoodCapacity = 500
 }
 
 class ValuesMilitaries {
@@ -56,6 +67,7 @@ class ValuesUpgrades {
     val increasePriceAfterBought = 2.0
     val farmBuyPrice = 250
     val farmProductionIncrease = 1
+    val militaryBuyPrice = 100
 }
 
 class ValuesAchievements {
@@ -75,7 +87,9 @@ class ValuesActions {
 }
 
 class ValuesFeatures {
-    val castlePeopleNeeded = if (CHEAT_MODE) 9 else 100
+    val castlePeopleNeeded = if (CHEAT_MODE) 10 else 100
+    val knightBarracksNeeded = if (CHEAT_MODE) 1 else 5
+    val catapultBarracksNeeded = if (CHEAT_MODE) 2 else 20
 }
 
 // =====================================================================================================================

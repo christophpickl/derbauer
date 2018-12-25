@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.ValueMilitary
 import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.misc.IgnoreStringified
+import com.github.christophpickl.derbauer2.misc.KMath
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
+import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
@@ -23,12 +25,19 @@ data class Militaries(
 
     @get:JsonIgnore val all get() = propertiesOfType<Militaries, Military>(this).ordered().filterConditional()
     val totalAmount get() = all.sumBy { it.amount }
+    val militaryCapacityLeft get() = Model.player.buildings.totalMilitaryCapacity - totalAmount
 }
 
 interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable {
     var attackModifier: Double
     var costsPeople: Int
-    override val effectiveBuyPossibleAmount get() = Math.max(0, Math.min(buyPossibleAmount, (Model.people - 1) / costsPeople))
+
+    override val effectiveBuyPossibleAmount
+        get() = KMath.minButNotNegative(
+            buyPossibleAmount,
+            (Model.people - 1) / costsPeople,
+            Model.militaryCapacityLeft
+        )
 }
 
 
@@ -42,7 +51,7 @@ abstract class AbstractMilitary(
     final override var buyPrice = value.buyPrice
     final override var attackModifier = value.attackModifier
     final override var costsPeople = value.costsPeople
-    final override fun buyDescription() = "$buyPrice gold and $costsPeople people"
+    final override val buyDescription get() = "$buyPrice gold and $costsPeople people"
 
     companion object {
         private var counter = 0
@@ -57,21 +66,23 @@ class SoldierMilitary : AbstractMilitary(
     labelPlural = "soldiers",
     value = Values.militaries.soldiers
 ) {
-    override fun description() = "basic unit; attack: $attackModifier"
+    override val description get() = "basic unit; attack: $attackModifier"
 }
 
 class KnightMilitary : AbstractMilitary(
     labelSingular = "knight",
     labelPlural = "knights",
     value = Values.militaries.knights
-) {
-    override fun description() = "allrounder unit; attack: $attackModifier"
+), ConditionalEntity {
+    override fun checkCondition() = Model.feature.military.isKnightEnabled
+    override val description get() = "allrounder unit; attack: $attackModifier"
 }
 
 class CatapultMilitary : AbstractMilitary(
     labelSingular = "catapult",
     labelPlural = "catapults",
     value = Values.militaries.catapults
-) {
-    override fun description() = "good against buildings; attack: $attackModifier"
+), ConditionalEntity {
+    override fun checkCondition() = Model.feature.military.isCatapultEnabled
+    override val description get() = "good against buildings; attack: $attackModifier"
 }

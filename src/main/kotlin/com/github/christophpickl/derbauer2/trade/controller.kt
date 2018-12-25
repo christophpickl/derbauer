@@ -57,11 +57,11 @@ class TradeController : TradeCallback {
                 condition = { choice.resource.amount >= amount },
                 alertType = AlertType.NotEnoughResourcesToSell
             ))
-            // unused amount
+            // unused amount (for land)
             if (choice.resource is UsableEntity) {
                 validations.add(SimpleChoiceValidation(
                     condition = { choice.resource.unusedAmount >= amount },
-                    alertType = AlertType.NotEnoughUnused
+                    alertType = AlertType.NotEnoughResources
                 ))
             }
         }

@@ -6,11 +6,16 @@ import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.UsableEntity
 import com.github.christophpickl.kpotpourri.common.string.times
 
-class Renderer(
+interface Renderer {
+    fun render()
+}
+
+class RendererImpl(
     private val text: MainTextArea,
     private val prompt: Prompt
-) {
-    fun render() {
+) : Renderer {
+
+    override fun render() {
         val promptText = when (Model.currentView.promptMode) {
             PromptMode.Off -> null
             PromptMode.Enter -> ">> Hit ENTER <<"

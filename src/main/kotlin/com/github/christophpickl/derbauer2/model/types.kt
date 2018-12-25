@@ -18,7 +18,7 @@ interface MultiLabeled : Labeled {
 }
 
 interface Descriptable {
-    fun description(): String
+    val description: String
 }
 
 interface Amountable {

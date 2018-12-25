@@ -29,8 +29,8 @@ interface TradeableResource : Resource, Tradeable {
     val effectiveBuyPrice get() = (buyPrice * priceModifier).toInt()
     val effectiveSellPrice get() = (sellPrice * priceModifier).toInt()
 
-    override fun buyDescription() = "${effectivePriceFor(BuySell.Buy)} gold"
-    override fun sellDescription() = "${effectivePriceFor(BuySell.Sell)} gold"
+    override val buyDescription get() = "${effectivePriceFor(BuySell.Buy)} gold"
+    override val sellDescription get() = "${effectivePriceFor(BuySell.Sell)} gold"
     
     fun effectivePriceFor(buySell: BuySell): Int = when (buySell) {
         BuySell.Buy -> effectiveBuyPrice

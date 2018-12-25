@@ -21,8 +21,10 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.github.christophpickl.kpotpourri:logback4k:1.12")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
+
     testImplementation("org.testng:testng:6.14.3")
     testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
 }
 
 

@@ -34,3 +34,12 @@ fun sleep(ms: Int) {
     Thread.sleep(ms.toLong())
 }
 
+object KMath {
+
+    fun minButNotNegative(first: Int, second: Int, vararg others: Int): Int =
+        Math.max(0, min(first, second, *others))
+
+    fun min(first: Int, second: Int, vararg others: Int): Int =
+        mutableListOf(first, second).apply { addAll(others.toList()) }.min()!!
+
+}

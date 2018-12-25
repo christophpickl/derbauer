@@ -1,6 +1,5 @@
 package com.github.christophpickl.derbauer2.upgrade
 
-import com.github.christophpickl.derbauer2.misc.ChoiceValidation
 import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.Model
@@ -15,17 +14,21 @@ class UpgradeController : UpgradeCallback {
         log.debug { "upgrade: $choice" }
         if (isValid(choice)) {
             Model.gold -= choice.upgrade.buyPrice
+            choice.upgrade.currentLevel++
             choice.upgrade.execute()
-            Model.goHome()
+            Model.currentView = UpgradeView()
         }
     }
 
-    private fun isValid(choice: UpgradeChoice): Boolean {
-        val validations = mutableListOf<ChoiceValidation>()
-        validations.add(SimpleChoiceValidation(
+    private fun isValid(choice: UpgradeChoice) = validateChoice(listOf(
+        SimpleChoiceValidation(
             condition = { Model.gold >= choice.upgrade.buyPrice },
             alertType = AlertType.NotEnoughGold
-        ))
-        return validateChoice(validations)
-    }
+        ),
+        SimpleChoiceValidation(
+            condition = { !choice.upgrade.isMaxLevelReached },
+            alertType = AlertType.FullyUpgraded
+        )
+    ))
+
 }

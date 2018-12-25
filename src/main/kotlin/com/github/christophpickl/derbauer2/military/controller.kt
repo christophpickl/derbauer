@@ -54,7 +54,7 @@ class MilitaryController(
         log.debug { "want to hire: $amount $militaryUnit" }
         val totalPrice = militaryUnit.buyPrice * amount
         val totalPeople = militaryUnit.costsPeople * amount
-        if (isValid(totalPrice, totalPeople)) {
+        if (isValid(totalPrice, totalPeople, amount)) {
             militaryUnit.amount += amount
             Model.gold -= totalPrice
             Model.people -= totalPeople
@@ -62,7 +62,7 @@ class MilitaryController(
         }
     }
 
-    private fun isValid(totalPrice: Int, totalPeople: Int) = validateChoice(listOf(
+    private fun isValid(totalPrice: Int, totalPeople: Int, amount: Int) = validateChoice(listOf(
         SimpleChoiceValidation(
             condition = { Model.gold >= totalPrice },
             alertType = AlertType.NotEnoughGold
@@ -70,6 +70,10 @@ class MilitaryController(
         SimpleChoiceValidation(
             condition = { Model.people >= totalPeople },
             alertType = AlertType.NotEnoughPeople
+        ),
+        SimpleChoiceValidation(
+            condition = { Model.totalMilitaryCapacity >= amount },
+            alertType = AlertType.NotEnoughCapacity
         )
     ))
 
