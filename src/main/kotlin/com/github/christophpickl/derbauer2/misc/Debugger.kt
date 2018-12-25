@@ -7,6 +7,7 @@ import com.github.christophpickl.derbauer2.model.Model
 import java.awt.BorderLayout
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.nio.file.Files
 import javax.swing.JButton
 import javax.swing.JDialog
 import javax.swing.JPanel
@@ -59,14 +60,26 @@ class DebugWindow : JDialog() {
         JPanel().apply {
             layout = BorderLayout()
             add(scrollPane, BorderLayout.CENTER)
-            add(JButton("Refresh").apply {
-                addActionListener { onRefresh() }
+            add(JPanel().apply {
+                add(JButton("Refresh").apply {
+                    addActionListener { onRefresh() }
+                })
+                add(JButton("Open").apply {
+                    addActionListener { open() }
+                })
             }, BorderLayout.SOUTH)
             onRefresh()
         }
 
     private fun onRefresh() {
         text.text = mapper.writeValueAsString(Model)
+    }
+
+    private fun open() {
+        val text = mapper.writeValueAsString(Model)
+        val file = Files.createTempFile("derbauer2_model_dump_", ".json").toFile()
+        file.writeText(text)
+        execute("open", file.absolutePath)
     }
 
 }

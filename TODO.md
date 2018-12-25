@@ -2,7 +2,6 @@
 # major
 
 * (!) if new thing is available, show it in end turn report!!!
-* (1) DEBUGGER: open content in browser (save as JSON file in /tmp)
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send
 * (2) if food/people are over capacity => decrease it slowly!

@@ -1,8 +1,11 @@
 package com.github.christophpickl.derbauer2.misc
 
+import mu.KotlinLogging.logger
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
+
+private val log = logger {}
 
 inline fun <reified C : Any, reified T> propertiesOfType(thiz: C): List<T> =
     C::class.memberProperties
@@ -42,4 +45,19 @@ object KMath {
     fun min(first: Int, second: Int, vararg others: Int): Int =
         mutableListOf(first, second).apply { addAll(others.toList()) }.min()!!
 
+}
+
+fun execute(vararg commands: String): Int {
+    log.info { "Starting process: ${commands.joinToString(" ")}" }
+    val builder = ProcessBuilder().apply {
+        command(commands.toList())
+        redirectOutput(ProcessBuilder.Redirect.INHERIT)
+        redirectError(ProcessBuilder.Redirect.INHERIT)
+    }
+    val process = builder.start()
+    val returnCode = process.waitFor()
+    if (returnCode != 0) {
+        log.warn { "Process returned code ${returnCode} for command: ${commands.joinToString(" ")}" }
+    }
+    return returnCode
 }
