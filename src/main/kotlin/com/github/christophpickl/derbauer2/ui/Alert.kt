@@ -36,7 +36,7 @@ object Alert {
         log.debug { "show($type)" }
         label.text = type.message
         glassPane.isVisible = true
-        beep()
+        beep("Alert: ${type.message}")
         resetTimer()
     }
 
@@ -72,7 +72,9 @@ sealed class AlertType(val message: String) {
 //    class CustomAlert(message: String) : AlertType(message)
 }
 
-fun beep() {
+private val log = logger {}
+fun beep(reason: String) {
+    log.debug { "Beep reason: $reason" }
     Toolkit.getDefaultToolkit().beep()
     println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
 }

@@ -21,7 +21,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.github.christophpickl.kpotpourri:logback4k:1.12")
 
-    // TODO test: testng, assertj
+    testImplementation("org.testng:testng:6.14.3")
+    testImplementation("org.assertj:assertj-core:3.11.1")
 }
 
 
@@ -34,5 +35,5 @@ tasks.withType(KotlinCompile::class.java).all {
 defaultTasks("tasks", "--all")
 
 tasks.withType(Test::class.java).all {
-    // TODO useTestNG()
+    useTestNG()
 }

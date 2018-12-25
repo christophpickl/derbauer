@@ -1,6 +1,5 @@
 package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer.logic.beep
 import com.github.christophpickl.derbauer2.misc.Listener
 import com.github.christophpickl.derbauer2.misc.Subscription
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
@@ -58,7 +57,7 @@ class Prompt : KeyboardListener {
                     }
                     KeyboardEvent.Backspace -> {
                         if (enteredText.isEmpty()) {
-                            beep()
+                            // do nothing
                         } else {
                             enteredText = enteredText.substring(0, enteredText.length - 1)
                             subscription.broadcast { onTextChange(enteredText) }

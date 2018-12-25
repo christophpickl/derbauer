@@ -30,7 +30,7 @@ abstract class ChooseScreen<C : Choice>(
             }
             is PromptInput.Number -> {
                 if (input.number < 1 || input.number > choices.size) {
-                    beep()
+                    beep("Invalid input choice: ${input.number} (must be within 1 and ${choices.size})")
                 } else {
                     onCallback(callback, choices[input.number - 1])
                 }
