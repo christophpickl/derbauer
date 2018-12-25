@@ -7,7 +7,9 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-NEXT_vVERSION=$1
+# e.g.: "v1.0" (existing github tag)
+VERSION=$1
+# path to assembled JAR file
 UPLOAD_FILE=$2
 
 if ! [[ -f "${UPLOAD_FILE}" ]] ; then
@@ -25,7 +27,7 @@ if ! [[ -x "$(command -v jq)" ]]; then
   exit 1
 fi
 
-echo "Next version: [${NEXT_vVERSION}]"
+echo "Next version: [${VERSION}]"
 echo "Upload file: [${UPLOAD_FILE}]"
 echo
 echo "Creating new release in GitHub ..."
@@ -34,7 +36,7 @@ safeEval "curl \
     --header \"Authorization: token ${GITHUB_TOKEN}\" \
     --header \"Content-Type: application/json\" \
     --request POST \
-    --data '{ \"tag_name\": \"${NEXT_vVERSION}\", \"target_commitish\": \"master\", \"name\": \"${NEXT_vVERSION}\", \"body\": \"DerBauer 2 Release\", \"draft\": false, \"prerelease\": false }' \
+    --data '{ \"tag_name\": \"${VERSION}\", \"target_commitish\": \"master\", \"name\": \"${VERSION}\", \"body\": \"DerBauer 2 Release\", \"draft\": false, \"prerelease\": false }' \
     https://api.github.com/repos/christophpickl/derbauer/releases"
 UPLOAD_URL=`echo ${LAST_RESULT} | jq -r '.upload_url' | sed -e 's/{?name,label}//g'`
 
@@ -45,4 +47,4 @@ safeEval "curl \
     --header \"Content-Type: application/jar\" \
     --request POST \
     --data-binary @${UPLOAD_FILE} \
-    $UPLOAD_URL?name=DerBauer2-${NEXT_vVERSION}.jar"
+    $UPLOAD_URL?name=DerBauer2-${VERSION}.jar"
