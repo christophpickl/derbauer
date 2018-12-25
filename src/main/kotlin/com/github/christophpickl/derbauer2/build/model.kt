@@ -1,7 +1,8 @@
 package com.github.christophpickl.derbauer2.build
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.ValueBuilding
+import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
@@ -20,9 +21,8 @@ data class Buildings(
     var farms: FarmBuilding = FarmBuilding(),
     val castles: CastleBuilding = CastleBuilding()
 ) {
-    @get:JsonIgnore
-    val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
-    
+    @get:JsonIgnore val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
+
     val totalLandNeeded get() = all.sumBy { it.totalLandNeeded }
     val totalFoodCapacity get() = all.filterIsInstance<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
     val totalFoodProduction get() = all.filterIsInstance<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
@@ -52,9 +52,7 @@ interface FoodProducingBuilding : Building {
 class HouseBuilding : AbstractBuilding(
     labelSingular = "house",
     labelPlural = "houses",
-    amount = VALUES.houses,
-    landNeeded = 1,
-    buyPrice = 15
+    values = Values.buildings.houses
 ), PeopleCapacityBuilding {
     override var peopleCapacity = 5
 }
@@ -62,9 +60,7 @@ class HouseBuilding : AbstractBuilding(
 class GranaryBuilding : AbstractBuilding(
     labelSingular = "granary",
     labelPlural = "granaries",
-    landNeeded = 1,
-    buyPrice = 30,
-    amount = VALUES.granaries
+    values = Values.buildings.granaries
 ), FoodCapacityBuilding {
     override var foodCapacity = 100
 }
@@ -72,9 +68,7 @@ class GranaryBuilding : AbstractBuilding(
 class FarmBuilding : AbstractBuilding(
     labelSingular = "farm",
     labelPlural = "farms",
-    landNeeded = 2,
-    buyPrice = 50,
-    amount = VALUES.farms
+    values = Values.buildings.farms
 ), FoodProducingBuilding {
     override var foodProduction = 2
 }
@@ -82,9 +76,7 @@ class FarmBuilding : AbstractBuilding(
 class CastleBuilding : AbstractBuilding(
     labelSingular = "castle",
     labelPlural = "castles",
-    landNeeded = 4,
-    buyPrice = 200,
-    amount = VALUES.castles
+    values = Values.buildings.castles
 ), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalEntity {
     override var foodCapacity = 500
     override var peopleCapacity = 50
@@ -94,13 +86,15 @@ class CastleBuilding : AbstractBuilding(
 abstract class AbstractBuilding(
     final override val labelSingular: String,
     final override val labelPlural: String,
-    override var amount: Int,
-    final override var landNeeded: Int,
-    final override var buyPrice: Int
+    values: ValueBuilding
 ) : Building {
     companion object {
         private var counter = 0
     }
+
+    final override var amount = values.amount
+    final override var landNeeded = values.landNeeded
+    final override var buyPrice = values.buyPrice
 
     final override val order = counter++
 
@@ -110,5 +104,6 @@ abstract class AbstractBuilding(
         if (this is FoodProducingBuilding) "produces +$foodProduction food" else null
     ).joinToString(" and ")
 
+    override fun buyDescription() = "$buyPrice gold and $landNeeded land" 
     override fun toString() = Stringifier.stringify(this)
 }

@@ -30,7 +30,7 @@ data class TradableChoice(
     val buySell: BuySell
 ) : Choice {
     override val label: String =
-        "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.effectivePriceFor(buySell)} gold"
+        "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.descriptionFor(buySell)}"
 }
 
 class ExecuteTradeView(private val choice: TradableChoice) : InputView(buildMessage(choice)) {

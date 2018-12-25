@@ -1,24 +1,24 @@
 package com.github.christophpickl.derbauer2.endturn.achievement
 
-import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.model.Model
 
 class Trade1Achievement(
 ) : AbstractAchievement(message = "Trade Mastery I: Cheaper trade rates") {
-    override fun condition() = Model.history.traded >= VALUES.achievementTrade1HistoryNeed
+    override fun condition() = Model.history.traded >= Values.achievements.trade1HistoryNeed
     override fun execute() {
         Model.player.resources.allTradeables.forEach {
-            it.priceModifier -= VALUES.achievementTrade1PriceModifier
+            it.priceModifier -= Values.achievements.trade1PriceModifier
         }
     }
 }
 
 class Attack1Achievement(
 ) : AbstractAchievement(message = "Military Mastery I: Stronger military units") {
-    override fun condition() = Model.history.attacked >= VALUES.achievementAttack1HistoryNeed
+    override fun condition() = Model.history.attacked >= Values.achievements.attack1HistoryNeed
     override fun execute() {
         Model.player.militaries.all.forEach {
-            it.attackModifier += 0.1
+            it.attackModifier += Values.achievements.attack1AttackModifier
         }
     }
 }

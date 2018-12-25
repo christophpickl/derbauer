@@ -33,7 +33,9 @@ sealed class MilitaryChoice(
     override val label: String
 ) : Choice {
     object Attack : MilitaryChoice("Attack")
-    class Hire(val military: Military) : MilitaryChoice("Hire ${military.label}")
+    class Hire(val military: Military) : MilitaryChoice(
+        label = "Hire ${military.label} ... ${military.buyDescription()} (${military.description()})"
+    )
 }
 
 interface MilitaryCallback {
@@ -46,7 +48,7 @@ class HireView(
     private val military: Military
 ) : InputView(
     "How many ${military.labelPlural} do you wanna hire?\n\n" +
-        "1 ${military.labelSingular} costs ${military.buyPrice} gold${if (military is PeopleMilitary) " and ${military.costsPeople} people" else ""}.\n\n" +
+        "1 ${military.labelSingular} costs ${military.buyPrice} gold and ${military.costsPeople} people.\n\n" +
         "You can afford for ${military.effectiveBuyPossibleAmount} ${military.labelPlural}."
 ) {
 

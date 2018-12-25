@@ -1,89 +1,105 @@
 package com.github.christophpickl.derbauer2
 
-val VALUES = if (CHEAT_MODE) CheatValues else DefaultValues()
-
-interface Values {
-    val gold: Int
-    val food: Int
-    val people: Int
-    val land: Int
-
-    val houses: Int
-    val granaries: Int
-    val farms: Int
-    val castles: Int
-
-    val soldiers: Int
-    val knights: Int
-    val catapults: Int
-    val attackBattleDelay: Int
-    val attackOverDelay: Int
-
-    val upgradeIncreasePriceAfterBought: Double // valid for all upgrades
-    val upgradeFarmBuyPrice: Int
-    val upgradeFarmIncreaseFarmBuyPrice: Int
-    val upgradeFarmProductionIncrease: Int
-
-    val achievementTrade1HistoryNeed: Int
-    val achievementTrade1PriceModifier: Double
-    val achievementAttack1HistoryNeed: Int
-    val achievementAttack1AttackModifier: Double
-
-    val happeningTurnsCooldown: Int
-    val happeningBaseProbability: Double
-
-    val visitorsWaitingInThroneRoom: Int
-    val featureCastlePeopleNeeded: Int
+class ValuesResources {
+    val gold = if (CHEAT_MODE) 900 else 100
+    val food = if (CHEAT_MODE) 400 else 300
+    val people = if (CHEAT_MODE) 9 else 2
+    val land = if (CHEAT_MODE) 100 else 5
 }
 
-open class DefaultValues : Values {
-    override val gold = 100
-    override val food = 300
-    override val people = 2
-    override val land = 5
-
-    override val houses = 1
-    override val granaries = 1
-    override val farms = 1
-    override val castles = 0
-
-    override val soldiers = 0
-    override val knights = 0
-    override val catapults = 0
-    override val attackBattleDelay = 600
-    override val attackOverDelay = 2_000
-
-    override val upgradeIncreasePriceAfterBought = 2.0
-    override val upgradeFarmBuyPrice = 250
-    override val upgradeFarmProductionIncrease = 1
-    override val upgradeFarmIncreaseFarmBuyPrice = 10
-
-    override val achievementTrade1HistoryNeed = 10
-    override val achievementTrade1PriceModifier = 0.1
-    override val achievementAttack1HistoryNeed = 5
-    override val achievementAttack1AttackModifier = 0.2
-
-    override val happeningTurnsCooldown = 10
-    override val happeningBaseProbability = 0.1
-
-    override val visitorsWaitingInThroneRoom = 0
-    override val featureCastlePeopleNeeded = 100
+class ValuesBuildings {
+    val houses = ValueBuilding(
+        amount = if (CHEAT_MODE) 30 else 1,
+        landNeeded = 1,
+        buyPrice = 15
+    )
+    val granaries = ValueBuilding(
+        amount = if (CHEAT_MODE) 20 else 1,
+        landNeeded = 1,
+        buyPrice = 30
+    )
+    val farms = ValueBuilding(
+        amount = if (CHEAT_MODE) 10 else 1,
+        landNeeded = 2,
+        buyPrice = 50
+    )
+    val castles = ValueBuilding(
+        amount = if (CHEAT_MODE) 0 else 0,
+        landNeeded = 4,
+        buyPrice = 200
+    )
 }
 
-object CheatValues : DefaultValues() {
-    override val gold = 900
-    override val food = 400
-    override val people = 9
-    override val land = 100
-
-    override val houses = 30
-    override val granaries = 10
-    override val farms = 20
-    override val castles = 0
-
-    override val soldiers = 2
-
-    override val visitorsWaitingInThroneRoom = 5
-    override val featureCastlePeopleNeeded = 10
-
+class ValuesMilitaries {
+    val soldiers = ValueMilitary(
+        amount = if (CHEAT_MODE) 2 else 0,
+        buyPrice = 20,
+        attackModifier = 1.0,
+        costsPeople = 1
+    )
+    val knights = ValueMilitary(
+        amount = if (CHEAT_MODE) 0 else 0,
+        buyPrice = 30,
+        attackModifier = 1.2,
+        costsPeople = 1
+    )
+    val catapults = ValueMilitary(
+        amount = if (CHEAT_MODE) 0 else 0,
+        buyPrice = 50,
+        attackModifier = 1.4,
+        costsPeople = 3
+    )
+    val attackBattleDelay = if (CHEAT_MODE) 400 else 600
 }
+
+class ValuesUpgrades {
+    val increasePriceAfterBought = 2.0
+    val farmBuyPrice = 250
+    val farmProductionIncrease = 1
+}
+
+class ValuesAchievements {
+    val trade1HistoryNeed = 10
+    val trade1PriceModifier = 0.1
+    val attack1HistoryNeed = 5
+    val attack1AttackModifier = 0.2
+}
+
+class ValuesHappenings {
+    val turnsCooldown = 10
+    val baseProbability = 0.1
+}
+
+class ValuesActions {
+    val visitorsWaitingInThroneRoom = if (CHEAT_MODE) 5 else 0
+}
+
+class ValuesFeatures {
+    val castlePeopleNeeded = if (CHEAT_MODE) 9 else 100
+}
+
+// =====================================================================================================================
+
+object Values {
+    val resources = ValuesResources()
+    val buildings = ValuesBuildings()
+    val militaries = ValuesMilitaries()
+    val upgrades = ValuesUpgrades()
+    val achievements = ValuesAchievements()
+    val happenings = ValuesHappenings()
+    val actions = ValuesActions()
+    val features = ValuesFeatures()
+}
+
+class ValueBuilding(
+    val amount: Int,
+    val landNeeded: Int,
+    val buyPrice: Int
+)
+
+class ValueMilitary(
+    val amount: Int,
+    val buyPrice: Int,
+    val attackModifier: Double,
+    val costsPeople: Int
+)

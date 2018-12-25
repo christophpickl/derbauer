@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.trade.BuySell
@@ -28,6 +28,9 @@ interface TradeableResource : Resource, Tradeable {
 
     val effectiveBuyPrice get() = (buyPrice * priceModifier).toInt()
     val effectiveSellPrice get() = (sellPrice * priceModifier).toInt()
+
+    override fun buyDescription() = "${effectivePriceFor(BuySell.Buy)} gold"
+    override fun sellDescription() = "${effectivePriceFor(BuySell.Sell)} gold"
     
     fun effectivePriceFor(buySell: BuySell): Int = when (buySell) {
         BuySell.Buy -> effectiveBuyPrice
@@ -40,18 +43,21 @@ abstract class AbstracteResource(
     override val labelPlural: String,
     override var amount: Int
 ) : Resource {
+
     companion object {
         private var counter = 0
     }
-    override val order = counter++
+
+    final override val order = counter++
     override fun toString() = Stringifier.stringify(this)
 }
 
 class FoodResource : AbstracteResource(
     labelSingular = "food",
     labelPlural = "food",
-    amount = VALUES.food
+    amount = Values.resources.food
 ), LimitedBuyableAmount, TradeableResource {
+
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
     override var priceModifier = 1.0
     override var buyPrice: Int = 15
@@ -63,7 +69,7 @@ class FoodResource : AbstracteResource(
 class GoldResource : AbstracteResource(
     labelSingular = "gold",
     labelPlural = "gold",
-    amount = VALUES.gold
+    amount = Values.resources.gold
 ) {
     override fun toString() = Stringifier.stringify(this)
 }
@@ -71,7 +77,7 @@ class GoldResource : AbstracteResource(
 class PeopleResource : AbstracteResource(
     labelSingular = "people",
     labelPlural = "people",
-    amount = VALUES.people
+    amount = Values.resources.people
 ), LimitedAmount {
     override val limitAmount get() = Model.player.buildings.houses.totalPeopleCapacity
     override fun toString() = Stringifier.stringify(this)
@@ -80,7 +86,7 @@ class PeopleResource : AbstracteResource(
 class LandResource : AbstracteResource(
     labelSingular = "land",
     labelPlural = "land",
-    amount = VALUES.land
+    amount = Values.resources.land
 ), UsableEntity, TradeableResource {
     override val usedAmount get() = Model.player.buildings.totalLandNeeded
     override var priceModifier = 1.0

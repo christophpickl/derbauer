@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
-import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
@@ -24,12 +24,12 @@ class Happener {
     )
     
     private var turnsNothingHappened = 999
-    private val baseProb = VALUES.happeningBaseProbability
+    private val baseProb = Values.happenings.baseProbability
 
     fun letItHappen(): View? {
         happenings.forEach { it.coolUpWarmUp() }
 
-        val prob = Math.min(baseProb, (baseProb / VALUES.happeningTurnsCooldown * turnsNothingHappened))
+        val prob = Math.min(baseProb, (baseProb / Values.happenings.turnsCooldown * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
         if (Random.nextDouble(0.0, 1.0) < prob) {
             turnsNothingHappened = 0

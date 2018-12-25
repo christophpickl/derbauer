@@ -28,7 +28,7 @@ data class UpgradeChoice(
     val upgrade: Upgrade
 ) : Choice, Labeled {
     override val label =
-        "${upgrade.label} ... ${upgrade.buyPrice} gold (${upgrade.description()})"
+        "${upgrade.label} ... ${upgrade.buyDescription()} (${upgrade.description()})"
 }
 
 interface UpgradeCallback {

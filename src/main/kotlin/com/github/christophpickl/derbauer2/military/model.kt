@@ -1,7 +1,8 @@
 package com.github.christophpickl.derbauer2.military
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.VALUES
+import com.github.christophpickl.derbauer2.ValueMilitary
+import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.misc.IgnoreStringified
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
@@ -10,6 +11,7 @@ import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.MultiLabeled
+import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
 
@@ -19,70 +21,57 @@ data class Militaries(
     var catapults: CatapultMilitary = CatapultMilitary()
 ) {
 
-    @JsonIgnore
-    val all: List<Military> = propertiesOfType<Militaries, Military>(this).ordered()
+    @get:JsonIgnore val all get() = propertiesOfType<Militaries, Military>(this).ordered().filterConditional()
     val totalAmount get() = all.sumBy { it.amount }
 }
 
 interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable {
     var attackModifier: Double
-}
-
-interface PeopleMilitary : Military {
     var costsPeople: Int
     override val effectiveBuyPossibleAmount get() = Math.max(0, Math.min(buyPossibleAmount, (Model.people - 1) / costsPeople))
 }
 
+
 abstract class AbstractMilitary(
     override val labelSingular: String,
     override val labelPlural: String,
-    override var amount: Int,
-    override var buyPrice: Int,
-    override var attackModifier: Double
+    value: ValueMilitary
 ) : Military {
+
+    final override var amount = value.amount
+    final override var buyPrice = value.buyPrice
+    final override var attackModifier = value.attackModifier
+    final override var costsPeople = value.costsPeople
+    final override fun buyDescription() = "$buyPrice gold and $costsPeople people"
+
     companion object {
         private var counter = 0
     }
 
-    @IgnoreStringified
-    override val order = counter++
-    protected abstract val preDescription: String
-    final override fun description() = "$preDescription; " +
-        "costs: $buyPrice gold${if (this is PeopleMilitary) " and $costsPeople people" else ""}; " +
-        "ATT: $attackModifier"
-
+    @IgnoreStringified final override val order = counter++
     override fun toString() = Stringifier.stringify(this)
 }
 
 class SoldierMilitary : AbstractMilitary(
     labelSingular = "soldier",
     labelPlural = "soldiers",
-    amount = VALUES.soldiers,
-    buyPrice = 20,
-    attackModifier = 1.0
-), PeopleMilitary {
-    override var costsPeople = 1
-    override val preDescription = "basic unit"
+    value = Values.militaries.soldiers
+) {
+    override fun description() = "basic unit; attack: $attackModifier"
 }
 
 class KnightMilitary : AbstractMilitary(
     labelSingular = "knight",
     labelPlural = "knights",
-    amount = VALUES.knights,
-    buyPrice = 30,
-    attackModifier = 1.2
-), PeopleMilitary {
-    override var costsPeople = 1
-    override val preDescription = "allrounder unit"
+    value = Values.militaries.knights
+) {
+    override fun description() = "allrounder unit; attack: $attackModifier"
 }
 
 class CatapultMilitary : AbstractMilitary(
     labelSingular = "catapult",
     labelPlural = "catapults",
-    amount = VALUES.catapults,
-    buyPrice = 50,
-    attackModifier = 1.4
-), PeopleMilitary {
-    override var costsPeople = 3
-    override val preDescription = "good against buildings"
+    value = Values.militaries.catapults
+) {
+    override fun description() = "good against buildings; attack: $attackModifier"
 }

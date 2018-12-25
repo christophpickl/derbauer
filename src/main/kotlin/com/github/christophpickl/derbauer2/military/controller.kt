@@ -53,7 +53,7 @@ class MilitaryController(
     override fun doHire(militaryUnit: Military, amount: Int) {
         log.debug { "want to hire: $amount $militaryUnit" }
         val totalPrice = militaryUnit.buyPrice * amount
-        val totalPeople = if (militaryUnit is PeopleMilitary) militaryUnit.costsPeople * amount else 0
+        val totalPeople = militaryUnit.costsPeople * amount
         if (isValid(totalPrice, totalPeople)) {
             militaryUnit.amount += amount
             Model.gold -= totalPrice
