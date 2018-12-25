@@ -88,6 +88,7 @@ class BarrackBuilding : AbstractBuilding(
 ), MilitaryCapacityBuilding, ConditionalEntity {
     override var militaryCapacity = Values.buildings.barrackMilitaryCapacity
     override fun checkCondition() = Model.feature.military.isMilitaryEnabled
+    override val additionalDescription = "enables new units"
 }
 
 class CastleBuilding : AbstractBuilding(
@@ -109,19 +110,18 @@ abstract class AbstractBuilding(
         private var counter = 0
     }
 
+    final override val order = counter++
     final override var amount = values.amount
     final override var landNeeded = values.landNeeded
     final override var buyPrice = values.buyPrice
-
-    final override val order = counter++
-
-    // TODO support additional description for subtypes
+    protected open val additionalDescription: String? = null
     final override val description
         get() = listOfNotNull(
             if (this is FoodCapacityBuilding) "stores +$foodCapacity food" else null,
             if (this is PeopleCapacityBuilding) "stores +$peopleCapacity people" else null,
             if (this is FoodProducingBuilding) "produces +$foodProduction food" else null,
-            if (this is MilitaryCapacityBuilding) "stores +$militaryCapacity units" else null
+            if (this is MilitaryCapacityBuilding) "stores +$militaryCapacity units" else null,
+            additionalDescription
         ).also { require(it.isNotEmpty()) { "No description could be computed for ${this::class.simpleName}!" } }.joinToString(" and ")
 
     override val buyDescription get() = "$buyPrice gold and $landNeeded land"
