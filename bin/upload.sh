@@ -7,10 +7,16 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-# e.g.: "v1.0" (existing github tag)
 VERSION=$1
-# path to assembled JAR file
 UPLOAD_FILE=$2
+
+if ! [[ $(git tag -l "${VERSION}") ]]; then
+    echo "ERROR: GIT tag '${VERSION}' does not exist!" >&2
+    echo
+    echo "Available tags:"
+    echo $(git tag)
+    exit 1
+fi
 
 if ! [[ -f "${UPLOAD_FILE}" ]] ; then
     echo "ERROR: upload file does not exist at '${UPLOAD_FILE}'" >&2
@@ -36,7 +42,7 @@ safeEval "curl \
     --header \"Authorization: token ${GITHUB_TOKEN}\" \
     --header \"Content-Type: application/json\" \
     --request POST \
-    --data '{ \"tag_name\": \"${VERSION}\", \"target_commitish\": \"master\", \"name\": \"${VERSION}\", \"body\": \"DerBauer 2 Release\", \"draft\": false, \"prerelease\": false }' \
+    --data '{ \"tag_name\": \"${VERSION}\", \"target_commitish\": \"master\", \"name\": \"${VERSION}\", \"body\": \"Click on the link pointing to the JAR file above, right beneath the Assets title.\", \"draft\": false, \"prerelease\": false }' \
     https://api.github.com/repos/christophpickl/derbauer/releases"
 UPLOAD_URL=`echo ${LAST_RESULT} | jq -r '.upload_url' | sed -e 's/{?name,label}//g'`
 

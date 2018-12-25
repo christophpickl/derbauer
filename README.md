@@ -4,6 +4,8 @@ A text-based, round-based, old-school strategy game written in Kotlin.
 
 ![derbauer-1.1.png](https://raw.githubusercontent.com/christophpickl/derbauer/master/doc/derbauer-1.1.png "DerBauer2 Screenshot")
 
+[Download](https://github.com/christophpickl/derbauer/releases/latest) latest version.
+
 It covers:
 
 - **Trading**: Buy and sell some resources
