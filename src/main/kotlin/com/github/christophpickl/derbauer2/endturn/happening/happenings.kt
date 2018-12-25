@@ -1,14 +1,19 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
+import com.github.christophpickl.derbauer2.misc.randomListOf
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AsciiArt
 
-// MINOR each bag sizes got different prob (gold+rat)
+// TODO make bag sizes depend on current Model resource
 
 class GoldBagHappening : Happening(
     cooldownDays = 7
 ) {
-    private val goldBagSizes = listOf(10, 20, 50)
+    private val goldBagSizes = randomListOf(
+        10 to 60,
+        20 to 30,
+        50 to 10
+    )
 
     override fun internalExecute(): String {
         val bagSize = goldBagSizes.random()
@@ -29,8 +34,12 @@ class RatsHappening : Happening(
     cooldownDays = 14
 ) {
 
-    private val eatenSizes = listOf(10, 20, 30)
-
+    private val eatenSizes = randomListOf(
+        10 to 60,
+        20 to 30,
+        30 to 10
+    )
+    
     override fun internalExecute(): String {
         val eatenProposal = eatenSizes.random()
         val (message, foodEaten) = if (Model.food <= 0) {

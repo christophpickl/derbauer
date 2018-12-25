@@ -14,10 +14,12 @@ class Trade1Achievement(
 }
 
 class Attack1Achievement(
-) : AbstractAchievement(message = "Military Mastery I: Soldier attack +30%") {
+) : AbstractAchievement(message = "Military Mastery I: Stronger military units") {
     override fun condition() = Model.history.attacked >= VALUES.achievementAttack1HistoryNeed
     override fun execute() {
-        // FIXME increase achievement: VALUES.achievementAttack1AttackModifier
+        Model.player.militaries.all.forEach {
+            it.attackModifier += 0.1
+        }
     }
 }
 
