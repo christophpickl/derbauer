@@ -26,7 +26,7 @@ class EndTurnController : EndTurnCallback {
     }
 
     private fun isGameOver() =
-        Model.people <= 0
+        Model.people <= 0 || Model.land <= 0
 
 }
 

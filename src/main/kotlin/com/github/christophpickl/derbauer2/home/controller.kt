@@ -8,11 +8,22 @@ import com.github.christophpickl.derbauer2.military.MilitaryView
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.trade.TradeView
+import com.github.christophpickl.derbauer2.ui.Formatter
 import com.github.christophpickl.derbauer2.upgrade.UpgradeView
 
 class HomeController : HomeCallback {
+
     override fun goEndTurnReport() {
-        val message = EndTurnExecutor.execute()
+        val report = EndTurnExecutor.execute()
+        val message = """
+            So, this is what happened over night:
+            
+            ${formatGrowth("Gold income    ", Model.gold, report.goldIncome)}
+            ${formatGrowth("Food production", Model.food, report.foodIncome)}
+            ${formatGrowth("People growth  ", Model.people, report.peopleIncome)}
+             
+            Go on and continue your miserable existence.
+            """.trimIndent()
         Model.currentView = EndTurnView(message)
     }
 
@@ -40,5 +51,12 @@ class HomeController : HomeCallback {
             }
         }.enforceWhenBranches()
     }
+
+    private val numberWidth = 6
+    private val numberWidthGrow = 5 // plus sign
+    private fun formatGrowth(label: String, current: Int, growth: Int) =
+        "$label: ${Formatter.formatNumber(current, numberWidth)} => " +
+            "${Formatter.formatNumber(growth, numberWidthGrow, addPlusSign = true)} => " +
+            Formatter.formatNumber(current + growth, numberWidth)
 
 }

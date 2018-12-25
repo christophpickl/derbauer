@@ -19,7 +19,7 @@ class GameOverView : InfoView(buildMessage()) {
             val suffix = when (Model.global.day) {
                 in 0..5 -> "you looser!"
                 in 6..10 -> "you beginner."
-                in 11..20 -> "you seem to get the grasp of it."
+                in 11..20 -> "you lucky bastard."
                 in 21..40 -> "of great leadership!"
                 else -> "of bad ass ruler skills!!!!!!!!11111elf"
             }
