@@ -1,13 +1,13 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
-import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.VALUES
-import com.github.christophpickl.derbauer2.misc.Rand
+import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.view.InfoView
 import com.github.christophpickl.derbauer2.ui.view.View
 import mu.KotlinLogging.logger
+import kotlin.random.Random
 
 class HappeningView(message: String) : InfoView(message) {
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
@@ -31,7 +31,7 @@ class Happener {
 
         val prob = Math.min(baseProb, (baseProb / VALUES.happeningTurnsCooldown * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
-        if (Rand.rand0to1() < prob) {
+        if (Random.nextDouble(0.0, 1.0) < prob) {
             turnsNothingHappened = 0
             val happening = happenings.sortedBy { it.currentCooldown }.first()
             return HappeningView(happening.execute())

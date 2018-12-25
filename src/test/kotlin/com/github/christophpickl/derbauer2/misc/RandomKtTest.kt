@@ -10,7 +10,7 @@ class RandomKtTest {
     fun `Given single element When random Then return it`() {
         val list = randomListOf("a" to 100)
 
-        assertThat(list.random()).isEqualTo("a")
+        assertThat(list.randomElement()).isEqualTo("a")
     }
 
     fun `Given two elements one is bigger When random Then return mostly one`() {
@@ -45,7 +45,7 @@ class RandomKtTest {
 
     private val timesHundred = 100
     private fun <E> randomSample(list: RandomList<E>) = (1..(100 * timesHundred)).map {
-        list.random()
+        list.randomElement()
     }.groupingBy { it }.eachCount().mapValues { it.value / timesHundred }.toMutableMap().fillMissing(list)
 
     private fun <K> MutableMap<K, Int>.fillMissing(list: RandomList<K>) = apply {

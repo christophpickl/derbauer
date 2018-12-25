@@ -16,7 +16,7 @@ class GoldBagHappening : Happening(
     )
 
     override fun internalExecute(): String {
-        val bagSize = goldBagSizes.random()
+        val bagSize = goldBagSizes.randomElement()
         Model.gold += bagSize
         val message = """
             You were lucky.
@@ -41,7 +41,7 @@ class RatsHappening : Happening(
     )
     
     override fun internalExecute(): String {
-        val eatenProposal = eatenSizes.random()
+        val eatenProposal = eatenSizes.randomElement()
         val (message, foodEaten) = if (Model.food <= 0) {
             """
                 Lucky you, although there were some rats,
