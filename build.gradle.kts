@@ -1,17 +1,21 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.11"
     idea
+    id("com.github.johnrengelman.shadow") version "4.0.3"
 }
+
+val artifactName = "DerBauer2"
+val localProjectVersion = file("version.txt").readText().trim()
+version = localProjectVersion
 
 repositories {
     jcenter()
     mavenCentral()
     maven { setUrl("http://dl.bintray.com/christophpickl/cpickl") }
 }
-
-// DEPENDENCIES ========================================================================================================
 
 dependencies {
     implementation(kotlin("stdlib", "1.3.11"))
@@ -38,4 +42,16 @@ defaultTasks("tasks", "--all")
 
 tasks.withType(Test::class.java).all {
     useTestNG()
+}
+
+tasks.withType(Jar::class.java).all {
+    manifest {
+        attributes["Main-Class"] = "com.github.christophpickl.derbauer2.DerBauer2"
+    }
+}
+
+tasks.withType(ShadowJar::class.java).all {
+    baseName = artifactName
+    classifier = ""
+    version = localProjectVersion
 }
