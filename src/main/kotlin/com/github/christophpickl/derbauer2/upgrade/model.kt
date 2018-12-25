@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.upgrade
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
@@ -12,6 +13,7 @@ import com.github.christophpickl.derbauer2.trade.Buyable
 data class Upgrades(
     val farmProductivity: FarmProductivityUpgrade = FarmProductivityUpgrade()
 ) {
+    @get:JsonIgnore
     val all: List<Upgrade>
         get() {
             return propertiesOfType<Upgrades, Upgrade>(this).ordered()

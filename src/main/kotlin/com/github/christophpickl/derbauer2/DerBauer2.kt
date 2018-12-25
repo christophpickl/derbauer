@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2
 
 import ch.qos.logback.classic.Level
+import com.github.christophpickl.derbauer2.misc.Debugger
 import com.github.christophpickl.derbauer2.ui.Keyboard
 import com.github.christophpickl.derbauer2.ui.MainFrame
 import com.github.christophpickl.derbauer2.ui.MainTextArea
@@ -9,7 +10,7 @@ import com.github.christophpickl.derbauer2.ui.Renderer
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import javax.swing.SwingUtilities
 
-val CHEAT_MODE = System.getProperty("not_existing") == null
+val CHEAT_MODE = System.getProperty("derbauer2.cheatmode") != null
 
 object DerBauer2 {
     @JvmStatic
@@ -24,6 +25,7 @@ object DerBauer2 {
         val engine = Router(renderer)
 
         text.addKeyListener(keyboard)
+        text.addKeyListener(Debugger.asKeyListener())
         keyboard.subscription.add(prompt)
         prompt.subscription.add(engine)
 

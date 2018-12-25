@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
@@ -13,7 +14,9 @@ data class Resources(
     var people: PeopleResource = PeopleResource(),
     var land: LandResource = LandResource()
 ) {
+    @JsonIgnore
     val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
+    @JsonIgnore
     val allTradeables = all.filterIsInstance<TradeableResource>()
 }
 

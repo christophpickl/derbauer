@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.military
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.IgnoreStringified
 import com.github.christophpickl.derbauer2.misc.Stringifier
@@ -18,6 +19,7 @@ data class Militaries(
     var catapults: CatapultMilitary = CatapultMilitary()
 ) {
 
+    @JsonIgnore
     val all: List<Military> = propertiesOfType<Militaries, Military>(this).ordered()
     val totalAmount get() = all.sumBy { it.amount }
 }

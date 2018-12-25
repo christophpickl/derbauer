@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.ui
 
+import mu.KotlinLogging.logger
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Component
@@ -12,6 +13,7 @@ import javax.swing.WindowConstants
 class MainFrame : JFrame() {
 
     private val backgroundColor = Color(194, 177, 55)
+    private val log = logger {}
 
     init {
         title = "Der Bauer II"
@@ -19,6 +21,7 @@ class MainFrame : JFrame() {
     }
 
     fun buildAndShow(content: Component) {
+        log.debug { "Showing main frame." }
         contentPane.add(buildRoot(content))
         prepareGlassPane()
         pack()
