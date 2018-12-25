@@ -1,20 +1,37 @@
 package com.github.christophpickl.derbauer2.misc
 
+import kotlin.reflect.KVisibility
+import kotlin.reflect.full.allSuperclasses
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
 
 @Target(AnnotationTarget.PROPERTY)
 annotation class IgnoreStringified
 
 object Stringifier {
-    // MINOR find annotation also on superclass
-    inline fun <reified T : Any> stringify(any: T) = "${T::class.simpleName}{${
-    T::class.memberProperties.filter {
-        it.findAnnotation<IgnoreStringified>() == null &&
-            !it.isAbstract &&
-            it.isNotPrivateFinal()
-    }.joinToString() {
-        "${it.name}=${it.get(any)}"
-    }}"
+
+    inline fun <reified T : Any> stringify(any: T) =
+        "${any::class.simpleName}{${
+        T::class.memberProperties
+//            .map { println(it); it }
+            .filter { prop ->
+                prop.findAnnotation<IgnoreStringified>() == null &&
+                    any::class.allSuperclasses.all { superClass ->
+                        superClass.members.filter { superProp -> superProp.name == prop.name }.all { superProp ->
+                            superProp.findAnnotation<IgnoreStringified>() == null
+                        }
+                    } &&
+                    !prop.isAbstract &&
+                    prop.visibility == KVisibility.PUBLIC
+            }
+            .map {
+                it.isAccessible = true
+                it
+            }
+            .sortedBy { it.name }
+            .joinToString() {
+                "${it.name}=${it.get(any)}"
+            }}}"
 
 }

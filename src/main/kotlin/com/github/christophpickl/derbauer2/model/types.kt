@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer2.model
 
+import com.github.christophpickl.derbauer2.misc.IgnoreStringified
+
 
 interface Entity : Labeled, Ordered
 
@@ -8,7 +10,9 @@ interface Labeled {
 }
 
 interface MultiLabeled : Labeled {
+    @IgnoreStringified
     val labelSingular: String
+    @IgnoreStringified
     val labelPlural: String
     override val label get() = labelSingular
 }
@@ -32,7 +36,7 @@ interface UsableEntity : Entity, Amountable {
 }
 
 interface Ordered {
-
+    @IgnoreStringified
     val order: Int
 }
 
