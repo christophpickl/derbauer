@@ -37,37 +37,19 @@ execute("./gradlew", "shadowJar")
 
 val jarFile = File("build/libs/DerBauer2-${nextVersion}.jar")
 require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
+println("Created fat JAR at: ${jarFile.absolutePath}")
 
 println()
 println("GIT commit, tag and push.")
 execute("git", "add", ".")
 execute("git", "commit", "-m", "[Auto-Release] Version: $nextVersion")
-execute("git", "tag", nextVersion.toString())
+execute("git", "tag", "v$nextVersion")
 execute("git", "push")
 execute("git", "push", "origin", "--tags")
 
 println()
 println("GitHub release.")
-
-
-//
-//    echo "Creating new release in GitHub ..."
-//    safeEval "curl \
-//        --header \"Authorization: token ${NAMASTE_GITHUB_TOKEN}\" \
-//        --header \"Content-Type: application/json\" \
-//        --request POST \
-//        --data '{ \"tag_name\": \"${NEXT_vVERSION}\", \"target_commitish\": \"master\", \"name\": \"${NEXT_vVERSION}\", \"body\": \"Namaste Release\", \"draft\": false, \"prerelease\": false }' \
-//        https://api.github.com/repos/christophpickl/namaste/releases"
-//    UPLOAD_URL=`echo $LAST_RESULT | jq -r '.upload_url' | sed -e 's/{?name,label}//g'`
-//    
-//    echo ""
-//    echo "Uploading asset to GitHub ..."
-//    safeEval "curl \
-//        --header \"Authorization: token ${NAMASTE_GITHUB_TOKEN}\" \
-//        --header \"Content-Type: application/zip\" \
-//        --request POST \
-//        --data-binary @${TARGET_ZIP_FILE} \
-//        $UPLOAD_URL?name=namaste-${NEXT_vVERSION}.zip"
+execute("./bin/upload.sh", "v${nextVersion}", jarFile.absolutePath)
 
 data class Version(val major: Int, val minor: Int) {
     companion object {
