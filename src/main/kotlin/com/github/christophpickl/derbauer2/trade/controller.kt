@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer2.trade
 import com.github.christophpickl.derbauer2.misc.ChoiceValidation
 import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.validateChoice
-import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.UsableEntity
@@ -15,7 +14,7 @@ class TradeController : TradeCallback {
     private val log = logger {}
 
     override fun onTrade(choice: TradableChoice) {
-        Model.view = ExecuteTradeView(choice)
+        Model.currentView = ExecuteTradeView(choice)
     }
 
     override fun doTrade(choice: TradableChoice, amount: Int) {

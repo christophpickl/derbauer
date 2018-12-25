@@ -48,7 +48,7 @@ class AttackThread(
         sleep(VALUES.attackOverDelay)
 
         Model.history.attacked++
-        Model.view = HomeView()
+        Model.currentView = HomeView()
         renderer.render()
     }
 

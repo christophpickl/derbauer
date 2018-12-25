@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer2.model
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.trade.BuySell
 import com.github.christophpickl.derbauer2.trade.LimitedBuyableAmount
 import com.github.christophpickl.derbauer2.trade.Tradeable
 

@@ -7,9 +7,10 @@ import com.github.christophpickl.derbauer2.ui.view.View
 
 object Model : ResourceHolder {
 
-    var view: View = HomeView()
-    var global: Global = Global()
+    var currentView: View = HomeView()
+    
     var player: Player = Player()
+    var global: Global = Global()
     var history: History = History()
     var feature: Feature = Feature()
 
@@ -19,7 +20,7 @@ object Model : ResourceHolder {
     val totalFoodCapacity get() = player.buildings.totalFoodCapacity
 
     fun goHome() {
-        view = HomeView()
+        currentView = HomeView()
     }
 
     override fun toString() = Stringifier.stringify(this)

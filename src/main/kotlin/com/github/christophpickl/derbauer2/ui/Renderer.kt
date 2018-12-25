@@ -11,12 +11,12 @@ class Renderer(
     private val prompt: Prompt
 ) {
     fun render() {
-        val promptText = when (Model.view.promptMode) {
+        val promptText = when (Model.currentView.promptMode) {
             PromptMode.Off -> null
             PromptMode.Enter -> ">> Hit ENTER <<"
             PromptMode.Input -> "$ ${prompt.enteredText}⌷"
         }
-        val content = Model.view.renderContent
+        val content = Model.currentView.renderContent
 
         val info = Model.player.resources.all.joinToString("  ") { it.formatInfo() }
 

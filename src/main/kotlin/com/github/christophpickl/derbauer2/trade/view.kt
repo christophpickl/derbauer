@@ -2,7 +2,6 @@ package com.github.christophpickl.derbauer2.trade
 
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.home.HomeView
-import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResource
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport

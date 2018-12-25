@@ -24,7 +24,7 @@ class MilitaryController(
                 prepareAttack()
             }
             MilitaryEnum.RecruiteSoldiers -> {
-                Model.view = HireSoldiersView()
+                Model.currentView = HireSoldiersView()
 
             }
         }.enforceWhenBranches()
@@ -38,7 +38,7 @@ class MilitaryController(
         val context = AttackContext(
             enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.soldiers.amount).toInt()
         )
-        Model.view = AttackView(context)
+        Model.currentView = AttackView(context)
         doBeginAttack(context)
     }
 

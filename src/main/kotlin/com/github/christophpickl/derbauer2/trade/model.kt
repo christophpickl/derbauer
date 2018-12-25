@@ -1,6 +1,5 @@
 package com.github.christophpickl.derbauer2.trade
 
-import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 
@@ -23,4 +22,9 @@ interface Tradeable : Buyable, Sellable {
 
 interface LimitedBuyableAmount : LimitedAmount, Buyable {
     override val effectiveBuyPossibleAmount get() = Math.min(buyPossibleAmount, capacityLeft)
+}
+
+enum class BuySell(val label: String) {
+    Buy("buy"),
+    Sell("sell")
 }

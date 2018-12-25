@@ -18,8 +18,8 @@ class Router(
     }
 
     override fun onEnter(input: PromptInput) {
-        log.debug { "onEnter($input) => ${Model.view::class.simpleName}" }
-        Model.view.onCallback(this, input)
+        log.debug { "onEnter($input) => ${Model.currentView::class.simpleName}" }
+        Model.currentView.onCallback(this, input)
         renderer.render()
     }
 

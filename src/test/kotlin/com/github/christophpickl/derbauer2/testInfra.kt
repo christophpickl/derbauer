@@ -25,7 +25,7 @@ class TestModelListener : TestListenerAdapter() {
 }
 
 fun Model.reset() {
-    view = HomeView()
+    currentView = HomeView()
     global = Global()
     player = Player()
     history = History()

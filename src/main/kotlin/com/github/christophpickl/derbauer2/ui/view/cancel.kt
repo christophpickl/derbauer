@@ -9,10 +9,10 @@ sealed class CancelSupport {
 }
 
 fun handleCancel() {
-    when (val cancel = Model.view.cancelSupport) {
+    when (val cancel = Model.currentView.cancelSupport) {
         CancelSupport.Disabled -> beep("Cancel support is disabled")
         is CancelSupport.Enabled -> {
-            Model.view = cancel.targetView()
+            Model.currentView = cancel.targetView()
         }
     }
 }

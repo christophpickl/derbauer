@@ -1,7 +1,6 @@
 package com.github.christophpickl.derbauer2.trade
 
 import com.github.christophpickl.derbauer2.TestModelListener
-import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResource
 import org.assertj.core.api.Assertions.assertThat

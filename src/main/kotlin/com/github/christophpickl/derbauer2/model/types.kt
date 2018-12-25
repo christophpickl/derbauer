@@ -31,6 +31,14 @@ interface UsableEntity : Entity, Amountable {
     val unusedAmount get() = amount - usedAmount
 }
 
+interface Ordered {
+
+    val order: Int
+}
+
+fun <E : Ordered> List<E>.ordered(): List<E> =
+    sortedBy { it.order }
+
 interface ConditionalEntity {
     fun checkCondition(): Boolean
 }

@@ -13,27 +13,27 @@ import com.github.christophpickl.derbauer2.upgrade.UpgradeView
 class HomeController : HomeCallback {
     override fun goEndTurnReport() {
         val message = EndTurnExecutor.execute()
-        Model.view = EndTurnView(message)
+        Model.currentView = EndTurnView(message)
     }
 
     override fun onHomeEnum(choice: HomeChoice) {
         when (choice.enum) {
             HomeEnum.Trade -> {
-                Model.view = TradeView()
+                Model.currentView = TradeView()
             }
             HomeEnum.Build -> {
-                Model.view = BuildView()
+                Model.currentView = BuildView()
             }
             HomeEnum.Upgrade -> {
-                Model.view = UpgradeView()
+                Model.currentView = UpgradeView()
             }
             HomeEnum.Military -> {
-                Model.view = MilitaryView()
+                Model.currentView = MilitaryView()
             }
             HomeEnum.EndTurn -> {
                 val achievement = AchievementChecker.nextView()
                 if (achievement != null) {
-                    Model.view = achievement
+                    Model.currentView = achievement
                 } else {
                     goEndTurnReport()
                 }
