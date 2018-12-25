@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2
 
+import com.github.christophpickl.derbauer2.feature.Feature
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Global

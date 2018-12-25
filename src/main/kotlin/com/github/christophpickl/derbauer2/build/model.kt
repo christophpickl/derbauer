@@ -24,11 +24,13 @@ data class Buildings(
 ) {
     @get:JsonIgnore val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
 
+    inline fun <reified T : Building> filterAll() = all.filterIsInstance<T>()
+    
     val totalLandNeeded get() = all.sumBy { it.totalLandNeeded }
-    val totalFoodCapacity get() = all.filterIsInstance<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
-    val totalFoodProduction get() = all.filterIsInstance<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
-    val totalPeopleCapacity get() = all.filterIsInstance<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
-    val totalMilitaryCapacity get() = all.filterIsInstance<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
+    val totalFoodCapacity get() = filterAll<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
+    val totalFoodProduction get() = filterAll<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
+    val totalPeopleCapacity get() = filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
+    val totalMilitaryCapacity get() = filterAll<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
 }
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable {

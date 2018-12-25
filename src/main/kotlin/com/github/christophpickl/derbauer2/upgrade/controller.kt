@@ -22,12 +22,12 @@ class UpgradeController : UpgradeCallback {
 
     private fun isValid(choice: UpgradeChoice) = validateChoice(listOf(
         SimpleChoiceValidation(
-            condition = { Model.gold >= choice.upgrade.buyPrice },
-            alertType = AlertType.NotEnoughGold
-        ),
-        SimpleChoiceValidation(
             condition = { !choice.upgrade.isMaxLevelReached },
             alertType = AlertType.FullyUpgraded
+        ),
+        SimpleChoiceValidation(
+            condition = { Model.gold >= choice.upgrade.buyPrice },
+            alertType = AlertType.NotEnoughGold
         )
     ))
 

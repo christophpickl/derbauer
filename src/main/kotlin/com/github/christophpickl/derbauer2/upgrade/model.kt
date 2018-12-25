@@ -5,6 +5,7 @@ import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.build.FoodProducingBuilding
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
@@ -48,7 +49,8 @@ class FarmProductivityUpgrade : AbstractUpgrade(
     label = "Farm Productivity",
     buyPrice = Values.upgrades.farmProductivityBuyPrice,
     maxLevel = 3
-) {
+), ConditionalEntity {
+    override fun checkCondition() = Model.feature.upgrade.isFoodProductionUpgradeEnabled
 
     var foodProductionIncrease = Values.upgrades.farmProductionIncrease
     override val description get() = "increases food production by $foodProductionIncrease"

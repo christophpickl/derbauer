@@ -1,15 +1,16 @@
 
 # major
 
+* (!) if new thing is available, show it in end turn report!!!
 * (2) upcome costs (some buildings, all military)
-
-* (4) MILIATRY: getting attacked end of turn
+* (3) MILITARY: chooose how many troops to send
 * (2) if food/people are over capacity => decrease it slowly!
 * (2) RENDER: wrap too long lines (print log warning)
 * (1) outsource messages too VALUES
 
 # minor
 
+* (4) MILIATRY: getting attacked end of turn
 * (2) VISITOR: accumulate probability; dynamic reward calculation (depends on progress/availability)
 * (1) HAPPENING: make bag sizes depend on current Model resource
 * (4) introduce tax rate: higher +gold -people prod.

@@ -16,6 +16,9 @@ abstract class ChooseView<C : Choice>(
 
     init {
         require(choices.filter { it.isZeroChoice() }.count() <= 1) { "only max one zero choice possible! choices: ${choices.joinToString()}" }
+        if (choices.any { it.isZeroChoice() }) {
+            require(choices.last().isZeroChoice()) { "if using zero choice, then it must be last index!" }
+        }
     }
 
     private var zeroChoice: C? = choices.firstOrNull { it.isZeroChoice() }
@@ -38,7 +41,7 @@ abstract class ChooseView<C : Choice>(
             }
             is PromptInput.Number -> {
                 if ((input.number >= if (zeroChoice != null) 0 else 1) &&
-                    (input.number <= choices.size)) {
+                    (input.number <= if (zeroChoice != null) choices.size - 1 else choices.size)) {
                     onCallback(callback, if (input.number == 0) zeroChoice!! else choices[input.number - 1])
                 } else {
                     beep("Invalid input choice: ${input.number} (must be within 1 and ${choices.size})")

@@ -16,7 +16,7 @@ class HomeView : ChooseView<HomeChoice>(
     choices = LinkedList<HomeChoice>().apply {
         this += EnumChoice(HomeEnum.Trade, "Trade")
         this += EnumChoice(HomeEnum.Build, "Build")
-        if (Model.feature.military.isUpgradeEnabled) {
+        if (Model.feature.upgrade.isUpgradeEnabled) {
             this += EnumChoice(HomeEnum.Upgrade, "Upgrade")
         }
         if (Model.feature.military.isMilitaryEnabled) {

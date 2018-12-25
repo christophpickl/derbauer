@@ -14,10 +14,10 @@ data class Resources(
     var people: PeopleResource = PeopleResource(),
     var land: LandResource = LandResource()
 ) {
-    @JsonIgnore
-    val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
-    @JsonIgnore
-    val allTradeables = all.filterIsInstance<TradeableResource>()
+    @JsonIgnore val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
+    @get:JsonIgnore val allTradeables get() = filterAll<TradeableResource>()
+
+    inline fun <reified T : Resource> filterAll() = all.filterIsInstance<T>()
 }
 
 interface Resource : Entity, Amountable, MultiLabeled

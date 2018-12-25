@@ -2,9 +2,9 @@ package com.github.christophpickl.derbauer2
 
 class ValuesResources {
     val gold = if (CHEAT_MODE) 900 else 300
-    val foodBuyPrice = 10
-    val foodSellPrice = 4
-    val food = if (CHEAT_MODE) 400 else 100
+    val foodBuyPrice = 4
+    val foodSellPrice = 2
+    val food = if (CHEAT_MODE) 400 else 50
     val people = if (CHEAT_MODE) 9 else 2
     val land = if (CHEAT_MODE) 100 else 10
     val landBuyPrice = 50
@@ -15,25 +15,25 @@ class ValuesBuildings {
     val houses = ValueBuilding(
         amount = if (CHEAT_MODE) 30 else 1,
         landNeeded = 1,
-        buyPrice = 15
+        buyPrice = 40
     )
-    val housePeopleCapacity = 5
+    val housePeopleCapacity = 10
     val farms = ValueBuilding(
         amount = if (CHEAT_MODE) 10 else 1,
         landNeeded = 2,
-        buyPrice = 50
+        buyPrice = 70
     )
-    val farmFoodProduction = 2
+    val farmFoodProduction = 4
     val granaries = ValueBuilding(
         amount = if (CHEAT_MODE) 20 else 1,
         landNeeded = 1,
-        buyPrice = 30
+        buyPrice = 50
     )
     val granaryFoodCapacity = 100
     val barrack = ValueBuilding(
         amount = if (CHEAT_MODE) 0 else 0,
         landNeeded = 1,
-        buyPrice = 40
+        buyPrice = 100
     )
     val barrackMilitaryCapacity = 10
     val castles = ValueBuilding(
@@ -68,10 +68,11 @@ class ValuesMilitaries {
 }
 
 class ValuesUpgrades {
+    val farmProductivityBuyPrice = 300
     val increasePriceAfterBought = 2.0
-    val farmProductivityBuyPrice = 250
     val farmProductionIncrease = 1
-    val militaryBuyPrice = 100
+
+    val militaryBuyPrice = 400
 }
 
 class ValuesAchievements {
@@ -91,8 +92,15 @@ class ValuesActions {
 }
 
 class ValuesFeatures {
+    // upgrade
     val upgradePeopleNeeded = 10
-    val castlePeopleNeeded = if (CHEAT_MODE) 10 else 100
+    val foodProductionUpgradeBuildingsNeeded = 10
+    val foodProductionUpgradeFoodNeeded = 500
+
+    // building
+    val castlePeopleNeeded = if (CHEAT_MODE) 10 else 50
+
+    // military
     val knightBarracksNeeded = if (CHEAT_MODE) 1 else 5
     val catapultBarracksNeeded = if (CHEAT_MODE) 2 else 20
 }

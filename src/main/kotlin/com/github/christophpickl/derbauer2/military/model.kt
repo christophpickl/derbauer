@@ -24,6 +24,8 @@ data class Militaries(
 ) {
 
     @get:JsonIgnore val all get() = propertiesOfType<Militaries, Military>(this).ordered().filterConditional()
+    inline fun <reified T : Military> filterAll() = all.filterIsInstance<T>()
+    
     val totalAmount get() = all.sumBy { it.amount }
     val militaryCapacityLeft get() = Model.player.buildings.totalMilitaryCapacity - totalAmount
 }

@@ -25,6 +25,10 @@ interface Amountable {
     var amount: Int
 }
 
+fun <E : Amountable> List<E>.amountsSum(): Int =
+    map { it.amount }.sum()
+
+
 interface LimitedAmount : Amountable {
     val limitAmount: Int
     val capacityLeft: Int get() = limitAmount - amount

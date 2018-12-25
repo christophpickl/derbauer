@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer2.home
 import com.github.christophpickl.derbauer2.action.ActionView
 import com.github.christophpickl.derbauer2.build.BuildView
 import com.github.christophpickl.derbauer2.endturn.EndTurnExecutor
+import com.github.christophpickl.derbauer2.endturn.EndTurnReportLine
 import com.github.christophpickl.derbauer2.endturn.EndTurnView
 import com.github.christophpickl.derbauer2.endturn.achievement.AchievementChecker
 import com.github.christophpickl.derbauer2.military.MilitaryView
@@ -19,9 +20,9 @@ class HomeController : HomeCallback {
         val message = """
             So, this is what happened over night:
             
-            ${formatGrowth("Gold income    ", Model.gold, report.goldIncome)}
-            ${formatGrowth("Food production", Model.food, report.foodIncome)}
-            ${formatGrowth("People growth  ", Model.people, report.peopleIncome)}
+            ${formatGrowth("Gold income    ", report.gold)}
+            ${formatGrowth("Food production", report.food)}
+            ${formatGrowth("People growth  ", report.people)}
              
             Go on and continue your miserable existence.
             """.trimIndent()
@@ -58,9 +59,9 @@ class HomeController : HomeCallback {
 
     private val numberWidth = 6
     private val numberWidthGrow = 5 // plus sign
-    private fun formatGrowth(label: String, current: Int, growth: Int) =
-        "$label: ${Formatter.formatNumber(current, numberWidth)} => " +
-            "${Formatter.formatNumber(growth, numberWidthGrow, addPlusSign = true)} => " +
-            Formatter.formatNumber(current + growth, numberWidth)
+    private fun formatGrowth(label: String, line: EndTurnReportLine) =
+        "$label: ${Formatter.formatNumber(line.oldValue, numberWidth)} => " +
+            "${Formatter.formatNumber(line.change, numberWidthGrow, addPlusSign = true)} => " +
+            Formatter.formatNumber(line.newValue, numberWidth)
 
 }

@@ -4,10 +4,32 @@ import com.github.christophpickl.derbauer2.model.Model
 import mu.KotlinLogging.logger
 import kotlin.random.Random
 
-data class EndTurnReport(
-    val goldIncome: Int,
-    val foodIncome: Int,
-    val peopleIncome: Int
+class EndTurnReport(
+    goldIncome: Int,
+    foodIncome: Int,
+    peopleIncome: Int
+) {
+    val gold = EndTurnReportLine(
+        newValue = Model.gold,
+        change = goldIncome,
+        oldValue = Model.gold - goldIncome
+    )
+    val food = EndTurnReportLine(
+        newValue = Model.food,
+        change = foodIncome,
+        oldValue = Model.food - foodIncome
+    )
+    val people = EndTurnReportLine(
+        newValue = Model.people,
+        change = peopleIncome,
+        oldValue = Model.people - peopleIncome
+    )
+}
+
+class EndTurnReportLine(
+    val oldValue: Int,
+    val newValue: Int,
+    val change: Int
 )
 
 object EndTurnExecutor {
@@ -53,10 +75,11 @@ object EndTurnExecutor {
             calc -= loosingPeople
         } else {
             var reproduced = (Model.people * Model.global.reproductionRate).toInt()
-            reproduced = (reproduced * Random.nextDouble(0.8, 1.4)).toInt()
+            reproduced = (reproduced * Random.nextDouble(0.7, 1.2)).toInt()
             calc += reproduced
         }
-        if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.6) {
+        // TODO when those kind of things happen, return back a message what happened
+        if (Model.people < 20 && calc == 0 && Random.nextDouble(0.0, 1.0) < 0.3) {
             log.trace { "people randomly added" }
             calc += Random.nextInt(1, 4)
         }

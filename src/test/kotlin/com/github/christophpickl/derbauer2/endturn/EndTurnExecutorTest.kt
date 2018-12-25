@@ -19,7 +19,7 @@ class EndTurnExecutorTest {
 
         val report = EndTurnExecutor.execute()
 
-        assertThat(report.foodIncome).isEqualTo(-1)
+        assertThat(report.food.change).isEqualTo(-1)
         assertThat(Model.food).isEqualTo(0)
     }
 
@@ -31,7 +31,7 @@ class EndTurnExecutorTest {
 
         val report = EndTurnExecutor.execute()
 
-        assertThat(report.peopleIncome).isNegative()
+        assertThat(report.people.change).isNegative()
         assertThat(Model.people).isLessThan(10)
     }
 
