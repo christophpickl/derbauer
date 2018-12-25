@@ -1,7 +1,6 @@
 
 # major
 
-* (!) if new thing is available, show it in end turn report!!!
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send
 * (2) if food/people are over capacity => decrease it slowly!
