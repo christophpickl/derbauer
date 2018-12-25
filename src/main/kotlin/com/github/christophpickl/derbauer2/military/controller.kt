@@ -1,5 +1,8 @@
 package com.github.christophpickl.derbauer2.military
 
+import com.github.christophpickl.derbauer2.military.attack.AttackContext
+import com.github.christophpickl.derbauer2.military.attack.AttackThread
+import com.github.christophpickl.derbauer2.military.attack.AttackView
 import com.github.christophpickl.derbauer2.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.misc.validateChoice

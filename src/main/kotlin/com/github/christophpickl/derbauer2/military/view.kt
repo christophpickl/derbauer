@@ -3,13 +3,10 @@ package com.github.christophpickl.derbauer2.military
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.ui.PromptInput
-import com.github.christophpickl.derbauer2.ui.PromptMode
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
 import com.github.christophpickl.derbauer2.ui.view.Choice
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
 import com.github.christophpickl.derbauer2.ui.view.InputView
-import com.github.christophpickl.derbauer2.ui.view.View
 
 class MilitaryView : ChooseView<MilitaryChoice>(
     messages = listOf(
@@ -44,18 +41,6 @@ interface MilitaryCallback {
     fun doHire(militaryUnit: Military, amount: Int)
 }
 
-class AttackView(
-    private val context: AttackContext
-) : View {
-
-    override val promptMode = PromptMode.Off
-    override val cancelSupport = CancelSupport.Disabled
-    override val renderContent get() = context.message
-
-    override fun onCallback(callback: ViewCallback, input: PromptInput) {
-        // no-op
-    }
-}
 
 class HireView(
     private val military: Military

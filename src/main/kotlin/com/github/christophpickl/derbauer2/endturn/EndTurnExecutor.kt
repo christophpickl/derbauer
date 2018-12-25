@@ -19,14 +19,14 @@ object EndTurnExecutor {
         val peopleIncome = calcPeople()
 
         val message = """
-        So, this is what happened over night:
-        
-        ${formatGrowth("Gold income    ", Model.gold, goldIncome)}
-        ${formatGrowth("Food production", Model.food, foodIncome)}
-        ${formatGrowth("People growth  ", Model.people, peopleIncome)}
-         
-        Go on and continue your miserable existence.
-        """.trimMargin()
+            So, this is what happened over night:
+            
+            ${formatGrowth("Gold income    ", Model.gold, goldIncome)}
+            ${formatGrowth("Food production", Model.food, foodIncome)}
+            ${formatGrowth("People growth  ", Model.people, peopleIncome)}
+             
+            Go on and continue your miserable existence.
+            """.trimIndent()
 
         Model.gold += goldIncome
         Model.food += foodIncome
