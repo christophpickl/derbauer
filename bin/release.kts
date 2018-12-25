@@ -4,49 +4,48 @@
 
 import java.io.File
 
-fun main(args: Array<String>) {
-    val versionFile = File("version.txt")
-    val currentVersion = versionFile.let {
-        require(it.exists()) { "Version file does not exist at: ${it.absolutePath}" }
-        Version.parse(it.readText().trim())
-    }
-    val nextVersion = currentVersion.incrementMinor()
+val versionFile = File("version.txt")
+val currentVersion = versionFile.let {
+    require(it.exists()) { "Version file does not exist at: ${it.absolutePath}" }
+    Version.parse(it.readText().trim())
+}
+val nextVersion = currentVersion.incrementMinor()
 
-    execute("git", "status")
-    println("Is everything checked in?")
-    confirmOrExit()
+execute("git", "status")
+println("Is everything checked in?")
+confirmOrExit()
 
-    println("Current version: $currentVersion")
-    println("Next version:    $nextVersion")
-    println()
-    println("Wanna release this?")
-    confirmOrExit()
+println("Current version: $currentVersion")
+println("Next version:    $nextVersion")
+println()
+println("Wanna release this?")
+confirmOrExit()
 
-    println()
-    println("Test build.")
-    execute("./gradlew", "clean", "test", "check")
+println()
+println("Test build.")
+execute("./gradlew", "clean", "test", "check")
 
-    println()
-    println("Writing version to version.txt file.")
-    versionFile.writeText(nextVersion.toString())
+println()
+println("Writing version to version.txt file.")
+versionFile.writeText(nextVersion.toString())
 
-    println()
-    println("Building fat JAR.")
-    execute("./gradlew", "shadowJar")
+println()
+println("Building fat JAR.")
+execute("./gradlew", "shadowJar")
 
-    val jarFile = File("build/libs/DerBauer2-${nextVersion}.jar")
-    require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
+val jarFile = File("build/libs/DerBauer2-${nextVersion}.jar")
+require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
 
-    println()
-    println("GIT commit, tag and push.")
-    execute("git", "add", ".")
-    execute("git", "commit", "-m", "[Auto-Release] Version: $nextVersion")
-    execute("git", "tag", nextVersion.toString())
-    execute("git", "push")
-    execute("git", "push", "origin", "--tags")
+println()
+println("GIT commit, tag and push.")
+execute("git", "add", ".")
+execute("git", "commit", "-m", "[Auto-Release] Version: $nextVersion")
+execute("git", "tag", nextVersion.toString())
+execute("git", "push")
+execute("git", "push", "origin", "--tags")
 
-    println()
-    println("GitHub release.")
+println()
+println("GitHub release.")
 
 
 //
@@ -67,8 +66,6 @@ fun main(args: Array<String>) {
 //        --request POST \
 //        --data-binary @${TARGET_ZIP_FILE} \
 //        $UPLOAD_URL?name=namaste-${NEXT_vVERSION}.zip"
-
-}
 
 data class Version(val major: Int, val minor: Int) {
     companion object {
