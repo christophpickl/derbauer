@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.home
 
+import com.github.christophpickl.derbauer2.action.ActionView
 import com.github.christophpickl.derbauer2.build.BuildView
 import com.github.christophpickl.derbauer2.endturn.EndTurnExecutor
 import com.github.christophpickl.derbauer2.endturn.EndTurnView
@@ -40,6 +41,9 @@ class HomeController : HomeCallback {
             }
             HomeEnum.Military -> {
                 Model.currentView = MilitaryView()
+            }
+            HomeEnum.Action -> {
+                Model.currentView = ActionView()
             }
             HomeEnum.EndTurn -> {
                 val achievement = AchievementChecker.nextView()

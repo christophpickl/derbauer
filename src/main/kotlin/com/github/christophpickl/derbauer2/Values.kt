@@ -32,6 +32,7 @@ interface Values {
     val happeningTurnsCooldown: Int
     val happeningBaseProbability: Double
 
+    val visitorsWaitingInThroneRoom: Int
     val featureCastlePeopleNeeded: Int
 }
 
@@ -65,6 +66,7 @@ open class DefaultValues : Values {
     override val happeningTurnsCooldown = 10
     override val happeningBaseProbability = 0.1
 
+    override val visitorsWaitingInThroneRoom = 0
     override val featureCastlePeopleNeeded = 100
 }
 
@@ -81,6 +83,7 @@ object CheatValues : DefaultValues() {
 
     override val soldiers = 2
 
+    override val visitorsWaitingInThroneRoom = 5
     override val featureCastlePeopleNeeded = 10
 
 }

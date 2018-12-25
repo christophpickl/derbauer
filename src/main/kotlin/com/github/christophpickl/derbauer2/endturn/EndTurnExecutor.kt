@@ -18,10 +18,12 @@ object EndTurnExecutor {
         val foodIncome = calcFood() // depends on people
         val goldIncome = calcGold() // depends on people
 
-        Model.global.day++
         Model.gold += goldIncome
         Model.food += foodIncome
         Model.people += peopleIncome
+
+        Model.global.day++
+        Model.global.visitorsWaitingInThroneRoom += Random.nextInt(0, Math.max(2, (Model.people / 100.0 * 1).toInt()))
 
         return EndTurnReport(
             goldIncome = goldIncome,

@@ -16,6 +16,7 @@ class HomeView : ChooseView<HomeChoice>(
         EnumChoice(HomeEnum.Build, "Build"),
         EnumChoice(HomeEnum.Upgrade, "Upgrade"),
         EnumChoice(HomeEnum.Military, "Military"),
+        EnumChoice(HomeEnum.Action, "Action"),
         EnumChoice(HomeEnum.EndTurn, "End Turn")
     )
 ) {
@@ -33,6 +34,7 @@ enum class HomeEnum {
     Build,
     Upgrade,
     Military,
+    Action,
     EndTurn
 }
 
