@@ -9,6 +9,7 @@ data class EndTurnReport(
     val foodIncome: Int,
     val peopleIncome: Int
 )
+
 object EndTurnExecutor {
 
     private val log = logger {}
@@ -23,7 +24,7 @@ object EndTurnExecutor {
         Model.people += peopleIncome
 
         Model.global.day++
-        Model.global.visitorsWaitingInThroneRoom += Random.nextInt(0, Math.max(2, (Model.people / 100.0 * 1).toInt()))
+        Model.actions.visitorsWaitingInThroneRoom += Random.nextInt(0, Math.max(2, (Model.people / 100.0 * 1).toInt()))
 
         return EndTurnReport(
             goldIncome = goldIncome,
@@ -47,17 +48,19 @@ object EndTurnExecutor {
         if (Model.food == 0) {
             val percentageLoose = Random.nextInt(8, 12)
             var loosingPeople = (Model.people / 100.0 * percentageLoose).toInt()
-            if (loosingPeople == 0) loosingPeople = Random.nextInt(1, 4)
+            if (loosingPeople == 0) loosingPeople = Random.nextInt(0, 3)
             log.trace { "loosing people because empty food: $loosingPeople (percentage: $percentageLoose%)" }
             calc -= loosingPeople
         } else {
-            calc += (Model.people * Model.global.reproductionRate).toInt() // reproduction rate by x% people
+            var reproduced = (Model.people * Model.global.reproductionRate).toInt()
+            reproduced = (reproduced * Random.nextDouble(0.8, 1.4)).toInt()
+            calc += reproduced
         }
-        if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.3) {
+        if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.6) {
             log.trace { "people randomly added" }
             calc += Random.nextInt(1, 4)
         }
-        if (calc == 0 && Random.nextDouble(0.0, 1.0) < 0.2) {
+        if (Model.people > 5 && calc == 0 && Random.nextDouble(0.0, 1.0) < 0.1) {
             log.trace { "people randomly killed" }
             calc -= Random.nextInt(1, 4)
         }
@@ -67,9 +70,10 @@ object EndTurnExecutor {
     }
 
     private fun calcGold(): Int {
-        val income = (Model.people * Model.global.peopleGoldRate).toInt()
-        log.trace { "Gold calc: $income (people=${Model.people} * rate=${Model.global.peopleGoldRate})" }
-        return income
+        var calc = (Model.people * Model.global.peopleGoldRate).toInt()
+        calc = (calc * Random.nextDouble(0.8, 1.6)).toInt()
+        log.trace { "Gold calc: $calc (people=${Model.people} * rate=${Model.global.peopleGoldRate})" }
+        return calc
     }
 
     private fun limitCalcMax(calc: Int, current: Int, max: Int) =

@@ -1,9 +1,12 @@
 
 # major
 
-* (4) MILIATRY: getting attacked end of turn
 * (2) upcome costs (some buildings, all military)
+
+* (4) MILIATRY: getting attacked end of turn
 * (2) if food/people are over capacity => decrease it slowly!
+* (2) RENDER: wrap too long lines (print log warning)
+* (1) outsource messages too VALUES
 
 # minor
 

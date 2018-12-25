@@ -16,7 +16,7 @@ class MainFrame : JFrame() {
     private val log = logger {}
 
     init {
-        title = "Der Bauer II"
+        title = "Der Bauer 2"
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     }
 

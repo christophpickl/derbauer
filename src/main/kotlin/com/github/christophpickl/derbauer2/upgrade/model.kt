@@ -46,7 +46,7 @@ abstract class AbstractUpgrade(
 
 class FarmProductivityUpgrade : AbstractUpgrade(
     label = "Farm Productivity",
-    buyPrice = Values.upgrades.farmBuyPrice,
+    buyPrice = Values.upgrades.farmProductivityBuyPrice,
     maxLevel = 3
 ) {
 
@@ -67,7 +67,5 @@ class MilitaryUpgrade : AbstractUpgrade(
     maxLevel = 1
 ) {
     override val description get() = "enables military actions"
-    override fun execute() {
-        Model.feature.military.isMilitaryEnabled = true
-    }
+    override fun execute() {} // dynamically checked in feature via this level
 }

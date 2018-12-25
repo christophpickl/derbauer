@@ -19,8 +19,10 @@ class BuildingFeature {
 
 class MilitaryFeature {
 
-    var isMilitaryEnabled = if (CHEAT_MODE) true else false
-
+    private val upgradeCondition = Condition { Model.people >= Values.features.upgradePeopleNeeded }
+    var isUpgradeEnabled = upgradeCondition.checkAndGet()
+    private val militaryCondition = Condition { Model.player.upgrades.militaryUpgrade.isMaxLevelReached }
+    var isMilitaryEnabled = militaryCondition.checkAndGet()
     private val knightCondition = Condition { Model.player.buildings.barracks.amount >= Values.features.knightBarracksNeeded }
     val isKnightEnabled get() = knightCondition.checkAndGet()
     private val catapultCondition = Condition { Model.player.buildings.barracks.amount >= Values.features.catapultBarracksNeeded }

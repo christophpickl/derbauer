@@ -17,8 +17,8 @@ import com.github.christophpickl.derbauer2.trade.Buyable
 
 data class Buildings(
     var houses: HouseBuilding = HouseBuilding(),
-    var granaries: GranaryBuilding = GranaryBuilding(),
     var farms: FarmBuilding = FarmBuilding(),
+    var granaries: GranaryBuilding = GranaryBuilding(),
     val castles: CastleBuilding = CastleBuilding(),
     val barracks: BarrackBuilding = BarrackBuilding()
 ) {
@@ -65,20 +65,20 @@ class HouseBuilding : AbstractBuilding(
     override var peopleCapacity = Values.buildings.housePeopleCapacity
 }
 
-class GranaryBuilding : AbstractBuilding(
-    labelSingular = "granary",
-    labelPlural = "granaries",
-    values = Values.buildings.granaries
-), FoodCapacityBuilding {
-    override var foodCapacity = Values.buildings.granaryFoodCapacity
-}
-
 class FarmBuilding : AbstractBuilding(
     labelSingular = "farm",
     labelPlural = "farms",
     values = Values.buildings.farms
 ), FoodProducingBuilding {
     override var foodProduction = Values.buildings.farmFoodProduction
+}
+
+class GranaryBuilding : AbstractBuilding(
+    labelSingular = "granary",
+    labelPlural = "granaries",
+    values = Values.buildings.granaries
+), FoodCapacityBuilding {
+    override var foodCapacity = Values.buildings.granaryFoodCapacity
 }
 
 class BarrackBuilding : AbstractBuilding(

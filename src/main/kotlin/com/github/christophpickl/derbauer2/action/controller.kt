@@ -3,18 +3,17 @@ package com.github.christophpickl.derbauer2.action
 import com.github.christophpickl.derbauer2.action.throneRoom.ThroneRoomChoice
 import com.github.christophpickl.derbauer2.action.throneRoom.ThroneRoomService
 import com.github.christophpickl.derbauer2.action.throneRoom.ThroneRoomVisitor
-import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 
-class ActionController : ActionCallback {
+class ActionController : ActionCallback, OnSpecificAction {
 
     private val throneRoom = ThroneRoomService()
 
-    override fun onActionEnum(choice: ActionChoice) {
-        when (choice.enum) {
-            ActionEnum.ThroneRoom -> {
-                throneRoom.enter()
-            }
-        }.enforceWhenBranches()
+    override fun choiceSelected(choice: ActionChoice) {
+        choice.action.onSpecificAction(this)
+    }
+
+    override fun onSpecificThroneRoomAction() {
+        throneRoom.enter()
     }
 
     override fun onThroneRoomChoice(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice) {

@@ -1,10 +1,14 @@
 package com.github.christophpickl.derbauer2
 
 class ValuesResources {
-    val gold = if (CHEAT_MODE) 900 else 100
-    val food = if (CHEAT_MODE) 400 else 50
+    val gold = if (CHEAT_MODE) 900 else 300
+    val foodBuyPrice = 10
+    val foodSellPrice = 4
+    val food = if (CHEAT_MODE) 400 else 100
     val people = if (CHEAT_MODE) 9 else 2
-    val land = if (CHEAT_MODE) 100 else 5
+    val land = if (CHEAT_MODE) 100 else 10
+    val landBuyPrice = 50
+    val landSellPrice = 40
 }
 
 class ValuesBuildings {
@@ -14,18 +18,18 @@ class ValuesBuildings {
         buyPrice = 15
     )
     val housePeopleCapacity = 5
-    val granaries = ValueBuilding(
-        amount = if (CHEAT_MODE) 20 else 1,
-        landNeeded = 1,
-        buyPrice = 30
-    )
-    val granaryFoodCapacity = 100
     val farms = ValueBuilding(
         amount = if (CHEAT_MODE) 10 else 1,
         landNeeded = 2,
         buyPrice = 50
     )
     val farmFoodProduction = 2
+    val granaries = ValueBuilding(
+        amount = if (CHEAT_MODE) 20 else 1,
+        landNeeded = 1,
+        buyPrice = 30
+    )
+    val granaryFoodCapacity = 100
     val barrack = ValueBuilding(
         amount = if (CHEAT_MODE) 0 else 0,
         landNeeded = 1,
@@ -65,7 +69,7 @@ class ValuesMilitaries {
 
 class ValuesUpgrades {
     val increasePriceAfterBought = 2.0
-    val farmBuyPrice = 250
+    val farmProductivityBuyPrice = 250
     val farmProductionIncrease = 1
     val militaryBuyPrice = 100
 }
@@ -87,9 +91,15 @@ class ValuesActions {
 }
 
 class ValuesFeatures {
+    val upgradePeopleNeeded = 10
     val castlePeopleNeeded = if (CHEAT_MODE) 10 else 100
     val knightBarracksNeeded = if (CHEAT_MODE) 1 else 5
     val catapultBarracksNeeded = if (CHEAT_MODE) 2 else 20
+}
+
+class ValuesGlobals {
+    val reproductionRate: Double = 0.1
+    val peopleGoldRate: Double = 0.9
 }
 
 // =====================================================================================================================
@@ -103,6 +113,7 @@ object Values {
     val happenings = ValuesHappenings()
     val actions = ValuesActions()
     val features = ValuesFeatures()
+    val globals = ValuesGlobals()
 }
 
 class ValueBuilding(

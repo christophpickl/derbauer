@@ -45,7 +45,7 @@ class ThroneRoomChoosenView(lastVisitorResponse: String, callback: YesNoCallback
 ) {
     companion object {
         fun buildMessage(lastVisitorResponse: String): String {
-            val visitors = Model.global.visitorsWaitingInThroneRoom
+            val visitors = Model.actions.visitorsWaitingInThroneRoom
             val singular = visitors == 1
             return "$lastVisitorResponse\n\n${"-".times(VIEW_SIZE.first)}\n\n" +
                 "There ${if (singular) "is" else "are"} $visitors visitor${if (singular) "" else "s"} waiting for you.\n" +

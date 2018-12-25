@@ -60,8 +60,8 @@ class FoodResource : AbstracteResource(
 
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
     override var priceModifier = 1.0
-    override var buyPrice: Int = 15
-    override var sellPrice: Int = 9
+    override var buyPrice: Int = Values.resources.foodBuyPrice
+    override var sellPrice: Int = Values.resources.foodSellPrice
     override val sellPossible get() = Math.max(0, amount)
     override fun toString() = Stringifier.stringify(this)
 }
@@ -90,8 +90,8 @@ class LandResource : AbstracteResource(
 ), UsableEntity, TradeableResource {
     override val usedAmount get() = Model.player.buildings.totalLandNeeded
     override var priceModifier = 1.0
-    override var buyPrice: Int = 50
-    override var sellPrice: Int = 40
+    override var buyPrice: Int = Values.resources.landBuyPrice
+    override var sellPrice: Int = Values.resources.landSellPrice
     override val sellPossible get() = Model.player.resources.land.unusedAmount
     override fun toString() = Stringifier.stringify(this)
 }

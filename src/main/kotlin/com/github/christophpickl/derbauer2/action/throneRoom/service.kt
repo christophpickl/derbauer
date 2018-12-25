@@ -15,12 +15,12 @@ class ThroneRoomService : YesNoCallback {
 
     fun enter() {
         log.debug { "enter()" }
-        val visitorsWaiting = Model.global.visitorsWaitingInThroneRoom
+        val visitorsWaiting = Model.actions.visitorsWaitingInThroneRoom
         if (visitorsWaiting == 0) {
             Model.currentView = ThroneRoomEmptyView()
             return
         }
-        Model.global.visitorsWaitingInThroneRoom--
+        Model.actions.visitorsWaitingInThroneRoom--
 
         val visitor = possibleVisitors.filter { it.condition() }.random()
 
@@ -29,7 +29,7 @@ class ThroneRoomService : YesNoCallback {
 
     fun choosen(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice) {
         val response = visitor.choose(choice)
-        if (Model.global.visitorsWaitingInThroneRoom == 0) {
+        if (Model.actions.visitorsWaitingInThroneRoom == 0) {
             Model.currentView = ThroneRoomEmptyView(response)
         } else {
             Model.currentView = ThroneRoomChoosenView(response, this)

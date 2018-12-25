@@ -6,30 +6,29 @@ import com.github.christophpickl.derbauer2.action.throneRoom.ThroneRoomVisitor
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.Choice
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
-import com.github.christophpickl.derbauer2.ui.view.EnumChoice
 
 class ActionView : ChooseView<ActionChoice>(
     messages = listOf(
-        "Looking for some action, don't you?"
+        "Looking for some action, don't you?",
+        "Sometimes, when I get bored, I cut my nails way too short..."
     ),
-    choices = listOf(
-        EnumChoice(ActionEnum.ThroneRoom, "Go to throne room (${Model.global.visitorsWaitingInThroneRoom} visitor${if (Model.global.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting)")
-    )
+    choices = Model.actions.all.map { ActionChoice(it) }
 ) {
     override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: ActionChoice) {
-        callback.onActionEnum(choice)
+        callback.choiceSelected(choice)
     }
 }
 
-typealias ActionChoice = EnumChoice<ActionEnum>
-
-enum class ActionEnum {
-    ThroneRoom
+data class ActionChoice(
+    val action: Action
+) : Choice {
+    override val label = "${action.label.capitalize()} ... ${action.description}"
 }
 
 interface ActionCallback {
-    fun onActionEnum(choice: ActionChoice)
-    fun onThroneRoomChoice(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice)
+    fun choiceSelected(choice: ActionChoice)
+    fun onThroneRoomChoice(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice) 
 }
