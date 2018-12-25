@@ -13,7 +13,7 @@ import javax.swing.JPanel
 object Alert {
 
     private val log = logger {}
-    lateinit var glassPane: JPanel
+    var glassPane: JPanel? = null
     private var currentTimer: Timer? = null
     private val label = JLabel("").apply {
         font = DEFAULT_FONT
@@ -33,9 +33,13 @@ object Alert {
     }
 
     fun show(type: AlertType) {
+        if (glassPane == null) {
+            log.debug { "show($type) DISABLED, running test." }
+            return
+        }
         log.debug { "show($type)" }
         label.text = type.message
-        glassPane.isVisible = true
+        glassPane!!.isVisible = true
         beep("Alert: ${type.message}")
         resetTimer()
     }
@@ -54,7 +58,7 @@ object Alert {
 
     private fun makeGlassPaneInvisibleTask() = object : TimerTask() {
         override fun run() {
-            glassPane.isVisible = false
+            glassPane!!.isVisible = false
         }
     }
 
@@ -68,8 +72,8 @@ sealed class AlertType(val message: String) {
     object NotEnoughPeople : AlertType("Not enough people!")
     object NotEnoughResourcesToSell : AlertType("Not enough resources to sell!")
     object NoMilitary : AlertType("No miliatry unit!")
-    
-//    class CustomAlert(message: String) : AlertType(message)
+
+    override fun toString() = "AlertType{message=$message}"
 }
 
 private val log = logger {}

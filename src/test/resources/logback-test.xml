@@ -1,0 +1,16 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- @formatter:off -->
+            <pattern>[%date{HH:mm:ss}] [%highlight(%-5level)] [%magenta(%thread)] [%cyan(%X{$userMdc})] - %logger{30} - %message%n</pattern>
+            <!-- @formatter:on -->
+        </encoder>
+    </appender>
+
+    <logger name="com.github.christophpickl.derbauer2" level="ALL" />
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

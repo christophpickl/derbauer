@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer2.misc
 
+import kotlin.reflect.KProperty1
+import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
@@ -33,3 +35,6 @@ fun Any?.enforceWhenBranches() {
 fun sleep(ms: Int) {
     Thread.sleep(ms.toLong())
 }
+
+fun <T, R> KProperty1<T, R>.isNotPrivateFinal() =
+    !isFinal && this.visibility != KVisibility.PRIVATE

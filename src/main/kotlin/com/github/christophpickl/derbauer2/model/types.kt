@@ -34,3 +34,7 @@ interface UsableEntity : Entity, Amountable {
 interface ConditionalEntity {
     fun checkCondition(): Boolean
 }
+
+fun <E : Entity> List<E>.filterConditional() = filter {
+    if (it is ConditionalEntity) it.checkCondition() else true
+}

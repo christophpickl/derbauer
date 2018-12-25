@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.MultiLabeled
+import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
 
@@ -19,13 +20,8 @@ data class Buildings(
     val castles: CastleBuilding = CastleBuilding()
 ) {
 
-    val all: List<Building>
-        get() {
-            return propertiesOfType<Buildings, Building>(this).ordered().filter {
-                if (it is ConditionalEntity) it.checkCondition() else true
-            }
-        }
-
+    val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
+    
     val totalLandNeeded get() = all.sumBy { it.totalLandNeeded }
     val totalFoodCapacity get() = all.filterIsInstance<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
     val totalFoodProduction get() = all.filterIsInstance<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
@@ -34,7 +30,6 @@ data class Buildings(
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable {
     var landNeeded: Int
-
     val totalLandNeeded get() = landNeeded * amount
 }
 

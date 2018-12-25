@@ -85,3 +85,26 @@ class LandResource : AbstracteResource(
     override val sellPossible get() = Model.player.resources.land.unusedAmount
     override fun toString() = Stringifier.stringify(this)
 }
+
+interface ResourceHolder {
+    var gold
+        get() = Model.player.resources.gold.amount
+        set(value) {
+            Model.player.resources.gold.amount = value
+        }
+    var food
+        get() = Model.player.resources.food.amount
+        set(value) {
+            Model.player.resources.food.amount = value
+        }
+    var people
+        get() = Model.player.resources.people.amount
+        set(value) {
+            Model.player.resources.people.amount = value
+        }
+    var land
+        get() = Model.player.resources.land.amount
+        set(value) {
+            Model.player.resources.land.amount = value
+        }
+}

@@ -1,6 +1,7 @@
 
 # major
 
+* GAME OVER condition when land = 0 (and people = 0)
 * MILIATRY: getting attacked end of turn
 * upcome costs (some buildings, all military)
 
