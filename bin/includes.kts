@@ -8,7 +8,9 @@ fun confirmOrExit() {
 
 fun confirm(): Boolean {
     print("[y/n] ")
-    return readLine() == "y"
+    val result = readLine() == "y"
+    println()
+    return result
 }
 
 fun execute(vararg commands: String) {
