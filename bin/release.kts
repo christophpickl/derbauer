@@ -1,10 +1,9 @@
 #!/usr/bin/env kscript
-
 //INCLUDE includes.kts
 
 import java.io.File
 
-val versionFile = File("version.txt")
+val versionFile = File("src/main/version.txt")
 val currentVersion = versionFile.let {
     require(it.exists()) { "Version file does not exist at: ${it.absolutePath}" }
     Version.parse(it.readText().trim())

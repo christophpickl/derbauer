@@ -8,7 +8,7 @@ plugins {
 }
 
 val artifactName = "DerBauer2"
-val localProjectVersion = file("version.txt").readText().trim()
+val localProjectVersion = file("src/main/version.txt").readText().trim()
 version = localProjectVersion
 
 repositories {
