@@ -20,7 +20,7 @@ data class Resources(
     inline fun <reified T : Resource> filterAll() = all.filterIsInstance<T>()
 }
 
-interface Resource : Entity, Amountable, MultiLabeled
+interface Resource : Entity, Amountable, MultiLabeled, Ordered
 
 interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int

@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2
 
-import com.github.christophpickl.derbauer2.feature.Feature
+import com.github.christophpickl.derbauer2.feature.Features
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Global
@@ -29,7 +29,7 @@ fun Model.reset() {
     global = Global()
     player = Player()
     history = History()
-    feature = Feature()
+    features = Features()
 }
 
 infix fun Amountable.hasSameAmountAs(expected: Int) {

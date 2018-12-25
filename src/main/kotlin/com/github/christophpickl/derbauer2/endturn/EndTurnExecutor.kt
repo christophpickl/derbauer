@@ -4,34 +4,6 @@ import com.github.christophpickl.derbauer2.model.Model
 import mu.KotlinLogging.logger
 import kotlin.random.Random
 
-class EndTurnReport(
-    goldIncome: Int,
-    foodIncome: Int,
-    peopleIncome: Int
-) {
-    val gold = EndTurnReportLine(
-        newValue = Model.gold,
-        change = goldIncome,
-        oldValue = Model.gold - goldIncome
-    )
-    val food = EndTurnReportLine(
-        newValue = Model.food,
-        change = foodIncome,
-        oldValue = Model.food - foodIncome
-    )
-    val people = EndTurnReportLine(
-        newValue = Model.people,
-        change = peopleIncome,
-        oldValue = Model.people - peopleIncome
-    )
-}
-
-class EndTurnReportLine(
-    val oldValue: Int,
-    val newValue: Int,
-    val change: Int
-)
-
 object EndTurnExecutor {
 
     private val log = logger {}
@@ -48,10 +20,16 @@ object EndTurnExecutor {
         Model.global.day++
         Model.actions.visitorsWaitingInThroneRoom += Random.nextInt(0, Math.max(2, (Model.people / 100.0 * 1).toInt()))
 
+        Model.features.all.forEach {
+            it.isEnabled() // check to get notifications here
+        }
+        val notifications = Model.notifications.consumeAll()
+        
         return EndTurnReport(
             goldIncome = goldIncome,
             foodIncome = foodIncome,
-            peopleIncome = peopleIncome
+            peopleIncome = peopleIncome,
+            notifications = notifications
         )
     }
 
@@ -78,14 +56,13 @@ object EndTurnExecutor {
             reproduced = (reproduced * Random.nextDouble(0.7, 1.2)).toInt()
             calc += reproduced
         }
-        // TODO when those kind of things happen, return back a message what happened
-        if (Model.people < 20 && calc == 0 && Random.nextDouble(0.0, 1.0) < 0.3) {
+        if (Model.people < 20 && Random.nextDouble(0.0, 1.0) < 0.3) {
             log.trace { "people randomly added" }
-            calc += Random.nextInt(1, 4)
+            calc += Random.nextInt(2, 5)
         }
-        if (Model.people > 5 && calc == 0 && Random.nextDouble(0.0, 1.0) < 0.1) {
+        if (Model.people > 10 && Random.nextDouble(0.0, 1.0) < 0.1) {
             log.trace { "people randomly killed" }
-            calc -= Random.nextInt(1, 4)
+            calc -= Random.nextInt(2, 6)
         }
         calc = limitCalcMax(calc, Model.people, Model.totalPeopleCapacity)
         log.trace { "People calc: $calc (people=${Model.people}, food=${Model.food}, reproRate=${Model.global.reproductionRate}, cap=${Model.totalPeopleCapacity})" }

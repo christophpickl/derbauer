@@ -78,6 +78,7 @@ class ValuesUpgrades {
 class ValuesAchievements {
     val trade1HistoryNeed = 10
     val trade1PriceModifier = 0.1
+    val trade1GoldReward = 300
     val attack1HistoryNeed = 5
     val attack1AttackModifier = 0.2
 }

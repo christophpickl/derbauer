@@ -16,10 +16,10 @@ class HomeView : ChooseView<HomeChoice>(
     choices = LinkedList<HomeChoice>().apply {
         this += EnumChoice(HomeEnum.Trade, "Trade")
         this += EnumChoice(HomeEnum.Build, "Build")
-        if (Model.feature.upgrade.isUpgradeEnabled) {
+        if (Model.features.upgrade.menu.isEnabled()) {
             this += EnumChoice(HomeEnum.Upgrade, "Upgrade")
         }
-        if (Model.feature.military.isMilitaryEnabled) {
+        if (Model.features.military.menu.isEnabled()) {
             this += EnumChoice(HomeEnum.Military, "Military")
         }
         if (Model.actions.all.isNotEmpty()) {

@@ -13,6 +13,7 @@ import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.MultiLabeled
+import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
@@ -30,7 +31,7 @@ data class Militaries(
     val militaryCapacityLeft get() = Model.player.buildings.totalMilitaryCapacity - totalAmount
 }
 
-interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable {
+interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable, Ordered {
     var attackModifier: Double
     var costsPeople: Int
 
@@ -76,7 +77,7 @@ class KnightMilitary : AbstractMilitary(
     labelPlural = "knights",
     value = Values.militaries.knights
 ), ConditionalEntity {
-    override fun checkCondition() = Model.feature.military.isKnightEnabled
+    override fun checkCondition() = Model.features.military.knights.isEnabled()
     override val description get() = "allrounder unit; attack: $attackModifier"
 }
 
@@ -85,6 +86,6 @@ class CatapultMilitary : AbstractMilitary(
     labelPlural = "catapults",
     value = Values.militaries.catapults
 ), ConditionalEntity {
-    override fun checkCondition() = Model.feature.military.isCatapultEnabled
+    override fun checkCondition() = Model.features.military.catapults.isEnabled()
     override val description get() = "good against buildings; attack: $attackModifier"
 }

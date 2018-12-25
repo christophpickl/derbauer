@@ -1,20 +1,25 @@
 package com.github.christophpickl.derbauer2.endturn.achievement
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AsciiArt
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.view.InfoView
 import com.github.christophpickl.derbauer2.ui.view.View
 
+class Achievements {
+    val trade1 = Trade1Achievement()
+    val attack1 = Attack1Achievement()
+
+    @get:JsonIgnore val all get() = propertiesOfType<Achievements, Achievement>(this)
+}
+
+
 object AchievementChecker {
-
-    private val achievements = listOf(
-        Trade1Achievement(),
-        Attack1Achievement()
-    )
-
     fun nextView(): View? {
-        val achieved = achievements.filter { it.conditionSatisfied() }
+        val achieved = Model.achievements.all.filter { it.conditionSatisfied() }
         if (achieved.isEmpty()) {
             return null
         }
@@ -22,12 +27,11 @@ object AchievementChecker {
             it.execute()
         }
         return AchievementView(
-            "You are doing great: Achievement${if (achieved.size > 1) "s" else ""} unlocked.\n\n" +
+            "You are doing great: Achievement${if (achieved.size > 1) "s" else ""} unlocked\n\n" +
                 "${AsciiArt.achievement}\n\n" +
-                achieved.joinToString("\n") { "- ${it.message}" }
+                achieved.joinToString("\n") { it.label }
         )
     }
-
 }
 
 class AchievementView(message: String) : InfoView(message) {

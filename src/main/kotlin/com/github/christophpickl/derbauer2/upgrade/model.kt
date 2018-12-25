@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
@@ -20,7 +21,7 @@ data class Upgrades(
     @get:JsonIgnore val all get() = propertiesOfType<Upgrades, Upgrade>(this).ordered().filterConditional()
 }
 
-interface Upgrade : Entity, Descriptable, Buyable {
+interface Upgrade : Entity, Descriptable, Buyable, Ordered {
     var currentLevel: Int
     val maxLevel: Int
 
@@ -50,7 +51,7 @@ class FarmProductivityUpgrade : AbstractUpgrade(
     buyPrice = Values.upgrades.farmProductivityBuyPrice,
     maxLevel = 3
 ), ConditionalEntity {
-    override fun checkCondition() = Model.feature.upgrade.isFoodProductionUpgradeEnabled
+    override fun checkCondition() = Model.features.upgrade.foodProductivityUpgrade.isEnabled()
 
     var foodProductionIncrease = Values.upgrades.farmProductionIncrease
     override val description get() = "increases food production by $foodProductionIncrease"

@@ -1,20 +1,36 @@
 package com.github.christophpickl.derbauer2.feature
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.military.Military
 import com.github.christophpickl.derbauer2.misc.Stringifier
+import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Model
 
-class MilitaryFeature {
+class MilitaryFeatures {
 
-    private val militaryCondition = FeatureCondition { Model.player.upgrades.militaryUpgrade.isMaxLevelReached }
-    val isMilitaryEnabled get() = militaryCondition.checkAndGet()
+    val menu = AbstractFeature("New possibility available: Military") {
+        Model.player.upgrades.militaryUpgrade.isMaxLevelReached
+    }
 
-    private val knightCondition = FeatureCondition { Model.player.buildings.barracks.amount >= Values.features.knightBarracksNeeded }
-    val isKnightEnabled get() = knightCondition.checkAndGet()
+    val knights = MilitaryCondition(Model.player.militaries.knights) {
+        Model.player.buildings.barracks.amount >= Values.features.knightBarracksNeeded
+    }
 
-    private val catapultCondition = FeatureCondition { Model.player.buildings.barracks.amount >= Values.features.catapultBarracksNeeded }
-    val isCatapultEnabled get() = catapultCondition.checkAndGet()
+    val catapults = MilitaryCondition(Model.player.militaries.catapults) {
+        Model.player.buildings.barracks.amount >= Values.features.catapultBarracksNeeded
+    }
 
+    @JsonIgnore val all = propertiesOfType<MilitaryFeatures, Feature>(this)
+    
     override fun toString() = Stringifier.stringify(this)
 }
 
+class MilitaryCondition<M>(
+    military: M,
+    predicate: () -> Boolean
+) : AbstractFeature(
+    notification = "New military unit available: ${military.label}",
+    predicate = predicate
+) where M : Military, M : ConditionalEntity

@@ -29,7 +29,7 @@ class MilitaryTest {
     }
 
     fun `Given all good  When hire Then possible and hire`() {
-        Model.feature.military.isMilitaryEnabled = true
+        Model.features.military.isMilitaryEnabled = true
         val soldier = Model.player.militaries.soldiers
         Model.gold = soldier.buyPrice
         Model.people = soldier.costsPeople + 1

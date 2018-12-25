@@ -3,11 +3,31 @@ package com.github.christophpickl.derbauer2.endturn
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AsciiArt
+import com.github.christophpickl.derbauer2.ui.Formatter
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
 import com.github.christophpickl.derbauer2.ui.view.InfoView
 
-class EndTurnView(message: String) : InfoView(message) {
+class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
+    companion object {
+        private fun buildMessage(report: EndTurnReport): String {
+            val notificationsMessage = if (report.notifications.isEmpty()) "" else "\n\nGood news, everyone:\n\n" +
+                report.notifications.joinToString("\n") { "- $it" }
+            return "So, this is what happened over night:\n\n" +
+                formatGrowth("Gold income    ", report.gold) + "\n" +
+                formatGrowth("Food production", report.food) + "\n" +
+                formatGrowth("People growth  ", report.people) +
+                notificationsMessage
+        }
+
+        private val numberWidth = 6
+        private val numberWidthGrow = 5 // plus sign
+        private fun formatGrowth(label: String, line: EndTurnReportLine) =
+            "$label: ${Formatter.formatNumber(line.oldValue, numberWidth)} => " +
+                "${Formatter.formatNumber(line.change, numberWidthGrow, addPlusSign = true)} => " +
+                Formatter.formatNumber(line.newValue, numberWidth)
+    }
+
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
         callback.onEndTurn()
     }

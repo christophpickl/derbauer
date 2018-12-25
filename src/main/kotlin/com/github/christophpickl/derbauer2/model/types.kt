@@ -3,7 +3,7 @@ package com.github.christophpickl.derbauer2.model
 import com.github.christophpickl.derbauer2.misc.IgnoreStringified
 
 
-interface Entity : Labeled, Ordered
+interface Entity : Labeled
 
 interface Labeled {
     val label: String

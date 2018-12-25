@@ -10,13 +10,13 @@ import org.testng.annotations.Test
 
 @Test
 @Listeners(TestModelListener::class)
-class UpgradeFeatureTest {
+class UpgradeFeaturesTest {
 
     fun `Given feature production upgrade satisfied Then feature is enabled`() {
         Model.food = Values.features.foodProductionUpgradeFoodNeeded
         Model.player.buildings.granaries.amount = Values.features.foodProductionUpgradeBuildingsNeeded
 
-        assertThat(Model.feature.upgrade.isFoodProductionUpgradeEnabled).isTrue()
+        assertThat(Model.features.upgrade.isFoodProductionUpgradeEnabled).isTrue()
     }
 
 }

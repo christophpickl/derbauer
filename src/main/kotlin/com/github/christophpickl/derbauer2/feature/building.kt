@@ -1,15 +1,27 @@
 package com.github.christophpickl.derbauer2.feature
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.build.Building
 import com.github.christophpickl.derbauer2.misc.Stringifier
+import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Model
 
-class BuildingFeature {
+class BuildingFeatures {
 
-    private val castleCondition = FeatureCondition {
+    val castleEnabled = BuildingFeature(Model.player.buildings.castles) {
         Model.people >= Values.features.castlePeopleNeeded
     }
-    val isCastleEnabled get() = castleCondition.checkAndGet()
+
+    @JsonIgnore val all = propertiesOfType<BuildingFeatures, Feature>(this)
 
     override fun toString() = Stringifier.stringify(this)
 }
+
+class BuildingFeature<B>(
+    building: B,
+    predicate: () -> Boolean
+) : AbstractFeature(
+    "New building available: ${building.label}", predicate
+) where B : Building, B : ConditionalEntity

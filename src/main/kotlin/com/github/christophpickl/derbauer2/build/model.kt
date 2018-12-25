@@ -11,6 +11,7 @@ import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.MultiLabeled
+import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
@@ -33,7 +34,7 @@ data class Buildings(
     val totalMilitaryCapacity get() = filterAll<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
 }
 
-interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable {
+interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable, Ordered {
     var landNeeded: Int
     val totalLandNeeded get() = landNeeded * amount
 }
@@ -89,7 +90,7 @@ class BarrackBuilding : AbstractBuilding(
     values = Values.buildings.barrack
 ), MilitaryCapacityBuilding, ConditionalEntity {
     override var militaryCapacity = Values.buildings.barrackMilitaryCapacity
-    override fun checkCondition() = Model.feature.military.isMilitaryEnabled
+    override fun checkCondition() = Model.features.military.menu.isEnabled()
     override val additionalDescription = "enables new units"
 }
 
@@ -100,7 +101,7 @@ class CastleBuilding : AbstractBuilding(
 ), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalEntity {
     override var foodCapacity = Values.buildings.castleFoodCapacity
     override var peopleCapacity = Values.buildings.castlePeopleCapacity
-    override fun checkCondition() = Model.feature.building.isCastleEnabled
+    override fun checkCondition() = Model.features.building.castleEnabled.isEnabled()
 }
 
 abstract class AbstractBuilding(

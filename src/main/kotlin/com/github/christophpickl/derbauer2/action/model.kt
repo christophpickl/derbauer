@@ -7,10 +7,11 @@ import com.github.christophpickl.derbauer2.model.ConditionalEntity
 import com.github.christophpickl.derbauer2.model.Descriptable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 
-interface Action : Entity, Descriptable {
+interface Action : Entity, Descriptable, Ordered {
     fun onSpecificAction(on: OnSpecificAction)
 }
 
