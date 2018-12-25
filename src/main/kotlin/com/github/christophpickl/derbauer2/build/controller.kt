@@ -15,7 +15,7 @@ class BuildController : BuildCallback {
         if (isValid(choice)) {
             choice.building.amount++
             Model.gold -= choice.building.buyPrice
-            Model.goHome()
+            Model.currentView = BuildView()
         }
     }
 

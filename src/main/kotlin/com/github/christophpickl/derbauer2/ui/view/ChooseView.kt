@@ -16,7 +16,7 @@ abstract class ChooseView<C : Choice>(
 
     override val renderContent =
         "${messages.random()}\n\n" +
-            "Choose:\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}" +
+            "Choose:\n\n${choices.mapIndexed { i, c -> "  [${i + 1}] ${c.label}" }.joinToString("\n")}" +
             if (additionalContent != null) "\n\n$additionalContent" else ""
     
     override val promptMode = PromptMode.Input

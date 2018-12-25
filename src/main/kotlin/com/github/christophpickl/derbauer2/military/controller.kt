@@ -19,24 +19,24 @@ class MilitaryController(
     
     override fun onMilitary(choice: MilitaryChoice) {
         log.debug { "military action: $choice" }
-        when (choice.enum) {
-            MilitaryEnum.Attack -> {
+        when (choice) {
+            MilitaryChoice.Attack -> {
                 prepareAttack()
             }
-            MilitaryEnum.RecruiteSoldiers -> {
-                Model.currentView = HireSoldiersView()
+            is MilitaryChoice.Hire -> {
+                Model.currentView = HireView(choice.military)
 
             }
         }.enforceWhenBranches()
     }
 
     private fun prepareAttack() {
-        if (Model.player.militaries.totalCount == 0) {
+        if (Model.player.militaries.totalAmount == 0) {
             Alert.show(AlertType.NoMilitary)
             return
         }
         val context = AttackContext(
-            enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.soldiers.amount).toInt()
+            enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.totalAmount).toInt()
         )
         Model.currentView = AttackView(context)
         doBeginAttack(context)
@@ -55,7 +55,7 @@ class MilitaryController(
             militaryUnit.amount += amount
             Model.gold -= totalPrice
             Model.people -= totalPeople
-            Model.goHome()
+            Model.currentView = MilitaryView()
         }
     }
 

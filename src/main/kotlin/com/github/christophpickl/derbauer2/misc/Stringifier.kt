@@ -9,7 +9,11 @@ annotation class IgnoreStringified
 object Stringifier {
     // MINOR find annotation also on superclass
     inline fun <reified T : Any> stringify(any: T) = "${T::class.simpleName}{${
-    T::class.memberProperties.filter { it.findAnnotation<IgnoreStringified>() == null && it.isNotPrivateFinal() }.joinToString() {
+    T::class.memberProperties.filter {
+        it.findAnnotation<IgnoreStringified>() == null &&
+            !it.isAbstract &&
+            it.isNotPrivateFinal()
+    }.joinToString() {
         "${it.name}=${it.get(any)}"
     }}"
 

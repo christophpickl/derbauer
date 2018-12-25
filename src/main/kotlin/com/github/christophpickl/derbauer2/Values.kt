@@ -14,6 +14,8 @@ interface Values {
     val castles: Int
 
     val soldiers: Int
+    val knights: Int
+    val catapults: Int
     val attackBattleDelay: Int
     val attackOverDelay: Int
 
@@ -45,6 +47,8 @@ open class DefaultValues : Values {
     override val castles = 0
 
     override val soldiers = 0
+    override val knights = 0
+    override val catapults = 0
     override val attackBattleDelay = 600
     override val attackOverDelay = 2_000
 
@@ -75,7 +79,7 @@ object CheatValues : DefaultValues() {
     override val farms = 20
     override val castles = 0
 
-    override val soldiers = 10
+    override val soldiers = 2
 
     override val featureCastlePeopleNeeded = 10
 

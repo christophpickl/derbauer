@@ -1,7 +1,6 @@
 package com.github.christophpickl.derbauer2.military
 
 import com.github.christophpickl.derbauer2.VALUES
-import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.misc.Rand
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.sleep
@@ -25,44 +24,24 @@ class AttackThread(
 ) : Runnable {
 
     private val log = logger {}
-
+    private val calculator = AttackCalculator(context)
 
     override fun run() {
         log.debug { "attack thread started" }
-        while (!isAttackOver()) {
+        while (!calculator.isAttackOver()) {
             nextBattle()
         }
         log.debug { "attack is over" }
-        val won = context.enemies == 0
-        val additionalText = if (won) {
-            val goldEarning = Rand.randomize(context.originalEnemies / 10, 0.5, 1.5)
-            Model.gold += goldEarning
-            val landEarning = Rand.randomize(context.originalEnemies / 5, 0.3, 2.5)
-            Model.land += landEarning
-            "\n\n  Gold stolen: $goldEarning\n  Land captured: $landEarning"
-        } else {
-            ""
-        }
-        context.message = "You ${if (won) "won" else "lost"}!$additionalText"
-        renderer.render()
-        sleep(VALUES.attackOverDelay)
-
-        Model.history.attacked++
-        Model.currentView = HomeView()
+        endResult()
+        Model.goHome()
         renderer.render()
     }
 
     private fun nextBattle() {
-        if (playerWonNextBattle()) {
-            log.trace { "next battle. enemy lost" }
-            context.enemies--
-        } else {
-            log.trace { "next battle. player lost" }
-            Model.player.militaries.killRandom()
-        }
+        calculator.nextBattleWon()
         context.message = "Ongoing war ...\n\n" +
             Model.player.militaries.all.joinToString("\n") {
-                "  ${it.labelPlural.capitalize()}: ${it.amount}"
+                "${it.labelPlural.capitalize()}: ${it.amount}"
             } + "\n\n" +
             "Enemies: ${context.enemies}"
 
@@ -70,18 +49,68 @@ class AttackThread(
         sleep(VALUES.attackBattleDelay)
     }
 
-    private fun playerWonNextBattle(): Boolean {
-        var playerRange = 0.5
-        val baseSoldier = when (Model.player.militaries.soldiers.amount) {
-            in 0..10 -> 0.05
-            in 11..25 -> 0.10
-            in 25..50 -> 0.15
-            else -> 0.20
+    private fun endResult() {
+        val result = calculator.applyEndResult()
+        context.message = when (result) {
+            is AttackResult.Won -> "You won!\n\n" +
+                "Gold stolen: ${result.goldEarning}\n" +
+                "Land captured: ${result.landEarning}"
+            AttackResult.Lost -> "You lost!"
         }
-        playerRange += baseSoldier * Model.player.militaries.soldiers.attackModifier
-        return Random.nextDouble(0.0, 1.0) < playerRange
+        renderer.render()
+        sleep(VALUES.attackOverDelay)
     }
 
-    private fun isAttackOver() = Model.player.militaries.totalCount == 0 || context.enemies == 0
+}
+
+sealed class AttackResult {
+    class Won(
+        val goldEarning: Int,
+        val landEarning: Int
+    ) : AttackResult()
+
+    object Lost : AttackResult()
+}
+
+class AttackCalculator(
+    private val context: AttackContext
+) {
+
+    private val log = logger {}
+
+    fun nextBattleWon(): Boolean {
+        var playerRange = 0.5
+        val playerUnit = Model.player.militaries.all.filter { it.amount > 0 }.random()
+        playerRange *= playerUnit.attackModifier
+        val rand = Random.nextDouble(0.0, 1.0)
+        val playerWon = rand < playerRange
+        log.trace { "rand (${String.format("%0.2f", rand)}) < playerRange ($playerRange) => player won: $playerWon" }
+        if (playerWon) {
+            context.enemies--
+        } else {
+            playerUnit.amount--
+            log.trace { "Killed: ${playerUnit.label} (amount left: ${playerUnit.amount})" }
+        }
+        return playerWon
+    }
+
+    fun applyEndResult(): AttackResult {
+        val won = context.enemies == 0
+        Model.history.attacked++
+        return if (won) {
+            val goldEarning = Rand.randomize(context.originalEnemies / 10, 0.5, 1.5)
+            val landEarning = Rand.randomize(context.originalEnemies / 5, 0.3, 2.5)
+            Model.gold += goldEarning
+            Model.land += landEarning
+            AttackResult.Won(
+                goldEarning = goldEarning,
+                landEarning = landEarning
+            )
+        } else {
+            AttackResult.Lost
+        }
+    }
+
+    fun isAttackOver() = Model.player.militaries.totalAmount == 0 || context.enemies == 0
 
 }

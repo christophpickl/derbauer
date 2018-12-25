@@ -6,8 +6,8 @@ import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
+import com.github.christophpickl.derbauer2.ui.view.Choice
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
-import com.github.christophpickl.derbauer2.ui.view.EnumChoice
 import com.github.christophpickl.derbauer2.ui.view.InputView
 import com.github.christophpickl.derbauer2.ui.view.View
 
@@ -17,10 +17,11 @@ class MilitaryView : ChooseView<MilitaryChoice>(
         "Gonna kick some ass!",
         "Any problem can be solved with brute force and violence."
     ),
-    choices = listOf(
-        EnumChoice(MilitaryEnum.Attack, "Attack"),
-        EnumChoice(MilitaryEnum.RecruiteSoldiers, "Recruite soldiers")
-    ),
+    choices = mutableListOf<MilitaryChoice>(
+        MilitaryChoice.Attack
+    ).apply {
+        addAll(Model.player.militaries.all.map { MilitaryChoice.Hire(it) })
+    },
     additionalContent = "You've got:\n${Model.player.militaries.all.joinToString("\n") {
         "  ${it.labelPlural.capitalize()}: ${it.amount}"
     }}"
@@ -31,11 +32,11 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     }
 }
 
-typealias MilitaryChoice = EnumChoice<MilitaryEnum>
-
-enum class MilitaryEnum {
-    Attack,
-    RecruiteSoldiers
+sealed class MilitaryChoice(
+    override val label: String
+) : Choice {
+    object Attack : MilitaryChoice("Attack")
+    class Hire(val military: Military) : MilitaryChoice("Hire ${military.label}")
 }
 
 interface MilitaryCallback {
@@ -46,7 +47,7 @@ interface MilitaryCallback {
 class AttackView(
     private val context: AttackContext
 ) : View {
-    
+
     override val promptMode = PromptMode.Off
     override val cancelSupport = CancelSupport.Disabled
     override val renderContent get() = context.message
@@ -56,14 +57,16 @@ class AttackView(
     }
 }
 
-class HireSoldiersView : InputView(
-    "How many soldiers do you wanna hire?\n\n" +
-        "1 soldier costs ${Model.player.militaries.soldiers.buyPrice} gold and ${Model.player.militaries.soldiers.costsPeople} people.\n\n" +
-        "You can afford for ${Model.player.militaries.soldiers.effectiveBuyPossibleAmount} soldiers."
+class HireView(
+    private val military: Military
+) : InputView(
+    "How many ${military.labelPlural} do you wanna hire?\n\n" +
+        "1 ${military.labelSingular} costs ${military.buyPrice} gold${if (military is PeopleMilitary) " and ${military.costsPeople} people" else ""}.\n\n" +
+        "You can afford for ${military.effectiveBuyPossibleAmount} ${military.labelPlural}."
 ) {
 
     override fun onCallback(callback: ViewCallback, number: Int) {
-        callback.doHire(Model.player.militaries.soldiers, number)
+        callback.doHire(military, number)
     }
 
     override val cancelSupport = CancelSupport.Enabled { MilitaryView() }

@@ -13,15 +13,13 @@ import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
 
 data class Militaries(
-    var soldiers: SoldierMilitary = SoldierMilitary()
+    var soldiers: SoldierMilitary = SoldierMilitary(),
+    var knights: KnightMilitary = KnightMilitary(),
+    var catapults: CatapultMilitary = CatapultMilitary()
 ) {
 
     val all: List<Military> = propertiesOfType<Militaries, Military>(this).ordered()
-    val totalCount get() = all.sumBy { it.amount }
-
-    fun killRandom() {
-        all.first { it.amount > 0 }.amount--
-    }
+    val totalAmount get() = all.sumBy { it.amount }
 }
 
 interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable {
@@ -30,6 +28,7 @@ interface Military : Entity, Descriptable, MultiLabeled, Amountable, Buyable {
 
 interface PeopleMilitary : Military {
     var costsPeople: Int
+    override val effectiveBuyPossibleAmount get() = Math.max(0, Math.min(buyPossibleAmount, (Model.people - 1) / costsPeople))
 }
 
 abstract class AbstractMilitary(
@@ -45,6 +44,10 @@ abstract class AbstractMilitary(
 
     @IgnoreStringified
     override val order = counter++
+    protected abstract val preDescription: String
+    final override fun description() = "$preDescription; " +
+        "costs: $buyPrice gold${if (this is PeopleMilitary) " and $costsPeople people" else ""}; " +
+        "ATT: $attackModifier"
 
     override fun toString() = Stringifier.stringify(this)
 }
@@ -57,6 +60,27 @@ class SoldierMilitary : AbstractMilitary(
     attackModifier = 1.0
 ), PeopleMilitary {
     override var costsPeople = 1
-    override val effectiveBuyPossibleAmount get() = Math.min(buyPossibleAmount, Model.people - 1)
-    override fun description() = "basic unit; costs: $buyPrice gold and $costsPeople people; ATT: $attackModifier"
+    override val preDescription = "basic unit"
+}
+
+class KnightMilitary : AbstractMilitary(
+    labelSingular = "knight",
+    labelPlural = "knights",
+    amount = VALUES.knights,
+    buyPrice = 30,
+    attackModifier = 1.2
+), PeopleMilitary {
+    override var costsPeople = 1
+    override val preDescription = "allrounder unit"
+}
+
+class CatapultMilitary : AbstractMilitary(
+    labelSingular = "catapult",
+    labelPlural = "catapults",
+    amount = VALUES.catapults,
+    buyPrice = 50,
+    attackModifier = 1.4
+), PeopleMilitary {
+    override var costsPeople = 3
+    override val preDescription = "good against buildings"
 }

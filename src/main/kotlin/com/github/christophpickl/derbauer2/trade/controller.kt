@@ -31,7 +31,7 @@ class TradeController : TradeCallback {
             resource.amount += signator * amount
             Model.gold += -1 * signator * totalPrice
             Model.history.traded++
-            Model.goHome()
+            Model.currentView = TradeView()
         }
     }
 
