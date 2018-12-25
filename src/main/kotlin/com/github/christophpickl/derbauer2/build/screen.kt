@@ -28,7 +28,8 @@ class BuildScreen : ChooseScreen<BuildChoice>(
 data class BuildChoice(
     val building: Building
 ) : Choice {
-    override val label: String = "Build ${building.labelSingular} ... ${building.buyPrice} gold and ${building.landNeeded} land (${building.description})"
+    override val label =
+        "${building.labelSingular} ... ${building.buyPrice} gold and ${building.landNeeded} land (${building.description()})"
 }
 
 interface BuildCallback {

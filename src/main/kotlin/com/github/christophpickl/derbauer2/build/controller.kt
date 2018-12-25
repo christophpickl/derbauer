@@ -25,7 +25,7 @@ class BuildController : BuildCallback {
             alertType = AlertType.NotEnoughGold
         ),
         SimpleChoiceValidation(
-            condition = { Model.landUnused >= choice.building.landNeeded },
+            condition = { Model.player.resources.land.unusedAmount >= choice.building.landNeeded },
             alertType = AlertType.NotEnoughLand
         )
     ))

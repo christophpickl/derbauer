@@ -1,9 +1,9 @@
 package com.github.christophpickl.derbauer2.ui
 
+import com.github.christophpickl.derbauer2.model.AbstracteResource
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.model.PlayerResource
-import com.github.christophpickl.derbauer2.model.UsableResource
+import com.github.christophpickl.derbauer2.model.UsableEntity
 import com.github.christophpickl.kpotpourri.common.string.times
 
 class Renderer(
@@ -27,9 +27,9 @@ class Renderer(
         text.text = board.convertAndReset()
     }
 
-    private fun PlayerResource.formatInfo(): String =
+    private fun AbstracteResource.formatInfo(): String =
         "$labelPlural: " + when (this) {
-            is UsableResource -> "$usedAmount / $amount"
+            is UsableEntity -> "$usedAmount / $amount"
             is LimitedAmount -> "$amount / $limitAmount"
             else -> amount
         }

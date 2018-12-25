@@ -3,19 +3,20 @@ package com.github.christophpickl.derbauer2.model
 import com.github.christophpickl.derbauer2.VALUES
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
+import com.github.christophpickl.derbauer2.trade.LimitedBuyableAmount
 import com.github.christophpickl.derbauer2.trade.Tradeable
 
-data class PlayerResources(
+data class Resources(
     var gold: GoldResource = GoldResource(),
     var food: FoodResource = FoodResource(),
     var people: PeopleResource = PeopleResource(),
     var land: LandResource = LandResource()
 ) {
-    val all = propertiesOfType<PlayerResources, PlayerResource>(this).ordered()
-    val allTradeables = propertiesOfType<PlayerResources, TradeableResource>(this).ordered()
+    val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
+    val allTradeables = all.filterIsInstance<TradeableResource>()
 }
 
-interface Resource : Amountable, Ordered, MultiLabeled
+interface Resource : Entity, Amountable, MultiLabeled
 
 interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int
@@ -30,7 +31,7 @@ interface TradeableResource : Resource, Tradeable {
     }
 }
 
-abstract class PlayerResource(
+abstract class AbstracteResource(
     override val labelSingular: String,
     override val labelPlural: String,
     override var amount: Int
@@ -38,12 +39,11 @@ abstract class PlayerResource(
     companion object {
         private var counter = 0
     }
-
     override val order = counter++
     override fun toString() = Stringifier.stringify(this)
 }
 
-class FoodResource : PlayerResource(
+class FoodResource : AbstracteResource(
     labelSingular = "food",
     labelPlural = "food",
     amount = VALUES.food
@@ -56,7 +56,7 @@ class FoodResource : PlayerResource(
     override fun toString() = Stringifier.stringify(this)
 }
 
-class GoldResource : PlayerResource(
+class GoldResource : AbstracteResource(
     labelSingular = "gold",
     labelPlural = "gold",
     amount = VALUES.gold
@@ -64,7 +64,7 @@ class GoldResource : PlayerResource(
     override fun toString() = Stringifier.stringify(this)
 }
 
-class PeopleResource : PlayerResource(
+class PeopleResource : AbstracteResource(
     labelSingular = "people",
     labelPlural = "people",
     amount = VALUES.people
@@ -73,16 +73,15 @@ class PeopleResource : PlayerResource(
     override fun toString() = Stringifier.stringify(this)
 }
 
-class LandResource : PlayerResource(
+class LandResource : AbstracteResource(
     labelSingular = "land",
     labelPlural = "land",
     amount = VALUES.land
-), UsableResource, TradeableResource {
-    override val unusedAmount get() = amount - usedAmount
-    override val usedAmount get() = Model.player.buildings.all.sumBy { it.totalLandNeeded }
+), UsableEntity, TradeableResource {
+    override val usedAmount get() = Model.player.buildings.totalLandNeeded
     override var priceModifier = 1.0
     override var buyPrice: Int = 50
     override var sellPrice: Int = 40
-    override val sellPossible get() = Model.landUnused
+    override val sellPossible get() = Model.player.resources.land.unusedAmount
     override fun toString() = Stringifier.stringify(this)
 }

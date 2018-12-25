@@ -6,7 +6,7 @@ import com.github.christophpickl.derbauer2.misc.validateChoice
 import com.github.christophpickl.derbauer2.model.BuySell
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.model.UsableResource
+import com.github.christophpickl.derbauer2.model.UsableEntity
 import com.github.christophpickl.derbauer2.ui.AlertType
 import mu.KotlinLogging.logger
 
@@ -59,7 +59,7 @@ class TradeController : TradeCallback {
                 alertType = AlertType.NotEnoughResourcesToSell
             ))
             // unused amount
-            if (choice.resource is UsableResource) {
+            if (choice.resource is UsableEntity) {
                 validations.add(SimpleChoiceValidation(
                     condition = { choice.resource.unusedAmount >= amount },
                     alertType = AlertType.NotEnoughUnused

@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.trade
 
 import com.github.christophpickl.derbauer2.model.BuySell
+import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 
 interface Buyable {
@@ -14,9 +15,12 @@ interface Sellable {
 }
 
 interface Tradeable : Buyable, Sellable {
-
     fun priceFor(buySell: BuySell): Int = when (buySell) {
         BuySell.Buy -> buyPrice
         BuySell.Sell -> sellPrice
     }
+}
+
+interface LimitedBuyableAmount : LimitedAmount, Buyable {
+    override val effectiveBuyPossibleAmount get() = Math.min(buyPossibleAmount, capacityLeft)
 }

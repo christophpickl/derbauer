@@ -58,7 +58,7 @@ class AttackScreen(
 
 class HireSoldiersScreen : InputScreen(
     "How many soldiers do you wanna hire?\n\n" +
-        "1 soldier costs ${Model.player.militaries.soldiers.buyPrice} gold and ${Model.player.militaries.soldiers.costsPeople} person\n\n" +
+        "1 soldier costs ${Model.player.militaries.soldiers.buyPrice} gold and ${Model.player.militaries.soldiers.costsPeople} people.\n\n" +
         "You can afford for ${Model.player.militaries.soldiers.effectiveBuyPossibleAmount} soldiers."
 ) {
 

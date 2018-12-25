@@ -8,7 +8,7 @@ fun validateChoice(validations: List<ChoiceValidation>): Boolean {
     if (failedValidations.isEmpty()) {
         return true
     }
-    // MINOR somehow display all
+    // showing only first is good enough :) dont bother user too much
     Alert.show(failedValidations.first().alertType)
     return false
 }
