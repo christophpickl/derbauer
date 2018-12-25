@@ -36,7 +36,7 @@ safeEval "curl \
     --request POST \
     --data '{ \"tag_name\": \"${NEXT_vVERSION}\", \"target_commitish\": \"master\", \"name\": \"${NEXT_vVERSION}\", \"body\": \"DerBauer 2 Release\", \"draft\": false, \"prerelease\": false }' \
     https://api.github.com/repos/christophpickl/derbauer/releases"
-UPLOAD_URL=`echo $LAST_RESULT | jq -r '.upload_url' | sed -e 's/{?name,label}//g'`
+UPLOAD_URL=`echo ${LAST_RESULT} | jq -r '.upload_url' | sed -e 's/{?name,label}//g'`
 
 echo ""
 echo "Uploading asset to GitHub ..."
