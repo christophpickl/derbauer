@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
 
-
 @Test
 @Listeners(TestModelListener::class)
 class UpgradeFeaturesTest {
@@ -16,7 +15,7 @@ class UpgradeFeaturesTest {
         Model.food = Values.features.foodProductionUpgradeFoodNeeded
         Model.player.buildings.granaries.amount = Values.features.foodProductionUpgradeBuildingsNeeded
 
-        assertThat(Model.features.upgrade.isFoodProductionUpgradeEnabled).isTrue()
+        assertThat(Model.features.upgrade.foodProductivityUpgrade).isEnabled()
     }
 
 }

@@ -28,8 +28,8 @@ class MilitaryTest {
         soldier hasSameAmountAs 0
     }
 
-    fun `Given all good  When hire Then possible and hire`() {
-        Model.features.military.isMilitaryEnabled = true
+    fun `Given all good When hire Then possible and hire`() {
+        Model.player.upgrades.militaryUpgrade.setToMaxLevel()
         val soldier = Model.player.militaries.soldiers
         Model.gold = soldier.buyPrice
         Model.people = soldier.costsPeople + 1
