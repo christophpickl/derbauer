@@ -1,6 +1,6 @@
 # Der Bauer II
 
-A text-based, round-based, old-school strategy game.
+A text-based, round-based, old-school strategy game written in Kotlin.
 
 It covers:
 

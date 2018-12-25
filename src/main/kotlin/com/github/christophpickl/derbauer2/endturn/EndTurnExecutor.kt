@@ -34,7 +34,6 @@ object EndTurnExecutor {
         var calc = Model.player.buildings.totalFoodProduction
         calc -= Model.people // each persons eats one food per day
 
-        // MINOR if food are over capacity => decrease it slowly!
         calc = limitCalcMax(calc, Model.food, Model.totalFoodCapacity)
         calc = limitCalcMin(calc, Model.food)
         log.trace { "Food calc: $calc (prod: ${Model.player.buildings.totalFoodProduction}, cap: ${Model.totalFoodCapacity}, people: ${Model.people})" }
@@ -60,7 +59,6 @@ object EndTurnExecutor {
             log.trace { "people randomly killed" }
             calc -= Random.nextInt(1, 4)
         }
-        // MINOR if people are over capacity => decrease it slowly!
         calc = limitCalcMax(calc, Model.people, Model.totalPeopleCapacity)
         log.trace { "People calc: $calc (people=${Model.people}, food=${Model.food}, reproRate=${Model.global.reproductionRate}, cap=${Model.totalPeopleCapacity})" }
         return calc

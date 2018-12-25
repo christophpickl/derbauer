@@ -4,8 +4,6 @@ import com.github.christophpickl.derbauer2.misc.randomListOf
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.AsciiArt
 
-// TODO make bag sizes depend on current Model resource
-
 class GoldBagHappening : Happening(
     cooldownDays = 7
 ) {
