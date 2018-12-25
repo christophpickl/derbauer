@@ -21,7 +21,7 @@ class HomeView : ChooseView<HomeChoice>(
             this += EnumChoice(HomeEnum.Military, "Military")
         }
         this += EnumChoice(HomeEnum.Action, "Action")
-        this += EnumChoice(HomeEnum.EndTurn, "End Turn")
+        this += EnumChoice(HomeEnum.EndTurn, "End Turn", zeroChoice = true)
     }
 ) {
     override val cancelSupport = CancelSupport.Disabled
