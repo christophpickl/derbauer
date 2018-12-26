@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Versions {
-    val kpotpourri = "2.0"
+    val kpotpourri = "2.1"
 }
 
 plugins {
