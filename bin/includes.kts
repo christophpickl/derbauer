@@ -11,9 +11,9 @@ fun confirm(): Boolean {
     return readLine() == "y"
 }
 
-fun execute(vararg commands: String) {
+fun execute(vararg commands: String, failNotification: Notification? = null, suppressOutput: Boolean = false) {
     val fullCommand = commands.joinToString(" ")
-    println(">> $fullCommand")
+    if (!suppressOutput) println(">> $fullCommand")
 
     val builder = ProcessBuilder().apply {
         command(commands.toList())
@@ -24,16 +24,24 @@ fun execute(vararg commands: String) {
     val process = builder.start()
     val returnCode = process.waitFor()
     if (returnCode != 0) {
-        fail("Failed to execute command: $fullCommand")
+        fail(failNotification ?: Notification(
+            title = "Command failed",
+            message = "Executing '$fullCommand' returned: $returnCode"
+        ))
     }
 }
 
-fun fail(message: String) {
-    System.err.println("⚠ ERROR ⚠ $message")
-    displayNotification("⚠ ERROR ⚠", message)
+fun fail(notification: Notification) {
+    System.err.println("[ERROR] ${notification.title} - ${notification.message}")
+    displayNotification(notification)
     System.exit(1)
 }
 
-fun displayNotification(title: String, message: String) {
-    execute("osascript", "-e", "display notification \"$message\" with title \"$title\"")
+fun displayNotification(notification: Notification) {
+    execute("osascript", "-e", "display notification \"${notification.message}\" with title \"${notification.title}\"", suppressOutput = true)
 }
+
+data class Notification(
+    val title: String,
+    val message: String
+)
