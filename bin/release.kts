@@ -1,64 +1,70 @@
 #!/usr/bin/env kscript
-//INCLUDE includes.kts
+
+@file:DependsOn("com.github.christophpickl.kpotpourri:build4k:SNAPSHOT")
+@file:DependsOn("com.github.christophpickl.kpotpourri:common4k:SNAPSHOT")
+@file:DependsOn("com.github.christophpickl.kpotpourri:logback4k:SNAPSHOT")
+@file:CompilerOpts("-jvm-target 1.8")
 
 import java.io.File
+import com.github.christophpickl.kpotpourri.build.build4k
+import com.github.christophpickl.kpotpourri.build.Build4k
+import com.github.christophpickl.kpotpourri.build.Version
+import com.github.christophpickl.kpotpourri.build.Version2
 
-val versionFile = File("src/main/version.txt")
-val currentVersion = versionFile.let {
-    require(it.exists()) { "Version file does not exist at: ${it.absolutePath}" }
-    Version.parse(it.readText().trim())
-}
-val nextVersion = currentVersion.incrementMinor()
+build4k {
+    title = "DerBauer Release"
+    val versionFile = File("src/main/version.txt")
+    val artifactId = "DerBauer"
+    val currentVersion = readFromFile<Version2>(versionFile)
+    val nextVersion = currentVersion.incrementPart2()
 
-execute("git", "status")
-
-println()
-println("Is everything checked in?")
-confirmOrExit()
-
-println("Current version: $currentVersion")
-println("Next version:    $nextVersion")
-println()
-println("Wanna release this?")
-confirmOrExit()
-
-println()
-println("Test build.")
-execute("./gradlew", "clean", "test", "check")
-
-println()
-println("Writing version to version.txt file.")
-versionFile.writeText(nextVersion.toString())
-
-println()
-println("Building fat JAR.")
-execute("./gradlew", "shadowJar")
-
-val jarFile = File("build/libs/DerBauer-${nextVersion}.jar")
-require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
-println("Created fat JAR at: ${jarFile.absolutePath}")
-
-println()
-println("GIT commit, tag and push.")
-execute("git", "add", ".")
-execute("git", "commit", "-m", "[Auto-Release] Version: $nextVersion")
-execute("git", "tag", "v$nextVersion")
-execute("git", "push")
-execute("git", "push", "origin", "--tags")
-
-println()
-println("GitHub release.")
-execute("./bin/upload.sh", "v${nextVersion}", jarFile.absolutePath)
-
-data class Version(val major: Int, val minor: Int) {
-    companion object {
-        fun parse(string: String): Version {
-            val parts = string.split(".")
-            return Version(parts[0].toInt(), parts[1].toInt())
-        }
+    verifyGitStatus()
+    println()
+    println("Current version: $currentVersion")
+    println("Next version:    $nextVersion")
+    println()
+    if (!confirm("Do you really want to release this? (This is your final warning)")) {
+        exit()
     }
+    printHeader("Test Build")
+    gradlew("clean", "test", "check")
 
-    fun incrementMinor() = Version(major = major, minor = minor + 1)
-    override fun toString() = "$major.$minor"
+    printHeader("Write next version")
+    versionFile.writeText(nextVersion.toString())
+    println("Written '$nextVersion' to file: ${versionFile.absolutePath}")
+
+    buildFatJar(artifactId, nextVersion)
+    gitTagPush(nextVersion)
+
+    printHeader("GitHub upload")
+    execute("./bin/upload.sh", listOf("v${nextVersion}", jarFile.absolutePath))
+
+    displayNotification("Release build succeeded ✅")
+    say("Hey you! The release build finished successfully.")
 }
 
+fun Build4k.verifyGitStatus() {
+    git("status")
+    println()
+    if (!confirm("Is everything checked in?")) {
+        exit()
+    }
+}
+
+fun Build4k.buildFatJar(artifactId: String, version: Version): File {
+    printHeader("Build FatJAR")
+    gradlew("shadowJar")
+    val jarFile = File("build/libs/$artifactId-$version.jar")
+    require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
+    println("Created Fat JAR at: ${jarFile.absolutePath}")
+    return jarFile
+}
+
+fun Build4k.gitTagPush(nextVersion: Version) {
+    printHeader("GIT tag&push")
+    git("add", ".")
+    git("commit", "-m", "[Auto-Release] Version: $nextVersion")
+    git("tag", "v$nextVersion")
+    git("push")
+    git("push", "origin", "--tags")
+}

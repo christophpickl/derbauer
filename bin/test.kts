@@ -1,14 +1,14 @@
 #!/usr/bin/env kscript
-//INCLUDE includes.kts
 
-val title = "DerBauer Tests"
+@file:DependsOn("com.github.christophpickl.kpotpourri:build4k:SNAPSHOT")
+@file:DependsOn("com.github.christophpickl.kpotpourri:common4k:SNAPSHOT")
+@file:DependsOn("com.github.christophpickl.kpotpourri:logback4k:SNAPSHOT")
 
-execute("./gradlew", "clean", "test", "check", failNotification = Notification(
-    title = title,
-    message = "Failed to execute tests ⚠️"
-))
+import com.github.christophpickl.kpotpourri.build.build4k
 
-displayNotification(Notification(
-    title = title,
-    message = "Executing tests succeeded ✅"
-))
+build4k {
+    title = "DerBauer Tests"
+
+    gradlew("clean", "test", "check", context = whenFail("Test build failed ⚠️"))
+    displayNotification("Test build succeeded ✅")
+}
