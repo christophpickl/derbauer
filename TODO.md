@@ -1,8 +1,8 @@
 
 # major
 
-* combine with kpot
 * travis
+* create new kpot module, containing /bin kts scripts (use gradle to download and unzip in /bin)
 * (1) rename "people" => "peasants"
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send

@@ -18,6 +18,7 @@ version = localProjectVersion
 repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
     maven { setUrl("http://dl.bintray.com/christophpickl/cpickl") }
 }
 
