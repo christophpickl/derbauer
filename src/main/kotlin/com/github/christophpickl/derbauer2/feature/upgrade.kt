@@ -1,11 +1,11 @@
 package com.github.christophpickl.derbauer2.feature
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.build.FoodCapacityBuilding
 import com.github.christophpickl.derbauer2.build.FoodProducingBuilding
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
-import com.github.christophpickl.derbauer2.model.ConditionalEntity
+import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.amountsSum
 import com.github.christophpickl.derbauer2.upgrade.Upgrade
@@ -33,4 +33,4 @@ class UpgradeFeature<U>(
 ) : AbstractFeature(
     notification = "New upgrade available: ${upgrade.label}",
     predicate = predicate
-) where U : Upgrade, U : ConditionalEntity
+) where U : Upgrade, U : Conditional

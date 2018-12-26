@@ -1,12 +1,12 @@
 package com.github.christophpickl.derbauer2.upgrade
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.build.FoodProducingBuilding
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
-import com.github.christophpickl.derbauer2.model.ConditionalEntity
-import com.github.christophpickl.derbauer2.model.Descriptable
+import com.github.christophpickl.derbauer2.model.Conditional
+import com.github.christophpickl.derbauer2.model.Describable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.Ordered
@@ -21,7 +21,7 @@ data class Upgrades(
     @get:JsonIgnore val all get() = propertiesOfType<Upgrades, Upgrade>(this).ordered().filterConditional()
 }
 
-interface Upgrade : Entity, Descriptable, Buyable, Ordered {
+interface Upgrade : Entity, Describable, Buyable, Ordered {
     var currentLevel: Int
     val maxLevel: Int
 
@@ -50,7 +50,7 @@ class FarmProductivityUpgrade : AbstractUpgrade(
     label = "Farm Productivity",
     buyPrice = Values.upgrades.farmProductivityBuyPrice,
     maxLevel = 3
-), ConditionalEntity {
+), Conditional {
     override fun checkCondition() = Model.features.upgrade.foodProductivityUpgrade.isEnabled()
 
     var foodProductionIncrease = Values.upgrades.farmProductionIncrease

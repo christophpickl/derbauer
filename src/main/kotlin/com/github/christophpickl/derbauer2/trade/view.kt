@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.trade
 
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.data.Texts
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.TradeableResource
@@ -9,33 +10,31 @@ import com.github.christophpickl.derbauer2.ui.view.Choice
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
 import com.github.christophpickl.derbauer2.ui.view.InputView
 
-class TradeView : ChooseView<TradableChoice>(
-    messages = listOf(
-        "Try not to get broke, huh?!",
-        "Got anything useful?",
-        "Psssst, over here! Looking for something?"
-    ),
+class TradeView : ChooseView<TradeableChoice>(
+    messages = Texts.tradeMessages,
     choices = Model.player.resources.allTradeables.flatMap {
-        listOf(TradableChoice(it, BuySell.Buy), TradableChoice(it, BuySell.Sell))
+        listOf(TradeableChoice(it, BuySell.Buy), TradeableChoice(it, BuySell.Sell))
     }
 ) {
     override val cancelSupport = CancelSupport.Enabled { HomeView() }
-    override fun onCallback(callback: ViewCallback, choice: TradableChoice) {
+    override fun onCallback(callback: ViewCallback, choice: TradeableChoice) {
         callback.onTrade(choice)
     }
 }
 
-data class TradableChoice(
+data class TradeableChoice(
     val resource: TradeableResource,
     val buySell: BuySell
 ) : Choice {
-    override val label: String =
-        "${buySell.label.capitalize()} ${resource.labelPlural} ... ${resource.descriptionFor(buySell)}"
+    override val label = formatLabel(
+        "${buySell.label.capitalize()} ${resource.labelPlural}",
+        resource.descriptionFor(buySell)
+    )
 }
 
-class ExecuteTradeView(private val choice: TradableChoice) : InputView(buildMessage(choice)) {
+class ExecuteTradeView(private val choice: TradeableChoice) : InputView(buildMessage(choice)) {
     companion object {
-        private fun buildMessage(choice: TradableChoice): String {
+        private fun buildMessage(choice: TradeableChoice): String {
             val info = when (choice.buySell) {
                 BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossibleAmount}"
                 BuySell.Sell -> "You have ${choice.resource.sellPossible} available."
@@ -57,6 +56,6 @@ class ExecuteTradeView(private val choice: TradableChoice) : InputView(buildMess
 }
 
 interface TradeCallback {
-    fun onTrade(choice: TradableChoice)
-    fun doTrade(choice: TradableChoice, amount: Int)
+    fun onTrade(choice: TradeableChoice)
+    fun doTrade(choice: TradeableChoice, amount: Int)
 }

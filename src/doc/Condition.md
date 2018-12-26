@@ -8,10 +8,7 @@ In order to enable:
 * military (unit/action)
 * trade (new) resource
 * upgrade
-* action:
-    - mini game: 17/4, riddle
-    - spy
-    - sabotage
+* action
 
 Depends on:
 

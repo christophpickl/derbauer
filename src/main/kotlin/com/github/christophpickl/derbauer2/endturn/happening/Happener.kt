@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
-import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.view.InfoView

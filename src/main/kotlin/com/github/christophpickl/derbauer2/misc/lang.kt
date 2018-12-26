@@ -40,10 +40,10 @@ fun sleep(ms: Int) {
 object KMath {
 
     fun minButNotNegative(first: Int, second: Int, vararg others: Int): Int =
-        Math.max(0, min(first, second, *others))
+        min(first, second, *others).coerceAtLeast(0)
 
     fun min(first: Int, second: Int, vararg others: Int): Int =
-        mutableListOf(first, second).apply { addAll(others.toList()) }.min()!!
+        listOf(first, second).plus(others.toList()).min()!!
 
 }
 
@@ -60,4 +60,20 @@ fun execute(vararg commands: String): Int {
         log.warn { "Process returned code ${returnCode} for command: ${commands.joinToString(" ")}" }
     }
     return returnCode
+}
+
+fun String.splitMaxWidth(maxWidth: Int): List<String> {
+    val lines = mutableListOf<String>()
+    var currentText = this
+    do {
+        val line = currentText.take(maxWidth)
+        currentText = currentText.drop(line.length)
+        lines += line
+    } while (currentText.length > maxWidth)
+    
+    if (currentText.isNotEmpty()) {
+        lines += currentText
+    }
+    
+    return lines
 }

@@ -40,34 +40,39 @@ class Prompt : KeyboardListener {
     override fun onKeyboard(event: KeyboardEvent) {
         when (Model.currentView.promptMode) {
             PromptMode.Off -> {
-                // do nothing
+                // ignore
             }
             PromptMode.Enter -> {
                 if (event == KeyboardEvent.Enter) {
                     subscription.broadcast { onEnter(PromptInput.Empty) }
                 } else {
+                    // ignore
                 }
             }
             PromptMode.Input -> {
-                when (event) {
-                    KeyboardEvent.Enter -> {
-                        val text = enteredText
-                        enteredText = ""
-                        subscription.broadcast { onEnter(PromptInput.by(text)) }
-                    }
-                    KeyboardEvent.Backspace -> {
-                        if (enteredText.isEmpty()) {
-                            // do nothing
-                        } else {
-                            enteredText = enteredText.substring(0, enteredText.length - 1)
-                            subscription.broadcast { onTextChange(enteredText) }
-                        }
-                    }
-                    is KeyboardEvent.Input -> {
-                        enteredText = "$enteredText${event.digit}"
-                        subscription.broadcast { onTextChange(enteredText) }
-                    }
-                }.enforceWhenBranches()
+                handleInput(event)
+            }
+        }.enforceWhenBranches()
+    }
+
+    private fun handleInput(event: KeyboardEvent) {
+        when (event) {
+            KeyboardEvent.Enter -> {
+                val text = enteredText
+                enteredText = ""
+                subscription.broadcast { onEnter(PromptInput.by(text)) }
+            }
+            KeyboardEvent.Backspace -> {
+                if (enteredText.isEmpty()) {
+                    // ignore
+                } else {
+                    enteredText = enteredText.dropLast(1)
+                    subscription.broadcast { onTextChange(enteredText) }
+                }
+            }
+            is KeyboardEvent.Input -> {
+                enteredText = "$enteredText${event.digit}"
+                subscription.broadcast { onTextChange(enteredText) }
             }
         }.enforceWhenBranches()
     }

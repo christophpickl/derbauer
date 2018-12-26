@@ -17,7 +17,7 @@ interface MultiLabeled : Labeled {
     override val label get() = labelSingular
 }
 
-interface Descriptable {
+interface Describable {
     val description: String
 }
 
@@ -47,10 +47,10 @@ interface Ordered {
 fun <E : Ordered> List<E>.ordered(): List<E> =
     sortedBy { it.order }
 
-interface ConditionalEntity {
+interface Conditional {
     fun checkCondition(): Boolean
 }
 
 fun <E : Entity> List<E>.filterConditional() = filter {
-    if (it is ConditionalEntity) it.checkCondition() else true
+    if (it is Conditional) it.checkCondition() else true
 }

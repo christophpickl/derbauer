@@ -1,4 +1,6 @@
-package com.github.christophpickl.derbauer2
+package com.github.christophpickl.derbauer2.data
+
+import com.github.christophpickl.derbauer2.CHEAT_MODE
 
 class ValuesResources {
     val gold = if (CHEAT_MODE) 900 else 300

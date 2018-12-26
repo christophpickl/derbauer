@@ -13,11 +13,11 @@ class TradeController : TradeCallback {
 
     private val log = logger {}
 
-    override fun onTrade(choice: TradableChoice) {
+    override fun onTrade(choice: TradeableChoice) {
         Model.currentView = ExecuteTradeView(choice)
     }
 
-    override fun doTrade(choice: TradableChoice, amount: Int) {
+    override fun doTrade(choice: TradeableChoice, amount: Int) {
         log.debug { "doTrade(amount=$amount, choice=$choice)" }
         val resource = choice.resource
         val pricePerItem = resource.effectivePriceFor(choice.buySell)
@@ -35,7 +35,7 @@ class TradeController : TradeCallback {
         }
     }
 
-    private fun isValid(choice: TradableChoice, amount: Int, totalPrice: Int): Boolean {
+    private fun isValid(choice: TradeableChoice, amount: Int, totalPrice: Int): Boolean {
         val validations = mutableListOf<ChoiceValidation>()
         if (choice.buySell == BuySell.Buy) {
             // enough gold

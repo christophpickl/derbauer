@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer2.ui
+package com.github.christophpickl.derbauer2.data
 
 object AsciiArt {
 

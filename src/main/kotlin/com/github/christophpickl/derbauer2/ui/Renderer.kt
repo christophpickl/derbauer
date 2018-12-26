@@ -1,10 +1,12 @@
 package com.github.christophpickl.derbauer2.ui
 
+import com.github.christophpickl.derbauer2.misc.splitMaxWidth
 import com.github.christophpickl.derbauer2.model.AbstracteResource
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.UsableEntity
 import com.github.christophpickl.kpotpourri.common.string.times
+import mu.KotlinLogging.logger
 
 interface Renderer {
     fun render()
@@ -18,7 +20,7 @@ class RendererImpl(
     override fun render() {
         val promptText = when (Model.currentView.promptMode) {
             PromptMode.Off -> null
-            PromptMode.Enter -> ">> Hit ENTER <<"
+            PromptMode.Enter -> "Hit ENTER to continue . . ."
             PromptMode.Input -> "$ ${prompt.enteredText}⌷"
         }
         val content = Model.currentView.renderContent
@@ -27,7 +29,7 @@ class RendererImpl(
 
         val board = Board()
         board.printHeader("Day: ${Model.global.day}", info)
-        promptText?.let { board.printPrompt(it) }
+        promptText?.let { board.printPrompt(it) } // first prompt, then content!
         board.printContent(content)
         text.text = board.convertAndReset()
     }
@@ -44,6 +46,7 @@ class RendererImpl(
 
 private class Board {
 
+    private val log = logger {}
     private val width = VIEW_SIZE.first
     private val height = VIEW_SIZE.second
     private val rows: MutableList<MutableList<Char>> = 1.rangeTo(height).map {
@@ -51,6 +54,7 @@ private class Board {
     }.toMutableList()
     private val skipRowsAboveContent = 3
     private var currentContentRow = 0
+    private val maxContentRow = height - skipRowsAboveContent
 
     fun convertAndReset(): String {
         val result = rows.joinToString("\n") { cols ->
@@ -82,8 +86,19 @@ private class Board {
     }
 
     private fun printSingleRow(text: String) {
-        rows[skipRowsAboveContent + currentContentRow].write(text)
-        currentContentRow++
+        val lines = text.splitMaxWidth(width)
+        if (lines.size > 1) {
+            log.warn { "Oversized row was split into ${lines.size} lines:\n$text" }
+        }
+        lines.forEach { line ->
+            val rowIndex = skipRowsAboveContent + currentContentRow++
+            if (rowIndex > maxContentRow) {
+                log.warn { "Overfull content! row=$rowIndex, maxContentRow=$maxContentRow, text:\n$text" }
+                rows[rows.lastIndex - 2].write("... Overfull content can not be displayed :'-( ...")
+            } else {
+                rows[rowIndex].write(line)
+            }
+        }
     }
 
     private fun MutableList<Char>.writeHr() {

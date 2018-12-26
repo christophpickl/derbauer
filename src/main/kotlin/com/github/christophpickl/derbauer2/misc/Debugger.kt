@@ -1,8 +1,5 @@
 package com.github.christophpickl.derbauer2.misc
 
-import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.christophpickl.derbauer2.model.Model
 import java.awt.BorderLayout
 import java.awt.event.KeyAdapter
@@ -46,9 +43,6 @@ class DebugWindow : JDialog() {
         (caret as DefaultCaret).updatePolicy = DefaultCaret.NEVER_UPDATE
     }
     private val scrollPane = JScrollPane(text)
-    private val mapper = jacksonObjectMapper()
-        .enable(SerializationFeature.INDENT_OUTPUT)
-        .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true)
 
     init {
         title = "Debugger"
@@ -72,11 +66,11 @@ class DebugWindow : JDialog() {
         }
 
     private fun onRefresh() {
-        text.text = mapper.writeValueAsString(Model)
+        text.text = Model.toJson()
     }
 
     private fun open() {
-        val text = mapper.writeValueAsString(Model)
+        val text = Model.toJson()
         val file = Files.createTempFile("derbauer2_model_dump_", ".json").toFile()
         file.writeText(text)
         execute("open", file.absolutePath)

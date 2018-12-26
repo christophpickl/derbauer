@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.military.attack
 
-import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.misc.sleep
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.Renderer

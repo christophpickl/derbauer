@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.endturn.achievement
 
-import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 

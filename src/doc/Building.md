@@ -20,19 +20,39 @@
 
 ## Examples
 
-* house: +people cap
-* "big house": resistince to happenings (fire, flood)
+### Economy/Resources
+
 * farm: +food prod
 * granary: +food cap, +rat protection
 * "big granary": resistince to happenings
-* barrack: +military cap, -military buy mod, +att/def mod
-* wall: +defense
 * marketplace: +gold prod (per people), -trade price modifier
 * mine: +gold prod, +people upcome (needs people to work)
-* castle: +people cap, +food cap
+
+### Military
+
+* barrack: +military cap, -military buy mod, +att/def mod
+* archery: +military cap, -military buy mod, +att/def mod
+* stable: +military cap, -military buy mod, +att/def mod
+* armoury
+* wall: +defense
+* "defence palisades" less likely to get raided by bandits
+
+### Tech (upgrade/feature/action)
+
+* library: +happiness
+* school: +happiness
+
+### Misc
+
+* house: +people cap
+* "big house" (nobility quarters): resistince to happenings (fire, flood)
+* castle: +people cap, +food cap; enables ThroneRoomVisitors-action
 * alchemy: +enable upgrade, -upgrade price
-* pub, school: +happiness
+* pub: +happiness
 * church: +happiness, +happening luck (as praising the lord helps)
+* town hall/center
+* monument 
+* workshop
 
 ## Effects
 
@@ -44,5 +64,6 @@
     * att/def mod
     * raid mod
 * price mod for build/trade/military/upgrade
-* condition/upgrade enabled
+* condition/feature/upgrade/action enabled (which itself might enable military unit...)
 * influences happening
+

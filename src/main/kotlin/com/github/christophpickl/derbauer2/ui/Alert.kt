@@ -5,7 +5,8 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Toolkit
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 import javax.swing.BorderFactory
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -24,9 +25,9 @@ object Alert {
         val container = JPanel()
         container.add(label)
         container.background = Color(80, 190, 90, 70)
-        container.border = BorderFactory.createEmptyBorder(30, 0, 0, 0)
+        container.border = BorderFactory.createEmptyBorder(40, 0, 0, 0)
         layout = BorderLayout()
-        val vgap = 360
+        val vgap = 280
         add(vgap(vgap), BorderLayout.NORTH)
         add(container, BorderLayout.CENTER)
         add(vgap(vgap), BorderLayout.SOUTH)

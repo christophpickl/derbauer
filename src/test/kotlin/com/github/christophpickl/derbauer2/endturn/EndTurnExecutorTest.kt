@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.endturn
 
 import com.github.christophpickl.derbauer2.TestModelListener
-import com.github.christophpickl.derbauer2.build.foodProducerAmountToZero
+import com.github.christophpickl.derbauer2.build._foodProducerAmountToZero
 import com.github.christophpickl.derbauer2.model.Model
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
@@ -15,7 +15,7 @@ class EndTurnExecutorTest {
         Model.food = 1
         Model.people = 2
         Model.player.buildings.houses.amount = 1
-        Model.player.buildings.foodProducerAmountToZero()
+        Model.player.buildings._foodProducerAmountToZero()
 
         val report = EndTurnExecutor.execute()
 
@@ -27,7 +27,7 @@ class EndTurnExecutorTest {
         Model.food = 0
         Model.people = 1
         Model.player.buildings.houses.amount = 1
-        Model.player.buildings.foodProducerAmountToZero()
+        Model.player.buildings._foodProducerAmountToZero()
 
         val report = EndTurnExecutor.execute()
 
