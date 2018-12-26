@@ -37,7 +37,7 @@ build4k {
 
     gitTagPush(nextVersion)
 
-    createGitHubRelease("v$version", jarFile)
+    createGitHubRelease(nextVersion, jarFile)
 
     displayNotification("Release build succeeded ✅")
     say("Hey you! The release build finished successfully.")
@@ -64,21 +64,21 @@ fun Build4k.gitTagPush(nextVersion: Version) {
     printHeader("GIT tag&push")
     git("add", ".")
     git("commit", "-m", "[Auto-Release] Version: $nextVersion")
-    git("tag", "v$nextVersion")
+    git("tag", "$nextVersion")
     git("push")
     git("push", "origin", "--tags")
 }
 
-fun Build4k.createGitHubRelease(tagName: String, uploadFile: File) {
+fun Build4k.createGitHubRelease(version: Version, uploadFile: File) {
     printHeader("GitHub upload")
-    requireGitTagExists(tagName)
+    requireGitTagExists(version.toString())
     github(
         repoOwner = "christophpickl",
         repoName = "derbauer",
         authToken = environmentVariable("GITHUB_TOKEN")
     ) {
-        uploadUrl = createRelease(
-            tagName = tagName,
+        val uploadUrl = createRelease(
+            tagName = version.toString(),
             releaseBody = "Click on the link pointing to the JAR file above, right beneath the Assets title."
         )
         uploadArtifact(
