@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-./gradlew clean test check
+source bin/includes.sh
+
+safeEval "./gradlew clean test check"
