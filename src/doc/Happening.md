@@ -21,3 +21,9 @@
 
 * +/- resource/building/upgrade/military
 * +/- resource prod
+
+## Ideas
+
+* happenings mit selber viel choices (wie action game)
+    - happenings auch waehrend dem turn (evtl durch action triggered)
+    - oder einfach random wenn im menue rumklicken

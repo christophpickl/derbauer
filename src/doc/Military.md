@@ -18,21 +18,37 @@ Properties:
 ## Examples
 
 * "angry farmer": cheap, weak; can be converted back to people
-* soldier: basic unit
-* knight: +att, +att against wildlings
-* archer: +def
+* soldier: basic unit (barracks)
+* knight: +att, +att against wildlings (stable)
+* archer: +def (archery)
 * catapult: +att against empire
+* ram: +att only against buildings/empire, not units
 * trap builder: +def, 0 att!
+* wizard
+* arch mage
 
 ## Attack
 
 * choose target:
     1. wildlings
     1. empire
-* gain **loot** at end
+    1. ... other countries ...?
+        * display relationship (requires diplomacy)
+
+* gain **loot**
     1. wildlings: +food, +people, -gold, 0 land
     1. empire: avg food, -people, +gold, -land
+
+* when can attacks happen?
+    1. during turn as it is now
+    1. only at end of turn
+    1. send troops during turn, but get outcome (see "animation") at end of turn
 
 ## Defend
 
 * if no more military unites => people will fight
+
+## Ideas
+
+* concept of heroes
+* give free money to army (increase temp. props)

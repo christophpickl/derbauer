@@ -18,7 +18,7 @@ class RendererImpl(
     override fun render() {
         val promptText = when (Model.currentView.promptMode) {
             PromptMode.Off -> null
-            PromptMode.Enter -> ">> Hit ENTER <<"
+            PromptMode.Enter -> "Hit ENTER to continue . . ."
             PromptMode.Input -> "$ ${prompt.enteredText}⌷"
         }
         val content = Model.currentView.renderContent
