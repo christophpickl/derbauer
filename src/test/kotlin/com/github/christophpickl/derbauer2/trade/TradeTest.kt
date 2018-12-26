@@ -47,7 +47,7 @@ class TradeTest {
     }
 
     private fun trade(resource: TradeableResource, buySell: BuySell, amount: Int) {
-        TradeController().doTrade(TradableChoice(resource, buySell), amount)
+        TradeController().doTrade(TradeableChoice(resource, buySell), amount)
     }
 
 }

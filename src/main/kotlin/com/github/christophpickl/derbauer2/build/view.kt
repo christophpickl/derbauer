@@ -28,8 +28,7 @@ class BuildView : ChooseView<BuildChoice>(
 data class BuildChoice(
     val building: Building
 ) : Choice {
-    override val label =
-        "${building.labelSingular} ... ${building.buyDescription} (${building.description})"
+    override val label = formatLabel(building)
 }
 
 interface BuildCallback {

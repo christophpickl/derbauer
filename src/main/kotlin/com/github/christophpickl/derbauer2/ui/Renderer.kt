@@ -29,7 +29,7 @@ class RendererImpl(
 
         val board = Board()
         board.printHeader("Day: ${Model.global.day}", info)
-        promptText?.let { board.printPrompt(it) }
+        promptText?.let { board.printPrompt(it) } // first prompt, then content!
         board.printContent(content)
         text.text = board.convertAndReset()
     }
@@ -54,6 +54,7 @@ private class Board {
     }.toMutableList()
     private val skipRowsAboveContent = 3
     private var currentContentRow = 0
+    private val maxContentRow = height - skipRowsAboveContent
 
     fun convertAndReset(): String {
         val result = rows.joinToString("\n") { cols ->
@@ -90,8 +91,13 @@ private class Board {
             log.warn { "Oversized row was split into ${lines.size} lines:\n$text" }
         }
         lines.forEach { line ->
-            rows[skipRowsAboveContent + currentContentRow].write(line)
-            currentContentRow++
+            val rowIndex = skipRowsAboveContent + currentContentRow++
+            if (rowIndex > maxContentRow) {
+                log.warn { "Overfull content! row=$rowIndex, maxContentRow=$maxContentRow, text:\n$text" }
+                rows[rows.lastIndex - 2].write("... Overfull content can not be displayed :'-( ...")
+            } else {
+                rows[rowIndex].write(line)
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.home
 
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.data.Texts
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
@@ -8,11 +9,7 @@ import com.github.christophpickl.derbauer2.ui.view.EnumChoice
 import java.util.LinkedList
 
 class HomeView : ChooseView<HomeChoice>(
-    messages = listOf(
-        "What are we up to today?",
-        "What can I do for you, master?",
-        "Your wish is my command."
-    ),
+    messages = Texts.homeMessages,
     choices = LinkedList<HomeChoice>().apply {
         this += EnumChoice(HomeEnum.Trade, "Trade")
         this += EnumChoice(HomeEnum.Build, "Build")

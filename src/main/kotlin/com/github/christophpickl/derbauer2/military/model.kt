@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer2.military
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.ValueMilitary
-import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.data.ValueMilitary
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.misc.IgnoreStringified
 import com.github.christophpickl.derbauer2.misc.KMath
 import com.github.christophpickl.derbauer2.misc.Stringifier

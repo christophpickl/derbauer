@@ -2,7 +2,9 @@ package com.github.christophpickl.derbauer2.ui.view
 
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
+import com.github.christophpickl.derbauer2.model.Describable
 import com.github.christophpickl.derbauer2.model.Labeled
+import com.github.christophpickl.derbauer2.trade.Buyable
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode
 import com.github.christophpickl.derbauer2.ui.beep
@@ -53,6 +55,11 @@ abstract class ChooseView<C : Choice>(
 
 interface Choice : Labeled {
     fun isZeroChoice(): Boolean = false
+
+    fun formatLabel(pre: String, post: String) = "$pre ... $post"
+
+    fun <B> formatLabel(buyable: B) where B : Labeled, B : Buyable, B : Describable =
+        formatLabel(buyable.label.capitalize(), "${buyable.buyDescription} (${buyable.description})")
 }
 
 class EnumChoice<E : Enum<E>>(

@@ -1,9 +1,9 @@
 package com.github.christophpickl.derbauer2.feature
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.build.FoodCapacityBuilding
 import com.github.christophpickl.derbauer2.build.FoodProducingBuilding
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Model

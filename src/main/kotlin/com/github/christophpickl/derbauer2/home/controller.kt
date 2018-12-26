@@ -9,12 +9,15 @@ import com.github.christophpickl.derbauer2.military.MilitaryView
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.trade.TradeView
+import com.github.christophpickl.derbauer2.ui.Alert
+import com.github.christophpickl.derbauer2.ui.AlertType
 import com.github.christophpickl.derbauer2.upgrade.UpgradeView
 
 class HomeController : HomeCallback {
 
     override fun goEndTurnReport() {
         val report = EndTurnExecutor.execute()
+        Alert.show(AlertType.FullyUpgraded)
         Model.currentView = EndTurnView(report)
     }
 

@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer2.endturn
 
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.data.AsciiArt
 import com.github.christophpickl.derbauer2.model.Model
-import com.github.christophpickl.derbauer2.ui.AsciiArt
 import com.github.christophpickl.derbauer2.ui.Formatter
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.PromptMode

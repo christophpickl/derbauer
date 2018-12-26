@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer2.military
 
 import com.github.christophpickl.derbauer2.ViewCallback
+import com.github.christophpickl.derbauer2.data.Texts
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
@@ -9,11 +10,7 @@ import com.github.christophpickl.derbauer2.ui.view.ChooseView
 import com.github.christophpickl.derbauer2.ui.view.InputView
 
 class MilitaryView : ChooseView<MilitaryChoice>(
-    messages = listOf(
-        "Hey, don't look at me dude.",
-        "Gonna kick some ass!",
-        "Any problem can be solved with brute force and violence."
-    ),
+    messages = Texts.militaryMessages,
     choices = mutableListOf<MilitaryChoice>(
         MilitaryChoice.Attack
     ).apply {
@@ -30,13 +27,14 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     }
 }
 
-sealed class MilitaryChoice(
-    override val label: String
-) : Choice {
-    object Attack : MilitaryChoice("Attack")
-    class Hire(val military: Military) : MilitaryChoice(
-        label = "Hire ${military.label} ... ${military.buyDescription} (${military.description})"
-    )
+sealed class MilitaryChoice : Choice {
+    object Attack : MilitaryChoice() {
+        override val label = "Attack"
+    }
+
+    class Hire(val military: Military) : MilitaryChoice() {
+        override val label = formatLabel(military)
+    }
 }
 
 interface MilitaryCallback {

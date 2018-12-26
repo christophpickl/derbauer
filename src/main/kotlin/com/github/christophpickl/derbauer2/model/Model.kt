@@ -1,5 +1,8 @@
 package com.github.christophpickl.derbauer2.model
 
+import com.fasterxml.jackson.databind.MapperFeature
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.christophpickl.derbauer2.action.Actions
 import com.github.christophpickl.derbauer2.endturn.Notifications
 import com.github.christophpickl.derbauer2.endturn.achievement.Achievements
@@ -8,10 +11,14 @@ import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.ui.view.View
 
+private val mapper = jacksonObjectMapper()
+    .enable(SerializationFeature.INDENT_OUTPUT)
+    .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true)
+
 object Model : ResourceHolder {
 
     lateinit var currentView: View
-    
+
     var player: Player = Player()
     var global: Global = Global()
     var history: History = History()
@@ -33,6 +40,8 @@ object Model : ResourceHolder {
         currentView = HomeView()
     }
 
+    fun toJson() = mapper.writeValueAsString(this)
+    
     override fun toString() = Stringifier.stringify(this)
 
 }

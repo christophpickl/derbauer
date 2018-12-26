@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer2.feature
 
 import com.github.christophpickl.derbauer2.TestModelListener
-import com.github.christophpickl.derbauer2.Values
+import com.github.christophpickl.derbauer2.data.Values
 import com.github.christophpickl.derbauer2.model.Model
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
