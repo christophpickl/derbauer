@@ -15,10 +15,12 @@ build4k {
     title = "DerBauer Release"
     val versionFile = File("src/main/version.txt")
     val artifactId = "DerBauer"
-    val currentVersion = readFromFile<Version2>(versionFile)
-    val nextVersion = currentVersion.incrementPart2()
 
     verifyGitStatus()
+    println()
+    
+    val currentVersion = readFromFile<Version2>(versionFile)
+    val nextVersion = chooseVersion(currentVersion.incrementPart2())
     println()
     println("Current version: $currentVersion")
     println("Next version:    $nextVersion")
@@ -26,6 +28,7 @@ build4k {
     if (!confirm("Do you really want to release this? (This is your final warning)")) {
         exit()
     }
+
     printHeader("Test Build")
     gradlew("clean", "test", "check")
 
@@ -51,7 +54,7 @@ fun Build4k.verifyGitStatus() {
     }
 }
 
-fun Build4k.buildFatJar(artifactId: String, version: Version): File {
+fun Build4k.buildFatJar(artifactId: String, version: Version<*>): File {
     printHeader("Build FatJAR")
     gradlew("shadowJar")
     val jarFile = File("build/libs/$artifactId-$version.jar")
@@ -60,7 +63,7 @@ fun Build4k.buildFatJar(artifactId: String, version: Version): File {
     return jarFile
 }
 
-fun Build4k.gitTagPush(nextVersion: Version) {
+fun Build4k.gitTagPush(nextVersion: Version<*>) {
     printHeader("GIT tag&push")
     git("add", ".")
     git("commit", "-m", "[Auto-Release] Version: $nextVersion")
@@ -69,7 +72,7 @@ fun Build4k.gitTagPush(nextVersion: Version) {
     git("push", "origin", "--tags")
 }
 
-fun Build4k.createGitHubRelease(version: Version, uploadFile: File) {
+fun Build4k.createGitHubRelease(version: Version<*>, uploadFile: File) {
     printHeader("GitHub upload")
     requireGitTagExists(version.toString())
     github(
