@@ -33,7 +33,8 @@ build4k {
     versionFile.writeText(nextVersion.toString())
     println("Written '$nextVersion' to file: ${versionFile.absolutePath}")
 
-    buildFatJar(artifactId, nextVersion)
+    val jarFile = buildFatJar(artifactId, nextVersion)
+    
     gitTagPush(nextVersion)
 
     printHeader("GitHub upload")
