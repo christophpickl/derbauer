@@ -1,10 +1,12 @@
 package com.github.christophpickl.derbauer2.ui
 
+import com.github.christophpickl.derbauer2.misc.splitMaxWidth
 import com.github.christophpickl.derbauer2.model.AbstracteResource
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.UsableEntity
 import com.github.christophpickl.kpotpourri.common.string.times
+import mu.KotlinLogging.logger
 
 interface Renderer {
     fun render()
@@ -44,6 +46,7 @@ class RendererImpl(
 
 private class Board {
 
+    private val log = logger {}
     private val width = VIEW_SIZE.first
     private val height = VIEW_SIZE.second
     private val rows: MutableList<MutableList<Char>> = 1.rangeTo(height).map {
@@ -82,8 +85,14 @@ private class Board {
     }
 
     private fun printSingleRow(text: String) {
-        rows[skipRowsAboveContent + currentContentRow].write(text)
-        currentContentRow++
+        val lines = text.splitMaxWidth(width)
+        if (lines.size > 1) {
+            log.warn { "Oversized row was split into ${lines.size} lines:\n$text" }
+        }
+        lines.forEach { line ->
+            rows[skipRowsAboveContent + currentContentRow].write(line)
+            currentContentRow++
+        }
     }
 
     private fun MutableList<Char>.writeHr() {

@@ -6,8 +6,8 @@ import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
-import com.github.christophpickl.derbauer2.model.ConditionalEntity
-import com.github.christophpickl.derbauer2.model.Descriptable
+import com.github.christophpickl.derbauer2.model.Conditional
+import com.github.christophpickl.derbauer2.model.Describable
 import com.github.christophpickl.derbauer2.model.Entity
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.MultiLabeled
@@ -34,7 +34,7 @@ data class Buildings(
     val totalMilitaryCapacity get() = filterAll<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
 }
 
-interface Building : Entity, MultiLabeled, Amountable, Buyable, Descriptable, Ordered {
+interface Building : Entity, MultiLabeled, Amountable, Buyable, Describable, Ordered {
     var landNeeded: Int
     val totalLandNeeded get() = landNeeded * amount
 }
@@ -88,7 +88,7 @@ class BarrackBuilding : AbstractBuilding(
     labelSingular = "barrack",
     labelPlural = "barracks",
     values = Values.buildings.barrack
-), MilitaryCapacityBuilding, ConditionalEntity {
+), MilitaryCapacityBuilding, Conditional {
     override var militaryCapacity = Values.buildings.barrackMilitaryCapacity
     override fun checkCondition() = Model.features.military.menu.isEnabled()
     override val additionalDescription = "enables new units"
@@ -98,7 +98,7 @@ class CastleBuilding : AbstractBuilding(
     labelSingular = "castle",
     labelPlural = "castles",
     values = Values.buildings.castles
-), FoodCapacityBuilding, PeopleCapacityBuilding, ConditionalEntity {
+), FoodCapacityBuilding, PeopleCapacityBuilding, Conditional {
     override var foodCapacity = Values.buildings.castleFoodCapacity
     override var peopleCapacity = Values.buildings.castlePeopleCapacity
     override fun checkCondition() = Model.features.building.castleEnabled.isEnabled()

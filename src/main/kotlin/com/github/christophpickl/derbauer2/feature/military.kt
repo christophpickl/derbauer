@@ -5,7 +5,7 @@ import com.github.christophpickl.derbauer2.Values
 import com.github.christophpickl.derbauer2.military.Military
 import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.misc.propertiesOfType
-import com.github.christophpickl.derbauer2.model.ConditionalEntity
+import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Model
 
 class MilitaryFeatures {
@@ -33,4 +33,4 @@ class MilitaryCondition<M>(
 ) : AbstractFeature(
     notification = "New military unit available: ${military.label}",
     predicate = predicate
-) where M : Military, M : ConditionalEntity
+) where M : Military, M : Conditional

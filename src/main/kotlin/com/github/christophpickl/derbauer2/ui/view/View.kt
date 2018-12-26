@@ -10,5 +10,6 @@ interface View {
     val promptMode: PromptMode
     val cancelSupport: CancelSupport
 
+    /** Invoked when the router gets an onEnter from the keyboard prompt. */
     fun onCallback(callback: ViewCallback, input: PromptInput)
 }

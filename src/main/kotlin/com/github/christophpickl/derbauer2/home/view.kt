@@ -5,7 +5,7 @@ import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.view.CancelSupport
 import com.github.christophpickl.derbauer2.ui.view.ChooseView
 import com.github.christophpickl.derbauer2.ui.view.EnumChoice
-import java.util.*
+import java.util.LinkedList
 
 class HomeView : ChooseView<HomeChoice>(
     messages = listOf(

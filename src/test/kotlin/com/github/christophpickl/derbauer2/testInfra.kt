@@ -1,5 +1,8 @@
 package com.github.christophpickl.derbauer2
 
+import com.github.christophpickl.derbauer2.action.Actions
+import com.github.christophpickl.derbauer2.endturn.Notifications
+import com.github.christophpickl.derbauer2.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer2.feature.Features
 import com.github.christophpickl.derbauer2.home.HomeView
 import com.github.christophpickl.derbauer2.model.Amountable
@@ -13,7 +16,7 @@ import org.testng.TestListenerAdapter
 
 class TestModelListener : TestListenerAdapter() {
     override fun onTestStart(testContext: ITestResult) {
-        Model.reset()
+        Model._reset()
 
         Model.player.resources.all.forEach { it.amount = 0 }
         Model.people = 1
@@ -24,12 +27,15 @@ class TestModelListener : TestListenerAdapter() {
     }
 }
 
-fun Model.reset() {
+fun Model._reset() {
     currentView = HomeView()
-    global = Global()
     player = Player()
+    global = Global()
     history = History()
     features = Features()
+    achievements = Achievements()
+    actions = Actions()
+    notifications = Notifications()
 }
 
 infix fun Amountable.hasSameAmountAs(expected: Int) {
