@@ -5,8 +5,7 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Toolkit
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 import javax.swing.BorderFactory
 import javax.swing.JLabel
 import javax.swing.JPanel

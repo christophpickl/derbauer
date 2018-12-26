@@ -2,11 +2,11 @@ package com.github.christophpickl.derbauer2.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.data.Values
-import com.github.christophpickl.derbauer2.misc.Stringifier
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.trade.BuySell
 import com.github.christophpickl.derbauer2.trade.LimitedBuyableAmount
 import com.github.christophpickl.derbauer2.trade.Tradeable
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 data class Resources(
     var gold: GoldResource = GoldResource(),

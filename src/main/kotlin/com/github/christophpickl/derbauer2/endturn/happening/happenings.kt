@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer2.endturn.happening
 
 import com.github.christophpickl.derbauer2.data.AsciiArt
-import com.github.christophpickl.derbauer2.misc.randomListOf
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.kpotpourri.common.random.randomListOf
 
 class GoldBagHappening : Happening(
     cooldownDays = 7

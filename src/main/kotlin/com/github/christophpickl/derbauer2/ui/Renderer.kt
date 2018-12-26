@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer2.misc.splitMaxWidth
 import com.github.christophpickl.derbauer2.model.AbstracteResource
 import com.github.christophpickl.derbauer2.model.LimitedAmount
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.UsableEntity
+import com.github.christophpickl.kpotpourri.common.string.splitMaxWidth
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger
 

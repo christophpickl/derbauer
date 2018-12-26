@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.military.attack
 
-import com.github.christophpickl.derbauer2.misc.Stringifier
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 class AttackContext(
     var enemies: Int

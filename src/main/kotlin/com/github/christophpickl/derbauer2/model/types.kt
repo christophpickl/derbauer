@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer2.model
 
-import com.github.christophpickl.derbauer2.misc.IgnoreStringified
+import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
 
 
 interface Entity : Labeled

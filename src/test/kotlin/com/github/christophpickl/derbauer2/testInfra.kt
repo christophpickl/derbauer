@@ -5,12 +5,12 @@ import com.github.christophpickl.derbauer2.endturn.Notifications
 import com.github.christophpickl.derbauer2.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer2.feature.Features
 import com.github.christophpickl.derbauer2.home.HomeView
-import com.github.christophpickl.derbauer2.misc.RandomService
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Global
 import com.github.christophpickl.derbauer2.model.History
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.Player
+import com.github.christophpickl.kpotpourri.common.random.RandomService
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.ITestResult
 import org.testng.TestListenerAdapter
@@ -43,7 +43,7 @@ infix fun Amountable.hasSameAmountAs(expected: Int) {
     assertThat(amount).isEqualTo(expected)
 }
 
-
+// TODO [KPOT] move to kpot test infra
 object RandomServiceMinimum : RandomService {
 
     override fun randomize(base: Int, from: Double, to: Double) =

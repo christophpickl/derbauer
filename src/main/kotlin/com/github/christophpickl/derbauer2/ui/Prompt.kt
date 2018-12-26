@@ -1,13 +1,13 @@
 package com.github.christophpickl.derbauer2.ui
 
-import com.github.christophpickl.derbauer2.misc.Listener
-import com.github.christophpickl.derbauer2.misc.Subscription
 import com.github.christophpickl.derbauer2.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.kpotpourri.common.misc.Dispatcher
+import com.github.christophpickl.kpotpourri.common.misc.DispatcherListener
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 
-interface PromptListener : Listener {
+interface PromptListener : DispatcherListener {
     fun onTextChange(text: String)
     fun onEnter(input: PromptInput)
 }
@@ -34,7 +34,7 @@ enum class PromptMode {
 
 class Prompt : KeyboardListener {
 
-    val subscription = Subscription<PromptListener>()
+    val dispatcher = Dispatcher<PromptListener>()
     var enteredText = ""
 
     override fun onKeyboard(event: KeyboardEvent) {
@@ -44,7 +44,7 @@ class Prompt : KeyboardListener {
             }
             PromptMode.Enter -> {
                 if (event == KeyboardEvent.Enter) {
-                    subscription.broadcast { onEnter(PromptInput.Empty) }
+                    dispatcher.dispatch { onEnter(PromptInput.Empty) }
                 } else {
                     // ignore
                 }
@@ -60,25 +60,25 @@ class Prompt : KeyboardListener {
             KeyboardEvent.Enter -> {
                 val text = enteredText
                 enteredText = ""
-                subscription.broadcast { onEnter(PromptInput.by(text)) }
+                dispatcher.dispatch { onEnter(PromptInput.by(text)) }
             }
             KeyboardEvent.Backspace -> {
                 if (enteredText.isEmpty()) {
                     // ignore
                 } else {
                     enteredText = enteredText.dropLast(1)
-                    subscription.broadcast { onTextChange(enteredText) }
+                    dispatcher.dispatch { onTextChange(enteredText) }
                 }
             }
             is KeyboardEvent.Input -> {
                 enteredText = "$enteredText${event.digit}"
-                subscription.broadcast { onTextChange(enteredText) }
+                dispatcher.dispatch { onTextChange(enteredText) }
             }
         }.enforceWhenBranches()
     }
 }
 
-interface KeyboardListener : Listener {
+interface KeyboardListener : DispatcherListener {
     fun onKeyboard(event: KeyboardEvent)
 }
 
@@ -90,19 +90,19 @@ sealed class KeyboardEvent {
 
 class Keyboard : KeyAdapter() {
 
-    val subscription = Subscription<KeyboardListener>()
+    val dispatcher = Dispatcher<KeyboardListener>()
 
     override fun keyPressed(e: KeyEvent) {
         if (e.keyCode == KeyEvent.VK_ENTER) {
-            subscription.broadcast { onKeyboard(KeyboardEvent.Enter) }
+            dispatcher.dispatch { onKeyboard(KeyboardEvent.Enter) }
         } else if (e.keyCode == KeyEvent.VK_BACK_SPACE) {
-            subscription.broadcast { onKeyboard(KeyboardEvent.Backspace) }
+            dispatcher.dispatch { onKeyboard(KeyboardEvent.Backspace) }
         }
     }
 
     override fun keyTyped(e: KeyEvent) {
         if (e.isDigit) {
-            subscription.broadcast { onKeyboard(KeyboardEvent.Input(e.keyChar.toString().toInt())) }
+            dispatcher.dispatch { onKeyboard(KeyboardEvent.Input(e.keyChar.toString().toInt())) }
         }
     }
 }

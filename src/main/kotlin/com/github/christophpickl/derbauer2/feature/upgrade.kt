@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.build.FoodCapacityBuilding
 import com.github.christophpickl.derbauer2.build.FoodProducingBuilding
 import com.github.christophpickl.derbauer2.data.Values
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.amountsSum
 import com.github.christophpickl.derbauer2.upgrade.Upgrade
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 class UpgradeFeatures {
 

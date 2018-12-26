@@ -1,6 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+object Versions {
+    val kpotpourri = "2.0"
+}
+
 plugins {
     kotlin("jvm") version "1.3.11"
     idea
@@ -18,12 +22,14 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib", "1.3.11"))
-    implementation(kotlin("reflect", "1.3.11"))
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
 
     implementation("io.github.microutils:kotlin-logging:1.6.20")
     implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("com.github.christophpickl.kpotpourri:logback4k:1.12")
+    implementation("com.github.christophpickl.kpotpourri:common4k:${Versions.kpotpourri}")
+    implementation("com.github.christophpickl.kpotpourri:logback4k:${Versions.kpotpourri}")
+    implementation("com.github.christophpickl.kpotpourri:swing4k:${Versions.kpotpourri}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
 
     testImplementation("org.testng:testng:6.14.3")

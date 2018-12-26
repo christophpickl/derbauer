@@ -8,8 +8,8 @@ import com.github.christophpickl.derbauer2.endturn.Notifications
 import com.github.christophpickl.derbauer2.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer2.feature.Features
 import com.github.christophpickl.derbauer2.home.HomeView
-import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.ui.view.View
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 private val mapper = jacksonObjectMapper()
     .enable(SerializationFeature.INDENT_OUTPUT)

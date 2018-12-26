@@ -1,9 +1,11 @@
 package com.github.christophpickl.derbauer2.misc
 
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.kpotpourri.common.process.ProcessExecuterImpl
 import java.awt.BorderLayout
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.io.File
 import java.nio.file.Files
 import javax.swing.JButton
 import javax.swing.JDialog
@@ -73,7 +75,7 @@ class DebugWindow : JDialog() {
         val text = Model.toJson()
         val file = Files.createTempFile("derbauer2_model_dump_", ".json").toFile()
         file.writeText(text)
-        execute("open", file.absolutePath)
+        ProcessExecuterImpl.execute("open", listOf(file.absolutePath), cwd = File("."))
     }
 
 }

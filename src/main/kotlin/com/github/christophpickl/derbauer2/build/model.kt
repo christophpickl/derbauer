@@ -3,8 +3,6 @@ package com.github.christophpickl.derbauer2.build
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.data.ValueBuilding
 import com.github.christophpickl.derbauer2.data.Values
-import com.github.christophpickl.derbauer2.misc.Stringifier
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Describable
@@ -15,6 +13,8 @@ import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 data class Buildings(
     var houses: HouseBuilding = HouseBuilding(),

@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer2.feature
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer2.misc.OncePredicate
-import com.github.christophpickl.derbauer2.misc.OnceResult
-import com.github.christophpickl.derbauer2.misc.Stringifier
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.kpotpourri.common.misc.OncePredicate
+import com.github.christophpickl.kpotpourri.common.misc.OnceResult
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 class Features {
     val building = BuildingFeatures()

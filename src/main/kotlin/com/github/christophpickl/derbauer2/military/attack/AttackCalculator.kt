@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer2.military.attack
 
-import com.github.christophpickl.derbauer2.misc.RandomService
-import com.github.christophpickl.derbauer2.misc.RealRandomService
 import com.github.christophpickl.derbauer2.model.Model
+import com.github.christophpickl.kpotpourri.common.random.RandomService
+import com.github.christophpickl.kpotpourri.common.random.RealRandomService
 import mu.KotlinLogging
 import kotlin.random.Random
 

@@ -3,10 +3,6 @@ package com.github.christophpickl.derbauer2.military
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.data.ValueMilitary
 import com.github.christophpickl.derbauer2.data.Values
-import com.github.christophpickl.derbauer2.misc.IgnoreStringified
-import com.github.christophpickl.derbauer2.misc.KMath
-import com.github.christophpickl.derbauer2.misc.Stringifier
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Describable
@@ -17,6 +13,10 @@ import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
 import com.github.christophpickl.derbauer2.trade.Buyable
+import com.github.christophpickl.kpotpourri.common.math.KMath
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
+import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
+import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 data class Militaries(
     var soldiers: SoldierMilitary = SoldierMilitary(),

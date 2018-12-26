@@ -3,11 +3,11 @@ package com.github.christophpickl.derbauer2.endturn.achievement
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.ViewCallback
 import com.github.christophpickl.derbauer2.data.AsciiArt
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.ui.PromptInput
 import com.github.christophpickl.derbauer2.ui.view.InfoView
 import com.github.christophpickl.derbauer2.ui.view.View
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 class Achievements {
     val trade1 = Trade1Achievement()

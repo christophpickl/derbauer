@@ -2,7 +2,6 @@ package com.github.christophpickl.derbauer2.action
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer2.data.Values
-import com.github.christophpickl.derbauer2.misc.propertiesOfType
 import com.github.christophpickl.derbauer2.model.Conditional
 import com.github.christophpickl.derbauer2.model.Describable
 import com.github.christophpickl.derbauer2.model.Entity
@@ -10,6 +9,7 @@ import com.github.christophpickl.derbauer2.model.Model
 import com.github.christophpickl.derbauer2.model.Ordered
 import com.github.christophpickl.derbauer2.model.filterConditional
 import com.github.christophpickl.derbauer2.model.ordered
+import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 interface Action : Entity, Conditional, Describable, Ordered {
     fun onSpecificAction(on: OnSpecificAction)
