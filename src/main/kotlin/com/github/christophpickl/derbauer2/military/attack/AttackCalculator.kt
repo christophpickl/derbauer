@@ -1,12 +1,14 @@
 package com.github.christophpickl.derbauer2.military.attack
 
-import com.github.christophpickl.derbauer2.misc.Rand
+import com.github.christophpickl.derbauer2.misc.RandomService
+import com.github.christophpickl.derbauer2.misc.RealRandomService
 import com.github.christophpickl.derbauer2.model.Model
 import mu.KotlinLogging
 import kotlin.random.Random
 
 class AttackCalculator(
-    private val context: AttackContext
+    private val context: AttackContext,
+    private val random: RandomService = RealRandomService
 ) {
 
     private val log = KotlinLogging.logger {}
@@ -32,8 +34,8 @@ class AttackCalculator(
         context.attackOver = true
         Model.history.attacked++
         return if (won) {
-            val goldEarning = Rand.randomize(context.originalEnemies / 10, 0.5, 1.5)
-            val landEarning = Rand.randomize(context.originalEnemies / 5, 0.3, 2.5)
+            val goldEarning = random.randomize(context.originalEnemies / 10, 0.5, 1.5)
+            val landEarning = random.randomize(context.originalEnemies / 5, 0.3, 2.5)
             Model.gold += goldEarning
             Model.land += landEarning
             AttackResult.Won(

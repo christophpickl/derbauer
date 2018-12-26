@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer2.endturn
 
+import com.github.christophpickl.derbauer2.RandomServiceMinimum
 import com.github.christophpickl.derbauer2.TestModelListener
 import com.github.christophpickl.derbauer2.build._foodProducerAmountToZero
 import com.github.christophpickl.derbauer2.model.Model
@@ -17,7 +18,7 @@ class EndTurnExecutorTest {
         Model.player.buildings.houses.amount = 1
         Model.player.buildings._foodProducerAmountToZero()
 
-        val report = EndTurnExecutor.execute()
+        val report = execute()
 
         assertThat(report.food.change).isEqualTo(-1)
         assertThat(Model.food).isEqualTo(0)
@@ -29,10 +30,12 @@ class EndTurnExecutorTest {
         Model.player.buildings.houses.amount = 1
         Model.player.buildings._foodProducerAmountToZero()
 
-        val report = EndTurnExecutor.execute()
+        val report = execute()
 
         assertThat(report.people.change).isNegative()
         assertThat(Model.people).isLessThan(10)
     }
+
+    private fun execute() = EndTurnExecutor(RandomServiceMinimum).execute()
 
 }

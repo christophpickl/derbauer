@@ -5,6 +5,7 @@ import com.github.christophpickl.derbauer2.endturn.Notifications
 import com.github.christophpickl.derbauer2.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer2.feature.Features
 import com.github.christophpickl.derbauer2.home.HomeView
+import com.github.christophpickl.derbauer2.misc.RandomService
 import com.github.christophpickl.derbauer2.model.Amountable
 import com.github.christophpickl.derbauer2.model.Global
 import com.github.christophpickl.derbauer2.model.History
@@ -41,3 +42,17 @@ fun Model._reset() {
 infix fun Amountable.hasSameAmountAs(expected: Int) {
     assertThat(amount).isEqualTo(expected)
 }
+
+
+object RandomServiceMinimum : RandomService {
+
+    override fun randomize(base: Int, from: Double, to: Double) =
+        (base * from).toInt()
+
+    override fun nextInt(fromInclusive: Int, toExclusive: Int) =
+        fromInclusive
+
+    override fun nextDouble(fromInclusive: Double, toExclusive: Double) =
+        fromInclusive
+}
+

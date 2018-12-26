@@ -3,11 +3,24 @@ package com.github.christophpickl.derbauer2.misc
 import java.util.*
 import kotlin.random.Random
 
-object Rand {
-
-    fun randomize(int: Int, from: Double, to: Double) = (int * Random.nextDouble(from, to)).toInt()
-
+interface RandomService {
+    fun nextInt(fromInclusive: Int, toExclusive: Int): Int
+    fun nextDouble(fromInclusive: Double, toExclusive: Double): Double
+    fun randomize(base: Int, from: Double, to: Double): Int
 }
+
+object RealRandomService : RandomService {
+
+    override fun randomize(base: Int, from: Double, to: Double) =
+        (base * Random.nextDouble(from, to)).toInt()
+
+    override fun nextInt(fromInclusive: Int, toExclusive: Int) =
+        Random.nextInt(fromInclusive, toExclusive)
+
+    override fun nextDouble(fromInclusive: Double, toExclusive: Double) =
+        Random.nextDouble(fromInclusive, toExclusive)
+}
+
 
 fun <E> randomListOf(first: Pair<E, Int>, vararg elements: Pair<E, Int>): RandomList<E> =
     RandomListImpl(mutableListOf(first).apply { addAll(elements.toList()) })

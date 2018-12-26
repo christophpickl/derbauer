@@ -15,8 +15,10 @@ import com.github.christophpickl.derbauer2.upgrade.UpgradeView
 
 class HomeController : HomeCallback {
 
+    private val endTurn = EndTurnExecutor()
+    
     override fun goEndTurnReport() {
-        val report = EndTurnExecutor.execute()
+        val report = endTurn.execute()
         Alert.show(AlertType.FullyUpgraded)
         Model.currentView = EndTurnView(report)
     }
