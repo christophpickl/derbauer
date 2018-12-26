@@ -1,8 +1,6 @@
 
 # major
 
-* travis
-* create new kpot module, containing /bin kts scripts (use gradle to download and unzip in /bin)
 * (1) rename "people" => "peasants"
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send
@@ -11,6 +9,7 @@
 
 # minor
 
+* create new kpot module, containing /bin kts scripts (use gradle to download and unzip in /bin)
 * (4) ! MILIATRY: getting attacked end of turn
 * (3) + TRADE: je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
 * (6) MILIATRY: attack target: { wildlings, the empire }
