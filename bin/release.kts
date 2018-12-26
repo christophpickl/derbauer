@@ -1,15 +1,8 @@
 #!/usr/bin/env kscript
-
-@file:DependsOn("com.github.christophpickl.kpotpourri:build4k:SNAPSHOT")
-@file:DependsOn("com.github.christophpickl.kpotpourri:common4k:SNAPSHOT")
-@file:DependsOn("com.github.christophpickl.kpotpourri:logback4k:SNAPSHOT")
+@file:DependsOn("com.github.christophpickl.kpotpourri:build4k:2.2")
 @file:CompilerOpts("-jvm-target 1.8")
-
 import java.io.File
-import com.github.christophpickl.kpotpourri.build.build4k
-import com.github.christophpickl.kpotpourri.build.Build4k
-import com.github.christophpickl.kpotpourri.build.Version
-import com.github.christophpickl.kpotpourri.build.Version2
+import com.github.christophpickl.kpotpourri.build.*
 
 build4k {
     title = "DerBauer Release"
@@ -21,6 +14,7 @@ build4k {
     
     val currentVersion = readFromFile<Version2>(versionFile)
     val nextVersion = chooseVersion(currentVersion.incrementPart2())
+
     println()
     println("Current version: $currentVersion")
     println("Next version:    $nextVersion")
