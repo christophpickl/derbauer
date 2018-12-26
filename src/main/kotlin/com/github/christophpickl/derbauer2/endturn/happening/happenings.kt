@@ -19,8 +19,8 @@ class GoldBagHappening : Happening(
         val message = """
             You were lucky.
             
-            While walking through the forrest you found a little, 
-            dirty bag on the path and found some coins in it.""".trimIndent()
+            While walking through the forrest you found a little, dirty bag 
+            on the ground next to a big tree. You open it up and ... It contains gold coins!""".trimIndent()
         return "$message\n\n" +
             "${AsciiArt.goldBag}\n\n" +
             "+$bagSize Gold"
