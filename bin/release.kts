@@ -34,7 +34,7 @@ println()
 println("Building fat JAR.")
 execute("./gradlew", "shadowJar")
 
-val jarFile = File("build/libs/DerBauer2-${nextVersion}.jar")
+val jarFile = File("build/libs/DerBauer-${nextVersion}.jar")
 require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
 println("Created fat JAR at: ${jarFile.absolutePath}")
 

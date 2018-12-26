@@ -11,7 +11,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "4.0.3"
 }
 
-val artifactName = "DerBauer2"
+val artifactName = "DerBauer"
 val localProjectVersion = file("src/main/version.txt").readText().trim()
 version = localProjectVersion
 
@@ -53,7 +53,7 @@ tasks.withType(Test::class.java).all {
 
 tasks.withType(Jar::class.java).all {
     manifest {
-        attributes["Main-Class"] = "com.github.christophpickl.derbauer2.DerBauer2"
+        attributes["Main-Class"] = "com.github.christophpickl.derbauer.DerBauer"
     }
 }
 

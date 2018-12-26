@@ -53,4 +53,4 @@ safeEval "curl \
     --header \"Content-Type: application/jar\" \
     --request POST \
     --data-binary @${UPLOAD_FILE} \
-    $UPLOAD_URL?name=DerBauer2-${VERSION}.jar"
+    $UPLOAD_URL?name=DerBauer-${VERSION}.jar"
