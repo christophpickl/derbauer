@@ -25,7 +25,7 @@ build4k {
     println("Current version: $currentVersion")
     println("Next version:    $nextVersion")
     println()
-    if (!confirm("Do you really want to release this? (This is your final warning)")) {
+    if (!confirm("Do you really want to release this?\nThis is your final warning!")) {
         exit()
     }
 
