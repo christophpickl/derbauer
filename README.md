@@ -1,10 +1,15 @@
-# Der Bauer II
+[![Kotlin](https://img.shields.io/badge/kotlin-1.3.11-blue.svg)](http://kotlinlang.org)
+[![Travis](https://img.shields.io/travis/christophpickl/derbauer.svg)](https://travis-ci.org/christophpickl/derbauer)
+[![Issues](https://img.shields.io/github/issues/christophpickl/derbauer.svg)](https://github.com/christophpickl/derbauer/issues?q=is%3Aopen)
+[![Apache License V.2](https://img.shields.io/badge/license-Apache%20V.2-blue.svg)](https://github.com/christophpickl/derbauer/blob/master/LICENSE)
+
+# Der Bauer
 
 A text-based, round-based, old-school, medieval strategy game written in [Kotlin](http://kotlinlang.org/).
 
 [Download the latest version](https://github.com/christophpickl/derbauer/releases/latest) by saving the JAR file and double-click on it (requires [Java](https://www.java.com/download/) installed).
 
-![derbauer-1.1.png](https://raw.githubusercontent.com/christophpickl/derbauer/master/src/doc/derbauer-1.1.png "DerBauer2 Screenshot")
+![derbauer-1.1.png](https://raw.githubusercontent.com/christophpickl/derbauer/master/src/doc/derbauer-1.1.png "DerBauer Screenshot")
 
 Basic concepts:
 
