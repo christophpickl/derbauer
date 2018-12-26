@@ -10,7 +10,8 @@ class Trade1Achievement(
     override fun execute() {
         Model.gold += Values.achievements.trade1GoldReward
         Model.player.resources.allTradeables.forEach {
-            it.priceModifier -= Values.achievements.trade1PriceModifier
+            it.buyPriceModifier -= Values.achievements.trade1PriceModifier
+            it.sellPriceModifier -= Values.achievements.trade1PriceModifier
         }
     }
 }

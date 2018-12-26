@@ -31,7 +31,7 @@ class ValuesBuildings {
         landNeeded = 1,
         buyPrice = 50
     )
-    val granaryFoodCapacity = 100
+    val granaryFoodCapacity = 250
     val barrack = ValueBuilding(
         amount = if (CHEAT_MODE) 0 else 0,
         landNeeded = 1,
@@ -41,10 +41,10 @@ class ValuesBuildings {
     val castles = ValueBuilding(
         amount = if (CHEAT_MODE) 0 else 0,
         landNeeded = 4,
-        buyPrice = 200
+        buyPrice = 300
     )
-    val castlePeopleCapacity = 50
-    val castleFoodCapacity = 500
+    val castlePeopleCapacity = 80
+    val castleFoodCapacity = 800
 }
 
 class ValuesMilitaries {
@@ -70,7 +70,7 @@ class ValuesMilitaries {
 }
 
 class ValuesUpgrades {
-    val farmProductivityBuyPrice = 300
+    val farmProductivityBuyPrice = 500
     val increasePriceAfterBought = 2.0
     val farmProductionIncrease = 1
 
@@ -79,7 +79,7 @@ class ValuesUpgrades {
 
 class ValuesAchievements {
     val trade1HistoryNeed = 10
-    val trade1PriceModifier = 0.1
+    val trade1PriceModifier = 0.08
     val trade1GoldReward = 300
     val attack1HistoryNeed = 5
     val attack1AttackModifier = 0.2

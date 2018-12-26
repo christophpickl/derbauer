@@ -1,6 +1,7 @@
 
 # major
 
+* seperate screen when notification (good news)
 * (1) rename "people" => "peasants"
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send

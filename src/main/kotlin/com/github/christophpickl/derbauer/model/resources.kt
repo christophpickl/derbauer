@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.christophpickl.derbauer.build.PeopleCapacityBuilding
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.trade.BuySell
 import com.github.christophpickl.derbauer.trade.LimitedBuyableAmount
@@ -24,10 +25,11 @@ interface Resource : Entity, Amountable, MultiLabeled, Ordered
 
 interface TradeableResource : Resource, Tradeable {
     val sellPossible: Int
-    var priceModifier: Double
+    var buyPriceModifier: Double
+    var sellPriceModifier: Double
 
-    val effectiveBuyPrice get() = (buyPrice * priceModifier).toInt()
-    val effectiveSellPrice get() = (sellPrice * priceModifier).toInt()
+    val effectiveBuyPrice get() = (buyPrice * buyPriceModifier).toInt()
+    val effectiveSellPrice get() = (sellPrice * sellPriceModifier).toInt()
 
     override val buyDescription get() = "${effectivePriceFor(BuySell.Buy)} gold"
     override val sellDescription get() = "${effectivePriceFor(BuySell.Sell)} gold"
@@ -57,12 +59,12 @@ class FoodResource : AbstracteResource(
     labelPlural = "food",
     amount = Values.resources.food
 ), LimitedBuyableAmount, TradeableResource {
-
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
-    override var priceModifier = 1.0
     override var buyPrice: Int = Values.resources.foodBuyPrice
     override var sellPrice: Int = Values.resources.foodSellPrice
     override val sellPossible get() = Math.max(0, amount)
+    override var buyPriceModifier = 1.0
+    override var sellPriceModifier = 1.0
     override fun toString() = Stringifier.stringify(this)
 }
 
@@ -79,7 +81,7 @@ class PeopleResource : AbstracteResource(
     labelPlural = "people",
     amount = Values.resources.people
 ), LimitedAmount {
-    override val limitAmount get() = Model.player.buildings.houses.totalPeopleCapacity
+    override val limitAmount get() = Model.player.buildings.filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
     override fun toString() = Stringifier.stringify(this)
 }
 
@@ -89,10 +91,11 @@ class LandResource : AbstracteResource(
     amount = Values.resources.land
 ), UsableEntity, TradeableResource {
     override val usedAmount get() = Model.player.buildings.totalLandNeeded
-    override var priceModifier = 1.0
     override var buyPrice: Int = Values.resources.landBuyPrice
     override var sellPrice: Int = Values.resources.landSellPrice
     override val sellPossible get() = Model.player.resources.land.unusedAmount
+    override var buyPriceModifier = 1.0
+    override var sellPriceModifier = 1.0
     override fun toString() = Stringifier.stringify(this)
 }
 
