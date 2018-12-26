@@ -34,11 +34,10 @@ build4k {
     println("Written '$nextVersion' to file: ${versionFile.absolutePath}")
 
     val jarFile = buildFatJar(artifactId, nextVersion)
-    
+
     gitTagPush(nextVersion)
 
-    printHeader("GitHub upload")
-    execute("./bin/upload.sh", listOf("v${nextVersion}", jarFile.absolutePath))
+    createGitHubRelease("v$version", jarFile)
 
     displayNotification("Release build succeeded ✅")
     say("Hey you! The release build finished successfully.")
@@ -56,7 +55,7 @@ fun Build4k.buildFatJar(artifactId: String, version: Version): File {
     printHeader("Build FatJAR")
     gradlew("shadowJar")
     val jarFile = File("build/libs/$artifactId-$version.jar")
-    require(jarFile.exists()) { "JAR file does not exist at: ${jarFile.absolutePath}" }
+    require(jarFile.exists() && jarFile.isFile) { "JAR file does not exist at: ${jarFile.absolutePath}" }
     println("Created Fat JAR at: ${jarFile.absolutePath}")
     return jarFile
 }
@@ -68,4 +67,24 @@ fun Build4k.gitTagPush(nextVersion: Version) {
     git("tag", "v$nextVersion")
     git("push")
     git("push", "origin", "--tags")
+}
+
+fun Build4k.createGitHubRelease(tagName: String, uploadFile: File) {
+    printHeader("GitHub upload")
+    requireGitTagExists(tagName)
+    github(
+        repoOwner = "christophpickl",
+        repoName = "derbauer",
+        authToken = environmentVariable("GITHUB_TOKEN")
+    ) {
+        uploadUrl = createRelease(
+            tagName = tagName,
+            releaseBody = "Click on the link pointing to the JAR file above, right beneath the Assets title."
+        )
+        uploadArtifact(
+            uploadUrl = uploadUrl,
+            contentType = "application/jar",
+            file = uploadFile
+        )
+    }
 }
