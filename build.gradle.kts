@@ -1,14 +1,16 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 object Versions {
-    val kpotpourri = "2.1"
+    val kpotpourri = "2.2"
 }
 
 plugins {
     kotlin("jvm") version "1.3.11"
     idea
     id("com.github.johnrengelman.shadow") version "4.0.3"
+    id("com.github.ben-manes.versions") version "0.20.0"
 }
 
 val artifactName = "DerBauer"
@@ -26,7 +28,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
-    implementation("io.github.microutils:kotlin-logging:1.6.20")
+    implementation("io.github.microutils:kotlin-logging:1.6.22")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.github.christophpickl.kpotpourri:common4k:${Versions.kpotpourri}")
     implementation("com.github.christophpickl.kpotpourri:logback4k:${Versions.kpotpourri}")
@@ -61,4 +63,20 @@ tasks.withType(ShadowJar::class.java).all {
     baseName = artifactName
     classifier = ""
     version = localProjectVersion
+}
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc")
+                    .map { Regex("(?i).*[.-]$it[.\\d-]*") }
+                    .any { it.matches(candidate.version) }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
+    }
+    checkForGradleUpdate = true
 }
