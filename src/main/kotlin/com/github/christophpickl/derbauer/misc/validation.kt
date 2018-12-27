@@ -12,7 +12,7 @@ fun validateChoice(validations: List<ChoiceValidation>): Boolean {
         log.trace { "validation succeeded" }
         return true
     }
-    log.trace { "validation failed: ${failedValidations.joinToString() { it.alertType.message }}" }
+    log.trace { "validation failed: ${failedValidations.joinToString { it.alertType.message }}" }
     // showing only first is good enough :) dont bother user too much
     Alert.show(failedValidations.first().alertType)
     return false

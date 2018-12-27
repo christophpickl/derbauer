@@ -33,7 +33,7 @@ interface TradeableResource : Resource, Tradeable {
 
     override val buyDescription get() = "${effectivePriceFor(BuySell.Buy)} gold"
     override val sellDescription get() = "${effectivePriceFor(BuySell.Sell)} gold"
-    
+
     fun effectivePriceFor(buySell: BuySell): Int = when (buySell) {
         BuySell.Buy -> effectiveBuyPrice
         BuySell.Sell -> effectiveSellPrice
@@ -81,7 +81,8 @@ class PeopleResource : AbstracteResource(
     labelPlural = "people",
     amount = Values.resources.people
 ), LimitedAmount {
-    override val limitAmount get() = Model.player.buildings.filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
+    override val limitAmount
+        get() = Model.player.buildings.filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
     override fun toString() = Stringifier.stringify(this)
 }
 

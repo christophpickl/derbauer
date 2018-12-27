@@ -82,33 +82,13 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
     }
     checkForGradleUpdate = true
 }
-/*
-first run: $ ./gradlew detektGenerateConfig
 
+// implictly wires itself to "check", or execute manually: ./gradlew detekt
 detekt {
-    toolVersion = "[version]"                             // Version of the Detekt CLI that will be used. When unspecified the latest detekt version found will be used. Override to stay on the same version.
-    input = files(                                        // The directories where detekt looks for input files. Defaults to `files("src/main/java", "src/main/kotlin")`.
+    toolVersion = "1.0.0-RC12"
+    config = files("src/detekt-config.yml")
+    input = files(
         "src/main/kotlin",
-        "gensrc/main/kotlin"
+        "src/test/kotlin"
     )
-    parallel = false                                      // Runs detekt in parallel. Can lead to speedups in larger projects. `false` by default.
-    config = files("path/to/config.yml")                  // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
-    baseline = file("path/to/baseline.xml")               // Specifying a baseline file. All findings stored in this file in subsequent runs of detekt.
-    filters = ''                                          // Regular expression of paths that should be excluded separated by `;`.
-    disableDefaultRuleSets = false                        // Disables all default detekt rulesets and will only run detekt with custom rules defined in `plugins`. `false` by default.
-    plugins = "other/optional/ruleset.jar"                // Additional jar file containing custom detekt rules.
-    debug = false                                         // Adds debug output during task execution. `false` by default.
-    reports {
-        xml {
-            enabled = true                                // Enable/Disable XML report (default: true)
-            destination = file("build/reports/detekt.xml")  // Path where XML report will be stored (default: `build/reports/detekt/detekt.xml`)
-        }
-        html {
-            enabled = true                                // Enable/Disable HTML report (default: true)
-            destination = file("build/reports/detekt.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
-        }
-    }
 }
-
-
- */

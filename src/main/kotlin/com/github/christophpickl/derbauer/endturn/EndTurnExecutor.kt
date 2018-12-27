@@ -42,7 +42,10 @@ class EndTurnExecutor(
 
         calc = limitCalcMax(calc, Model.food, Model.totalFoodCapacity)
         calc = limitCalcMin(calc, Model.food)
-        log.trace { "Food calc: $calc (prod: ${Model.player.buildings.totalFoodProduction}, cap: ${Model.totalFoodCapacity}, people: ${Model.people})" }
+        log.trace {
+            "Food calc: $calc (prod: ${Model.player.buildings.totalFoodProduction}, " +
+                "cap: ${Model.totalFoodCapacity}, people: ${Model.people})"
+        }
         return calc
     }
 
@@ -68,7 +71,10 @@ class EndTurnExecutor(
             calc -= random.nextInt(2, 6)
         }
         calc = limitCalcMax(calc, Model.people, Model.totalPeopleCapacity)
-        log.trace { "People calc: $calc (people=${Model.people}, food=${Model.food}, reproRate=${Model.global.reproductionRate}, cap=${Model.totalPeopleCapacity})" }
+        log.trace {
+            "People calc: $calc (people=${Model.people}, food=${Model.food}, " +
+                "reproRate=${Model.global.reproductionRate}, cap=${Model.totalPeopleCapacity})"
+        }
         return calc
     }
 

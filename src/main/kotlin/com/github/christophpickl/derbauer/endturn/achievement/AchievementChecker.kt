@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer.ui.view.InfoView
 import com.github.christophpickl.derbauer.ui.view.View
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
+@Suppress("unused")
 class Achievements {
     val trade1 = Trade1Achievement()
     val attack1 = Attack1Achievement()

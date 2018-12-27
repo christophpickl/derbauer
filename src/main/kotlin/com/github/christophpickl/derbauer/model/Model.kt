@@ -40,7 +40,7 @@ object Model : ResourceHolder {
         currentView = HomeView()
     }
 
-    fun toJson() = mapper.writeValueAsString(this)
+    fun toJson(): String = mapper.writeValueAsString(this)
     
     override fun toString() = Stringifier.stringify(this)
 

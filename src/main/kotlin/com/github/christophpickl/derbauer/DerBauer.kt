@@ -16,32 +16,39 @@ import javax.swing.SwingUtilities
 val CHEAT_MODE = System.getProperty("derbauer.cheatmode") != null
 
 object DerBauer {
+
+    private val exceptionHandler = AbortingExceptionHandler()
+    
     @JvmStatic
+    @Suppress("TooGenericExceptionCaught")
     fun main(args: Array<String>) {
-        initLogging()
-        val exceptionHandler = AbortingExceptionHandler()
         try {
-            Model.currentView = HomeView()
-
-            val prompt = Prompt()
-            val text = MainTextArea()
-            val keyboard = Keyboard()
-
-            val renderer = RendererImpl(text, prompt)
-            val engine = Router(renderer)
-
-            text.addKeyListener(keyboard)
-            text.addKeyListener(Debugger.asKeyListener())
-            keyboard.dispatcher.add(prompt)
-            prompt.dispatcher.add(engine)
-
-            renderer.render()
-            SwingUtilities.invokeLater {
-                Thread.currentThread().uncaughtExceptionHandler = exceptionHandler
-                MainFrame().buildAndShow(text)
-            }
-        } catch(e : Exception) {
+            initLogging()
+            startDerBauer()
+        } catch (e: Exception) {
             exceptionHandler.uncaughtException(Thread.currentThread(), e)
+        }
+    }
+
+    private fun startDerBauer() {
+        Model.currentView = HomeView()
+
+        val prompt = Prompt()
+        val text = MainTextArea()
+        val keyboard = Keyboard()
+
+        val renderer = RendererImpl(text, prompt)
+        val engine = Router(renderer)
+
+        text.addKeyListener(keyboard)
+        text.addKeyListener(Debugger.asKeyListener())
+        keyboard.dispatcher.add(prompt)
+        prompt.dispatcher.add(engine)
+
+        renderer.render()
+        SwingUtilities.invokeLater {
+            Thread.currentThread().uncaughtExceptionHandler = exceptionHandler
+            MainFrame().buildAndShow(text)
         }
     }
 

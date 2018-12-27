@@ -26,7 +26,7 @@ data class Buildings(
     @get:JsonIgnore val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
 
     inline fun <reified T : Building> filterAll() = all.filterIsInstance<T>()
-    
+
     val totalLandNeeded get() = all.sumBy { it.totalLandNeeded }
     val totalFoodCapacity get() = filterAll<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
     val totalFoodProduction get() = filterAll<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
@@ -125,7 +125,12 @@ abstract class AbstractBuilding(
             if (this is FoodProducingBuilding) "produces +$foodProduction food" else null,
             if (this is MilitaryCapacityBuilding) "stores +$militaryCapacity units" else null,
             additionalDescription
-        ).also { require(it.isNotEmpty()) { "No description could be computed for ${this::class.simpleName}!" } }.joinToString(" and ")
+        ).also {
+            require(it.isNotEmpty()) {
+                "No description could be computed for ${this::class.simpleName}! " +
+                    "(not of any known building type, nor an additional description provided)"
+            }
+        }.joinToString(" and ")
 
     override val buyDescription get() = "$buyPrice gold and $landNeeded land"
     override fun toString() = Stringifier.stringify(this)

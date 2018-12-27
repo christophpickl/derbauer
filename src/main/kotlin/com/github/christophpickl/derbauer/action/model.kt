@@ -11,14 +11,7 @@ import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
-interface Action : Entity, Conditional, Describable, Ordered {
-    fun onSpecificAction(on: OnSpecificAction)
-}
-
-interface OnSpecificAction {
-    fun onSpecificThroneRoomAction()
-}
-
+@Suppress("unused")
 class Actions {
     val visitThroneRoom: ThroneRoomAction = ThroneRoomAction()
 
@@ -27,12 +20,23 @@ class Actions {
     var visitorsWaitingInThroneRoom: Int = Values.actions.visitorsWaitingInThroneRoom
 }
 
+interface Action : Entity, Conditional, Describable, Ordered {
+    fun onSpecificAction(on: OnSpecificAction)
+}
+
+interface OnSpecificAction {
+    fun onSpecificThroneRoomAction()
+}
+
 class ThroneRoomAction(
     override val label: String = "visit throne room"
 ) : Action {
 
     override val order: Int = 0
-    override val description get() = "${Model.actions.visitorsWaitingInThroneRoom} visitor${if (Model.actions.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting"
+    override val description
+        get() = "${Model.actions.visitorsWaitingInThroneRoom} " +
+            "visitor${if (Model.actions.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting"
+
     override fun checkCondition() = Model.player.buildings.castles.amount > 0
     override fun onSpecificAction(on: OnSpecificAction) {
         on.onSpecificThroneRoomAction()

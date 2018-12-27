@@ -43,7 +43,6 @@ interface Military : Entity, Describable, MultiLabeled, Amountable, Buyable, Ord
         )
 }
 
-
 abstract class AbstractMilitary(
     override val labelSingular: String,
     override val labelPlural: String,

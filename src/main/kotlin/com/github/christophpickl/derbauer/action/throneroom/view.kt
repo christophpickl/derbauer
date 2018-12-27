@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.action.throneRoom
+package com.github.christophpickl.derbauer.action.throneroom
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.model.Model
@@ -30,7 +30,8 @@ class ThroneRoomChoice(
 ) : Choice
 
 class ThroneRoomEmptyView(responseFromPreviousVisitor: String? = null) : InfoView(
-    (if (responseFromPreviousVisitor != null) "$responseFromPreviousVisitor\n\n" + "${"-".times(VIEW_SIZE.first)}\n\n" else "") +
+    (if (responseFromPreviousVisitor != null) "$responseFromPreviousVisitor\n\n" +
+        "${"-".times(VIEW_SIZE.first)}\n\n" else "") +
         "There are no visitors waiting for you, my lord.\n\n" +
         "Please come back some other day again."
 ) {
@@ -47,8 +48,9 @@ class ThroneRoomChoosenView(lastVisitorResponse: String, callback: YesNoCallback
         fun buildMessage(lastVisitorResponse: String): String {
             val visitors = Model.actions.visitorsWaitingInThroneRoom
             val singular = visitors == 1
+            val areVisitors = "${if (singular) "is" else "are"} $visitors visitor${if (singular) "" else "s"}"
             return "$lastVisitorResponse\n\n${"-".times(VIEW_SIZE.first)}\n\n" +
-                "There ${if (singular) "is" else "are"} $visitors visitor${if (singular) "" else "s"} waiting for you.\n" +
+                "There $areVisitors waiting for you.\n" +
                 "Do you wish to welcome the next visitor?"
         }
     }

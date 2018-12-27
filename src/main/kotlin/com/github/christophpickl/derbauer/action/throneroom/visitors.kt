@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.action.throneRoom
+package com.github.christophpickl.derbauer.action.throneroom
 
 import com.github.christophpickl.derbauer.model.Model
 import kotlin.random.Random
@@ -26,19 +26,7 @@ class PoorBoyVisitor : ThroneRoomVisitor {
     override fun choose(choice: ThroneRoomChoice) =
         when (choice.id) {
             1, 2, 3 -> {
-                val goldAmountToGive = if (choice.id == 1) 1 else if (choice.id == 2) 10 else 100
-                Model.gold -= goldAmountToGive
-
-                val probReward = when (choice.id) {
-                    1 -> 0.05; 2 -> 0.15; else -> 0.4
-                }
-                val isRewardGranted = Random.nextDouble(0.0, 1.0) < probReward
-                if (isRewardGranted) {
-                    Model.land += 5
-                    "Because of your generosity you get 5 land :)"
-                } else {
-                    "The kid thankfully takes the $goldAmountToGive gold and quickly leaves the room."
-                }
+                giveMoney(choice.id)
             }
             4 -> {
                 "You greedy bastard."
@@ -49,7 +37,30 @@ class PoorBoyVisitor : ThroneRoomVisitor {
             }
             else -> throw IllegalArgumentException("Unhandled choice ID: ${choice.id}")
         }
+
+    private fun giveMoney(choiceId: Int): String {
+        val goldAmountToGive = if (choiceId == 1) 1 else if (choiceId == 2) 10 else 100
+        Model.gold -= goldAmountToGive
+
+        val probReward = when (choiceId) {
+            1 -> 0.05; 2 -> 0.15; else -> 0.4
+        }
+        val isRewardGranted = Random.nextDouble(0.0, 1.0) < probReward
+        return if (isRewardGranted) {
+            Model.land += 5
+            "Because of your generosity you get 5 land :)"
+        } else {
+            "The kid thankfully takes the $goldAmountToGive gold and quickly leaves the room."
+        }
+    }
 }
+
+// FIXME write test first; then change ThroneRoomChoice to carry some generic data with it.
+//sealed class ThroneRomeAction {
+//    class GiveGold(amount: Int) : ThroneRomeAction()
+//    object SendAway : ThroneRomeAction()
+//    object ThrowToDungeon : ThroneRomeAction()
+//}
 
 class GeneralDemandVisitor : ThroneRoomVisitor {
     override fun condition() = Model.player.militaries.soldiers.amount > 0

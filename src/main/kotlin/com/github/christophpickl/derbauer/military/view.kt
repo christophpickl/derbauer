@@ -16,7 +16,8 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     ).apply {
         addAll(Model.player.militaries.all.map { MilitaryChoice.Hire(it) })
     },
-    additionalContent = "You've got (used capacity ${Model.player.militaries.totalAmount}/${Model.player.buildings.totalMilitaryCapacity}):\n" +
+    additionalContent = "You've got (used capacity " +
+        "${Model.player.militaries.totalAmount}/${Model.player.buildings.totalMilitaryCapacity}):\n" +
         Model.player.militaries.all.joinToString("\n") {
             "  ${it.labelPlural.capitalize()}: ${it.amount}"
         }

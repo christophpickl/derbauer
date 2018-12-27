@@ -29,7 +29,7 @@ class MilitaryTest {
     }
 
     fun `Given all good When hire Then possible and hire`() {
-        Model.player.upgrades.militaryUpgrade._setToMaxLevel()
+        Model.player.upgrades.militaryUpgrade.setToMaxLevel()
         val soldier = Model.player.militaries.soldiers
         Model.gold = soldier.buyPrice
         Model.people = soldier.costsPeople + 1

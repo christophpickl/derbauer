@@ -5,7 +5,6 @@ import com.github.christophpickl.kpotpourri.common.process.ProcessExecuterImpl
 import java.awt.BorderLayout
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.io.File
 import java.nio.file.Files
 import javax.swing.JButton
 import javax.swing.JDialog
@@ -40,6 +39,7 @@ object Debugger {
 
 class DebugWindow : JDialog() {
 
+    private val windowSize = 500 to 800
     private val text = JTextArea().apply {
         isEditable = false
         (caret as DefaultCaret).updatePolicy = DefaultCaret.NEVER_UPDATE
@@ -49,7 +49,7 @@ class DebugWindow : JDialog() {
     init {
         title = "Debugger"
         contentPane.add(rootPanel())
-        setSize(500, 800)
+        setSize(windowSize.first, windowSize.second)
     }
 
     private fun rootPanel() =
@@ -75,7 +75,7 @@ class DebugWindow : JDialog() {
         val text = Model.toJson()
         val file = Files.createTempFile("derbauer_model_dump_", ".json").toFile()
         file.writeText(text)
-        ProcessExecuterImpl.execute("open", listOf(file.absolutePath), cwd = File("."))
+        ProcessExecuterImpl.execute("open", listOf(file.absolutePath))
     }
 
 }

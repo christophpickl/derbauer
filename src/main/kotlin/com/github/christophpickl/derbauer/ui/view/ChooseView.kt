@@ -17,7 +17,9 @@ abstract class ChooseView<C : Choice>(
 ) : View {
 
     init {
-        require(choices.filter { it.isZeroChoice() }.count() <= 1) { "only max one zero choice possible! choices: ${choices.joinToString()}" }
+        require(choices.filter { it.isZeroChoice() }.count() <= 1) {
+            "only max one zero choice possible! choices: ${choices.joinToString()}"
+        }
         if (choices.any { it.isZeroChoice() }) {
             require(choices.last().isZeroChoice()) { "if using zero choice, then it must be last index!" }
         }
@@ -36,6 +38,7 @@ abstract class ChooseView<C : Choice>(
 
     abstract fun onCallback(callback: ViewCallback, choice: C)
 
+    // FIXME simplify
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
         when (input) {
             PromptInput.Empty -> {

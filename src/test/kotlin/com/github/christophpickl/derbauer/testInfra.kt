@@ -17,7 +17,7 @@ import org.testng.TestListenerAdapter
 
 class TestModelListener : TestListenerAdapter() {
     override fun onTestStart(testContext: ITestResult) {
-        Model._reset()
+        Model.reset()
 
         Model.player.resources.all.forEach { it.amount = 0 }
         Model.people = 1
@@ -28,7 +28,7 @@ class TestModelListener : TestListenerAdapter() {
     }
 }
 
-fun Model._reset() {
+fun Model.reset() {
     currentView = HomeView()
     player = Player()
     global = Global()

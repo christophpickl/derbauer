@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.action.throneRoom
+package com.github.christophpickl.derbauer.action.throneroom
 
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.view.YesNo

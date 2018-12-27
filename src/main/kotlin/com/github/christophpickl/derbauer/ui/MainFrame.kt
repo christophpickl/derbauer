@@ -45,7 +45,7 @@ class MainFrame : JFrame() {
     }
 }
 
-class MainTextArea() : JTextArea() {
+class MainTextArea : JTextArea() {
     init {
         isEditable = false
         isOpaque = false
