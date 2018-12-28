@@ -5,16 +5,20 @@ import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.model.Describable
 import com.github.christophpickl.derbauer.model.Labeled
 import com.github.christophpickl.derbauer.trade.Buyable
+import com.github.christophpickl.derbauer.ui.Beeper
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.PromptMode
-import com.github.christophpickl.derbauer.ui.beep
+import com.github.christophpickl.derbauer.ui.RealBeeper
 
 
 abstract class ChooseView<C : Choice>(
     messages: List<String>,
     private val choices: List<C>,
-    val additionalContent: String? = null
-) : View {
+    val additionalContent: String? = null,
+    private val beeper: Beeper = RealBeeper,
+    cancelSupport: CancelSupport,
+    private val cancelHandler: CancelHandler = CancelHandlerDelegate(cancelSupport, beeper)
+) : View, CancelHandler by cancelHandler {
 
     init {
         require(choices.filter { it.isZeroChoice() }.count() <= 1) {
@@ -49,7 +53,7 @@ abstract class ChooseView<C : Choice>(
                     (input.number <= if (zeroChoice != null) choices.size - 1 else choices.size)) {
                     onCallback(callback, if (input.number == 0) zeroChoice!! else choices[input.number - 1])
                 } else {
-                    beep("Invalid input choice: ${input.number} (must be within 1 and ${choices.size})")
+                    beeper.beep("Invalid input choice: ${input.number} (must be within 1 and ${choices.size})")
                 }
             }
         }.enforceWhenBranches()

@@ -7,9 +7,9 @@ open class YesNoChooseView(
     message: String
 ) : ChooseView<YesNoChoice>(
     messages = listOf(message),
-    choices = listOf(EnumChoice(YesNo.Yes, "Yes"), EnumChoice(YesNo.No, "No"))
+    choices = listOf(EnumChoice(YesNo.Yes, "Yes"), EnumChoice(YesNo.No, "No")),
+    cancelSupport = CancelSupport.Disabled
 ) {
-    override val cancelSupport = CancelSupport.Disabled
     override fun onCallback(callback: ViewCallback, choice: YesNoChoice) {
         yesNoCallback.onYesNo(choice.enum)
     }

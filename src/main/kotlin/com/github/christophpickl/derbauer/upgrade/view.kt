@@ -13,9 +13,9 @@ class UpgradeView : ChooseView<UpgradeChoice>(
     messages = Texts.upgradeMessages,
     choices = Model.player.upgrades.all.map {
         UpgradeChoice(it)
-    }
+    },
+    cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: UpgradeChoice) {
         callback.doUpgrade(choice)
     }

@@ -14,9 +14,9 @@ class TradeView : ChooseView<TradeableChoice>(
     messages = Texts.tradeMessages,
     choices = Model.player.resources.allTradeables.flatMap {
         listOf(TradeableChoice(it, BuySell.Buy), TradeableChoice(it, BuySell.Sell))
-    }
+    },
+    cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: TradeableChoice) {
         callback.onTrade(choice)
     }
@@ -32,7 +32,12 @@ data class TradeableChoice(
     )
 }
 
-class ExecuteTradeView(private val choice: TradeableChoice) : InputView(buildMessage(choice)) {
+class ExecuteTradeView(
+    private val choice: TradeableChoice
+) : InputView(
+    message = buildMessage(choice),
+    cancelSupport = CancelSupport.Enabled { TradeView() }
+) {
     companion object {
         private fun buildMessage(choice: TradeableChoice): String {
             val info = when (choice.buySell) {
@@ -49,7 +54,6 @@ class ExecuteTradeView(private val choice: TradeableChoice) : InputView(buildMes
         }
     }
 
-    override val cancelSupport = CancelSupport.Enabled { TradeView() }
     override fun onCallback(callback: ViewCallback, number: Int) {
         callback.doTrade(choice, number)
     }

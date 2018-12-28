@@ -12,9 +12,9 @@ import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class ActionView : ChooseView<ActionChoice>(
     messages = Texts.actionMessages,
-    choices = Model.actions.all.map { ActionChoice(it) }
+    choices = Model.actions.all.map { ActionChoice(it) },
+    cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: ActionChoice) {
         callback.choiceSelected(choice)
     }

@@ -17,9 +17,9 @@ class BuildView : ChooseView<BuildChoice>(
     },
     additionalContent = "You've got:\n${Model.player.buildings.all.joinToString("\n") {
         "  ${it.labelPlural.capitalize()}: ${it.amount}"
-    }}"
+    }}",
+    cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
-    override val cancelSupport = CancelSupport.Enabled { HomeView() }
     override fun onCallback(callback: ViewCallback, choice: BuildChoice) {
         callback.doBuild(choice)
     }

@@ -16,9 +16,9 @@ class ThroneRoomView(
     private val visitor: ThroneRoomVisitor
 ) : ChooseView<ThroneRoomChoice>(
     messages = listOf(visitor.message),
-    choices = visitor.choices
+    choices = visitor.choices,
+    cancelSupport = CancelSupport.Disabled
 ) {
-    override val cancelSupport = CancelSupport.Disabled
     override fun onCallback(callback: ViewCallback, choice: ThroneRoomChoice) {
         callback.onThroneRoomChoice(visitor, choice)
     }
@@ -29,7 +29,9 @@ class ThroneRoomChoice(
     override val label: String
 ) : Choice
 
-class ThroneRoomEmptyView(responseFromPreviousVisitor: String? = null) : InfoView(
+class ThroneRoomEmptyView(
+    responseFromPreviousVisitor: String? = null
+) : InfoView(
     (if (responseFromPreviousVisitor != null) "$responseFromPreviousVisitor\n\n" +
         "${"-".times(VIEW_SIZE.first)}\n\n" else "") +
         "There are no visitors waiting for you, my lord.\n\n" +

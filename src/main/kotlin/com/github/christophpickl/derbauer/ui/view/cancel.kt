@@ -1,18 +1,29 @@
 package com.github.christophpickl.derbauer.ui.view
 
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.ui.beep
+import com.github.christophpickl.derbauer.ui.Beeper
+import com.github.christophpickl.derbauer.ui.RealBeeper
+
+interface CancelHandler {
+    fun handleCancel()
+}
+
+class CancelHandlerDelegate(
+    private val cancelSupport: CancelSupport,
+    private val beeper: Beeper = RealBeeper
+) : CancelHandler {
+
+    override fun handleCancel() {
+        when (val cancel = cancelSupport) {
+            CancelSupport.Disabled -> beeper.beep("Cancel support is disabled")
+            is CancelSupport.Enabled -> {
+                Model.currentView = cancel.targetView()
+            }
+        }
+    }
+}
 
 sealed class CancelSupport {
     object Disabled : CancelSupport()
     class Enabled(val targetView: () -> View) : CancelSupport()
-}
-
-fun handleCancel() {
-    when (val cancel = Model.currentView.cancelSupport) {
-        CancelSupport.Disabled -> beep("Cancel support is disabled")
-        is CancelSupport.Enabled -> {
-            Model.currentView = cancel.targetView()
-        }
-    }
 }

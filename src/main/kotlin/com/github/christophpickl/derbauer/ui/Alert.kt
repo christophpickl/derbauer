@@ -4,7 +4,6 @@ import mu.KotlinLogging.logger
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
-import java.awt.Toolkit
 import java.util.*
 import javax.swing.BorderFactory
 import javax.swing.JLabel
@@ -40,7 +39,7 @@ object Alert {
         log.debug { "show($type)" }
         label.text = type.message
         glassPane!!.isVisible = true
-        beep("Alert: ${type.message}")
+        RealBeeper.beep("Alert: ${type.message}")
         resetTimer()
     }
 
@@ -77,14 +76,3 @@ sealed class AlertType(val message: String) {
     override fun toString() = "AlertType{message=$message}"
 }
 
-private val log = logger {}
-fun beep(reason: String) {
-    log.debug { "Beep reason: $reason" }
-    Toolkit.getDefaultToolkit().beep()
-    println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
-}
-
-//fun <T> beepReturn(): T? {
-//    beep()
-//    return null
-//}

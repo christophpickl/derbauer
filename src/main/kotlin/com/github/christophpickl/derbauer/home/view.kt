@@ -23,9 +23,9 @@ class HomeView : ChooseView<HomeChoice>(
             this += EnumChoice(HomeEnum.Action, "Action")
         }
         this += EnumChoice(HomeEnum.EndTurn, "End Turn", zeroChoice = true)
-    }
+    },
+    cancelSupport = CancelSupport.Disabled
 ) {
-    override val cancelSupport = CancelSupport.Disabled
 
     override fun onCallback(callback: ViewCallback, choice: HomeChoice) {
         callback.onHomeEnum(choice)
