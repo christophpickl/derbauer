@@ -29,7 +29,7 @@ abstract class ChooseView<C : Choice>(
         }
     }
 
-    private var zeroChoice: C? = choices.firstOrNull { it.isZeroChoice() }
+    private val zeroChoice: C? = choices.firstOrNull { it.isZeroChoice() }
 
     private var choiceCounter = 1
     override val renderContent =
@@ -42,22 +42,22 @@ abstract class ChooseView<C : Choice>(
 
     abstract fun onCallback(callback: ViewCallback, choice: C)
 
-    // FIXME simplify
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
         when (input) {
             PromptInput.Empty -> {
                 handleCancel()
             }
             is PromptInput.Number -> {
-                if ((input.number >= if (zeroChoice != null) 0 else 1) &&
-                    (input.number <= if (zeroChoice != null) choices.size - 1 else choices.size)) {
-                    onCallback(callback, if (input.number == 0) zeroChoice!! else choices[input.number - 1])
+                val context = InputContext.by(input, choices, zeroChoice)
+                if (context.isWithinRange()) {
+                    onCallback(callback, context.lookupChoice())
                 } else {
-                    beeper.beep("Invalid input choice: ${input.number} (must be within 1 and ${choices.size})")
+                    beeper.beep(context.beepMessage())
                 }
             }
         }.enforceWhenBranches()
     }
+
 }
 
 interface Choice : Labeled {
@@ -76,4 +76,52 @@ class EnumChoice<E : Enum<E>>(
 ) : Choice {
     override fun isZeroChoice(): Boolean = zeroChoice
     override fun toString() = "EnumChoice{enum=$enum, label=$label, zeroChoice=$zeroChoice}"
+}
+
+private data class InputContext<C : Choice>(
+    private val input: PromptInput.Number,
+    private val startIndex: Int,
+    private val endIndex: Int,
+    private val additionalBeep: String,
+    val lookupChoice: () -> C
+) {
+    companion object {
+        fun <C : Choice> by(input: PromptInput.Number, choices: List<C>, zeroChoice: C?): InputContext<C> {
+            val startIndex: Int
+            val endIndex: Int
+            val additionalBeep: String
+            val defaultLookupChoice: () -> C = {
+                choices[input.number - 1]
+            }
+            val lookupChoice: () -> C
+            if (zeroChoice != null) {
+                startIndex = 0
+                endIndex = choices.size - 1
+                additionalBeep = ", or 0 for zeroChoice"
+                lookupChoice = {
+                    if (input.number == 0) {
+                        zeroChoice
+                    } else {
+                        defaultLookupChoice()
+                    }
+                }
+            } else {
+                startIndex = 1
+                endIndex = choices.size
+                additionalBeep = ""
+                lookupChoice = defaultLookupChoice
+            }
+            return InputContext(
+                input = input,
+                startIndex = startIndex,
+                endIndex = endIndex,
+                additionalBeep = additionalBeep,
+                lookupChoice = lookupChoice
+            )
+        }
+    }
+
+    fun isWithinRange() = (input.number >= startIndex) && (input.number <= endIndex)
+    fun beepMessage() = "Invalid input choice: ${input.number} (must be within 1 and $endIndex$additionalBeep)"
+
 }
