@@ -12,7 +12,7 @@
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send
 * (2) if food/people are over capacity => decrease it slowly!
-* (1) outsource messages too VALUES
+* rename to Army (not military)
 
 # minor
 
@@ -24,9 +24,12 @@
 * (1) - HAPPENING: make bag sizes depend on current Model resource
 * (2) - VISITOR: accumulate probability; dynamic reward calculation (depends on progress/availability)
 * if too low income for upcome costs: soldiers slowly run away, buildings will get abandoned
+* scout: is a (non-army) military unit; to see when the next attack is approaching
 
 # ideas
 
+* concept of karma (good/bad decisions); aka "global luck" (e.g. for good/bad happenings, random calc)
+* concept of wealth: count all land/building/units
 * mittelalterliche BG music
 * very detailed end-turn report (was weg/was dazu, warum/woher)
     - aus verschiedene bereiche/sectioned (economic, military, ...)
