@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.trade
 import com.github.christophpickl.derbauer.misc.ChoiceValidation
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.validateChoice
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.UsableEntity
@@ -17,7 +18,7 @@ class TradeController : TradeCallback {
         Model.currentView = ExecuteTradeView(choice)
     }
 
-    override fun doTrade(choice: TradeableChoice, amount: Int) {
+    override fun doTrade(choice: TradeableChoice, amount: Long) {
         log.debug { "doTrade(amount=$amount, choice=$choice)" }
         val resource = choice.resource
         val pricePerItem = resource.effectivePriceFor(choice.buySell)
@@ -25,17 +26,17 @@ class TradeController : TradeCallback {
 
         if (isValid(choice, amount, totalPrice)) {
             val signator = when (choice.buySell) {
-                BuySell.Buy -> +1
-                BuySell.Sell -> -1
+                BuySell.Buy -> +1L
+                BuySell.Sell -> -1L
             }
-            resource.amount += signator * amount
-            Model.gold += -1 * signator * totalPrice
+            resource.amount += amount * signator
+            Model.gold += totalPrice * (-1 * signator)
             Model.history.traded++
             Model.currentView = TradeView()
         }
     }
 
-    private fun isValid(choice: TradeableChoice, amount: Int, totalPrice: Int): Boolean {
+    private fun isValid(choice: TradeableChoice, amount: Long, totalPrice: Amount): Boolean {
         val validations = mutableListOf<ChoiceValidation>()
         if (choice.buySell == BuySell.Buy) {
             // enough gold

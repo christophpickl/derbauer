@@ -11,9 +11,15 @@ import com.github.christophpickl.derbauer.ui.Prompt
 import com.github.christophpickl.derbauer.ui.RendererImpl
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import com.github.christophpickl.kpotpourri.swing.AbortingExceptionHandler
+import mu.KotlinLogging
 import javax.swing.SwingUtilities
 
-val CHEAT_MODE = System.getProperty("derbauer.cheatmode") != null
+val CHEAT_MODE_PROPERTY = "derbauer.cheat"
+val DEV_MODE_PROPERTY = "derbauer.dev"
+private val log = KotlinLogging.logger {}
+
+val CHEAT_MODE get() = (System.getProperty(CHEAT_MODE_PROPERTY) != null)
+val DEV_MODE get() = (System.getProperty(DEV_MODE_PROPERTY) != null)
 
 object DerBauer {
 
@@ -59,6 +65,13 @@ object DerBauer {
             addConsoleAppender {
                 pattern = "%d{HH:mm:ss} [%gray(%thread)] [%highlight(%-5level)] %cyan(%logger{30}) - %msg%n"
             }
+        }
+
+        if (CHEAT_MODE) {
+            log.info { "CHEAT MODE enabled" }
+        }
+        if (DEV_MODE) {
+            log.info { "DEV MODE enabled" }
         }
     }
 }

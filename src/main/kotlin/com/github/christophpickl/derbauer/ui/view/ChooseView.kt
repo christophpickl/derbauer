@@ -91,7 +91,7 @@ private data class InputContext<C : Choice>(
             val endIndex: Int
             val additionalBeep: String
             val defaultLookupChoice: () -> C = {
-                choices[input.number - 1]
+                choices[input.number.toInt() - 1]
             }
             val lookupChoice: () -> C
             if (zeroChoice != null) {
@@ -99,7 +99,7 @@ private data class InputContext<C : Choice>(
                 endIndex = choices.size - 1
                 additionalBeep = ", or 0 for zeroChoice"
                 lookupChoice = {
-                    if (input.number == 0) {
+                    if (input.number.toInt() == 0) {
                         zeroChoice
                     } else {
                         defaultLookupChoice()

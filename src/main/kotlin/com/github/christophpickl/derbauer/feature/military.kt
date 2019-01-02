@@ -31,6 +31,6 @@ class MilitaryCondition<M>(
     military: M,
     predicate: () -> Boolean
 ) : AbstractFeature(
-    notification = "New military unit available: ${military.label}",
+    notification = "New military unit available: ${military.label.capitalize()}",
     predicate = predicate
 ) where M : Military, M : Conditional

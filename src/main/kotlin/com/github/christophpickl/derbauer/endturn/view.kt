@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer.endturn
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.AsciiArt
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.ui.Formatter
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.PromptMode
 import com.github.christophpickl.derbauer.ui.view.InfoView
@@ -20,12 +19,11 @@ class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
                 notificationsMessage
         }
 
-        private val numberWidth = 6
-        private val numberWidthGrow = 5 // plus sign
+        // TODO properly format: add left padding; add plus sign for change value
         private fun formatGrowth(label: String, line: EndTurnReportLine) =
-            "$label: ${Formatter.formatNumber(line.oldValue, numberWidth)} => " +
-                "${Formatter.formatNumber(line.change, numberWidthGrow, addPlusSign = true)} => " +
-                Formatter.formatNumber(line.newValue, numberWidth)
+            "$label: ${line.oldValue.formatted} => " +
+                "${line.change.formatted} => " +
+                line.newValue.formatted
     }
 
     override fun onCallback(callback: ViewCallback, input: PromptInput) {

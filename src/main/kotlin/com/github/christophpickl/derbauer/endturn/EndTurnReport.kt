@@ -1,11 +1,12 @@
 package com.github.christophpickl.derbauer.endturn
 
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 
 class EndTurnReport(
-    goldIncome: Int,
-    foodIncome: Int,
-    peopleIncome: Int,
+    goldIncome: Amount,
+    foodIncome: Amount,
+    peopleIncome: Amount,
     val notifications: List<String>
 ) {
     val gold = EndTurnReportLine(
@@ -26,7 +27,7 @@ class EndTurnReport(
 }
 
 class EndTurnReportLine(
-    val oldValue: Int,
-    val newValue: Int,
-    val change: Int
+    val oldValue: Amount,
+    val newValue: Amount,
+    val change: Amount
 )

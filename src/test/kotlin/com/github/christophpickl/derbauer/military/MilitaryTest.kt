@@ -3,6 +3,8 @@ package com.github.christophpickl.derbauer.military
 import com.github.christophpickl.derbauer.TestModelListener
 import com.github.christophpickl.derbauer.build.MilitaryCapacityBuilding
 import com.github.christophpickl.derbauer.hasSameAmountAs
+import com.github.christophpickl.derbauer.isAmountEqualTo
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Renderer
 import com.nhaarman.mockitokotlin2.mock
@@ -20,9 +22,9 @@ class MilitaryTest {
         val soldier = Model.player.militaries.soldiers
         Model.gold = soldier.buyPrice
         Model.people = soldier.costsPeople
-        Model.player.buildings.all.filterIsInstance<MilitaryCapacityBuilding>().forEach { it.amount = 0 }
+        Model.player.buildings.all.filterIsInstance<MilitaryCapacityBuilding>().forEach { it.amount.isZero }
 
-        assertThat(soldier.effectiveBuyPossibleAmount).isEqualTo(0)
+        assertThat(soldier.effectiveBuyPossibleAmount).isAmountEqualTo(0)
         MilitaryController(renderer).doHire(soldier, 1)
 
         soldier hasSameAmountAs 0
@@ -33,9 +35,9 @@ class MilitaryTest {
         val soldier = Model.player.militaries.soldiers
         Model.gold = soldier.buyPrice
         Model.people = soldier.costsPeople + 1
-        Model.player.buildings.barracks.amount = 1
+        Model.player.buildings.barracks.amount = Amount(1)
 
-        assertThat(soldier.effectiveBuyPossibleAmount).isEqualTo(1)
+        assertThat(soldier.effectiveBuyPossibleAmount).isAmountEqualTo(1)
         MilitaryController(renderer).doHire(soldier, 1)
 
         soldier hasSameAmountAs 1

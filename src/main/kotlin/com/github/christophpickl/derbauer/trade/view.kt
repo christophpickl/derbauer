@@ -41,25 +41,25 @@ class ExecuteTradeView(
     companion object {
         private fun buildMessage(choice: TradeableChoice): String {
             val info = when (choice.buySell) {
-                BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossibleAmount}"
-                BuySell.Sell -> "You have ${choice.resource.sellPossible} available."
+                BuySell.Buy -> "You can buy maximum: ${choice.resource.effectiveBuyPossibleAmount.formatted}"
+                BuySell.Sell -> "You have ${choice.resource.sellPossible.formatted} available."
             }
             val verb = when (choice.buySell) {
                 BuySell.Buy -> "costs"
                 BuySell.Sell -> "brings"
             }
             return "How much ${choice.resource.labelPlural} do you wanna ${choice.buySell.label}?\n\n" +
-                "1 ${choice.resource.labelSingular} $verb ${choice.resource.priceFor(choice.buySell)} gold.\n\n" +
+                "1 ${choice.resource.labelSingular} $verb ${choice.resource.priceFor(choice.buySell).formatted} gold.\n\n" +
                 info
         }
     }
 
-    override fun onCallback(callback: ViewCallback, number: Int) {
+    override fun onCallback(callback: ViewCallback, number: Long) {
         callback.doTrade(choice, number)
     }
 }
 
 interface TradeCallback {
     fun onTrade(choice: TradeableChoice)
-    fun doTrade(choice: TradeableChoice, amount: Int)
+    fun doTrade(choice: TradeableChoice, amount: Long)
 }

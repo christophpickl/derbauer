@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.build
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.data.ValueBuilding
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Amountable
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Describable
@@ -12,6 +13,7 @@ import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
+import com.github.christophpickl.derbauer.model.sumBy
 import com.github.christophpickl.derbauer.trade.Buyable
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
@@ -35,27 +37,28 @@ data class Buildings(
 }
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Describable, Ordered {
-    var landNeeded: Int
-    val totalLandNeeded get() = landNeeded * amount
+    var landNeeded: Amount
+    val totalLandNeeded: Amount get() = amount * landNeeded
 }
 
 interface FoodCapacityBuilding : Building {
-    var foodCapacity: Int
-    val totalFoodCapacity get() = foodCapacity * amount
+    var foodCapacity: Amount
+    val totalFoodCapacity: Amount get() = foodCapacity * amount
 }
 
 interface PeopleCapacityBuilding : Building {
-    var peopleCapacity: Int
-    val totalPeopleCapacity get() = peopleCapacity * amount
+    var peopleCapacity: Amount
+    val totalPeopleCapacity: Amount get() = peopleCapacity * amount
 }
 
+
 interface FoodProducingBuilding : Building {
-    var foodProduction: Int
-    val totalFoodProduction get() = foodProduction * amount
+    var foodProduction: Amount
+    val totalFoodProduction: Amount get() = foodProduction * amount
 }
 
 interface MilitaryCapacityBuilding : Building {
-    var militaryCapacity: Int
+    var militaryCapacity: Amount
     val totalMilitaryCapacity get() = militaryCapacity * amount
 
 }
@@ -120,10 +123,10 @@ abstract class AbstractBuilding(
     protected open val additionalDescription: String? = null
     final override val description
         get() = listOfNotNull(
-            if (this is FoodCapacityBuilding) "stores +$foodCapacity food" else null,
-            if (this is PeopleCapacityBuilding) "stores +$peopleCapacity people" else null,
-            if (this is FoodProducingBuilding) "produces +$foodProduction food" else null,
-            if (this is MilitaryCapacityBuilding) "stores +$militaryCapacity units" else null,
+            if (this is FoodCapacityBuilding) "stores +${foodCapacity.formatted} food" else null,
+            if (this is PeopleCapacityBuilding) "stores +${peopleCapacity.formatted} people" else null,
+            if (this is FoodProducingBuilding) "produces +${foodProduction.formatted} food" else null,
+            if (this is MilitaryCapacityBuilding) "stores +${militaryCapacity.formatted} units" else null,
             additionalDescription
         ).also {
             require(it.isNotEmpty()) {
@@ -132,6 +135,6 @@ abstract class AbstractBuilding(
             }
         }.joinToString(" and ")
 
-    override val buyDescription get() = "$buyPrice gold and $landNeeded land"
+    override val buyDescription get() = "${buyPrice.formatted} gold and ${landNeeded.formatted} land"
     override fun toString() = Stringifier.stringify(this)
 }

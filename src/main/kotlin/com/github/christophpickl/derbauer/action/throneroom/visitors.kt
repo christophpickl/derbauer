@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.action.throneroom
 
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import kotlin.random.Random
 
@@ -39,7 +40,7 @@ class PoorBoyVisitor : ThroneRoomVisitor {
         }
 
     private fun giveMoney(choiceId: Int): String {
-        val goldAmountToGive = if (choiceId == 1) 1 else if (choiceId == 2) 10 else 100
+        val goldAmountToGive = Amount(if (choiceId == 1) 1L else if (choiceId == 2) 10L else 100L)
         Model.gold -= goldAmountToGive
 
         val probReward = when (choiceId) {
@@ -50,7 +51,7 @@ class PoorBoyVisitor : ThroneRoomVisitor {
             Model.land += 5
             "Because of your generosity you get 5 land :)"
         } else {
-            "The kid thankfully takes the $goldAmountToGive gold and quickly leaves the room."
+            "The kid thankfully takes the ${goldAmountToGive.formatted} gold and quickly leaves the room."
         }
     }
 }

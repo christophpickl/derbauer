@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.upgrade
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.build.FoodProducingBuilding
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Describable
 import com.github.christophpickl.derbauer.model.Entity
@@ -31,12 +32,12 @@ interface Upgrade : Entity, Describable, Buyable, Ordered {
 
 abstract class AbstractUpgrade(
     override val label: String,
-    override var buyPrice: Int,
+    override var buyPrice: Amount,
     override val maxLevel: Int
 ) : Upgrade {
 
     override var currentLevel = 0
-    final override val buyDescription get() = "$buyPrice gold"
+    final override val buyDescription get() = "${buyPrice.formatted} gold"
 
     companion object {
         var counter = 0
@@ -60,7 +61,7 @@ class FarmProductivityUpgrade : AbstractUpgrade(
         Model.player.buildings.all.filterIsInstance<FoodProducingBuilding>().forEach {
             it.foodProduction += foodProductionIncrease
         }
-        buyPrice = (buyPrice * Values.upgrades.increasePriceAfterBought).toInt()
+        buyPrice *= Values.upgrades.increasePriceAfterBought
     }
 }
 

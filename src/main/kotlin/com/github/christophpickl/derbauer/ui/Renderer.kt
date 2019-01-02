@@ -36,9 +36,9 @@ class RendererImpl(
 
     private fun AbstracteResource.formatInfo(): String =
         "$labelPlural: " + when (this) {
-            is UsableEntity -> "$usedAmount / $amount"
-            is LimitedAmount -> "$amount / $limitAmount"
-            else -> amount
+            is UsableEntity -> "${usedAmount.formatted} / ${amount.formatted}"
+            is LimitedAmount -> "${amount.formatted} / ${limitAmount.formatted}"
+            else -> amount.formatted
         }
 
 }

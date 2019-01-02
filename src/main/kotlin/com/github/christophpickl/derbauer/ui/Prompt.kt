@@ -14,14 +14,14 @@ interface PromptListener : DispatcherListener {
 
 sealed class PromptInput {
     companion object {
-        fun by(text: String) = if (text.isEmpty()) Empty else Number(text.toInt())
+        fun by(text: String) = if (text.isEmpty()) Empty else Number(text.toLong())
     }
 
     object Empty : PromptInput() {
         override fun toString() = "Empty"
     }
 
-    class Number(val number: Int) : PromptInput() {
+    class Number(val number: Long) : PromptInput() {
         override fun toString() = "Number{$number}"
     }
 }

@@ -24,17 +24,17 @@ data class Resources(
 interface Resource : Entity, Amountable, MultiLabeled, Ordered
 
 interface TradeableResource : Resource, Tradeable {
-    val sellPossible: Int
+    val sellPossible: Amount
     var buyPriceModifier: Double
     var sellPriceModifier: Double
 
-    val effectiveBuyPrice get() = (buyPrice * buyPriceModifier).toInt()
-    val effectiveSellPrice get() = (sellPrice * sellPriceModifier).toInt()
+    val effectiveBuyPrice get() = buyPrice * buyPriceModifier
+    val effectiveSellPrice get() = sellPrice * sellPriceModifier
 
-    override val buyDescription get() = "${effectivePriceFor(BuySell.Buy)} gold"
-    override val sellDescription get() = "${effectivePriceFor(BuySell.Sell)} gold"
+    override val buyDescription get() = "${effectivePriceFor(BuySell.Buy).formatted} gold"
+    override val sellDescription get() = "${effectivePriceFor(BuySell.Sell).formatted} gold"
 
-    fun effectivePriceFor(buySell: BuySell): Int = when (buySell) {
+    fun effectivePriceFor(buySell: BuySell) = when (buySell) {
         BuySell.Buy -> effectiveBuyPrice
         BuySell.Sell -> effectiveSellPrice
     }
@@ -43,7 +43,7 @@ interface TradeableResource : Resource, Tradeable {
 abstract class AbstracteResource(
     override val labelSingular: String,
     override val labelPlural: String,
-    override var amount: Int
+    override var amount: Amount
 ) : Resource {
 
     companion object {
@@ -60,9 +60,9 @@ class FoodResource : AbstracteResource(
     amount = Values.resources.food
 ), LimitedBuyableAmount, TradeableResource {
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
-    override var buyPrice: Int = Values.resources.foodBuyPrice
-    override var sellPrice: Int = Values.resources.foodSellPrice
-    override val sellPossible get() = Math.max(0, amount)
+    override var buyPrice = Values.resources.foodBuyPrice
+    override var sellPrice = Values.resources.foodSellPrice
+    override val sellPossible get() = Amount.maxOf(Amount.zero, amount)
     override var buyPriceModifier = 1.0
     override var sellPriceModifier = 1.0
     override fun toString() = Stringifier.stringify(this)
@@ -83,6 +83,7 @@ class PeopleResource : AbstracteResource(
 ), LimitedAmount {
     override val limitAmount
         get() = Model.player.buildings.filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
+
     override fun toString() = Stringifier.stringify(this)
 }
 
@@ -92,8 +93,8 @@ class LandResource : AbstracteResource(
     amount = Values.resources.land
 ), UsableEntity, TradeableResource {
     override val usedAmount get() = Model.player.buildings.totalLandNeeded
-    override var buyPrice: Int = Values.resources.landBuyPrice
-    override var sellPrice: Int = Values.resources.landSellPrice
+    override var buyPrice = Values.resources.landBuyPrice
+    override var sellPrice = Values.resources.landSellPrice
     override val sellPossible get() = Model.player.resources.land.unusedAmount
     override var buyPriceModifier = 1.0
     override var sellPriceModifier = 1.0

@@ -25,4 +25,8 @@ object Texts {
         "Always keep your stuff up2date.",
         "You want to play with the big boys, you first need big equipment."
     )
+    val buildMessages = listOf(
+        "Expand, expand, expand.",
+        "Construction work makes us happyyyy..."
+    )
 }

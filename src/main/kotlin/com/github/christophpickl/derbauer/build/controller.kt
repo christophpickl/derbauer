@@ -14,14 +14,14 @@ class BuildController : BuildCallback {
         log.debug { "try building: $choice" }
         if (isValid(choice)) {
             choice.building.amount++
-            Model.gold -= choice.building.buyPrice
+            Model.gold -= choice.building.buyPrice.rounded
             Model.currentView = BuildView()
         }
     }
 
     private fun isValid(choice: BuildChoice) = validateChoice(listOf(
         SimpleChoiceValidation(
-            condition = { Model.gold >= choice.building.buyPrice },
+            condition = { Model.gold >= choice.building.buyPrice.rounded },
             alertType = AlertType.NotEnoughGold
         ),
         SimpleChoiceValidation(

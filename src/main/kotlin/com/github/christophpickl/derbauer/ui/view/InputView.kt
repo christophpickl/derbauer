@@ -17,7 +17,7 @@ abstract class InputView(
     override val renderContent = message
     override val promptMode = PromptMode.Input
 
-    abstract fun onCallback(callback: ViewCallback, number: Int)
+    abstract fun onCallback(callback: ViewCallback, number: Long)
 
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
         when (input) {

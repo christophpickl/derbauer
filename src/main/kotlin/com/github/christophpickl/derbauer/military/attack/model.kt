@@ -1,9 +1,10 @@
 package com.github.christophpickl.derbauer.military.attack
 
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 class AttackContext(
-    var enemies: Int
+    var enemies: Amount
 ) {
     val originalEnemies = enemies
     var message = ""
@@ -14,8 +15,8 @@ class AttackContext(
 
 sealed class AttackResult {
     class Won(
-        val goldEarning: Int,
-        val landEarning: Int
+        val goldEarning: Amount,
+        val landEarning: Amount
     ) : AttackResult()
 
     object Lost : AttackResult()

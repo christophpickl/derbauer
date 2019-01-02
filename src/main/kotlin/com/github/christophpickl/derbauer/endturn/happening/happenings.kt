@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.endturn.happening
 
 import com.github.christophpickl.derbauer.data.AsciiArt
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
 
@@ -8,9 +9,9 @@ class GoldBagHappening : Happening(
     cooldownDays = 7
 ) {
     private val goldBagSizes = randomListOf(
-        10 to 60,
-        20 to 30,
-        50 to 10
+        10L to 60,
+        20L to 30,
+        50L to 10
     )
 
     override fun internalExecute(): String {
@@ -33,9 +34,9 @@ class RatsHappening : Happening(
 ) {
 
     private val eatenSizes = randomListOf(
-        10 to 60,
-        20 to 30,
-        30 to 10
+        10L to 60,
+        20L to 30,
+        30L to 10
     )
     
     override fun internalExecute(): String {
@@ -46,18 +47,18 @@ class RatsHappening : Happening(
                 but because there was no food you poor bastard,
                 you didn't lose any.
                 One does not have, one can not lose.
-            """.trimIndent() to 0
+            """.trimIndent() to Amount.zero
         } else {
             """
                 Oh noes!!!
                 
                 Some of those nasty rats ate some of your food!
-            """.trimIndent() to Math.min(eatenProposal, Model.food)
+            """.trimIndent() to Amount.minOf(Amount(eatenProposal), Model.food)
         }
         Model.food -= foodEaten
         return "$message\n\n" +
             "${AsciiArt.rat}\n\n" +
-            "-$foodEaten Food"
+            "-${foodEaten.formatted} Food"
     }
 
 }

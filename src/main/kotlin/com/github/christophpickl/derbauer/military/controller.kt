@@ -6,6 +6,7 @@ import com.github.christophpickl.derbauer.military.attack.AttackView
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.misc.validateChoice
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Alert
 import com.github.christophpickl.derbauer.ui.AlertType
@@ -34,12 +35,12 @@ class MilitaryController(
     }
 
     private fun prepareAttack() {
-        if (Model.player.militaries.totalAmount == 0) {
+        if (Model.player.militaries.totalAmount.isZero) {
             Alert.show(AlertType.NoMilitary)
             return
         }
         val context = AttackContext(
-            enemies = (Random.nextDouble(0.4, 1.1) * Model.player.militaries.totalAmount).toInt()
+            enemies = Model.player.militaries.totalAmount * Random.nextDouble(0.4, 1.1)
         )
         Model.currentView = AttackView(context)
         doBeginAttack(context)
@@ -50,7 +51,8 @@ class MilitaryController(
         Thread(AttackThread(context, renderer), "Attack-${++threadId}").start()
     }
 
-    override fun doHire(militaryUnit: Military, amount: Int) {
+    // FIXME input amount can be entered as "1k"
+    override fun doHire(militaryUnit: Military, amount: Long) {
         log.debug { "want to hire: $amount $militaryUnit" }
         val totalPrice = militaryUnit.buyPrice * amount
         val totalPeople = militaryUnit.costsPeople * amount
@@ -62,7 +64,7 @@ class MilitaryController(
         }
     }
 
-    private fun isValid(totalPrice: Int, totalPeople: Int, amount: Int) = validateChoice(listOf(
+    private fun isValid(totalPrice: Amount, totalPeople: Amount, amount: Long) = validateChoice(listOf(
         SimpleChoiceValidation(
             condition = { Model.gold >= totalPrice },
             alertType = AlertType.NotEnoughGold

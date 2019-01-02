@@ -63,6 +63,11 @@ class DebugWindow : JDialog() {
                 add(JButton("Open").apply {
                     addActionListener { open() }
                 })
+                add(JButton("+1k Gold").apply {
+                    addActionListener {
+                        Model.gold += 1_000
+                    }
+                })
             }, BorderLayout.SOUTH)
             onRefresh()
         }

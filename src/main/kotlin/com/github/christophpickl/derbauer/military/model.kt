@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.military
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.data.ValueMilitary
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Amountable
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Describable
@@ -12,8 +13,8 @@ import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
+import com.github.christophpickl.derbauer.model.sumBy
 import com.github.christophpickl.derbauer.trade.Buyable
-import com.github.christophpickl.kpotpourri.common.math.KMath
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
@@ -33,12 +34,12 @@ data class Militaries(
 
 interface Military : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered {
     var attackModifier: Double
-    var costsPeople: Int
+    var costsPeople: Amount
 
     override val effectiveBuyPossibleAmount
-        get() = KMath.minButNotNegative(
+        get() = Amount.minOfNonNegative(
             buyPossibleAmount,
-            (Model.people - 1) / costsPeople,
+            (Model.people - Amount.one) / costsPeople,
             Model.militaryCapacityLeft
         )
 }
@@ -53,7 +54,7 @@ abstract class AbstractMilitary(
     final override var buyPrice = value.buyPrice
     final override var attackModifier = value.attackModifier
     final override var costsPeople = value.costsPeople
-    final override val buyDescription get() = "$buyPrice gold and $costsPeople people"
+    final override val buyDescription get() = "${buyPrice.formatted} gold and ${costsPeople.formatted} people"
 
     companion object {
         private var counter = 0

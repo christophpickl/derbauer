@@ -5,7 +5,7 @@ import com.github.christophpickl.derbauer.model.Entity
 import com.github.christophpickl.derbauer.model.Model
 
 class Trade1Achievement : AbstractAchievement(
-    label = "Trade Mastery I: Cheaper trade rates and +${Values.achievements.trade1GoldReward} gold"
+    label = "Trade Mastery I: Cheaper trade rates and +${Values.achievements.trade1GoldReward.formatted} gold"
 ) {
     override fun condition() = Model.history.traded >= Values.achievements.trade1HistoryNeed
     override fun execute() {
