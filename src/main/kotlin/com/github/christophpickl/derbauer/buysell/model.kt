@@ -4,7 +4,6 @@ import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 
-// TODO change data model: buyable is generic; concrete is: tradable, buildable, hirable, upgradable, ...
 interface Buyable {
     val buyDescription: String
     var buyPrice: Amount

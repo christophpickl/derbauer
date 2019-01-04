@@ -28,6 +28,7 @@
 
 # ideas
 
+* change data model: buyable is generic; concrete is: tradable, buildable, hirable, upgradable, ...
 * concept of karma (good/bad decisions); aka "global luck" (e.g. for good/bad happenings, random calc)
 * concept of wealth: count all land/building/units
 * mittelalterliche BG music

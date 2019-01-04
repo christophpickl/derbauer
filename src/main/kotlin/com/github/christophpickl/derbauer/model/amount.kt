@@ -98,9 +98,6 @@ data class Amount(
 @Target(AnnotationTarget.FUNCTION)
 annotation class AmountToStringAllowed
 
-// TODO can not be imported?!
-operator fun Int.times(amount: Amount) = Amount(amount.real * this)
-
 inline fun <A : Any> Iterable<A>.sumBy(selector: (A) -> Amount): Amount {
     var sum = 0L
     for (element in this) {
