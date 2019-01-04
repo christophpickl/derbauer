@@ -1,10 +1,10 @@
 package com.github.christophpickl.derbauer.ui.view
 
 import com.github.christophpickl.derbauer.ViewCallback
+import com.github.christophpickl.derbauer.buysell.Buyable
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.model.Describable
 import com.github.christophpickl.derbauer.model.Labeled
-import com.github.christophpickl.derbauer.trade.Buyable
 import com.github.christophpickl.derbauer.ui.Beeper
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.PromptMode

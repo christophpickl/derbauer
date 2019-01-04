@@ -14,6 +14,7 @@ interface PromptListener : DispatcherListener {
 
 sealed class PromptInput {
     companion object {
+        // FIXME input amount can be entered as "1k"
         fun by(text: String) = if (text.isEmpty()) Empty else Number(text.toLong())
     }
 

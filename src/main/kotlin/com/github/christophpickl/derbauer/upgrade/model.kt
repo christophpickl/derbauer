@@ -2,6 +2,7 @@ package com.github.christophpickl.derbauer.upgrade
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.build.FoodProducingBuilding
+import com.github.christophpickl.derbauer.buysell.Buyable
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Conditional
@@ -11,7 +12,6 @@ import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
-import com.github.christophpickl.derbauer.trade.Buyable
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 

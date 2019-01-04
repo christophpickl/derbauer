@@ -40,7 +40,7 @@ fun Model.reset() {
     notifications = Notifications()
 }
 
-infix fun Amountable.hasSameAmountAs(expected: Int) {
+infix fun Amountable.hasSameAmountAs(expected: Long) {
     assertThat(amount.real).isEqualTo(expected)
 }
 

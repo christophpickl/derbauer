@@ -6,6 +6,6 @@ import com.github.christophpickl.kpotpourri.build.*
 
 build4k {
     title = "DerBauer Tests"
-    gradlew("clean", "test", "check", context = whenFail("Test build failed ⚠️"))
+    gradlew("clean", "test", context = whenFail("Test build failed ⚠️"))
     displayNotification("Test build succeeded ✅")
 }

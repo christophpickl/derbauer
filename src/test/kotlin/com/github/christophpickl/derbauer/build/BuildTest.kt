@@ -16,55 +16,51 @@ class BuildTest {
     fun `Given enough gold and land When build Then succeed`() {
         Model.gold = building.buyPrice
         Model.land = building.landNeeded
-        val before = building.amount
 
         build(building)
 
-        building hasSameAmountAs before + 1
+        building hasSameAmountAs 1
         assertThat(Model.gold).isAmountEqualTo(0)
         assertThat(Model.land).isEqualTo(building.landNeeded)
         assertThat(Model.player.resources.land.usedAmount).isEqualTo(building.landNeeded)
     }
 
-    fun `Given no gold When build Then fail`() {
+    fun `Given no gold When build Then dont build`() {
         Model.gold = Amount.zero
-        val before = building.amount
 
         build(building)
 
-        building hasSameAmountAs before
+        building hasSameAmountAs 0
     }
 
-    fun `Given no land When build Then fail`() {
+    fun `Given no land When build Then dont build`() {
         Model.land = Amount.zero
-        val before = building.amount
 
         build(building)
 
-        building hasSameAmountAs before
+        building hasSameAmountAs 0
     }
 
-    fun `Given enough gold but not enough unused land When build Then fail`() {
-        building.amount = Amount.one
+    fun `Given enough gold but not enough unused land When build Then dont build`() {
+        building.amount = Amount(1)
         Model.land = building.landNeeded
         Model.gold = building.buyPrice
-        val before = building.amount
+        println(building.amount)
 
         build(building)
 
-        building hasSameAmountAs before
+        building hasSameAmountAs 1
     }
 
-    // FIXME check this for trade/hire/upgrade as well
-    fun `Given actually not enough gold When build Then succeed because rounded price used`() {
+    // FIXME check this for trade/upgrade as well
+    fun `Given not really enough gold When build Then succeed because rounded price used`() {
         Model.land = building.landNeeded
         building.buyPrice = Amount(1_999)
         Model.gold = Amount(1_000)
-        val before = building.amount
 
         build(building)
 
-        building hasSameAmountAs before + 1
+        building hasSameAmountAs 1
         assertThat(Model.gold.real).isEqualTo(0)
     }
 

@@ -102,4 +102,21 @@ class AmountTest {
         assertThat(Amount(-realAmount).formatted).isEqualTo(if (realAmount == 0L) "0" else "-$expectedFormatted")
     }
 
+    fun `AmountType proper thousands and limits`() {
+        assertThat(AmountType.Single.thousands).isEqualTo(0L)
+        assertThat(AmountType.Single.limit).isEqualTo(1_000L)
+
+        assertThat(AmountType.Kilo.thousands).isEqualTo(1_000L)
+        assertThat(AmountType.Kilo.limit).isEqualTo(1_000_000L)
+
+        assertThat(AmountType.Mega.thousands).isEqualTo(1_000_000L)
+        assertThat(AmountType.Mega.limit).isEqualTo(1_000_000_000L)
+
+        assertThat(AmountType.Giga.thousands).isEqualTo(1_000_000_000L)
+        assertThat(AmountType.Giga.limit).isEqualTo(1_000_000_000_000L)
+
+        assertThat(AmountType.Tera.thousands).isEqualTo(1_000_000_000_000L)
+        assertThat(AmountType.Tera.limit).isEqualTo(1_000_000_000_000_000L)
+    }
+
 }

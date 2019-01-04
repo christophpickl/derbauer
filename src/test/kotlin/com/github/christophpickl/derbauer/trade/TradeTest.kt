@@ -1,10 +1,11 @@
 package com.github.christophpickl.derbauer.trade
 
 import com.github.christophpickl.derbauer.TestModelListener
+import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Amount
+import com.github.christophpickl.derbauer.model.BuyAndSellableResource
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.model.TradeableResource
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
@@ -48,7 +49,7 @@ class TradeTest {
         trade(Model.player.resources.food, buySell, amount)
     }
 
-    private fun trade(resource: TradeableResource, buySell: BuySell, amount: Long) {
+    private fun trade(resource: BuyAndSellableResource, buySell: BuySell, amount: Long) {
         TradeController().doTrade(TradeableChoice(resource, buySell), amount)
     }
 

@@ -2,10 +2,10 @@ package com.github.christophpickl.derbauer.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.build.PeopleCapacityBuilding
+import com.github.christophpickl.derbauer.buysell.BuyAndSellable
+import com.github.christophpickl.derbauer.buysell.BuySell
+import com.github.christophpickl.derbauer.buysell.LimitedBuyableAmount
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.trade.BuySell
-import com.github.christophpickl.derbauer.trade.LimitedBuyableAmount
-import com.github.christophpickl.derbauer.trade.Tradeable
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
@@ -16,14 +16,14 @@ data class Resources(
     var land: LandResource = LandResource()
 ) {
     @JsonIgnore val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
-    @get:JsonIgnore val allTradeables get() = filterAll<TradeableResource>()
+    @get:JsonIgnore val allTradeables get() = filterAll<BuyAndSellableResource>()
 
     inline fun <reified T : Resource> filterAll() = all.filterIsInstance<T>()
 }
 
 interface Resource : Entity, Amountable, MultiLabeled, Ordered
 
-interface TradeableResource : Resource, Tradeable {
+interface BuyAndSellableResource : Resource, BuyAndSellable {
     val sellPossible: Amount
     var buyPriceModifier: Double
     var sellPriceModifier: Double
@@ -58,7 +58,7 @@ class FoodResource : AbstracteResource(
     labelSingular = "food",
     labelPlural = "food",
     amount = Values.resources.food
-), LimitedBuyableAmount, TradeableResource {
+), LimitedBuyableAmount, BuyAndSellableResource {
     override val limitAmount get() = Model.player.buildings.totalFoodCapacity
     override var buyPrice = Values.resources.foodBuyPrice
     override var sellPrice = Values.resources.foodSellPrice
@@ -91,7 +91,7 @@ class LandResource : AbstracteResource(
     labelSingular = "land",
     labelPlural = "land",
     amount = Values.resources.land
-), UsableEntity, TradeableResource {
+), UsableEntity, BuyAndSellableResource {
     override val usedAmount get() = Model.player.buildings.totalLandNeeded
     override var buyPrice = Values.resources.landBuyPrice
     override var sellPrice = Values.resources.landSellPrice

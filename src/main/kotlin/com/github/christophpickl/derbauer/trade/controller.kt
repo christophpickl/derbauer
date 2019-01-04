@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.trade
 
+import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.misc.ChoiceValidation
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.validateChoice

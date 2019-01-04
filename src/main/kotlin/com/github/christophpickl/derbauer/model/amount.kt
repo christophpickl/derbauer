@@ -38,12 +38,16 @@ data class Amount(
         }
 
         private fun round(type: AmountType, real: Long): Long =
-            real - (real % type.thousands)
+            if (type == AmountType.Single) real
+            else real - (real % type.thousands)
 
-        private fun format(type: AmountType, rounded: Long): String {
-            val realCut = rounded / type.thousands
-            return "$realCut${type.sign}"
-        }
+        private fun format(type: AmountType, rounded: Long): String =
+            if (type == AmountType.Single) {
+                rounded.toString()
+            } else {
+                val realCut = rounded / type.thousands
+                "$realCut${type.sign}"
+            }
     }
 
     val type: AmountType = whichType(real)
@@ -104,10 +108,9 @@ inline fun <A : Any> Iterable<A>.sumBy(selector: (A) -> Amount): Amount {
     return Amount(sum)
 }
 
-// FIXME test me
 enum class AmountType(
     val sign: String,
-    val thousandFactor: Int
+    thousandFactor: Int
 ) {
     Single("", 0),
     Kilo("k", 1),
@@ -115,7 +118,7 @@ enum class AmountType(
     Giga("g", 3),
     Tera("t", 4);
 
-    val thousands = Math.pow(1_000.0, thousandFactor.toDouble()).toLong()
+    val thousands = if (thousandFactor == 0) 0 else Math.pow(1_000.0, thousandFactor.toDouble()).toLong()
     val limit = Math.pow(1_000.0, thousandFactor + 1.0).toLong()
 }
 

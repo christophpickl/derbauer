@@ -1,13 +1,14 @@
-package com.github.christophpickl.derbauer.trade
+package com.github.christophpickl.derbauer.buysell
 
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 
+// TODO change data model: buyable is generic; concrete is: tradable, buildable, hirable, upgradable, ...
 interface Buyable {
     val buyDescription: String
     var buyPrice: Amount
-    val buyPossibleAmount get() = Amount.maxOf(Amount.zero, Model.gold / buyPrice)
+    val buyPossibleAmount get() = Amount.maxOf(Amount.zero, Model.gold / buyPrice.rounded)
     val effectiveBuyPossibleAmount get() = buyPossibleAmount
 }
 
@@ -16,7 +17,7 @@ interface Sellable {
     val sellDescription: String
 }
 
-interface Tradeable : Buyable, Sellable {
+interface BuyAndSellable : Buyable, Sellable {
     fun priceFor(buySell: BuySell) = when (buySell) {
         BuySell.Buy -> buyPrice
         BuySell.Sell -> sellPrice

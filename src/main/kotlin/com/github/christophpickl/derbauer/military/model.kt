@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.military
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.christophpickl.derbauer.buysell.Buyable
 import com.github.christophpickl.derbauer.data.ValueMilitary
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
@@ -14,7 +15,6 @@ import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
 import com.github.christophpickl.derbauer.model.sumBy
-import com.github.christophpickl.derbauer.trade.Buyable
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
 import com.github.christophpickl.kpotpourri.common.string.Stringifier

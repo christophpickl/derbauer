@@ -1,10 +1,11 @@
 package com.github.christophpickl.derbauer.trade
 
 import com.github.christophpickl.derbauer.ViewCallback
+import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.data.Texts
 import com.github.christophpickl.derbauer.home.HomeView
+import com.github.christophpickl.derbauer.model.BuyAndSellableResource
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.model.TradeableResource
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
 import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
@@ -23,7 +24,7 @@ class TradeView : ChooseView<TradeableChoice>(
 }
 
 data class TradeableChoice(
-    val resource: TradeableResource,
+    val resource: BuyAndSellableResource,
     val buySell: BuySell
 ) : Choice {
     override val label = formatLabel(
