@@ -2,6 +2,7 @@ package com.github.christophpickl.derbauer.action
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomChoice
+import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
 import com.github.christophpickl.derbauer.data.Texts
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model

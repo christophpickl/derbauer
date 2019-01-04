@@ -12,7 +12,7 @@ import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 class UpgradeFeatures {
 
-    val menu = AbstractFeature("New possibility available: Upgrade") {
+    val menu = AbstractFeature("New menu available: Upgrade") {
         Model.people >= Values.features.upgradePeopleNeeded
     }
 

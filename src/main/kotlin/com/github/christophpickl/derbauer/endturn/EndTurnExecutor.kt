@@ -25,7 +25,7 @@ class EndTurnExecutor(
         Model.actions.visitorsWaitingInThroneRoom += random.nextInt(0, Math.max(2, (Model.people.real / 100.0 * 1).toInt()))
 
         Model.features.all.forEach {
-            it.isEnabled() // check to get notifications here
+            it.checkAndNotify()
         }
         val notifications = Model.notifications.consumeAll()
         

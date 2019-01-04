@@ -10,7 +10,7 @@ import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 class MilitaryFeatures {
 
-    val menu = AbstractFeature("New possibility available: Military") {
+    val menu = AbstractFeature("New menu available: Military") {
         Model.player.upgrades.militaryUpgrade.isMaxLevelReached
     }
 

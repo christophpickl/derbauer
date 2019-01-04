@@ -23,5 +23,5 @@ class BuildingFeature<B>(
     building: B,
     predicate: () -> Boolean
 ) : AbstractFeature(
-    "New building available: ${building.label}", predicate
+    "New building available: ${building.label.capitalize()}", predicate
 ) where B : Building, B : Conditional

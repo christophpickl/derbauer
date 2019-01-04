@@ -37,7 +37,7 @@ class ThroneRoomAction(
         get() = "${Model.actions.visitorsWaitingInThroneRoom} " +
             "visitor${if (Model.actions.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting"
 
-    override fun checkCondition() = Model.player.buildings.castles.amount > 0
+    override fun checkCondition() = Model.features.action.throneRoomEnabled.isEnabled()
     override fun onSpecificAction(on: OnSpecificAction) {
         on.onSpecificThroneRoomAction()
     }
