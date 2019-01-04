@@ -80,7 +80,8 @@ data class Amount(
             val invokingTrace = stackTraceElements[2]
             val method = Class.forName(invokingTrace.className).methods.first { it.name == invokingTrace.methodName }
             val hasAnnotation = method.getAnnotation(AmountToStringAllowed::class.java) != null
-            if (!hasAnnotation) {
+            val isLogStatement = stackTraceElements.any { it.className == "mu.internal.LocationAwareKLogger" }
+            if (!hasAnnotation && !isLogStatement) {
                 throw UnsupportedOperationException(
                     "Method must be annotated with @${AmountToStringAllowed::class.simpleName} in order to use the Amount.toString()! " +
                         "Invoking method was: ${invokingTrace.toLabel()}")
@@ -118,6 +119,11 @@ enum class AmountType(
     Giga("g", 3),
     Tera("t", 4);
 
+    companion object {
+        val valuesButSingle get() = values().drop(1)
+    }
+
+    val regexp = Regex("""(\d+)($sign)""")
     val thousands = if (thousandFactor == 0) 0 else Math.pow(1_000.0, thousandFactor.toDouble()).toLong()
     val limit = Math.pow(1_000.0, thousandFactor + 1.0).toLong()
 }

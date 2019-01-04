@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.github.christophpickl.derbauer.DEV_MODE_PROPERTY
+import mu.KotlinLogging.logger
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.AfterClass
@@ -30,6 +31,13 @@ class AmountTest {
     @AmountToStringAllowed
     fun `Given annotated method When invoking toString Then dont throw`() {
         Amount(1).toString()
+    }
+
+    fun `When log amount using toString Then succeed`() {
+        val log = logger {}
+        var logSucceeded = false
+        log.debug { Amount(1).toString(); logSucceeded = true; "" }
+        assertThat(logSucceeded).isTrue()
     }
 
     // @formatter:off

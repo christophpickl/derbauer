@@ -4,4 +4,4 @@ package com.github.christophpickl.derbauer.misc
 fun Any?.enforceWhenBranches() {
 }
 
-fun StackTraceElement.toLabel() = "$className.$methodName():$lineNumber"
+fun StackTraceElement.toLabel() = "$className#$methodName():$lineNumber"

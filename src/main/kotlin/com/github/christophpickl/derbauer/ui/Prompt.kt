@@ -1,37 +1,10 @@
 package com.github.christophpickl.derbauer.ui
 
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
+import com.github.christophpickl.derbauer.model.AmountType
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.misc.Dispatcher
 import com.github.christophpickl.kpotpourri.common.misc.DispatcherListener
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-
-interface PromptListener : DispatcherListener {
-    fun onTextChange(text: String)
-    fun onEnter(input: PromptInput)
-}
-
-sealed class PromptInput {
-    companion object {
-        // FIXME input amount can be entered as "1k"
-        fun by(text: String) = if (text.isEmpty()) Empty else Number(text.toLong())
-    }
-
-    object Empty : PromptInput() {
-        override fun toString() = "Empty"
-    }
-
-    class Number(val number: Long) : PromptInput() {
-        override fun toString() = "Number{$number}"
-    }
-}
-
-enum class PromptMode {
-    Off,
-    Enter,
-    Input
-}
 
 class Prompt : KeyboardListener {
 
@@ -45,7 +18,7 @@ class Prompt : KeyboardListener {
             }
             PromptMode.Enter -> {
                 if (event == KeyboardEvent.Enter) {
-                    dispatcher.dispatch { onEnter(PromptInput.Empty) }
+                    dispatcher.dispatch { onEnter(RawPromptInput.Empty) }
                 } else {
                     // ignore
                 }
@@ -61,7 +34,9 @@ class Prompt : KeyboardListener {
             KeyboardEvent.Enter -> {
                 val text = enteredText
                 enteredText = ""
-                dispatcher.dispatch { onEnter(PromptInput.by(text)) }
+                dispatcher.dispatch {
+                    onEnter(RawPromptInput.by(text))
+                }
             }
             KeyboardEvent.Backspace -> {
                 if (enteredText.isEmpty()) {
@@ -79,33 +54,64 @@ class Prompt : KeyboardListener {
     }
 }
 
-interface KeyboardListener : DispatcherListener {
-    fun onKeyboard(event: KeyboardEvent)
+interface PromptListener : DispatcherListener {
+    fun onTextChange(text: String)
+    fun onEnter(input: RawPromptInput)
 }
 
-sealed class KeyboardEvent {
-    object Enter : KeyboardEvent()
-    object Backspace : KeyboardEvent()
-    class Input(val digit: Int) : KeyboardEvent()
-}
+sealed class PromptInput {
 
-class Keyboard : KeyAdapter() {
-
-    val dispatcher = Dispatcher<KeyboardListener>()
-
-    override fun keyPressed(e: KeyEvent) {
-        if (e.keyCode == KeyEvent.VK_ENTER) {
-            dispatcher.dispatch { onKeyboard(KeyboardEvent.Enter) }
-        } else if (e.keyCode == KeyEvent.VK_BACK_SPACE) {
-            dispatcher.dispatch { onKeyboard(KeyboardEvent.Backspace) }
-        }
+    object Empty : PromptInput() {
+        override fun toString() = "Empty"
     }
 
-    override fun keyTyped(e: KeyEvent) {
-        if (e.isDigit) {
-            dispatcher.dispatch { onKeyboard(KeyboardEvent.Input(e.keyChar.toString().toInt())) }
+    data class Number(val number: Long) : PromptInput() {
+        override fun toString() = "Number{$number}"
+    }
+
+}
+
+sealed class RawPromptInput {
+
+    companion object {
+        fun by(text: String): RawPromptInput = if (text.isEmpty()) {
+            Empty
+        } else {
+            parse(text)?.let {
+                Number(it)
+            } ?: Invalid(text)
         }
+
+        private fun parse(text: String): Long? {
+            text.toLongOrNull()?.let {
+                return it
+            }
+            return AmountType.valuesButSingle.mapNotNull { type ->
+                type.regexp.matchEntire(text)?.let {
+                    type to it
+                }
+            }.firstOrNull()?.let { (type, match) ->
+                match.groupValues[1].toLong() * type.thousands
+            }
+        }
+
+    }
+
+    object Empty : RawPromptInput() {
+        override fun toString() = "Empty"
+    }
+
+    data class Number(val number: Long) : RawPromptInput() {
+        override fun toString() = "Number{$number}"
+    }
+
+    data class Invalid(val entered: String) : RawPromptInput() {
+        override fun toString() = "Invalid{$entered}"
     }
 }
 
-private val KeyEvent.isDigit get() = keyChar.category == CharCategory.DECIMAL_DIGIT_NUMBER
+enum class PromptMode {
+    Off,
+    Enter,
+    Input
+}
