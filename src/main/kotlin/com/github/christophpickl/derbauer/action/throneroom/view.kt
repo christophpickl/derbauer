@@ -12,22 +12,19 @@ import com.github.christophpickl.derbauer.ui.view.YesNoCallback
 import com.github.christophpickl.derbauer.ui.view.YesNoChooseView
 import com.github.christophpickl.kpotpourri.common.string.times
 
-class ThroneRoomView(
-    private val visitor: ThroneRoomVisitor
-) : ChooseView<ThroneRoomChoice>(
+class ThroneRoomView<C : ThroneRoomChoice>(
+    private val visitor: ThroneRoomVisitor<C>
+) : ChooseView<C>(
     messages = listOf(visitor.message),
     choices = visitor.choices,
     cancelSupport = CancelSupport.Disabled
 ) {
-    override fun onCallback(callback: ViewCallback, choice: ThroneRoomChoice) {
+    override fun onCallback(callback: ViewCallback, choice: C) {
         callback.onThroneRoomChoice(visitor, choice)
     }
 }
 
-class ThroneRoomChoice(
-    val id: Int,
-    override val label: String
-) : Choice
+interface ThroneRoomChoice : Choice
 
 class ThroneRoomEmptyView(
     responseFromPreviousVisitor: String? = null

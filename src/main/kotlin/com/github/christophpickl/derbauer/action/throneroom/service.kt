@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.action.throneroom
 
+import com.github.christophpickl.derbauer.action.throneroom.visitors.GeneralVisitor
+import com.github.christophpickl.derbauer.action.throneroom.visitors.PoorBoyVisitor
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.view.YesNo
 import com.github.christophpickl.derbauer.ui.view.YesNoCallback
@@ -8,9 +10,9 @@ import mu.KotlinLogging.logger
 class ThroneRoomService : YesNoCallback {
     private val log = logger {}
 
-    private val possibleVisitors: List<ThroneRoomVisitor> = listOf(
+    private val possibleVisitors: List<ThroneRoomVisitor<out ThroneRoomChoice>> = listOf(
         PoorBoyVisitor(),
-        GeneralDemandVisitor()
+        GeneralVisitor()
     )
 
     fun enter() {
@@ -27,7 +29,7 @@ class ThroneRoomService : YesNoCallback {
         Model.currentView = ThroneRoomView(visitor)
     }
 
-    fun choosen(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice) {
+    fun <C : ThroneRoomChoice> choosen(visitor: ThroneRoomVisitor<C>, choice: C) {
         val response = visitor.choose(choice)
         if (Model.actions.visitorsWaitingInThroneRoom == 0) {
             Model.currentView = ThroneRoomEmptyView(response)
@@ -47,4 +49,11 @@ class ThroneRoomService : YesNoCallback {
         }
     }
 
+}
+
+interface ThroneRoomVisitor<C : ThroneRoomChoice> {
+    val message: String
+    val choices: List<C>
+    fun condition(): Boolean
+    fun choose(choice: C): String
 }

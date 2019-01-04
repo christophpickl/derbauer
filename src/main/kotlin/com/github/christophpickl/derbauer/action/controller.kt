@@ -2,7 +2,6 @@ package com.github.christophpickl.derbauer.action
 
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomChoice
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomService
-import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
 
 class ActionController : ActionCallback, OnSpecificAction {
 
@@ -16,7 +15,7 @@ class ActionController : ActionCallback, OnSpecificAction {
         throneRoom.enter()
     }
 
-    override fun onThroneRoomChoice(visitor: ThroneRoomVisitor, choice: ThroneRoomChoice) {
+    override fun <C : ThroneRoomChoice> onThroneRoomChoice(visitor: ThroneRoomVisitor<C>, choice: C) {
         throneRoom.choosen(visitor, choice)
     }
 
