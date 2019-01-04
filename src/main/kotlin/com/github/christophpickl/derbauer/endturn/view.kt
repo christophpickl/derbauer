@@ -2,10 +2,12 @@ package com.github.christophpickl.derbauer.endturn
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.AsciiArt
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.PromptMode
 import com.github.christophpickl.derbauer.ui.view.InfoView
+import com.github.christophpickl.kpotpourri.common.string.times
 
 class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
     companion object {
@@ -19,11 +21,17 @@ class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
                 notificationsMessage
         }
 
-        // TODO properly format: add left padding; add plus sign for change value
-        private fun formatGrowth(label: String, line: EndTurnReportLine) =
-            "$label: ${line.oldValue.formatted} => " +
-                "${line.change.formatted} => " +
-                line.newValue.formatted
+        private fun formatGrowth(label: String, line: EndTurnReportLine) = "$label: " +
+            "${line.oldValue.format()} => " +
+            "${line.change.format(addPlus = true)} => " +
+            line.newValue.format()
+
+        private fun Amount.format(addPlus: Boolean = false): String {
+            val stringly = "${if (addPlus && real > 0) "+" else ""}$formatted"
+            // e.g.: "+999k"
+            val stringSize = if (addPlus) 5 else 4
+            return " ".times(stringSize - stringly.length) + stringly
+        }
     }
 
     override fun onCallback(callback: ViewCallback, input: PromptInput) {
