@@ -17,7 +17,7 @@ class UpgradeView : ChooseView<UpgradeChoice>(
     cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
     override fun onCallback(callback: ViewCallback, choice: UpgradeChoice) {
-        callback.doUpgrade(choice)
+        callback.doUpgrade(choice.upgrade)
     }
 }
 
@@ -31,5 +31,5 @@ data class UpgradeChoice(
 }
 
 interface UpgradeCallback {
-    fun doUpgrade(choice: UpgradeChoice)
+    fun doUpgrade(upgrade: Upgrade)
 }

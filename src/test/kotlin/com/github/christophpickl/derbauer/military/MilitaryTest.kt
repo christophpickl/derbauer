@@ -73,7 +73,7 @@ class MilitaryTest {
 
     fun `Given a bit more people than needed When build Then some people left because rounded people is used`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
-        unit.costsPeople = Amount(1_000)
+        unit.costsPeople = Amount(1_010)
         Model.people = Amount(1_042)
 
         hire(unit, 1)

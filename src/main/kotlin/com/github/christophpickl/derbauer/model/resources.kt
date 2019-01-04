@@ -28,8 +28,8 @@ interface BuyAndSellableResource : Resource, BuyAndSellable {
     var buyPriceModifier: Double
     var sellPriceModifier: Double
 
-    val effectiveBuyPrice get() = buyPrice * buyPriceModifier
-    val effectiveSellPrice get() = sellPrice * sellPriceModifier
+    val effectiveBuyPrice get() = Amount((buyPrice.rounded * buyPriceModifier).toLong())
+    val effectiveSellPrice get() = Amount((sellPrice.rounded * sellPriceModifier).toLong()) 
 
     override val buyDescription get() = "${effectivePriceFor(BuySell.Buy).formatted} gold"
     override val sellDescription get() = "${effectivePriceFor(BuySell.Sell).formatted} gold"

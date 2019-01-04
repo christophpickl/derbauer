@@ -52,7 +52,6 @@ class BuildTest {
         building hasSameAmountAs 1
     }
 
-    // FIXME check this for trade/upgrade as well
     fun `Given not really enough gold When build Then succeed because rounded price used`() {
         Model.land = building.landNeeded
         building.buyPrice = Amount(1_999)
@@ -66,7 +65,7 @@ class BuildTest {
 
     fun `Given a bit more gold than needed When build Then some gold left because rounded price is used`() {
         Model.land = building.landNeeded
-        building.buyPrice = Amount(1_000)
+        building.buyPrice = Amount(1_010)
         Model.gold = Amount(1_042)
 
         build(building)
