@@ -12,6 +12,7 @@ import com.github.christophpickl.derbauer.ui.view.ChooseView
 import com.github.christophpickl.derbauer.ui.view.InputView
 
 class TradeView : ChooseView<TradeableChoice>(
+    choosePrompt = "What do you want to trade?",
     messages = Texts.tradeMessages,
     choices = Model.player.resources.allTradeables.flatMap {
         listOf(TradeableChoice(it, BuySell.Buy), TradeableChoice(it, BuySell.Sell))

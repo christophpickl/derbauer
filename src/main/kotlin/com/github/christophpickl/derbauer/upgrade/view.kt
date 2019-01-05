@@ -10,6 +10,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class UpgradeView : ChooseView<UpgradeChoice>(
+    choosePrompt = "What do you want to upgrade?",
     messages = Texts.upgradeMessages,
     choices = Model.player.upgrades.all.map {
         UpgradeChoice(it)

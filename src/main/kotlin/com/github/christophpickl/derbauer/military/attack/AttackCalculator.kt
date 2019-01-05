@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.RandomService
 import com.github.christophpickl.kpotpourri.common.random.RealRandomService
-import mu.KotlinLogging
+import mu.KotlinLogging.logger
 import kotlin.random.Random
 
 class AttackCalculator(
@@ -12,7 +12,7 @@ class AttackCalculator(
     private val random: RandomService = RealRandomService
 ) {
 
-    private val log = KotlinLogging.logger {}
+    private val log = logger {}
 
     fun nextBattleWon(): Boolean {
         var playerRange = 0.5
@@ -20,7 +20,7 @@ class AttackCalculator(
         playerRange *= playerUnit.attackModifier
         val rand = Random.nextDouble(0.0, 1.0)
         val playerWon = rand < playerRange
-        log.trace { "rand (${String.format("%0.2f", rand)}) < playerRange ($playerRange) => player won: $playerWon" }
+        log.trace { "rand (${String.format("%.2f", rand)}) < playerRange ($playerRange) => player won: $playerWon" }
         if (playerWon) {
             context.enemies--
         } else {

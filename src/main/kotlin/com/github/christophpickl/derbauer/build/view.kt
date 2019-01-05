@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class BuildView : ChooseView<BuildChoice>(
+    choosePrompt = "What do you want to build?",
     messages = Texts.buildMessages,
     choices = Model.player.buildings.all.map {
         BuildChoice(it)

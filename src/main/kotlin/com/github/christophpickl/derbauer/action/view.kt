@@ -11,6 +11,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class ActionView : ChooseView<ActionChoice>(
+    choosePrompt = "What do you want to do?",
     messages = Texts.actionMessages,
     choices = Model.actions.all.map { ActionChoice(it) },
     cancelSupport = CancelSupport.Enabled { HomeView() }

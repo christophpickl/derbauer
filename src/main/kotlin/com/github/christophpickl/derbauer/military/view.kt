@@ -10,6 +10,7 @@ import com.github.christophpickl.derbauer.ui.view.ChooseView
 import com.github.christophpickl.derbauer.ui.view.InputView
 
 class MilitaryView : ChooseView<MilitaryChoice>(
+    choosePrompt = "Whom to attack today?",
     messages = Texts.militaryMessages,
     choices = mutableListOf<MilitaryChoice>(
         MilitaryChoice.Attack

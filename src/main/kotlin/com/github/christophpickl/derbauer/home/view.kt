@@ -9,6 +9,7 @@ import com.github.christophpickl.derbauer.ui.view.EnumChoice
 import java.util.*
 
 class HomeView : ChooseView<HomeChoice>(
+    choosePrompt = "What is your concern?",
     messages = Texts.homeMessages,
     choices = LinkedList<HomeChoice>().apply {
         this += EnumChoice(HomeEnum.Trade, "Trade")

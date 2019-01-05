@@ -8,7 +8,7 @@ class ValuesResources {
     val foodBuyPrice = Amount(4)
     val foodSellPrice = Amount(2)
     val food = Amount(if (CHEAT_MODE) 400 else 50)
-    val people = Amount(if (CHEAT_MODE) 9 else 2)
+    val people = Amount(if (CHEAT_MODE) 10 else 2)
     val land = Amount(if (CHEAT_MODE) 100 else 10)
     val landBuyPrice = Amount(50)
     val landSellPrice = Amount(40)
@@ -34,13 +34,13 @@ class ValuesBuildings {
     )
     val granaryFoodCapacity = Amount(250)
     val barrack = ValueBuilding(
-        realAmount = if (CHEAT_MODE) 0 else 0,
+        realAmount = if (CHEAT_MODE) 3 else 0,
         realLandNeeded = 1,
         realBuyPrice = 100
     )
     val barrackMilitaryCapacity = Amount(10)
     val castles = ValueBuilding(
-        realAmount = if (CHEAT_MODE) 0 else 0,
+        realAmount = if (CHEAT_MODE) 1 else 0,
         realLandNeeded = 4,
         realBuyPrice = 300
     )

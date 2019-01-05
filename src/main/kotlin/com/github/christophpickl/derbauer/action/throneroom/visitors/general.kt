@@ -6,9 +6,9 @@ import com.github.christophpickl.derbauer.model.Model
 import kotlin.random.Random
 
 class GeneralVisitor : ThroneRoomVisitor<GeneralChoice> {
-
     override fun condition() = Model.player.militaries.soldiers.amount > 0
     override val message = "A general enters, demanding a soldier to join his personal guard."
+    override val choosePrompt = "Do you agree with his wish?"
     override val choices = listOf(
         GeneralChoice(GeneralDecision.Agree),
         GeneralChoice(GeneralDecision.Decline)

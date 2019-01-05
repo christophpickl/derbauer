@@ -1,6 +1,5 @@
 # with seraphine
 
-* statt "choose" spezifischer titel
 * feedback bei aktion (zb gebaeude gebaut)
 * cancel aktion (mit gleich enter) irgendwo erklaeren
 * gebaeude abreissen: kostet gold

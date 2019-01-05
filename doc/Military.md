@@ -14,6 +14,8 @@ Properties:
 * hire people == upcome people
 * upcome gold
 * att/def
+* global military expertize
+    - each time attack, it increases and leads to improved global att/def
 
 ## Examples
 

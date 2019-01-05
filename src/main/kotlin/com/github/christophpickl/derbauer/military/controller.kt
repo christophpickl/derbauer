@@ -35,7 +35,7 @@ class MilitaryController(
 
     private fun prepareAttack() {
         if (Model.player.militaries.totalAmount.isZero) {
-            Alert.show(AlertType.NoMilitary)
+            Alert.show(AlertType.NoArmy)
             return
         }
         val context = AttackContext(

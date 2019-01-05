@@ -2,7 +2,7 @@ package com.github.christophpickl.derbauer.data
 
 object Texts {
     val homeMessages = listOf(
-        "What are we up to today?",
+        "Looking like a great day today.",
         "What can I do for you, master?",
         "Your wish is my command."
     )
