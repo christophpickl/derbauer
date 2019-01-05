@@ -6,7 +6,8 @@ import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
 
 class GoldBagHappening : Happening(
-    cooldownDays = 7
+    cooldownDays = 7,
+    nature = HappeningNature.Positive
 ) {
     private val goldBagSizes = randomListOf(
         10L to 60,
@@ -30,7 +31,8 @@ class GoldBagHappening : Happening(
 
 
 class RatsHappening : Happening(
-    cooldownDays = 14
+    cooldownDays = 14,
+    nature = HappeningNature.Negative
 ) {
 
     private val eatenSizes = randomListOf(

@@ -2,8 +2,10 @@ package com.github.christophpickl.derbauer.action.throneroom.visitors
 
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomChoice
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
+import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.kpotpourri.common.math.KMath
 import kotlin.random.Random
 
 class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
@@ -18,11 +20,11 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
     override val choosePrompt = "How do you feel about that boy, my lord?"
 
     override val choices = listOf(
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[0], PoorBoyMoneySize.Little)),
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[1], PoorBoyMoneySize.Medium)),
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[2], PoorBoyMoneySize.Much)),
-        PoorBoyChoice(PoorBoyDecision.SendAwayDecision),
-        PoorBoyChoice(PoorBoyDecision.ThrowDungeonDecision)
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[0], PoorBoyMoneySize.Little), karmaEffect = Values.karma.throneRoom.boyMoneyLittle),
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[1], PoorBoyMoneySize.Medium), karmaEffect = Values.karma.throneRoom.boyMoneyMedium),
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[2], PoorBoyMoneySize.Much), karmaEffect = Values.karma.throneRoom.boyMoneyMuch),
+        PoorBoyChoice(PoorBoyDecision.SendAwayDecision, karmaEffect = Values.karma.throneRoom.boySendAway),
+        PoorBoyChoice(PoorBoyDecision.ThrowDungeonDecision, karmaEffect = Values.karma.throneRoom.boyThrowDungeon)
     )
 
     override fun choose(choice: PoorBoyChoice) =
@@ -30,7 +32,9 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
             is PoorBoyDecision.GiveMoneyDecision -> {
                 giveMoney(choice.decision)
             }
-            PoorBoyDecision.SendAwayDecision -> "You greedy bastard."
+            PoorBoyDecision.SendAwayDecision -> {
+                "You greedy bastard."
+            }
             PoorBoyDecision.ThrowDungeonDecision -> {
                 Model.people -= 1
                 "Your people gonna hate you for this."
@@ -40,15 +44,14 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
     private fun giveMoney(decision: PoorBoyDecision.GiveMoneyDecision): String {
         Model.gold -= decision.amount
 
-        val probReward = when (decision.size) {
+        val probabilityReward = when (decision.size) {
             PoorBoyMoneySize.Little -> 0.05
             PoorBoyMoneySize.Medium -> 0.15
             PoorBoyMoneySize.Much -> 0.4
-        }
-        val isRewardGranted = Random.nextDouble(0.0, 1.0) < probReward
-        return if (isRewardGranted) {
+        } + KMath.max(Model.global.karma / 10, 0.2)
+        return if (Random.nextDouble() < probabilityReward) {
             Model.land += 5
-            "Because of your generosity you get 5 land :)"
+            "Because of your generosity you get 5 land for free."
         } else {
             "The kid thankfully takes the ${decision.amount.formatted} gold and quickly leaves the room."
         }
@@ -56,7 +59,8 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
 }
 
 class PoorBoyChoice(
-    val decision: PoorBoyDecision
+    val decision: PoorBoyDecision,
+    override val karmaEffect: Double
 ) : ThroneRoomChoice {
     override val label: String = decision.label
 }

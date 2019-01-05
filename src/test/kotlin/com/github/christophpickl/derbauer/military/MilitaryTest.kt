@@ -12,11 +12,27 @@ import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
 
+abstract class BaseMilitaryTest {
+    private val renderer = mock<Renderer>()
+
+    protected val unit get() = Model.player.militaries.soldiers
+
+    protected fun hire(toHire: Military, amount: Long) {
+        MilitaryController(renderer).doHire(toHire, amount)
+    }
+
+    protected fun ensureEnoughGoldPeopleCapacityAndUpgrade(army: Military) {
+        Model.gold = unit.buyPrice
+        Model.people = army.costsPeople + 1
+        Model.player.buildings.barracks.amount = Amount(1)
+        Model.player.upgrades.militaryUpgrade.setToMaxLevel()
+        Model.features.checkAndNotifyAll()
+    }
+}
+
 @Test
 @Listeners(TestModelListener::class)
-class MilitaryTest {
-
-    private val renderer = mock<Renderer>()
+class MilitaryTest : BaseMilitaryTest() {
 
     fun `Given all good but no military cap When hire Then not possible and dont hire`() {
         Model.gold = unit.buyPrice
@@ -29,14 +45,18 @@ class MilitaryTest {
         unit hasSameAmountAs 0
     }
 
-
     fun `Given all good When hire Then possible and hire`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
-        assertThat(unit.effectiveBuyPossibleAmount).isAmountEqualTo(1)
 
         hire(unit, 1)
 
         unit hasSameAmountAs 1
+    }
+
+    fun `Given all good Then effective buy possible is 1`() {
+        ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
+
+        assertThat(unit.effectiveBuyPossibleAmount).isAmountEqualTo(1)
     }
 
     fun `Given not really enough gold When hire Then succeed because rounded price used`() {
@@ -79,19 +99,6 @@ class MilitaryTest {
         hire(unit, 1)
 
         assertThat(Model.people.real).isEqualTo(42)
-    }
-
-    private val unit get() = Model.player.militaries.soldiers
-
-    private fun hire(toHire: Military, amount: Long) {
-        MilitaryController(renderer).doHire(toHire, amount)
-    }
-
-    private fun ensureEnoughGoldPeopleCapacityAndUpgrade(military: Military) {
-        Model.gold = unit.buyPrice
-        Model.people = military.costsPeople + 1
-        Model.player.buildings.barracks.amount = Amount(1)
-        Model.player.upgrades.militaryUpgrade.setToMaxLevel()
     }
 
 }

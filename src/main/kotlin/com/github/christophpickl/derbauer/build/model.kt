@@ -60,7 +60,6 @@ interface FoodProducingBuilding : Building {
 interface MilitaryCapacityBuilding : Building {
     var militaryCapacity: Amount
     val totalMilitaryCapacity get() = militaryCapacity * amount
-
 }
 
 class HouseBuilding : AbstractBuilding(

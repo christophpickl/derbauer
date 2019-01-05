@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.endturn
 
+import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.RandomService
@@ -24,11 +25,11 @@ class EndTurnExecutor(
         Model.global.day++
         Model.actions.visitorsWaitingInThroneRoom += random.nextInt(0, Math.max(2, (Model.people.real / 100.0 * 1).toInt()))
 
-        Model.features.all.forEach {
-            it.checkAndNotify()
-        }
-        val notifications = Model.notifications.consumeAll()
+        Model.features.checkAndNotifyAll()
         
+        val notifications = Model.notifications.consumeAll()
+        adjustKarma()
+
         return EndTurnReport(
             goldIncome = goldIncome,
             foodIncome = foodIncome,
@@ -84,6 +85,28 @@ class EndTurnExecutor(
         calc *= random.nextDouble(0.8, 1.6)
         log.trace { "Gold calc: $calc (people=${Model.people} * rate=${Model.global.peopleGoldRate})" }
         return calc
+    }
+
+    private fun adjustKarma() {
+        val currentKarma = Model.global.karma
+        if (currentKarma == 0.0) {
+            return
+        }
+        val balancer = Values.karma.karmaTurnBalancer
+        if (currentKarma > 0.0) {
+            if (currentKarma <= balancer) {
+                Model.global.karma = 0.0
+            } else {
+                Model.global.karma -= balancer
+            }
+        }
+        if (currentKarma < 0.0) {
+            if (currentKarma >= -balancer) {
+                Model.global.karma = 0.0
+            } else {
+                Model.global.karma += balancer
+            }
+        }
     }
 
     private fun limitCalcMax(calc: Amount, current: Amount, max: Amount) =

@@ -87,8 +87,8 @@ class ValuesAchievements {
 }
 
 class ValuesHappenings {
-    val turnsCooldown = 10
-    val baseProbability = 0.1
+    val turnsCooldown = if (CHEAT_MODE) 1 else 10
+    val baseProbability = if (CHEAT_MODE) 0.9 else 0.1
 }
 
 class ValuesActions {
@@ -114,6 +114,23 @@ class ValuesGlobals {
     val peopleGoldRate: Double = 0.9
 }
 
+class ValuesKarma {
+    val initial = 0.0
+    val karmaTurnBalancer = 0.02
+    val throneRoom = ValuesKarmaThroneRoom()
+}
+
+class ValuesKarmaThroneRoom {
+    val boyMoneyLittle = 0.1
+    val boyMoneyMedium = 0.2
+    val boyMoneyMuch = 0.3
+    val boySendAway = -0.1
+    val boyThrowDungeon = -0.4
+
+    val generalAgree = 0.3
+    val generalDecline = -0.1
+}
+
 // =====================================================================================================================
 
 object Values {
@@ -126,6 +143,7 @@ object Values {
     val actions = ValuesActions()
     val features = ValuesFeatures()
     val globals = ValuesGlobals()
+    val karma = ValuesKarma()
 }
 
 class ValueBuilding(

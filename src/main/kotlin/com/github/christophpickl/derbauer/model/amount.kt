@@ -50,12 +50,12 @@ data class Amount(
             }
     }
 
-    val type: AmountType = whichType(real)
-    val rounded: Long get() = round(type, real)
+    @get:JsonIgnore val type: AmountType = whichType(real)
+    @get:JsonIgnore val rounded: Long get() = round(type, real)
     val formatted: String get() = format(type, rounded)
 
-    @JsonIgnore val isZero = real == 0L
-    @JsonIgnore val isNotZero = real != 0L
+    @get:JsonIgnore val isZero = real == 0L
+    @get:JsonIgnore val isNotZero = real != 0L
 
     operator fun plus(other: Amount) = Amount(real + other.real)
     operator fun minus(other: Amount) = Amount(real - other.real)

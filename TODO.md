@@ -1,8 +1,3 @@
-# with seraphine
-
-* feedback bei aktion (zb gebaeude gebaut)
-* cancel aktion (mit gleich enter) irgendwo erklaeren
-* gebaeude abreissen: kostet gold
 
 # major
 
@@ -34,6 +29,9 @@
 * very detailed end-turn report (was weg/was dazu, warum/woher)
     - aus verschiedene bereiche/sectioned (economic, military, ...)
     - gibt stats aus ueber production/upcome/.../achievements/...
+* feedback bei aktion (zb gebaeude gebaut)
+* cancel aktion (mit gleich enter) irgendwo erklaeren
+* gebaeude abreissen: kostet gold
 
 ## I/O
 

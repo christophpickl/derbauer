@@ -22,7 +22,7 @@ class Happener {
         GoldBagHappening(),
         RatsHappening()
     )
-    
+
     private var turnsNothingHappened = 999
     private val baseProb = Values.happenings.baseProbability
 
@@ -31,9 +31,10 @@ class Happener {
 
         val prob = Math.min(baseProb, (baseProb / Values.happenings.turnsCooldown * turnsNothingHappened))
         log.trace { "Happening probability: $prob (turns quiet: $turnsNothingHappened)" }
-        if (Random.nextDouble(0.0, 1.0) < prob) {
+        if (Random.nextDouble() < prob) {
             turnsNothingHappened = 0
-            val happening = happenings.sortedBy { it.currentCooldown }.first()
+            val nature = determineNature()
+            val happening = happenings.filter { it.nature == nature }.sortedBy { it.currentCooldown }.first()
             return HappeningView(happening.execute())
         }
 
@@ -41,11 +42,17 @@ class Happener {
         return null
     }
 
+    private fun determineNature(): HappeningNature {
+        val rand = Random.nextDouble() + Model.global.karma
+        return if (rand >= 0.5) HappeningNature.Positive else HappeningNature.Negative
+    }
+
 }
 
 
 abstract class Happening(
-    val cooldownDays: Int
+    val cooldownDays: Int,
+    val nature: HappeningNature
 ) {
 
     var currentCooldown = 0
@@ -62,4 +69,9 @@ abstract class Happening(
             currentCooldown--
         }
     }
+}
+
+enum class HappeningNature {
+    Positive,
+    Negative
 }

@@ -14,6 +14,12 @@ class Features {
 
     @JsonIgnore val all = building.all.plus(military.all).plus(upgrade.all).plus(action.all)
 
+    fun checkAndNotifyAll() {
+        all.forEach {
+            it.checkAndNotify()
+        }
+    }
+    
     override fun toString() = Stringifier.stringify(this)
 }
 

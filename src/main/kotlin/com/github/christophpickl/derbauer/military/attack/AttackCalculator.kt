@@ -2,6 +2,7 @@ package com.github.christophpickl.derbauer.military.attack
 
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.kpotpourri.common.math.KMath
 import com.github.christophpickl.kpotpourri.common.random.RandomService
 import com.github.christophpickl.kpotpourri.common.random.RealRandomService
 import mu.KotlinLogging.logger
@@ -14,12 +15,12 @@ class AttackCalculator(
 
     private val log = logger {}
 
-    fun nextBattleWon(): Boolean {
+    fun fightBattle(): BattleResult {
         var playerRange = 0.5
         val playerUnit = Model.player.militaries.all.filter { it.amount > 0 }.random()
         playerRange *= playerUnit.attackModifier
-        val rand = Random.nextDouble(0.0, 1.0)
-        val playerWon = rand < playerRange
+        val rand = Random.nextDouble()
+        val playerWon = rand < (playerRange + KMath.max(KMath.min((Model.global.karma / 20), -0.1), 0.1))
         log.trace { "rand (${String.format("%.2f", rand)}) < playerRange ($playerRange) => player won: $playerWon" }
         if (playerWon) {
             context.enemies--
@@ -27,7 +28,7 @@ class AttackCalculator(
             playerUnit.amount--
             log.trace { "Killed: ${playerUnit.label} (amount left: ${playerUnit.amount})" }
         }
-        return playerWon
+        return if (playerWon) BattleResult.Won else BattleResult.Lost
     }
 
     fun applyEndResult(): AttackResult {
@@ -50,4 +51,9 @@ class AttackCalculator(
 
     fun isAttackOver() = Model.player.militaries.totalAmount.isZero || context.enemies.isZero
 
+}
+
+enum class BattleResult {
+    Won,
+    Lost
 }

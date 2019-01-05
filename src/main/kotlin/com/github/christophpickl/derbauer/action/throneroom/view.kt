@@ -23,7 +23,9 @@ class ThroneRoomView<C : ThroneRoomChoice>(
     }
 }
 
-interface ThroneRoomChoice : Choice
+interface ThroneRoomChoice : Choice {
+    val karmaEffect: Double
+}
 
 class ThroneRoomEmptyView : InfoView(
     "The throne room is empty and no visitors are currently waiting for you, my lord.\n" +
