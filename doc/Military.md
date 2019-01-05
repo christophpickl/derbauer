@@ -34,6 +34,7 @@ Properties:
 * trap builder: +def, 0 att!
 * wizard
 * arch mage
+* scout: is a (non-army) military unit; to see when the next attack is approaching
 
 ## Attack
 

@@ -12,6 +12,7 @@ import com.github.christophpickl.derbauer.model.Entity
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
+import com.github.christophpickl.derbauer.model.PlayerEntity
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
 import com.github.christophpickl.derbauer.model.sumBy
@@ -23,13 +24,17 @@ data class Armies(
     var soldiers: Soldier = Soldier(),
     var knights: Knight = Knight(),
     var catapults: Catapult = Catapult()
-) {
+) : PlayerEntity {
 
     @get:JsonIgnore val all get() = propertiesOfType<Armies, Army>(this).ordered().filterConditional()
     inline fun <reified T : Army> filterAll() = all.filterIsInstance<T>()
     
     val totalAmount get() = all.sumBy { it.amount }
     val armyCapacityLeft get() = Model.player.buildings.totalArmyCapacity - totalAmount
+
+    override val wealth: Amount
+        get() = all.sumBy { it.amount * it.buyPrice }
+
 }
 
 interface Army : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered {

@@ -16,6 +16,8 @@
     * upcome costs
     * get via random events (happenings) depending on karma (and amount on wealth)
     * income influenced by upgrades/features/achievements
+    * it's not possible to get negative balance (only if contract exists with bank)
+        - if in minus (without bank contract): in end turn resources/buildings immediately gone until in positive again
 1. People
     * capacity, used (for buildings, kind of "upcome"??)
     * happyness: do something "nice" for people

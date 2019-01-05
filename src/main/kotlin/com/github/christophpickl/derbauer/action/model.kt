@@ -32,7 +32,7 @@ class ThroneRoomAction(
     override val label: String = "visit throne room"
 ) : Action {
 
-    override val order: Int = 0
+    @get:JsonIgnore override val order: Int = 0
     override val description
         get() = "${Model.actions.visitorsWaitingInThroneRoom} " +
             "visitor${if (Model.actions.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting"

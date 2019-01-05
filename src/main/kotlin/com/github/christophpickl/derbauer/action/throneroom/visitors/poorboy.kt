@@ -11,7 +11,9 @@ import kotlin.random.Random
 class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
 
     companion object {
-        private fun buildGoldAmounts() = listOf(Amount(1), Amount(10), Amount(100))
+        private fun buildGoldAmounts() = Values.actions.throneRoom.boyDemandsOfRelativeWealth.map {
+            Model.player.relativeWealthBy(it)
+        }
     }
 
     private val goldAmounts = buildGoldAmounts()
@@ -50,8 +52,10 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
             PoorBoyMoneySize.Much -> 0.4
         } + KMath.max(Model.global.karma / 10, 0.2)
         return if (Random.nextDouble() < probabilityReward) {
-            Model.land += 5
-            "Because of your generosity you get 5 land for free."
+            val reward = Amount(KMath.min(Values.actions.throneRoom.boyMinReward,
+                Model.player.relativeWealthBy(Values.actions.throneRoom.boyRewardRelativeWealth).real))
+            Model.land += reward
+            "Because of your generosity you get ${reward.formatted} land for free."
         } else {
             "The kid thankfully takes the ${decision.amount.formatted} gold and quickly leaves the room."
         }

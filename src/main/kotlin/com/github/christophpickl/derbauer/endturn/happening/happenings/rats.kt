@@ -1,48 +1,26 @@
-package com.github.christophpickl.derbauer.endturn.happening
+package com.github.christophpickl.derbauer.endturn.happening.happenings
 
 import com.github.christophpickl.derbauer.data.AsciiArt
+import com.github.christophpickl.derbauer.endturn.happening.Happening
+import com.github.christophpickl.derbauer.endturn.happening.HappeningNature
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
-
-class GoldBagHappening : Happening(
-    cooldownDays = 7,
-    nature = HappeningNature.Positive
-) {
-    private val goldBagSizes = randomListOf(
-        10L to 60,
-        20L to 30,
-        50L to 10
-    )
-
-    override fun internalExecute(): String {
-        val bagSize = goldBagSizes.randomElement()
-        Model.gold += bagSize
-        val message = """
-            You were lucky.
-            
-            While walking through the forrest you found a little, dirty bag 
-            on the ground next to a big tree. You open it up and ... It contains gold coins!""".trimIndent()
-        return "$message\n\n" +
-            "${AsciiArt.goldBag}\n\n" +
-            "+$bagSize Gold"
-    }
-}
-
 
 class RatsHappening : Happening(
     cooldownDays = 14,
     nature = HappeningNature.Negative
 ) {
 
-    private val eatenSizes = randomListOf(
-        10L to 60,
-        20L to 30,
-        30L to 10
+    private val eatenSizes = listOf(0.001, 0.003, 0.008).map { Model.player.relativeWealthBy(it) }
+    private val randomEatenSizes = randomListOf(
+        eatenSizes[0] to 60,
+        eatenSizes[1] to 30,
+        eatenSizes[2] to 10
     )
     
     override fun internalExecute(): String {
-        val eatenProposal = eatenSizes.randomElement()
+        val eatenProposal = randomEatenSizes.randomElement()
         val (message, foodEaten) = if (Model.food <= 0) {
             """
                 Lucky you, although there were some rats,
@@ -55,8 +33,9 @@ class RatsHappening : Happening(
                 Oh noes!!!
                 
                 Some of those nasty rats ate some of your food!
-            """.trimIndent() to Amount.minOf(Amount(eatenProposal), Model.food)
+            """.trimIndent() to Amount.minOf(eatenProposal, Model.food)
         }
+
         Model.food -= foodEaten
         return "$message\n\n" +
             "${AsciiArt.rat}\n\n" +

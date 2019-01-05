@@ -12,6 +12,7 @@ import com.github.christophpickl.derbauer.model.Entity
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
+import com.github.christophpickl.derbauer.model.PlayerEntity
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
 import com.github.christophpickl.derbauer.model.sumBy
@@ -24,7 +25,8 @@ data class Buildings(
     var granaries: GranaryBuilding = GranaryBuilding(),
     val castles: CastleBuilding = CastleBuilding(),
     val barracks: BarrackBuilding = BarrackBuilding()
-) {
+) : PlayerEntity {
+    
     @get:JsonIgnore val all get() = propertiesOfType<Buildings, Building>(this).ordered().filterConditional()
 
     inline fun <reified T : Building> filterAll() = all.filterIsInstance<T>()
@@ -34,6 +36,8 @@ data class Buildings(
     val totalFoodProduction get() = filterAll<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
     val totalPeopleCapacity get() = filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
     val totalArmyCapacity get() = filterAll<ArmyCapacityBuilding>().sumBy { it.totalArmyCapacity }
+
+    override val wealth: Amount get() = all.sumBy { it.amount * it.buyPrice }
 }
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Describable, Ordered {

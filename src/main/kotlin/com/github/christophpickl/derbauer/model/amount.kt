@@ -52,7 +52,7 @@ data class Amount(
 
     @get:JsonIgnore val type: AmountType = whichType(real)
     @get:JsonIgnore val rounded: Long get() = round(type, real)
-    val formatted: String get() = format(type, rounded)
+    @get:JsonIgnore val formatted: String get() = format(type, rounded)
 
     @get:JsonIgnore val isZero = real == 0L
     @get:JsonIgnore val isNotZero = real != 0L

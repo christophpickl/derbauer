@@ -93,6 +93,16 @@ class ValuesHappenings {
 
 class ValuesActions {
     val visitorsWaitingInThroneRoom = if (CHEAT_MODE) 5 else 0
+    val throneRoom = ValuesThroneRoom()
+}
+
+class ValuesThroneRoom {
+    val generalRewardLandRelativeWealth = 0.001
+    val generalMinReward = 200L
+
+    val boyDemandsOfRelativeWealth = listOf(0.004, 0.01, 0.03)
+    val boyRewardRelativeWealth = 0.0001
+    val boyMinReward = 5L
 }
 
 class ValuesFeatures {

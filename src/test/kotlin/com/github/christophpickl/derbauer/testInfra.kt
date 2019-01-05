@@ -40,6 +40,21 @@ fun Model.reset() {
     notifications = Notifications()
 }
 
+fun Model.nullify() {
+    player.resources.all.forEach {
+        it.amount = Amount.zero
+    }
+    player.buildings.all.forEach {
+        it.amount = Amount.zero
+    }
+    player.upgrades.all.forEach {
+        it.currentLevel = 0
+    }
+    player.armies.all.forEach {
+        it.amount = Amount.zero
+    }
+}
+
 infix fun Amountable.hasSameAmountAs(expected: Long) {
     assertThat(amount.real).isEqualTo(expected)
 }

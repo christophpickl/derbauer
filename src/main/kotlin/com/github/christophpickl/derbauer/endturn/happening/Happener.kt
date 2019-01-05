@@ -2,6 +2,8 @@ package com.github.christophpickl.derbauer.endturn.happening
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.endturn.happening.happenings.GoldBagHappening
+import com.github.christophpickl.derbauer.endturn.happening.happenings.RatsHappening
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.view.InfoView

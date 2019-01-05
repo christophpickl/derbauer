@@ -14,9 +14,16 @@ data class Resources(
     var food: FoodResource = FoodResource(),
     var people: PeopleResource = PeopleResource(),
     var land: LandResource = LandResource()
-) {
+) : PlayerEntity {
+    
     @JsonIgnore val all = propertiesOfType<Resources, AbstracteResource>(this).ordered()
     @get:JsonIgnore val allTradeables get() = filterAll<BuyAndSellableResource>()
+
+    override val wealth: Amount
+        get() = gold.amount +
+            food.amount * Values.resources.foodBuyPrice +
+            people.amount * 10 +
+            land.amount * Values.resources.landBuyPrice
 
     inline fun <reified T : Resource> filterAll() = all.filterIsInstance<T>()
 }
@@ -29,7 +36,7 @@ interface BuyAndSellableResource : Resource, BuyAndSellable {
     var sellPriceModifier: Double
 
     val effectiveBuyPrice get() = Amount((buyPrice.rounded * buyPriceModifier).toLong())
-    val effectiveSellPrice get() = Amount((sellPrice.rounded * sellPriceModifier).toLong()) 
+    val effectiveSellPrice get() = Amount((sellPrice.rounded * sellPriceModifier).toLong())
 
     override val buyDescription get() = "${effectivePriceFor(BuySell.Buy).formatted} gold"
     override val sellDescription get() = "${effectivePriceFor(BuySell.Sell).formatted} gold"

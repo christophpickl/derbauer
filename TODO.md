@@ -18,7 +18,11 @@
 * (1) - HAPPENING: make bag sizes depend on current Model resource
 * (2) - VISITOR: accumulate probability; dynamic reward calculation (depends on progress/availability)
 * if too low income for upcome costs: soldiers slowly run away, buildings will get abandoned
-* scout: is a (non-army) military unit; to see when the next attack is approaching
+* adapt happening:
+    - increase likelyhood of rats if: lots of food, no buildings/upgrades which protect from it + eaten amount depends on amount of stored food
+* adapt throne room:
+    - poor boy should not be possible to give gold so you are below 0
+    - poor boy demand should be more relative to gold amount (but also a bit relative to wealth)
 
 # ideas
 

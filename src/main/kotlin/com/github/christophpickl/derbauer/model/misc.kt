@@ -13,3 +13,7 @@ data class History(
     var attacked: Int = 0,
     var traded: Int = 0
 )
+
+interface Wealthable {
+    val wealth: Amount
+}
