@@ -15,7 +15,7 @@ class PlayerTest {
     @DataProvider
     fun wealthProvider() = arrayOf(
         arrayOf( 123, 0.1,  10),
-        arrayOf(1999, 0.3, 300),
+        arrayOf(1999, 0.3, 500),
         arrayOf(-100, 0.1,   0),
         arrayOf(   1, 0.1,   0)
     )
