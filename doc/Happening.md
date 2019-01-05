@@ -14,12 +14,12 @@
 * weather:
     * drouth (duerre): -food prod (not food itself!)
     * storm: -food, -people, -building
-* military units join: +military
+* armies join: +army
 * marriage / birth => if dies (because of age) option to continue by day 1 but with same state
 
 ## Effects
 
-* +/- resource/building/upgrade/military
+* +/- resource/building/upgrade/army
 * +/- resource prod
 
 ## Ideas

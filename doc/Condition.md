@@ -5,7 +5,7 @@ See "Feature".
 In order to enable:
 
 * building
-* military (unit/action)
+* military (army/action)
 * trade (new) resource
 * upgrade
 * action

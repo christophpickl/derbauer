@@ -17,7 +17,7 @@ class AttackCalculator(
 
     fun fightBattle(): BattleResult {
         var playerRange = 0.5
-        val playerUnit = Model.player.militaries.all.filter { it.amount > 0 }.random()
+        val playerUnit = Model.player.armies.all.filter { it.amount > 0 }.random()
         playerRange *= playerUnit.attackModifier
         val rand = Random.nextDouble()
         val playerWon = rand < (playerRange + KMath.max(KMath.min((Model.global.karma / 20), -0.1), 0.1))
@@ -49,7 +49,7 @@ class AttackCalculator(
         }
     }
 
-    fun isAttackOver() = Model.player.militaries.totalAmount.isZero || context.enemies.isZero
+    fun isAttackOver() = Model.player.armies.totalAmount.isZero || context.enemies.isZero
 
 }
 

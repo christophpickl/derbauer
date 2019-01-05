@@ -3,10 +3,10 @@
 
 meaning:
 
-1. units (simply "military")
+1. covers armies (military units)
 1. or actions like attacking or getting attacked
 
-also covered in buildings as for military buildings.
+also covered in buildings as for military buildings (barrack, ...).
 
 Properties:
 
@@ -48,7 +48,7 @@ Properties:
 
 ## Defend
 
-* if no more military unites => people will fight
+* if no more armies => people will fight
 
 ## Ideas
 

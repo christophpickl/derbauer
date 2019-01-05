@@ -17,10 +17,10 @@ class Trade1Achievement : AbstractAchievement(
     }
 }
 
-class Attack1Achievement : AbstractAchievement(label = "Military Mastery I: Stronger military units") {
+class Attack1Achievement : AbstractAchievement(label = "Military Mastery I: Stronger armies") {
     override fun condition() = Model.history.attacked >= Values.achievements.attack1HistoryNeed
     override fun execute() {
-        Model.player.militaries.all.forEach {
+        Model.player.armies.all.forEach {
             it.attackModifier += Values.achievements.attack1AttackModifier
         }
     }

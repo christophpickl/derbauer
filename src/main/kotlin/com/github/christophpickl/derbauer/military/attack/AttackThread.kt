@@ -27,7 +27,7 @@ class AttackThread(
     private fun nextBattle() {
         calculator.fightBattle()
         context.message = "Ongoing war ...\n\n" +
-            Model.player.militaries.all.joinToString("\n") {
+            Model.player.armies.all.joinToString("\n") {
                 "${it.labelPlural.capitalize()}: ${it.amount.formatted}"
             } + "\n\n" +
             "Enemies: ${context.enemies.formatted}"

@@ -33,7 +33,7 @@ data class Buildings(
     val totalFoodCapacity get() = filterAll<FoodCapacityBuilding>().sumBy { it.totalFoodCapacity }
     val totalFoodProduction get() = filterAll<FoodProducingBuilding>().sumBy { it.totalFoodProduction }
     val totalPeopleCapacity get() = filterAll<PeopleCapacityBuilding>().sumBy { it.totalPeopleCapacity }
-    val totalMilitaryCapacity get() = filterAll<MilitaryCapacityBuilding>().sumBy { it.totalMilitaryCapacity }
+    val totalArmyCapacity get() = filterAll<ArmyCapacityBuilding>().sumBy { it.totalArmyCapacity }
 }
 
 interface Building : Entity, MultiLabeled, Amountable, Buyable, Describable, Ordered {
@@ -57,9 +57,9 @@ interface FoodProducingBuilding : Building {
     val totalFoodProduction: Amount get() = foodProduction * amount
 }
 
-interface MilitaryCapacityBuilding : Building {
-    var militaryCapacity: Amount
-    val totalMilitaryCapacity get() = militaryCapacity * amount
+interface ArmyCapacityBuilding : Building {
+    var armyCapacity: Amount
+    val totalArmyCapacity get() = armyCapacity * amount
 }
 
 class HouseBuilding : AbstractBuilding(
@@ -90,8 +90,8 @@ class BarrackBuilding : AbstractBuilding(
     labelSingular = "barrack",
     labelPlural = "barracks",
     values = Values.buildings.barrack
-), MilitaryCapacityBuilding, Conditional {
-    override var militaryCapacity = Values.buildings.barrackMilitaryCapacity
+), ArmyCapacityBuilding, Conditional {
+    override var armyCapacity = Values.buildings.barrackArmyCapacity
     override fun checkCondition() = Model.features.military.menu.isEnabled()
     override val additionalDescription = "enables new units"
 }
@@ -125,7 +125,7 @@ abstract class AbstractBuilding(
             if (this is FoodCapacityBuilding) "stores +${foodCapacity.formatted} food" else null,
             if (this is PeopleCapacityBuilding) "stores +${peopleCapacity.formatted} people" else null,
             if (this is FoodProducingBuilding) "produces +${foodProduction.formatted} food" else null,
-            if (this is MilitaryCapacityBuilding) "stores +${militaryCapacity.formatted} units" else null,
+            if (this is ArmyCapacityBuilding) "stores +${armyCapacity.formatted} units" else null,
             additionalDescription
         ).also {
             require(it.isNotEmpty()) {

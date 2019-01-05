@@ -15,7 +15,7 @@
 * areas:
     * economy: resource prod/cap
         * agriculture: food resource only
-    * military: cap, effectiveness
+    * military armies: cap, effectiveness
     * social: happyness
 
 ## Examples
@@ -30,9 +30,9 @@
 
 ### Military
 
-* barrack: +military cap, -military buy mod, +att/def mod
-* archery: +military cap, -military buy mod, +att/def mod
-* stable: +military cap, -military buy mod, +att/def mod
+* barrack: +army cap, -army buy mod, +att/def mod
+* archery: +army cap, -army buy mod, +att/def mod
+* stable: +army cap, -army buy mod, +att/def mod
 * armoury
 * wall: +defense
 * "defence palisades" less likely to get raided by bandits
@@ -64,6 +64,6 @@
     * att/def mod
     * raid mod
 * price mod for build/trade/military/upgrade
-* condition/feature/upgrade/action enabled (which itself might enable military unit...)
+* condition/feature/upgrade/action enabled (which itself might enable army...)
 * influences happening
 

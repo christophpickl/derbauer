@@ -25,7 +25,7 @@ class TestModelListener : TestListenerAdapter() {
         Model.land = Amount.one
 
         Model.player.buildings.all.forEach { it.amount = Amount.zero }
-        Model.player.militaries.all.forEach { it.amount = Amount.zero }
+        Model.player.armies.all.forEach { it.amount = Amount.zero }
     }
 }
 

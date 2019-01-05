@@ -2,7 +2,7 @@ package com.github.christophpickl.derbauer.military
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.buysell.Buyable
-import com.github.christophpickl.derbauer.data.ValueMilitary
+import com.github.christophpickl.derbauer.data.ValueArmy
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Amountable
@@ -19,20 +19,20 @@ import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
-data class Militaries(
-    var soldiers: SoldierMilitary = SoldierMilitary(),
-    var knights: KnightMilitary = KnightMilitary(),
-    var catapults: CatapultMilitary = CatapultMilitary()
+data class Armies(
+    var soldiers: Soldier = Soldier(),
+    var knights: Knight = Knight(),
+    var catapults: Catapult = Catapult()
 ) {
 
-    @get:JsonIgnore val all get() = propertiesOfType<Militaries, Military>(this).ordered().filterConditional()
-    inline fun <reified T : Military> filterAll() = all.filterIsInstance<T>()
+    @get:JsonIgnore val all get() = propertiesOfType<Armies, Army>(this).ordered().filterConditional()
+    inline fun <reified T : Army> filterAll() = all.filterIsInstance<T>()
     
     val totalAmount get() = all.sumBy { it.amount }
-    val militaryCapacityLeft get() = Model.player.buildings.totalMilitaryCapacity - totalAmount
+    val armyCapacityLeft get() = Model.player.buildings.totalArmyCapacity - totalAmount
 }
 
-interface Military : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered {
+interface Army : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered {
     var attackModifier: Double
     var costsPeople: Amount
 
@@ -40,15 +40,15 @@ interface Military : Entity, Describable, MultiLabeled, Amountable, Buyable, Ord
         get() = Amount.minOfNonNegative(
             buyPossibleAmount,
             (Model.people - Amount.one) / costsPeople,
-            Model.militaryCapacityLeft
+            Model.armyCapacityLeft
         )
 }
 
-abstract class AbstractMilitary(
+abstract class AbstractArmy(
     override val labelSingular: String,
     override val labelPlural: String,
-    value: ValueMilitary
-) : Military {
+    value: ValueArmy
+) : Army {
 
     final override var amount = value.amount
     final override var buyPrice = value.buyPrice
@@ -64,7 +64,7 @@ abstract class AbstractMilitary(
     override fun toString() = Stringifier.stringify(this)
 }
 
-class SoldierMilitary : AbstractMilitary(
+class Soldier : AbstractArmy(
     labelSingular = "soldier",
     labelPlural = "soldiers",
     value = Values.militaries.soldiers
@@ -72,7 +72,7 @@ class SoldierMilitary : AbstractMilitary(
     override val description get() = "basic unit; attack: $attackModifier"
 }
 
-class KnightMilitary : AbstractMilitary(
+class Knight : AbstractArmy(
     labelSingular = "knight",
     labelPlural = "knights",
     value = Values.militaries.knights
@@ -81,7 +81,7 @@ class KnightMilitary : AbstractMilitary(
     override val description get() = "allrounder unit; attack: $attackModifier"
 }
 
-class CatapultMilitary : AbstractMilitary(
+class Catapult : AbstractArmy(
     labelSingular = "catapult",
     labelPlural = "catapults",
     value = Values.militaries.catapults

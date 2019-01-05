@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.military
 
 import com.github.christophpickl.derbauer.TestModelListener
-import com.github.christophpickl.derbauer.build.MilitaryCapacityBuilding
+import com.github.christophpickl.derbauer.build.ArmyCapacityBuilding
 import com.github.christophpickl.derbauer.hasSameAmountAs
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Amount
@@ -15,13 +15,13 @@ import org.testng.annotations.Test
 abstract class BaseMilitaryTest {
     private val renderer = mock<Renderer>()
 
-    protected val unit get() = Model.player.militaries.soldiers
+    protected val unit get() = Model.player.armies.soldiers
 
-    protected fun hire(toHire: Military, amount: Long) {
+    protected fun hire(toHire: Army, amount: Long) {
         MilitaryController(renderer).doHire(toHire, amount)
     }
 
-    protected fun ensureEnoughGoldPeopleCapacityAndUpgrade(army: Military) {
+    protected fun ensureEnoughGoldPeopleCapacityAndUpgrade(army: Army) {
         Model.gold = unit.buyPrice
         Model.people = army.costsPeople + 1
         Model.player.buildings.barracks.amount = Amount(1)
@@ -37,7 +37,7 @@ class MilitaryTest : BaseMilitaryTest() {
     fun `Given all good but no military cap When hire Then not possible and dont hire`() {
         Model.gold = unit.buyPrice
         Model.people = unit.costsPeople
-        Model.player.buildings.all.filterIsInstance<MilitaryCapacityBuilding>().forEach { it.amount.isZero }
+        Model.player.buildings.all.filterIsInstance<ArmyCapacityBuilding>().forEach { it.amount.isZero }
 
         assertThat(unit.effectiveBuyPossibleAmount).isAmountEqualTo(0)
         hire(unit, 1)

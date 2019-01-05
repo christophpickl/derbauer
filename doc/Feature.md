@@ -7,6 +7,6 @@ See to "Condition".
 
 What it does:
 
-* enables new building/upgrade/military
+* enables new building/upgrade/army
 * effects mods
 * new action

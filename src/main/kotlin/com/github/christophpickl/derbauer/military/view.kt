@@ -15,11 +15,11 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     choices = mutableListOf<MilitaryChoice>(
         MilitaryChoice.Attack
     ).apply {
-        addAll(Model.player.militaries.all.map { MilitaryChoice.Hire(it) })
+        addAll(Model.player.armies.all.map { MilitaryChoice.Hire(it) })
     },
     additionalContent = "You've got (used capacity " +
-        "${Model.player.militaries.totalAmount.formatted}/${Model.player.buildings.totalMilitaryCapacity.formatted}):\n" +
-        Model.player.militaries.all.joinToString("\n") {
+        "${Model.player.armies.totalAmount.formatted}/${Model.player.buildings.totalArmyCapacity.formatted}):\n" +
+        Model.player.armies.all.joinToString("\n") {
             "  ${it.labelPlural.capitalize()}: ${it.amount.formatted}"
         },
     cancelSupport = CancelSupport.Enabled { HomeView() }
@@ -34,28 +34,28 @@ sealed class MilitaryChoice : Choice {
         override val label = "Attack"
     }
 
-    class Hire(val military: Military) : MilitaryChoice() {
-        override val label = formatLabel(military)
+    class Hire(val army: Army) : MilitaryChoice() {
+        override val label = formatLabel(army)
     }
 }
 
 interface MilitaryCallback {
     fun onMilitary(choice: MilitaryChoice)
-    fun doHire(militaryUnit: Military, amount: Long)
+    fun doHire(army: Army, amount: Long)
 }
 
 
 class HireView(
-    private val military: Military
+    private val army: Army
 ) : InputView(
-    message = "How many ${military.labelPlural} do you wanna hire?\n\n" +
-        "1 ${military.labelSingular} costs ${military.buyPrice.formatted} gold and ${military.costsPeople.formatted} people.\n\n" +
-        "You can hire ${military.effectiveBuyPossibleAmount.formatted} ${military.labelPlural} maximum.",
+    message = "How many ${army.labelPlural} do you wanna hire?\n\n" +
+        "1 ${army.labelSingular} costs ${army.buyPrice.formatted} gold and ${army.costsPeople.formatted} people.\n\n" +
+        "You can hire ${army.effectiveBuyPossibleAmount.formatted} ${army.labelPlural} maximum.",
     cancelSupport = CancelSupport.Enabled { MilitaryView() }
 ) {
 
     override fun onCallback(callback: ViewCallback, number: Long) {
-        callback.doHire(military, number)
+        callback.doHire(army, number)
     }
 
 }

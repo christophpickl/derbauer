@@ -32,8 +32,8 @@ object Model : ResourceHolder {
     val totalPeopleCapacity get() = player.buildings.totalPeopleCapacity
     val foodCapacityLeft get() = player.resources.food.capacityLeft
     val totalFoodCapacity get() = player.buildings.totalFoodCapacity
-    val militaryCapacityLeft get() = player.militaries.militaryCapacityLeft
-    val totalMilitaryCapacity get() = player.buildings.totalMilitaryCapacity
+    val armyCapacityLeft get() = player.armies.armyCapacityLeft
+    val totalArmyCapacity get() = player.buildings.totalArmyCapacity
     //</editor-fold>
 
     fun goHome() {

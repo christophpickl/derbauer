@@ -27,19 +27,19 @@ class MilitaryController(
                 prepareAttack()
             }
             is MilitaryChoice.Hire -> {
-                Model.currentView = HireView(choice.military)
+                Model.currentView = HireView(choice.army)
 
             }
         }.enforceWhenBranches()
     }
 
     private fun prepareAttack() {
-        if (Model.player.militaries.totalAmount.isZero) {
+        if (Model.player.armies.totalAmount.isZero) {
             Alert.show(AlertType.NoArmy)
             return
         }
         val context = AttackContext(
-            enemies = Model.player.militaries.totalAmount * Random.nextDouble(0.4, 1.1)
+            enemies = Model.player.armies.totalAmount * Random.nextDouble(0.4, 1.1)
         )
         Model.currentView = AttackView(context)
         doBeginAttack(context)
@@ -50,12 +50,12 @@ class MilitaryController(
         Thread(AttackThread(context, renderer), "Attack-${++threadId}").start()
     }
 
-    override fun doHire(militaryUnit: Military, amount: Long) {
-        log.debug { "want to hire: $amount $militaryUnit" }
-        val totalPrice = militaryUnit.buyPrice.rounded * amount
-        val totalPeople = militaryUnit.costsPeople.rounded * amount
+    override fun doHire(army: Army, amount: Long) {
+        log.debug { "want to hire: $amount $army" }
+        val totalPrice = army.buyPrice.rounded * amount
+        val totalPeople = army.costsPeople.rounded * amount
         if (isValid(totalPrice, totalPeople, amount)) {
-            militaryUnit.amount += amount
+            army.amount += amount
             Model.gold -= totalPrice
             Model.people -= totalPeople
             Model.currentView = MilitaryView()
@@ -72,7 +72,7 @@ class MilitaryController(
             alertType = AlertType.NotEnoughPeople
         ),
         SimpleChoiceValidation(
-            condition = { Model.totalMilitaryCapacity >= amountToHire },
+            condition = { Model.totalArmyCapacity >= amountToHire },
             alertType = AlertType.NotEnoughCapacity
         )
     ))

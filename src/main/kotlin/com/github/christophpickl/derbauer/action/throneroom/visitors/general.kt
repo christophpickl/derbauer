@@ -8,7 +8,7 @@ import com.github.christophpickl.kpotpourri.common.math.KMath
 import kotlin.random.Random
 
 class GeneralVisitor : ThroneRoomVisitor<GeneralChoice> {
-    override fun condition() = Model.player.militaries.soldiers.amount > 0
+    override fun condition() = Model.player.armies.soldiers.amount > 0
     override val message = "A general enters, demanding a soldier to join his personal guard."
     override val choosePrompt = "Do you agree with his wish?"
     override val choices = listOf(
@@ -19,7 +19,7 @@ class GeneralVisitor : ThroneRoomVisitor<GeneralChoice> {
     override fun choose(choice: GeneralChoice) =
         when (choice.decision) {
             GeneralDecision.Agree -> {
-                Model.player.militaries.soldiers.amount--
+                Model.player.armies.soldiers.amount--
                 val probabilityReward = 0.3 + KMath.max(Model.global.karma / 10, 0.2)
                 if (Random.nextDouble() <= probabilityReward) {
                     Model.gold += 200

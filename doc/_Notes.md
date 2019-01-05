@@ -1,6 +1,6 @@
 
 * people = peasants = villagers
-* military = units = militia
+* army = military unit = militia
 
 # Other similar games
 

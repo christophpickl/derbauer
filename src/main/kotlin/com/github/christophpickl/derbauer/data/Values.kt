@@ -38,7 +38,7 @@ class ValuesBuildings {
         realLandNeeded = 1,
         realBuyPrice = 100
     )
-    val barrackMilitaryCapacity = Amount(10)
+    val barrackArmyCapacity = Amount(10)
     val castles = ValueBuilding(
         realAmount = if (CHEAT_MODE) 1 else 0,
         realLandNeeded = 4,
@@ -49,19 +49,19 @@ class ValuesBuildings {
 }
 
 class ValuesMilitaries {
-    val soldiers = ValueMilitary(
+    val soldiers = ValueArmy(
         realAmount = if (CHEAT_MODE) 2 else 0,
         realBuyPrice = 20,
         attackModifier = 1.0,
         realCostsPeople = 1
     )
-    val knights = ValueMilitary(
+    val knights = ValueArmy(
         realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 30,
         attackModifier = 1.2,
         realCostsPeople = 1
     )
-    val catapults = ValueMilitary(
+    val catapults = ValueArmy(
         realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 50,
         attackModifier = 1.4,
@@ -156,7 +156,7 @@ class ValueBuilding(
     val buyPrice = Amount(realBuyPrice)
 }
 
-class ValueMilitary(
+class ValueArmy(
     val realAmount: Long,
     val realBuyPrice: Long,
     val attackModifier: Double,

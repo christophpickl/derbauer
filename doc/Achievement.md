@@ -9,7 +9,7 @@ Happens when lots of:
 * buildings: total build/owned
 * upgrades
 * trades: buy/sell amount, money spent/earned
-* military: total hired/owned
+* military armies: total hired/owned
 * attacks: attack VS raid, won/lost/total
 * happenings: good vs bad
 * days
