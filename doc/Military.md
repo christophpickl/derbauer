@@ -17,6 +17,12 @@ Properties:
 * global military expertize
     - each time attack, it increases and leads to improved global att/def
 
+## Hire
+
+* costs: gold, people
+* limit amount to be hired
+* can't be reverted back (?)
+
 ## Examples
 
 * "angry farmer": cheap, weak; can be converted back to people
@@ -31,16 +37,16 @@ Properties:
 
 ## Attack
 
+* lowers karma
 * choose target:
-    1. wildlings
-    1. empire
-    1. ... other countries ...?
-        * display relationship (requires diplomacy)
-
+    * leveld: wildlings, village, town, ... city, empire
+    * other countries? display relationship (requires diplomacy)
+    * each different target will have different (static) amount of armies
+    * if successfully attacked highest level target, next level target is enabled
+* choose how many units to send
 * gain **loot**
     1. wildlings: +food, +people, -gold, 0 land
     1. empire: avg food, -people, +gold, -land
-
 * when can attacks happen?
     1. during turn as it is now
     1. only at end of turn
@@ -54,3 +60,4 @@ Properties:
 
 * concept of heroes
 * give free money to army (increase temp. props)
+* when lose land => building destoryed

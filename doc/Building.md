@@ -2,25 +2,55 @@
 # Building
 
 * attributes:
-    * buy price
-    * needs land
-    * pay upcome in gold (and maybe people)
+    * costs gold (buy price)
+    * uses land
+    * pay upcome in gold (each turn)
+        - and (maybe) in people ... so people have to be usable entities
+    * always can unlimited amount
+        - if condition >= 1, then any further have a multiplying effect
+        - if building is destroyed afterwards, feature goes (usually!) away; e.g.: castle
 
-* traits:
+* enables:
     * food cap
     * food prod
     * people cap
+    * happyness production for people
+    * enable features (increase efficiency)
+        - at least 1, but also enable for X amount
     * ...
+    * some buildings are "multi-areal" (affects several areas, like castle)
 
 * areas:
-    * economy: resource prod/cap
-        * agriculture: food resource only
-    * military armies: cap, effectiveness
+    * enable new "stuff": action/upgrade/feature
+    * economy:
+        - resource prod/cap
+        - agriculture: food resource only
+        - improve trade (more available, quicker regenration, better prices)
+    * military:
+        - army capacity
+        - army effectiveness
     * social: happyness
+
+* can be destroyed/sold?
 
 ## Examples
 
+* Areas:
+    - economical: affects resources (prod/cap)
+    - military: strengthen armies and increase cap
+    - social: increase happiness/karma
+    - feature enabler; e.g.: castle (for throne room)
+
 ### Economy/Resources
+
+General:
+
+* food cap/prod
+* people cap/prod (reproduction rate, immigrants)
+* gold prod
+* trade benefits
+
+Examples:
 
 * farm: +food prod
 * granary: +food cap, +rat protection
@@ -29,6 +59,13 @@
 * mine: +gold prod, +people upcome (needs people to work)
 
 ### Military
+
+General:
+
+* unit cap/hire (=buy)
+* enable hire (new types)
+
+Examples:
 
 * barrack: +army cap, -army buy mod, +att/def mod
 * archery: +army cap, -army buy mod, +att/def mod
@@ -39,8 +76,20 @@
 
 ### Tech (upgrade/feature/action)
 
-* library: +happiness
-* school: +happiness
+* castle
+* alchemy
+
+### Social
+
+General:
+
+* increase happyness/karma
+* the more people, the more social buildings required
+
+Examples:
+
+* library
+* school
 
 ### Misc
 

@@ -16,6 +16,7 @@
     * storm: -food, -people, -building
 * armies join: +army
 * marriage / birth => if dies (because of age) option to continue by day 1 but with same state
+* immigrants: if happyness (and karma) is high, free people move in
 
 ## Effects
 
@@ -24,6 +25,11 @@
 
 ## Ideas
 
-* happenings mit selber viel choices (wie action game)
+* ? happenings mit selber viel choices (wie action game)
     - happenings auch waehrend dem turn (evtl durch action triggered)
     - oder einfach random wenn im menue rumklicken
+    - OR: are happenings always PASSIVE only?!?
+* long lasting happenings
+    - e.g.: blessing from farm good increases farm productivity for X turns
+    - affects: income, prod, efficiency, military
+* when land is lost, building(s) will be destroyed if not enough free land

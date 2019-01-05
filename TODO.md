@@ -40,22 +40,3 @@
 * print header ascii art for each section (build/trade/military/upgrade)
 * show options which are not available yet "x)"
 
-## new concepts
-
-* new "resource": 
-    - happyness/public opinion
-    - stone/wood
-* religion
-* change laws
-    - taxes (gambling, banking, land, military)
-    - +gold prod; -happyness/people prod
-    - feature enabled when ... upgrade "politics" + building "tax office"
-* diplomacy
-    * mit verschiedene voelker, relationship metrik
-    * actions: buy/sell troops, handeln/schenken/verlangen, buendnis, ...
-    * other nations: info about resources, army, ....
-        - diplomacy, spy, war
-        - trade agreement, send gift, hire troops, alliance
-        - happening: get free stuff from other; get requested to donate/help/escort (borrow miliatry units)
-* bank
-    - deposit/withdray money (earn interest), take loan

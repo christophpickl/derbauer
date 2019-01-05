@@ -1,12 +1,15 @@
 
 # Feature
 
-Enables some features = new possibilities (buildings/units/upgrades).
+Internal "switches" to allow user new interactions.
 
-See to "Condition".
+* See to "Condition"
+* Enables new possibilities
+    - buildings
+    - armies
+    - upgrades
+    - actions
+    - achievements
+    - happenings
+* effects modifiers
 
-What it does:
-
-* enables new building/upgrade/army
-* effects mods
-* new action

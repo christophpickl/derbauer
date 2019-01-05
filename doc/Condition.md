@@ -1,19 +1,20 @@
 # Condition
 
-See "Feature".
+Conditions are certain criteria in order to allow certain things like
 
-In order to enable:
+* See "Feature" as well
+* Need to be fulfilled in order to enable:
+    * features
+    * building
+    * military (army/action)
+    * trade (new) resource
+    * upgrade
+    * action
+    * happening
 
-* building
-* military (army/action)
-* trade (new) resource
-* upgrade
-* action
-
-Depends on:
-
-* people
-* history!
-* building
-* achievement
-* upgrade
+* Depends on:
+    * history!
+    * upgrade
+    * people
+    * building
+    * achievement
