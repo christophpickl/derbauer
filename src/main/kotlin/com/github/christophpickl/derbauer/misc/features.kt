@@ -23,7 +23,7 @@ class Features {
             it.checkAndNotify()
         }
     }
-    
+
     override fun toString() = Stringifier.stringify(this)
 }
 

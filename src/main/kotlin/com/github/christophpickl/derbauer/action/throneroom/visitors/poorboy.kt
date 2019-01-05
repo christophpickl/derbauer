@@ -5,6 +5,8 @@ import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.ui.Alert
+import com.github.christophpickl.derbauer.ui.AlertType
 import com.github.christophpickl.kpotpourri.common.math.KMath
 import kotlin.random.Random
 
@@ -46,7 +48,12 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
             }
         }
 
-    private fun giveMoney(decision: PoorBoyDecision.GiveMoneyDecision): String {
+    private fun giveMoney(decision: PoorBoyDecision.GiveMoneyDecision): String? {
+        if (decision.amount > Model.gold) {
+            Alert.show(AlertType.NotEnoughGold)
+            return null
+        }
+        
         Model.gold -= decision.amount
 
         val probabilityReward = when (decision.size) {
@@ -54,6 +61,7 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
             PoorBoyMoneySize.Medium -> 0.15
             PoorBoyMoneySize.Much -> 0.4
         } + KMath.max(Model.global.karma / 10, 0.2)
+
         return if (Random.nextDouble() < probabilityReward) {
             val reward = Amount(KMath.min(Values.actions.throneRoom.boyMinReward,
                 Model.player.relativeWealthBy(Values.actions.throneRoom.boyRewardRelativeWealth).real))
@@ -78,7 +86,7 @@ sealed class PoorBoyDecision(
     data class GiveMoneyDecision(
         val amount: Amount,
         val size: PoorBoyMoneySize
-    ) : PoorBoyDecision("Givem him ${amount.formatted} gold.")
+    ) : PoorBoyDecision("Give him ${amount.formatted} gold.")
 
     object SendAwayDecision : PoorBoyDecision("Send him away.")
     object ThrowDungeonDecision : PoorBoyDecision("Throw this scum into the dungeon!")

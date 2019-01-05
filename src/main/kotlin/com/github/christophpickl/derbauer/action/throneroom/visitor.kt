@@ -5,5 +5,6 @@ interface ThroneRoomVisitor<C : ThroneRoomChoice> {
     val message: String
     val choices: List<C>
     fun condition(): Boolean
-    fun choose(choice: C): String
+    /** Return null if choice was invalid. */
+    fun choose(choice: C): String?
 }

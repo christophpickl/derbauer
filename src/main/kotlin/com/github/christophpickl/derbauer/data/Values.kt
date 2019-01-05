@@ -110,6 +110,7 @@ class ValuesFeatures {
     val upgradePeopleNeeded = Amount(10)
     val foodProductionUpgradeBuildingsNeeded = Amount(10)
     val foodProductionUpgradeFoodNeeded = Amount(500)
+    val militaryUpgradeLandNeeded = Amount(25)
 
     // building
     val castlePeopleNeeded = Amount(if (CHEAT_MODE) 10 else 50)

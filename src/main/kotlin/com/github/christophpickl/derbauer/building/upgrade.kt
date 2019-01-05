@@ -10,6 +10,7 @@ class FarmProductivityUpgrade : AbstractUpgrade(
     buyPrice = Values.upgrades.farmProductivityBuyPrice,
     maxLevel = 3
 ), Conditional {
+
     override fun checkCondition() = Model.features.upgrade.foodProductivityUpgrade.isEnabled()
 
     var foodProductionIncrease = Values.upgrades.farmProductionIncrease

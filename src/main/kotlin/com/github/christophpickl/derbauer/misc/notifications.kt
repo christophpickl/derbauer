@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.endturn
+package com.github.christophpickl.derbauer.misc
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.AsciiArt
@@ -22,7 +22,8 @@ class Notifications {
 }
 
 class NotificationsView(notifications: List<String>) : InfoView(
-    message = AsciiArt.feather + "\n\nGood news, everyone:\n\n" +
+    message = "Good news, everyone:\n\n" +
+        AsciiArt.feather + "\n\n" +
         notifications.joinToString("\n") { "- $it" }
 ) {
     override fun onCallback(callback: ViewCallback, input: PromptInput) {

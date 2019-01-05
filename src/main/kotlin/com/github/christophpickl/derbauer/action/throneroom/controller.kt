@@ -31,7 +31,7 @@ class ThroneRoomController : YesNoCallback {
     }
 
     fun <C : ThroneRoomChoice> choosen(visitor: ThroneRoomVisitor<C>, choice: C) {
-        val response = visitor.choose(choice)
+        val response = visitor.choose(choice) ?: return
         Model.global.karma += choice.karmaEffect
         Model.currentView = FeedbackView(response) {
             if (Model.actions.visitorsWaitingInThroneRoom == 0) {

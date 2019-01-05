@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.endturn
 
 import com.github.christophpickl.derbauer.endturn.happening.Happener
+import com.github.christophpickl.derbauer.misc.NotificationsView
 import com.github.christophpickl.derbauer.model.Model
 import mu.KotlinLogging.logger
 
@@ -19,7 +20,7 @@ class EndTurnController : EndTurnCallback {
 
         val notifications = Model.notifications.consumeAll()
         if (notifications.isNotEmpty()) {
-            Model.currentView = NotificationsView(notifications)
+            Model.currentView = NotificationsView(notifications.sorted())
             return
         }
         

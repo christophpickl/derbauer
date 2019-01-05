@@ -13,10 +13,6 @@ import javax.swing.JScrollPane
 import javax.swing.JTextArea
 import javax.swing.text.DefaultCaret
 
-fun main(args: Array<String>) {
-    DebugWindow().isVisible = true
-}
-
 object Debugger {
 
     private var window: DebugWindow? = null

@@ -17,6 +17,10 @@ class UpgradeFeatures {
         Model.people >= Values.features.upgradePeopleNeeded
     }
 
+    val militaryUpgrade = UpgradeFeature(Model.player.upgrades.militaryUpgrade) {
+        Model.land > Values.features.militaryUpgradeLandNeeded
+    }
+    
     val foodProductivityUpgrade = UpgradeFeature(Model.player.upgrades.farmProductivity) {
         (Model.player.buildings.filterAll<FoodProducingBuilding>().realAmountSum() +
             Model.player.buildings.filterAll<FoodCapacityBuilding>().realAmountSum() >=
