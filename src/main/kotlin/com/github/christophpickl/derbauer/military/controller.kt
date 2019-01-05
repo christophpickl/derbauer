@@ -3,9 +3,12 @@ package com.github.christophpickl.derbauer.military
 import com.github.christophpickl.derbauer.military.attack.AttackContext
 import com.github.christophpickl.derbauer.military.attack.AttackThread
 import com.github.christophpickl.derbauer.military.attack.AttackView
+import com.github.christophpickl.derbauer.military.attack.PrepareAttackContext
+import com.github.christophpickl.derbauer.military.attack.PrepareAttackView
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.misc.validateChoice
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Alert
 import com.github.christophpickl.derbauer.ui.AlertType
@@ -19,7 +22,7 @@ class MilitaryController(
 
     private val log = logger {}
     private var threadId = 0
-    
+
     override fun onMilitary(choice: MilitaryChoice) {
         log.debug { "military action: $choice" }
         when (choice) {
@@ -38,7 +41,15 @@ class MilitaryController(
             Alert.show(AlertType.NoArmy)
             return
         }
+        Model.currentView = PrepareAttackView(PrepareAttackContext(
+            armies = LinkedHashMap(Model.player.armies.all.filter { it.amount.isNotZero }.associate { it to null })
+        ))
+    }
+
+    override fun executeAttack(chosenArmy: Map<Army, Amount>) {
+        // FIXME use me
         val context = AttackContext(
+            armies = chosenArmy,
             enemies = Model.player.armies.totalAmount * Random.nextDouble(0.4, 1.1)
         )
         Model.currentView = AttackView(context)

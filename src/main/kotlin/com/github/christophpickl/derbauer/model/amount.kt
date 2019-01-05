@@ -77,7 +77,7 @@ data class Amount(
             val stackTraceElements = Thread.currentThread().stackTrace.toList()
             // 0 ... Thread.getStackTrace
             // 1 ... Amount.toString
-            val invokingTrace = stackTraceElements[2]
+            val invokingTrace = stackTraceElements[2] // TODO check ALL methods in stack trace for annotation
             val method = Class.forName(invokingTrace.className).methods.first { it.name == invokingTrace.methodName }
             val hasAnnotation = method.getAnnotation(AmountToStringAllowed::class.java) != null
             val isLogStatement = stackTraceElements.any { it.className == "mu.internal.LocationAwareKLogger" }

@@ -17,7 +17,7 @@ class AttackCalculator(
 
     fun fightBattle(): BattleResult {
         var playerRange = 0.5
-        val playerUnit = Model.player.armies.all.filter { it.amount > 0 }.random()
+        val playerUnit = context.armies.filter { it.value.isNotZero }.keys.random()
         playerRange *= playerUnit.attackModifier
         val rand = Random.nextDouble()
         val playerWon = rand < (playerRange + KMath.max(KMath.min((Model.global.karma / 20), -0.1), 0.1))
@@ -26,7 +26,8 @@ class AttackCalculator(
             context.enemies--
         } else {
             playerUnit.amount--
-            log.trace { "Killed: ${playerUnit.label} (amount left: ${playerUnit.amount})" }
+            context.armies[playerUnit] = context.armies[playerUnit]!! - 1
+            log.trace { "Killed: ${playerUnit.label} (amount left: ${context.armies[playerUnit]})" }
         }
         return if (playerWon) BattleResult.Won else BattleResult.Lost
     }
@@ -40,6 +41,7 @@ class AttackCalculator(
             val landEarning = Amount(random.randomize((context.originalEnemies / 5).real, 0.3, 2.5))
             Model.gold += goldEarning
             Model.land += landEarning
+            // TODO there should be at least something, but not 0 
             AttackResult.Won(
                 goldEarning = goldEarning,
                 landEarning = landEarning
@@ -49,7 +51,7 @@ class AttackCalculator(
         }
     }
 
-    fun isAttackOver() = Model.player.armies.totalAmount.isZero || context.enemies.isZero
+    fun isAttackOver() = context.allArmiesDead || context.allEnemiesDead
 
 }
 

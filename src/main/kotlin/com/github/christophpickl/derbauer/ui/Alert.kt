@@ -72,6 +72,7 @@ sealed class AlertType(val message: String) {
     object NotEnoughResourcesToSell : AlertType("Not enough resources to sell!")
     object FullyUpgraded : AlertType("Already fully upgraded!")
     object NoArmy : AlertType("No army available!")
+    object NotEnoughArmies : AlertType("Not enough armies!")
 
     override fun toString() = "AlertType{message=$message}"
 }

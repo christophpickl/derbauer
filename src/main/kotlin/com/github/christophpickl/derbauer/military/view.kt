@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.military
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.Texts
 import com.github.christophpickl.derbauer.home.HomeView
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
 import com.github.christophpickl.derbauer.ui.view.Choice
@@ -42,6 +43,7 @@ sealed class MilitaryChoice : Choice {
 interface MilitaryCallback {
     fun onMilitary(choice: MilitaryChoice)
     fun doHire(army: Army, amount: Long)
+    fun executeAttack(chosenArmy: Map<Army, Amount>)
 }
 
 

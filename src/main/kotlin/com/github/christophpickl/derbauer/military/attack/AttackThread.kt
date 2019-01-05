@@ -1,7 +1,6 @@
 package com.github.christophpickl.derbauer.military.attack
 
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Renderer
 import com.github.christophpickl.derbauer.ui.view.FeedbackView
 import com.github.christophpickl.kpotpourri.common.misc.sleep
@@ -27,9 +26,7 @@ class AttackThread(
     private fun nextBattle() {
         calculator.fightBattle()
         context.message = "Ongoing war ...\n\n" +
-            Model.player.armies.all.joinToString("\n") {
-                "${it.labelPlural.capitalize()}: ${it.amount.formatted}"
-            } + "\n\n" +
+            context.armies.map { "${it.key.labelPlural.capitalize()}: ${it.value.formatted}" }.joinToString("\n") + "\n\n" +
             "Enemies: ${context.enemies.formatted}"
 
         renderer.render()
@@ -40,10 +37,10 @@ class AttackThread(
         val result = calculator.applyEndResult()
         context.message = FeedbackView.concatMessages(context.message,
             when (result) {
-                is AttackResult.Won -> "You won!\n\n" +
+                is AttackResult.Won -> "You won! This is your loot:\n\n" +
                     "Gold stolen: ${result.goldEarning.formatted}\n" +
                     "Land captured: ${result.landEarning.formatted}"
-                AttackResult.Lost -> "You lost!"
+                AttackResult.Lost -> "You lost! No loot for you, poor bastard."
             }
         )
         renderer.render()

@@ -1,6 +1,8 @@
 
 # major
 
+* !!! gausche glocken kurve research+einbauen
+* ! java web start (erspart das auto-update :)
 * (2) upcome costs (some buildings, all military)
 * (3) MILITARY: chooose how many troops to send
 * (2) if food/people are over capacity => decrease it slowly!
