@@ -22,9 +22,12 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
     override val choosePrompt = "How do you feel about that boy, my lord?"
 
     override val choices = listOf(
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[0], PoorBoyMoneySize.Little), karmaEffect = Values.karma.throneRoom.boyMoneyLittle),
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[1], PoorBoyMoneySize.Medium), karmaEffect = Values.karma.throneRoom.boyMoneyMedium),
-        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[2], PoorBoyMoneySize.Much), karmaEffect = Values.karma.throneRoom.boyMoneyMuch),
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[0], PoorBoyMoneySize.Little),
+            karmaEffect = Values.karma.throneRoom.boyMoneyLittle),
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[1], PoorBoyMoneySize.Medium),
+            karmaEffect = Values.karma.throneRoom.boyMoneyMedium),
+        PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[2], PoorBoyMoneySize.Much),
+            karmaEffect = Values.karma.throneRoom.boyMoneyMuch),
         PoorBoyChoice(PoorBoyDecision.SendAwayDecision, karmaEffect = Values.karma.throneRoom.boySendAway),
         PoorBoyChoice(PoorBoyDecision.ThrowDungeonDecision, karmaEffect = Values.karma.throneRoom.boyThrowDungeon)
     )

@@ -30,6 +30,4 @@ class BuyableTest {
 private class TestBuyable(
     override val buyDescription: String = "testBuyDescription",
     override var buyPrice: Amount
-) : Buyable {
-
-}
+) : Buyable

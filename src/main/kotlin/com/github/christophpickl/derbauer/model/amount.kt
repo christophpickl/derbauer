@@ -83,7 +83,8 @@ data class Amount(
             val isLogStatement = stackTraceElements.any { it.className == "mu.internal.LocationAwareKLogger" }
             if (!hasAnnotation && !isLogStatement) {
                 throw UnsupportedOperationException(
-                    "Method must be annotated with @${AmountToStringAllowed::class.simpleName} in order to use the Amount.toString()! " +
+                    "Method must be annotated with @${AmountToStringAllowed::class.simpleName} " +
+                        "in order to use the Amount.toString()! " +
                         "Invoking method was: ${invokingTrace.toLabel()}")
             }
         }

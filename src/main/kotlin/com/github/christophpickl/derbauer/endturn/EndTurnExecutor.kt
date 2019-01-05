@@ -23,13 +23,12 @@ class EndTurnExecutor(
         Model.people += peopleIncome
 
         Model.global.day++
-        Model.actions.visitorsWaitingInThroneRoom += random.nextInt(0, Math.max(2, (Model.people.real / 100.0 * 1).toInt()))
-
+        val newVisitors = random.nextInt(0, Math.max(2, (Model.people.real / 100.0).toInt()))
+        Model.actions.visitorsWaitingInThroneRoom += newVisitors
         Model.features.checkAndNotifyAll()
-        
-        val notifications = Model.notifications.consumeAll()
         adjustKarma()
 
+        val notifications = Model.notifications.consumeAll()
         return EndTurnReport(
             goldIncome = goldIncome,
             foodIncome = foodIncome,
