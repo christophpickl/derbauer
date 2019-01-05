@@ -16,6 +16,13 @@ class EndTurnController : EndTurnCallback {
             Model.currentView = GameOverView()
             return
         }
+
+        val notifications = Model.notifications.consumeAll()
+        if (notifications.isNotEmpty()) {
+            Model.currentView = NotificationsView(notifications)
+            return
+        }
+        
         val happening = happener.letItHappen()
         if (happening != null) {
             log.info { "happening occured: $happening" }

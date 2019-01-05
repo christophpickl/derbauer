@@ -1,6 +1,8 @@
-package com.github.christophpickl.derbauer.feature
+package com.github.christophpickl.derbauer.action
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.christophpickl.derbauer.misc.AbstractFeature
+import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier

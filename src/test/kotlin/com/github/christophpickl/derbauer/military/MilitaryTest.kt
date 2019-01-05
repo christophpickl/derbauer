@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.military
 
 import com.github.christophpickl.derbauer.TestModelListener
-import com.github.christophpickl.derbauer.build.ArmyCapacityBuilding
+import com.github.christophpickl.derbauer.building.ArmyCapacityBuilding
 import com.github.christophpickl.derbauer.hasSameAmountAs
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Amount

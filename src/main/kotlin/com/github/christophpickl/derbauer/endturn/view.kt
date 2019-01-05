@@ -12,13 +12,10 @@ import com.github.christophpickl.kpotpourri.common.string.times
 class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
     companion object {
         private fun buildMessage(report: EndTurnReport): String {
-            val notificationsMessage = if (report.notifications.isEmpty()) "" else "\n\nGood news, everyone:\n\n" +
-                report.notifications.joinToString("\n") { "- $it" }
             return "So, this is what happened over night:\n\n" +
                 formatGrowth("Gold income    ", report.gold) + "\n" +
                 formatGrowth("Food production", report.food) + "\n" +
-                formatGrowth("People growth  ", report.people) +
-                notificationsMessage
+                formatGrowth("People growth  ", report.people)
         }
 
         private fun formatGrowth(label: String, line: EndTurnReportLine) = "$label: " +

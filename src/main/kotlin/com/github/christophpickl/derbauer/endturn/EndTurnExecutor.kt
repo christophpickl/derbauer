@@ -28,12 +28,10 @@ class EndTurnExecutor(
         Model.features.checkAndNotifyAll()
         adjustKarma()
 
-        val notifications = Model.notifications.consumeAll()
         return EndTurnReport(
             goldIncome = goldIncome,
             foodIncome = foodIncome,
-            peopleIncome = peopleIncome,
-            notifications = notifications
+            peopleIncome = peopleIncome
         )
     }
 

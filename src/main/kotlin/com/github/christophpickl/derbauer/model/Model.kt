@@ -6,8 +6,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.christophpickl.derbauer.action.Actions
 import com.github.christophpickl.derbauer.endturn.Notifications
 import com.github.christophpickl.derbauer.endturn.achievement.Achievements
-import com.github.christophpickl.derbauer.feature.Features
 import com.github.christophpickl.derbauer.home.HomeView
+import com.github.christophpickl.derbauer.misc.Features
 import com.github.christophpickl.derbauer.ui.view.View
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 

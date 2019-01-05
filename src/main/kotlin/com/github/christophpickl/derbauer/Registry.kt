@@ -2,8 +2,8 @@ package com.github.christophpickl.derbauer
 
 import com.github.christophpickl.derbauer.action.ActionCallback
 import com.github.christophpickl.derbauer.action.ActionController
-import com.github.christophpickl.derbauer.build.BuildCallback
-import com.github.christophpickl.derbauer.build.BuildController
+import com.github.christophpickl.derbauer.building.BuildCallback
+import com.github.christophpickl.derbauer.building.BuildController
 import com.github.christophpickl.derbauer.endturn.EndTurnCallback
 import com.github.christophpickl.derbauer.endturn.EndTurnController
 import com.github.christophpickl.derbauer.home.HomeCallback

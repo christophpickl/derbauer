@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.endturn
 
 import com.github.christophpickl.derbauer.TestModelListener
-import com.github.christophpickl.derbauer.build.foodProducerAmountToZero
+import com.github.christophpickl.derbauer.building.foodProducerAmountToZero
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Amount

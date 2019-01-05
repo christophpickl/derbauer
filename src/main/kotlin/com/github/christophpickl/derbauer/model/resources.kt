@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer.build.PeopleCapacityBuilding
+import com.github.christophpickl.derbauer.building.PeopleCapacityBuilding
 import com.github.christophpickl.derbauer.buysell.BuyAndSellable
 import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.buysell.LimitedBuyableAmount

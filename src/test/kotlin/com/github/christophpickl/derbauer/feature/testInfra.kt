@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.feature
 
+import com.github.christophpickl.derbauer.misc.Feature
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.ObjectAssert
 

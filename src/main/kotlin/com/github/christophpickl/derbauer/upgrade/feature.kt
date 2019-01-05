@@ -1,13 +1,14 @@
-package com.github.christophpickl.derbauer.feature
+package com.github.christophpickl.derbauer.upgrade
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.christophpickl.derbauer.build.FoodCapacityBuilding
-import com.github.christophpickl.derbauer.build.FoodProducingBuilding
+import com.github.christophpickl.derbauer.building.FoodCapacityBuilding
+import com.github.christophpickl.derbauer.building.FoodProducingBuilding
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.misc.AbstractFeature
+import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.realAmountSum
-import com.github.christophpickl.derbauer.upgrade.Upgrade
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 class UpgradeFeatures {

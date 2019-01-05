@@ -1,8 +1,9 @@
-package com.github.christophpickl.derbauer.feature
+package com.github.christophpickl.derbauer.military
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.military.Army
+import com.github.christophpickl.derbauer.misc.AbstractFeature
+import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
@@ -23,7 +24,7 @@ class MilitaryFeatures {
     }
 
     @JsonIgnore val all = propertiesOfType<MilitaryFeatures, Feature>(this)
-    
+
     override fun toString() = Stringifier.stringify(this)
 }
 

@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.home
 
 import com.github.christophpickl.derbauer.action.ActionView
-import com.github.christophpickl.derbauer.build.BuildView
+import com.github.christophpickl.derbauer.building.BuildView
 import com.github.christophpickl.derbauer.endturn.EndTurnExecutor
 import com.github.christophpickl.derbauer.endturn.EndTurnView
 import com.github.christophpickl.derbauer.endturn.achievement.AchievementChecker

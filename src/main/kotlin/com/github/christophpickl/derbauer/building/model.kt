@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.build
+package com.github.christophpickl.derbauer.building
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.buysell.Buyable

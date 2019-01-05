@@ -1,7 +1,11 @@
-package com.github.christophpickl.derbauer.feature
+package com.github.christophpickl.derbauer.misc
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.christophpickl.derbauer.action.ActionFeatures
+import com.github.christophpickl.derbauer.building.BuildingFeatures
+import com.github.christophpickl.derbauer.military.MilitaryFeatures
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.upgrade.UpgradeFeatures
 import com.github.christophpickl.kpotpourri.common.misc.OncePredicate
 import com.github.christophpickl.kpotpourri.common.misc.OnceResult
 import com.github.christophpickl.kpotpourri.common.string.Stringifier

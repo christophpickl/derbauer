@@ -6,8 +6,7 @@ import com.github.christophpickl.derbauer.model.Model
 class EndTurnReport(
     goldIncome: Amount,
     foodIncome: Amount,
-    peopleIncome: Amount,
-    val notifications: List<String>
+    peopleIncome: Amount
 ) {
     val gold = EndTurnReportLine(
         newValue = Model.gold,

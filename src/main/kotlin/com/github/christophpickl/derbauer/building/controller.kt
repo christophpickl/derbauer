@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.build
+package com.github.christophpickl.derbauer.building
 
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.validateChoice
