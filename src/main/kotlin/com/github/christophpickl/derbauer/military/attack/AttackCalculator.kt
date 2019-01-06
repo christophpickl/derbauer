@@ -41,7 +41,6 @@ class AttackCalculator(
             val landEarning = Amount(random.randomize((context.originalEnemies / 5).real, 0.3, 2.5))
             Model.gold += goldEarning
             Model.land += landEarning
-            // TODO there should be at least something, but not 0 
             AttackResult.Won(
                 goldEarning = goldEarning,
                 landEarning = landEarning

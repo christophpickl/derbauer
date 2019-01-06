@@ -33,6 +33,15 @@ class AmountTest {
         Amount(1).toString()
     }
 
+    @AmountToStringAllowed
+    fun `Given annotated method invoking other method When invoking toString Then dont throw`() {
+        otherMethod()
+    }
+
+    private fun otherMethod() {
+        Amount(1).toString()
+    }
+
     fun `When log amount using toString Then succeed`() {
         val log = logger {}
         var logSucceeded = false

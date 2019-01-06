@@ -47,7 +47,6 @@ class MilitaryController(
     }
 
     override fun executeAttack(chosenArmy: Map<Army, Amount>) {
-        // FIXME use me
         val context = AttackContext(
             armies = chosenArmy,
             enemies = Model.player.armies.totalAmount * Random.nextDouble(0.4, 1.1)

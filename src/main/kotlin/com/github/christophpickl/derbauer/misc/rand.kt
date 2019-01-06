@@ -12,7 +12,6 @@ fun main(args: Array<String>) {
 //    println(f.last())
 }
 
-// TODO improve and use ;)
 object KRand {
 
     private val random = Random()

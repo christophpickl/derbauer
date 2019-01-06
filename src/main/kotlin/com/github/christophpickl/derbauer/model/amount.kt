@@ -71,27 +71,24 @@ data class Amount(
     operator fun div(divisor: Amount) = Amount(real / divisor.real)
     operator fun div(divisor: Long) = Amount(real / divisor)
     operator fun unaryMinus() = Amount(-real)
-
-//    fun ensureMax(current: Amount, max: Amount) =
-//        if (current + this <= max) this else max - current
-//
-//    fun ensureMin(current: Amount, min: Long = 0) =
-//        if (current + this >= min) this else -current
     
     override fun toString(): String {
         if (DEV_MODE) {
             val stackTraceElements = Thread.currentThread().stackTrace.toList()
-            // 0 ... Thread.getStackTrace
-            // 1 ... Amount.toString
-            val invokingTrace = stackTraceElements[2] // TODO check ALL methods in stack trace for annotation
-            val method = Class.forName(invokingTrace.className).methods.first { it.name == invokingTrace.methodName }
-            val hasAnnotation = method.getAnnotation(AmountToStringAllowed::class.java) != null
+            val hasAnyAnnotation = stackTraceElements.any { stack ->
+                val method = Class.forName(stack.className).declaredMethods.first { it.name == stack.methodName }
+                method.getAnnotation(AmountToStringAllowed::class.java) != null
+            }
+            
             val isLogStatement = stackTraceElements.any { it.className == "mu.internal.LocationAwareKLogger" }
-            if (!hasAnnotation && !isLogStatement) {
+            if (!hasAnyAnnotation && !isLogStatement) {
                 throw UnsupportedOperationException(
                     "Method must be annotated with @${AmountToStringAllowed::class.simpleName} " +
                         "in order to use the Amount.toString()! " +
-                        "Invoking method was: ${invokingTrace.toLabel()}")
+                        // 0 ... Thread.getStackTrace
+                        // 1 ... Amount.toString
+                        // 2 ... invoking method
+                        "Invoking method was: ${stackTraceElements[2].toLabel()}")
             }
         }
         return real.toString()
