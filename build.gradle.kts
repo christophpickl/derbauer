@@ -4,8 +4,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 object Versions {
-    //    val kpotpourri = "SNAPSHOT"
-    val kpotpourri = "2.3"
+    val kpotpourri = "SNAPSHOT"
+//    val kpotpourri = "2.3"
 }
 
 plugins {
@@ -17,7 +17,7 @@ plugins {
 }
 
 val artifactName = "DerBauer"
-val localProjectVersion = file("src/main/version.txt").readText().trim()
+val localProjectVersion = file("src/main/resources/derbauer/version.txt").readText().trim()
 version = localProjectVersion
 
 repositories {

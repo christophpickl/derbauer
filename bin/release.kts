@@ -6,7 +6,7 @@ import com.github.christophpickl.kpotpourri.build.*
 
 build4k {
     title = "DerBauer Release"
-    val versionFile = File("src/main/version.txt")
+    val versionFile = File("src/main/resources/derbauer/version.txt")
     val artifactId = "DerBauer"
 
     verifyGitStatus()

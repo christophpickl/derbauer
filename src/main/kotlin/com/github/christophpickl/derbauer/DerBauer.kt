@@ -3,15 +3,18 @@ package com.github.christophpickl.derbauer
 import ch.qos.logback.classic.Level
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.misc.Debugger
+import com.github.christophpickl.derbauer.misc.VersionChecker
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Keyboard
 import com.github.christophpickl.derbauer.ui.MainFrame
 import com.github.christophpickl.derbauer.ui.MainTextArea
 import com.github.christophpickl.derbauer.ui.Prompt
 import com.github.christophpickl.derbauer.ui.RendererImpl
+import com.github.christophpickl.kpotpourri.common.version.Version2
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import com.github.christophpickl.kpotpourri.swing.AbortingExceptionHandler
 import mu.KotlinLogging
+import java.net.URL
 import javax.swing.SwingUtilities
 
 val CHEAT_MODE_PROPERTY = "derbauer.cheat"
@@ -21,10 +24,13 @@ private val log = KotlinLogging.logger {}
 val CHEAT_MODE get() = (System.getProperty(CHEAT_MODE_PROPERTY) != null)
 val DEV_MODE get() = (System.getProperty(DEV_MODE_PROPERTY) != null)
 
+val currentVersion = Version2.parse(
+    DerBauer.javaClass.getResourceAsStream("/derbauer/version.txt").bufferedReader().use { it.readText() })!!
+
 object DerBauer {
 
     private val exceptionHandler = AbortingExceptionHandler()
-    
+
     @JvmStatic
     @Suppress("TooGenericExceptionCaught")
     fun main(args: Array<String>) {
@@ -37,6 +43,7 @@ object DerBauer {
     }
 
     private fun startDerBauer() {
+        log.info { "Starting DerBauer v$currentVersion" }
         Model.currentView = HomeView()
 
         val prompt = Prompt()
@@ -53,9 +60,11 @@ object DerBauer {
 
         renderer.render()
         SwingUtilities.invokeLater {
+            log.debug { "Showing user interface." }
             Thread.currentThread().uncaughtExceptionHandler = exceptionHandler
             MainFrame().buildAndShow(text)
         }
+        checkLatestVersion()
     }
 
     private fun initLogging() {
@@ -73,5 +82,16 @@ object DerBauer {
         if (DEV_MODE) {
             log.info { "DEV MODE enabled" }
         }
+    }
+
+    private fun checkLatestVersion() {
+        val runnable = Runnable {
+            VersionChecker.checkAndShowDialog(
+                currentVersion = currentVersion,
+                urlOfLatestVersionFile = URL("https://raw.githubusercontent.com/christophpickl/derbauer/master/src/main/resources/derbauer/version.txt"),
+                downloadPattern = "https://github.com/christophpickl/derbauer/releases/download/{0}/DerBauer-{0}.jar"
+            )
+        }
+        Thread(runnable, "VersionCheckThread").start()
     }
 }
