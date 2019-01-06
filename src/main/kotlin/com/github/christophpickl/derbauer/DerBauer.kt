@@ -71,6 +71,7 @@ object DerBauer {
         Logback4k.reconfigure {
             rootLevel = Level.WARN
             packageLevel(Level.ALL, "com.github.christophpickl.derbauer")
+            packageLevel(Level.DEBUG, "com.github.christophpickl.kpotpourri")
             addConsoleAppender {
                 pattern = "%d{HH:mm:ss} [%gray(%thread)] [%highlight(%-5level)] %cyan(%logger{30}) - %msg%n"
             }
