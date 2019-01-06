@@ -1,9 +1,9 @@
 package com.github.christophpickl.derbauer.ui
 
-import com.github.christophpickl.derbauer.model.AbstracteResource
 import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.UsableEntity
+import com.github.christophpickl.derbauer.resource.AbstracteResource
 import com.github.christophpickl.kpotpourri.common.string.splitMaxWidth
 import com.github.christophpickl.kpotpourri.common.string.times
 import mu.KotlinLogging.logger

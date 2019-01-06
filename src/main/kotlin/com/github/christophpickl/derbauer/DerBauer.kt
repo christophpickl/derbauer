@@ -3,7 +3,6 @@ package com.github.christophpickl.derbauer
 import ch.qos.logback.classic.Level
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.misc.Debugger
-import com.github.christophpickl.derbauer.misc.VersionChecker
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Keyboard
 import com.github.christophpickl.derbauer.ui.MainFrame
@@ -11,6 +10,7 @@ import com.github.christophpickl.derbauer.ui.MainTextArea
 import com.github.christophpickl.derbauer.ui.Prompt
 import com.github.christophpickl.derbauer.ui.RendererImpl
 import com.github.christophpickl.kpotpourri.common.version.Version2
+import com.github.christophpickl.kpotpourri.common.version.VersionChecker
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import com.github.christophpickl.kpotpourri.swing.AbortingExceptionHandler
 import mu.KotlinLogging
@@ -85,6 +85,10 @@ object DerBauer {
     }
 
     private fun checkLatestVersion() {
+        if (DEV_MODE) {
+            log.debug { "Not checking for latest version while in DEV mode." }
+            return
+        }
         val runnable = Runnable {
             VersionChecker.checkAndShowDialog(
                 currentVersion = currentVersion,

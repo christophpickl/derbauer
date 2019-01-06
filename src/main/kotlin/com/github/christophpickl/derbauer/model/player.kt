@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.building.Buildings
 import com.github.christophpickl.derbauer.military.Armies
+import com.github.christophpickl.derbauer.resource.Resources
 import com.github.christophpickl.derbauer.upgrade.Upgrades
 import com.github.christophpickl.kpotpourri.common.math.KMath
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType

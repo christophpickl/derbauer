@@ -8,6 +8,7 @@ import com.github.christophpickl.derbauer.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.misc.Features
 import com.github.christophpickl.derbauer.misc.Notifications
+import com.github.christophpickl.derbauer.resource.ResourceHolder
 import com.github.christophpickl.derbauer.ui.view.View
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 

@@ -4,7 +4,7 @@ import com.github.christophpickl.derbauer.misc.KRand.gaussLimitted
 import java.util.*
 
 fun main(args: Array<String>) {
-    val f = (1..100).map { _ ->
+    (1..100).map { _ ->
         gaussLimitted(50.0, 20.0)
     }.sorted()
         .forEach { println(it) }

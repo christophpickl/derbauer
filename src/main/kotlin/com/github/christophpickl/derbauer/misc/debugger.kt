@@ -51,7 +51,6 @@ class DebugWindow : JDialog() {
     private fun rootPanel() =
         JPanel().apply {
             layout = BorderLayout()
-            add(scrollPane, BorderLayout.CENTER)
             add(JPanel().apply {
                 add(JButton("Refresh").apply {
                     addActionListener { onRefresh() }
@@ -59,9 +58,17 @@ class DebugWindow : JDialog() {
                 add(JButton("Open").apply {
                     addActionListener { open() }
                 })
+            }, BorderLayout.NORTH)
+            add(scrollPane, BorderLayout.CENTER)
+            add(JPanel().apply {
                 add(JButton("+1k Gold").apply {
                     addActionListener {
                         Model.gold += 1_000
+                    }
+                })
+                add(JButton("+100 Food").apply {
+                    addActionListener {
+                        Model.food += 100
                     }
                 })
                 add(JButton("+100 People").apply {

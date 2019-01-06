@@ -4,8 +4,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 object Versions {
-    val kpotpourri = "SNAPSHOT"
-//    val kpotpourri = "2.3"
+    //    val kpotpourri = "SNAPSHOT"
+    val kpotpourri = "2.4"
 }
 
 plugins {

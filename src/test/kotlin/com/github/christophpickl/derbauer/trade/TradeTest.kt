@@ -4,8 +4,8 @@ import com.github.christophpickl.derbauer.TestModelListener
 import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Amount
-import com.github.christophpickl.derbauer.model.BuyAndSellableResource
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.resource.BuyAndSellableResource
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test

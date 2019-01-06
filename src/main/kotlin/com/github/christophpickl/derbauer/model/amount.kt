@@ -72,6 +72,12 @@ data class Amount(
     operator fun div(divisor: Long) = Amount(real / divisor)
     operator fun unaryMinus() = Amount(-real)
 
+//    fun ensureMax(current: Amount, max: Amount) =
+//        if (current + this <= max) this else max - current
+//
+//    fun ensureMin(current: Amount, min: Long = 0) =
+//        if (current + this >= min) this else -current
+    
     override fun toString(): String {
         if (DEV_MODE) {
             val stackTraceElements = Thread.currentThread().stackTrace.toList()
