@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer
 import ch.qos.logback.classic.Level
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.misc.Debugger
+import com.github.christophpickl.derbauer.misc.DerBauerVersionChecker
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.Keyboard
 import com.github.christophpickl.derbauer.ui.MainFrame
@@ -10,11 +11,9 @@ import com.github.christophpickl.derbauer.ui.MainTextArea
 import com.github.christophpickl.derbauer.ui.Prompt
 import com.github.christophpickl.derbauer.ui.RendererImpl
 import com.github.christophpickl.kpotpourri.common.version.Version2
-import com.github.christophpickl.kpotpourri.common.version.VersionChecker
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import com.github.christophpickl.kpotpourri.swing.AbortingExceptionHandler
 import mu.KotlinLogging
-import java.net.URL
 import javax.swing.SwingUtilities
 
 val CHEAT_MODE_PROPERTY = "derbauer.cheat"
@@ -64,7 +63,7 @@ object DerBauer {
             Thread.currentThread().uncaughtExceptionHandler = exceptionHandler
             MainFrame().buildAndShow(text)
         }
-        checkLatestVersion()
+        DerBauerVersionChecker.checkLatestVersion()
     }
 
     private fun initLogging() {
@@ -85,18 +84,4 @@ object DerBauer {
         }
     }
 
-    private fun checkLatestVersion() {
-        if (DEV_MODE) {
-            log.debug { "Not checking for latest version while in DEV mode." }
-            return
-        }
-        val runnable = Runnable {
-            VersionChecker.checkAndShowDialog(
-                currentVersion = currentVersion,
-                urlOfLatestVersionFile = URL("https://raw.githubusercontent.com/christophpickl/derbauer/master/src/main/resources/derbauer/version.txt"),
-                downloadPattern = "https://github.com/christophpickl/derbauer/releases/download/{0}/DerBauer-{0}.jar"
-            )
-        }
-        Thread(runnable, "VersionCheckThread").start()
-    }
 }

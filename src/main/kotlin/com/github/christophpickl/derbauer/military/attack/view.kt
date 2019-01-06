@@ -37,7 +37,8 @@ class PrepareAttackView(
     companion object {
         private fun buildMessage(context: PrepareAttackContext) =
             "Choose your attacking armies:\n" + (if (context.armies.any { it.value != null }) "\n" else "") +
-                context.armies.filter { it.value != null }.map { "- ${it.value!!.formatted} ${it.key.labelPlural.capitalize()}" }.joinToString("\n") + "\n" +
+                context.armies.filter { it.value != null }
+                    .map { "- ${it.value!!.formatted} ${it.key.labelPlural.capitalize()}" }.joinToString("\n") + "\n" +
                 "-> ${context.current.key.labelPlural.capitalize()} available: ${context.current.key.amount.formatted}"
     }
 

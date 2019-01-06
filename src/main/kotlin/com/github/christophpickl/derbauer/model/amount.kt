@@ -71,15 +71,18 @@ data class Amount(
     operator fun div(divisor: Amount) = Amount(real / divisor.real)
     operator fun div(divisor: Long) = Amount(real / divisor)
     operator fun unaryMinus() = Amount(-real)
-    
+
     override fun toString(): String {
         if (DEV_MODE) {
             val stackTraceElements = Thread.currentThread().stackTrace.toList()
-            val hasAnyAnnotation = stackTraceElements.any { stack ->
-                val method = Class.forName(stack.className).declaredMethods.first { it.name == stack.methodName }
-                method.getAnnotation(AmountToStringAllowed::class.java) != null
-            }
-            
+
+            val hasAnyAnnotation = stackTraceElements
+                .filter { it.className.startsWith("com.github.christophpickl.derbauer") }
+                .any { stack ->
+                    val method = Class.forName(stack.className).declaredMethods.first { it.name == stack.methodName }
+                    method.getAnnotation(AmountToStringAllowed::class.java) != null
+                }
+
             val isLogStatement = stackTraceElements.any { it.className == "mu.internal.LocationAwareKLogger" }
             if (!hasAnyAnnotation && !isLogStatement) {
                 throw UnsupportedOperationException(

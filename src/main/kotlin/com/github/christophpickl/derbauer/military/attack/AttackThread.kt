@@ -4,14 +4,14 @@ import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.ui.Renderer
 import com.github.christophpickl.derbauer.ui.view.FeedbackView
 import com.github.christophpickl.kpotpourri.common.misc.sleep
-import mu.KotlinLogging
+import mu.KotlinLogging.logger
 
 class AttackThread(
     private val context: AttackContext,
     private val renderer: Renderer
 ) : Runnable {
 
-    private val log = KotlinLogging.logger {}
+    private val log = logger {}
     private val calculator = AttackCalculator(context)
 
     override fun run() {
@@ -26,7 +26,9 @@ class AttackThread(
     private fun nextBattle() {
         calculator.fightBattle()
         context.message = "Ongoing war ...\n\n" +
-            context.armies.map { "${it.key.labelPlural.capitalize()}: ${it.value.formatted}" }.joinToString("\n") + "\n\n" +
+            context.armies.map { "${it.key.labelPlural.capitalize()}: ${it.value.formatted}" }
+                .joinToString("\n") +
+            "\n\n" +
             "Enemies: ${context.enemies.formatted}"
 
         renderer.render()
