@@ -25,6 +25,7 @@
 
 ## Ideas
 
+* increase likelyhood of rats if: lots of food, no buildings/upgrades which protect from it + eaten amount depends on amount of stored food
 * ? happenings mit selber viel choices (wie action game)
     - happenings auch waehrend dem turn (evtl durch action triggered)
     - oder einfach random wenn im menue rumklicken

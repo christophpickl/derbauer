@@ -31,7 +31,10 @@
         - army effectiveness
     * social: happyness
 
+## Ideas
+
 * can be destroyed/sold?
+* build multiple buildings at once?
 
 ## Examples
 
