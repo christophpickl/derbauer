@@ -14,11 +14,11 @@ import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 class UpgradeFeatures {
 
     val menu = AbstractFeature("New menu available: Upgrade") {
-        Model.people >= Values.features.upgradePeopleNeeded
+        all.any { it.isEnabled() }
     }
 
     val militaryUpgrade = UpgradeFeature(Model.player.upgrades.militaryUpgrade) {
-        Model.land > Values.features.militaryUpgradeLandNeeded
+        Model.land >= Values.features.militaryUpgradeLandNeeded
     }
     
     val foodProductivityUpgrade = UpgradeFeature(Model.player.upgrades.farmProductivity) {

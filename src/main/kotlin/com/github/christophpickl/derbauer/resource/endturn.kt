@@ -129,7 +129,8 @@ class ResourceEndTurn(
     private fun calcGold(): Amount {
         var calc = Model.people * Model.global.peopleGoldRate
         calc *= random.nextDouble(0.8, 1.6)
-        log.trace { "Gold calc: $calc (people=${Model.people} * rate=${Model.global.peopleGoldRate})" }
+        calc -= Model.player.armies.totalUpkeep
+        log.trace { "Gold calc: $calc (people=${Model.people} * rate=${Model.global.peopleGoldRate} - upkeep: ${Model.player.armies.totalUpkeep})" }
         return calc
     }
 

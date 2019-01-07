@@ -13,6 +13,7 @@ import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.PlayerEntity
+import com.github.christophpickl.derbauer.model.Upkeepable
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
 import com.github.christophpickl.derbauer.model.sumBy
@@ -31,13 +32,12 @@ data class Armies(
     
     val totalAmount get() = all.sumBy { it.amount }
     val armyCapacityLeft get() = Model.player.buildings.totalArmyCapacity - totalAmount
-
-    override val wealth: Amount
-        get() = all.sumBy { it.amount * it.buyPrice }
+    override val wealth get() = all.sumBy { it.amount * it.buyPrice }
+    val totalUpkeep get() = all.sumBy { it.amount * it.upkeep }
 
 }
 
-interface Army : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered {
+interface Army : Entity, Describable, MultiLabeled, Amountable, Buyable, Ordered, Upkeepable {
     var attackModifier: Double
     var costsPeople: Amount
 
@@ -59,7 +59,10 @@ abstract class AbstractArmy(
     final override var buyPrice = value.buyPrice
     final override var attackModifier = value.attackModifier
     final override var costsPeople = value.costsPeople
-    final override val buyDescription get() = "${buyPrice.formatted} gold and ${costsPeople.formatted} people"
+    final override val buyDescription
+        get() =
+            "${buyPrice.formatted} gold (${upkeep.formatted} upkeep) and ${costsPeople.formatted} people"
+    final override var upkeep = value.upkeep
 
     companion object {
         private var counter = 0

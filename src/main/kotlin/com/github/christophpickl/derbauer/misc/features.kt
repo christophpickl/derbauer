@@ -16,7 +16,7 @@ class Features {
     val upgrade = UpgradeFeatures()
     val action = ActionFeatures()
 
-    @JsonIgnore val all = building.all.plus(military.all).plus(upgrade.all).plus(action.all)
+    @JsonIgnore val all = building.all.plus(military.all).plus(action.all).plus(upgrade.all)
 
     fun checkAndNotifyAll() {
         all.forEach {

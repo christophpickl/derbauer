@@ -26,13 +26,31 @@ class EndTurnExecutor(
         val newVisitors = random.nextInt(0, Math.max(2, (Model.people.real / 100.0).toInt()))
         Model.actions.visitorsWaitingInThroneRoom += newVisitors
         Model.features.checkAndNotifyAll()
+        Model.features.upgrade.menu.checkAndNotify() // do it again, as it itself depends on other upgrades to be enabled
         adjustKarma()
+        loseArmyIfGoldNegative(resourceReport.goldIncome)
 
         return EndTurnReport(
             goldIncome = resourceReport.goldIncome,
             foodIncome = resourceReport.foodIncome,
             peopleIncome = resourceReport.peopleIncome
         )
+    }
+
+    private fun loseArmyIfGoldNegative(goldIncome: Amount) {
+        if (Model.gold.real < 0 && Model.player.armies.totalAmount.isNotZero) {
+            val armyType = Model.player.armies.all.filter { it.amount.isNotZero }.random()
+            val countRunAway = Amount(Math.min(armyType.amount.real, Math.max(1,
+                // restore 25% of negative income by army upkeep
+                (Math.abs(goldIncome.real) / armyType.upkeep.real / 100.0 * 25.0 * random.nextDouble(0.8, 1.2)).toLong())))
+            val label = if (countRunAway.real == 1L) armyType.labelSingular else armyType.labelPlural
+            armyType.amount -= countRunAway
+            log.trace {
+                "${armyType.labelPlural} lost ${countRunAway.real} amount due to negative gold. " +
+                    "(gold=${Model.gold.real}, goldIncome=${goldIncome.real}, armyTypeUpkeep=${armyType.upkeep.real})"
+            }
+            Model.notifications.add("Because of lack of gold ${countRunAway.formatted} $label left you")
+        }
     }
 
     private fun adjustKarma() {

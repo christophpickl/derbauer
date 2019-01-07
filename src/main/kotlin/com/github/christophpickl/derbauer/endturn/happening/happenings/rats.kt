@@ -12,7 +12,7 @@ class RatsHappening : Happening(
     nature = HappeningNature.Negative
 ) {
 
-    private val eatenSizes = listOf(0.001, 0.003, 0.008).map { Model.player.relativeWealthBy(it) }
+    private val eatenSizes = listOf(0.01, 0.02, 0.04).map { Model.player.relativeWealthBy(it) }
     private val randomEatenSizes = randomListOf(
         eatenSizes[0] to 60,
         eatenSizes[1] to 30,

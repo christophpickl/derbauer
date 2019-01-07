@@ -17,3 +17,7 @@ data class History(
 interface Wealthable {
     val wealth: Amount
 }
+
+interface Upkeepable {
+    var upkeep: Amount
+}

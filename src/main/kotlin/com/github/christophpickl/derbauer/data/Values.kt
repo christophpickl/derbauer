@@ -53,19 +53,22 @@ class ValuesMilitaries {
         realAmount = if (CHEAT_MODE) 2 else 0,
         realBuyPrice = 20,
         attackModifier = 1.0,
-        realCostsPeople = 1
+        realCostsPeople = 1,
+        realUpkeep = 1
     )
     val knights = ValueArmy(
         realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 30,
         attackModifier = 1.2,
-        realCostsPeople = 1
+        realCostsPeople = 1,
+        realUpkeep = 2
     )
     val catapults = ValueArmy(
         realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 50,
         attackModifier = 1.4,
-        realCostsPeople = 3
+        realCostsPeople = 3,
+        realUpkeep = 4
     )
     val attackBattleDelay = if (CHEAT_MODE) 400 else 600
 }
@@ -107,7 +110,6 @@ class ValuesThroneRoom {
 
 class ValuesFeatures {
     // upgrade
-    val upgradePeopleNeeded = Amount(10)
     val foodProductionUpgradeBuildingsNeeded = Amount(10)
     val foodProductionUpgradeFoodNeeded = Amount(500)
     val militaryUpgradeLandNeeded = Amount(25)
@@ -171,9 +173,11 @@ class ValueArmy(
     val realAmount: Long,
     val realBuyPrice: Long,
     val attackModifier: Double,
-    val realCostsPeople: Long
+    val realCostsPeople: Long,
+    val realUpkeep: Long
 ) {
     val amount = Amount(realAmount)
     val buyPrice = Amount(realBuyPrice)
     val costsPeople = Amount(realCostsPeople)
+    val upkeep = Amount(realUpkeep)
 }
