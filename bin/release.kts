@@ -26,7 +26,7 @@ build4k {
     printHeader("Test Build")
     gradlew("clean", "test", "check")
 
-    printHeader("Write next version")
+    printHeader("Write Version")
     versionFile.writeText(nextVersion.toString())
     println("Written '$nextVersion' to file: ${versionFile.absolutePath}")
 
@@ -58,7 +58,7 @@ fun Build4k.buildFatJar(artifactId: String, version: Version<*>): File {
 }
 
 fun Build4k.gitTagPush(nextVersion: Version<*>) {
-    printHeader("GIT tag&push")
+    printHeader("GIT Tag + Push")
     git("add", ".")
     git("commit", "-m", "[Auto-Release] Version: $nextVersion")
     git("tag", "$nextVersion")
@@ -67,7 +67,7 @@ fun Build4k.gitTagPush(nextVersion: Version<*>) {
 }
 
 fun Build4k.createGitHubRelease(version: Version<*>, uploadFile: File) {
-    printHeader("GitHub upload")
+    printHeader("GitHub Upload")
     requireGitTagExists(version.toString())
     github(
         repoOwner = "christophpickl",

@@ -7,7 +7,7 @@
 
 A text-based, round-based, old-school, medieval strategy game written in [Kotlin](http://kotlinlang.org/).
 
-[Download the latest version](https://github.com/christophpickl/derbauer/releases/latest) by saving the JAR file and double-click on it (requires [Java](https://www.java.com/download/) to be present).
+[**Download the latest version**](https://github.com/christophpickl/derbauer/releases/latest) by saving the JAR file and double-click on it (requires [Java](https://www.java.com/download/) to be present).
 
 ![derbauer-1.1.png](https://raw.githubusercontent.com/christophpickl/derbauer/master/doc/derbauer-1.1.png "DerBauer Screenshot")
 
