@@ -11,13 +11,18 @@ import com.github.christophpickl.derbauer.model.Global
 import com.github.christophpickl.derbauer.model.History
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.Player
+import mu.KotlinLogging.logger
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.ObjectAssert
 import org.testng.ITestResult
 import org.testng.TestListenerAdapter
 
 class TestModelListener : TestListenerAdapter() {
+
+    private val log = logger {}
+    
     override fun onTestStart(testContext: ITestResult) {
+        log.trace { "Resetting model for tests. Just one house, granary and people; nothing else." }
         Model.reset()
 
         Model.player.resources.all.forEach { it.amount = Amount.zero }
@@ -26,6 +31,10 @@ class TestModelListener : TestListenerAdapter() {
 
         Model.player.buildings.all.forEach { it.amount = Amount.zero }
         Model.player.armies.all.forEach { it.amount = Amount.zero }
+
+        Model.player.buildings.houses.amount = Amount.one
+        Model.player.buildings.granaries.amount = Amount.one
+        Model.player.resources.people.amount = Amount.one
     }
 }
 

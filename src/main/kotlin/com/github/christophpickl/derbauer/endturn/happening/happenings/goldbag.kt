@@ -1,15 +1,16 @@
 package com.github.christophpickl.derbauer.endturn.happening.happenings
 
 import com.github.christophpickl.derbauer.data.AsciiArt
-import com.github.christophpickl.derbauer.endturn.happening.Happening
+import com.github.christophpickl.derbauer.endturn.happening.BaseHappening
 import com.github.christophpickl.derbauer.endturn.happening.HappeningNature
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
 
-class GoldBagHappening : Happening(
-    cooldownDays = 7,
+class GoldBagHappening : BaseHappening(
+    totalCooldownDays = 7,
     nature = HappeningNature.Positive
 ) {
+
     private val goldAmounts = listOf(0.01, 0.02, 0.03).map { Model.player.relativeWealthBy(it) }
     private val randomGoldAmounts = randomListOf(
         goldAmounts[0] to 50,

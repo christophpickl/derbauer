@@ -1,6 +1,7 @@
 
 # TODO
 
+* new happening: random people/army join; make happening#condition() .. check whether player good capacity/necessary features
 * (6) MILIATRY: attack target: { wildlings, the empire }
 * (4) ! MILIATRY: getting attacked end of turn
 * (2) gausche glocken kurve research+einbauen, see KRand

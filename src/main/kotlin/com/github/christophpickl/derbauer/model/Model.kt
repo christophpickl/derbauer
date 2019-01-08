@@ -33,6 +33,7 @@ object Model : ResourceHolder {
     val totalPeopleCapacity get() = player.buildings.totalPeopleCapacity
     val foodCapacityLeft get() = player.resources.food.capacityLeft
     val totalFoodCapacity get() = player.buildings.totalFoodCapacity
+    val foodCapacityRation get() = Percent(Model.food.real.toDouble() / totalFoodCapacity.real.toDouble())
     val armyCapacityLeft get() = player.armies.armyCapacityLeft
     val totalArmyCapacity get() = player.buildings.totalArmyCapacity
     //</editor-fold>
