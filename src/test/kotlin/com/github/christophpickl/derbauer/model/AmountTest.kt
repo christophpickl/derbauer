@@ -74,12 +74,14 @@ class AmountTest {
     // @formatter:off
     @DataProvider
     fun amountRounded() = arrayOf(
-        arrayOf(        0L,           0L),
-        arrayOf(      999L,         999L),
-        arrayOf(    1_239L,       1_230L),
-        arrayOf(   12_399L,      12_300L),
-        arrayOf(1_234_567L,   1_230_000L),
-        arrayOf(1_012_345L,   1_010_000L)
+        arrayOf(          0L,           0L),
+        arrayOf(        999L,         999L),
+        arrayOf(      1_239L,       1_230L),
+        arrayOf(     12_399L,      12_300L),
+        arrayOf(  1_234_567L,   1_230_000L),
+        arrayOf(  1_012_345L,   1_010_000L),
+        arrayOf( 12_345_678L,  12_300_000L),
+        arrayOf( 12_000_000L,  12_000_000L)
     )
     // @formatter:on
 
@@ -96,9 +98,9 @@ class AmountTest {
     // @formatter:off
     @DataProvider
     fun amountFormatted() = arrayOf(
-        arrayOf(                  0L,   "0"),
-        arrayOf(                  1L,   "1"),
-        arrayOf(                999L, "999"),
+        arrayOf(                  0L,    "0"),
+        arrayOf(                  1L,    "1"),
+        arrayOf(                999L,  "999"),
         arrayOf(              1_000L,"1.00k"),
         arrayOf(              1_020L,"1.02k"),
         arrayOf(              1_200L,"1.20k"),

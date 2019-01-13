@@ -44,18 +44,21 @@ data class Amount(
                 val rawRounded = real - rest
                 val realCut = rawRounded / type.thousands
                 println("ROUND: rest=$rest, realCut=$realCut")
+                val absRealCut = Math.abs(realCut)
+                val absRest = Math.abs(rest)
+                val absReal = Math.abs(real)
                 val addition = when {
-                    realCut < 10 -> if (rest == 0L) 0 else {
-                        rest.toString().let {
-                            if (real.toString().elementAt(1) == '0') "0$it" else it
+                    absRealCut < 10 -> if (rest == 0L) 0 else {
+                        absRest.toString().let {
+                            if (absReal.toString().elementAt(1) == '0') "0$it" else it
                         }.substring(0, 2).toInt() * 10 * type.thousandsForNext
                     }
-                    realCut < 100 -> rest.toString().substring(0, 1).toInt() * 100 * type.thousandsForNext
+                    absRealCut < 100 -> absRest.toString().substring(0, 1).toInt() * 100 * type.thousandsForNext
                     else -> 0
                 }
                 println("ROUND: real=$real, rest=$rest; realCut=$realCut; type.thousandsForNext=${type.thousandsForNext}")
                 println("ROUND: rawRounded=$rawRounded; addition: $addition")
-                rawRounded + addition
+                rawRounded + (addition * (if (real < 0) -1 else 1))
             }
 
         private fun format(real: Long, type: AmountType, rounded: Long): String =
@@ -63,14 +66,16 @@ data class Amount(
                 rounded.toString()
             } else {
                 val realCut = rounded / type.thousands
+                val absRealCut = Math.abs(realCut)
+                val absReal = Math.abs(real)
                 val floatPart = when {
-                    realCut < 10 -> { // real=1239; rounded=1230, realCut=1 ===> 1239.substring=239, take2=23 => 1.23
-                        val rest = real.toString().substring(1).take(2)
+                    absRealCut < 10 -> { // real=1239; rounded=1230, realCut=1 ===> 1239.substring=239, take2=23 => 1.23
+                        val rest = absReal.toString().substring(1).take(2)
                         println("FORMAT: rest=$rest")
                         ".$rest"
                     }
-                    realCut < 100 -> // real=12399; realCut=12 ===> realCut.length=2, real.sub(2)=399, first=3 => 12.3
-                        ".${real.toString().substring(2).first()}"
+                    absRealCut < 100 -> // real=12399; realCut=12 ===> realCut.length=2, real.sub(2)=399, first=3 => 12.3
+                        ".${absReal.toString().substring(2).take(1)}"
                     else -> ""
                 }
                 println("FORMAT: rounded=$rounded, real=$real, floatPart=$floatPart; realCut=$realCut")
