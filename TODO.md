@@ -1,12 +1,13 @@
 
 # TODO
 
-* !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)
+* make window NOT resizable
+* amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
+* gold income DRASTISCH rauf, +30%
 
 # UP NEXT
 
-* make window NOT resizable
-* amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
+* !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)
 * (6) MILITARY: attack target:
     - targets: wildlings, village, town, city, country, nation, empire
     * when attack won, there should be at least some loot, but never 0
@@ -15,9 +16,8 @@
         - aufjedenfall so massig mehr GOLD rauskommen!! (land passt so halbwegs)
         - gibt als loot: gold/food/land spaeter fuer higher targets sogar: people/armies/upgrades?
 * (4) ! MILITARY: getting attacked end of turn
-* (2) gausche glocken kurve research+einbauen, see KRand
+* (2) gausche glocken kurve research+einbauen, see KRand (ad doku: log10, log, ...)
 * (3) + TRADE: je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
-* ATTACK TARGETS:
 * ad HAPPENING
     * new happening: random people/army join; make happening#condition() .. check whether player good capacity/necessary features
     * increase gold bag happening amount (oder eh schon durch wealth gemacht?!)
@@ -30,13 +30,11 @@
 # Mit Rene
 
 ## LIL
-    
-* randomize food consumption
-* castle attraktiver machen; guenstigere baukosten
+
 * end attack view: layout armies lost so wie end turn report (genau sehen welche wieviel verloren)
-* food.production *= random modifier
-* gold income DRASTISCH rauf, +30%
-    - unbedingt TAX rate konzept einfuehren (modifier * people.count * random)
+* randomize food consumption and production
+* castle attraktiver machen; guenstigere baukosten
+* unbedingt TAX rate konzept einfuehren (modifier * people.count * random)
 * nur "schoene" zahlen als limits verwenden, damit fuer den user klarer ersichtlich, also 100/250/500/1000/....
     - zb: castle braucht 50 leute, etc
 * BUG: "people(s)" wird gerendert ad castle description
