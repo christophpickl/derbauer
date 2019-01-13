@@ -110,4 +110,3 @@
 * introduce game preferences (persisted)
     - alert type: { off, beep, visual } // weil der beep sound kann super laestig werden!
     - visual != AlertGlasspane ... sondern eher nur ein kurzer flash
-* military view schoener rendern: "capacity 1_/_13" spaces rund um "/" trennzeichen

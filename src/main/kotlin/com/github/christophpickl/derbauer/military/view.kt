@@ -18,11 +18,8 @@ class MilitaryView : ChooseView<MilitaryChoice>(
     ).apply {
         addAll(Model.player.armies.all.map { MilitaryChoice.Hire(it) })
     },
-    additionalContent = "You've got (used capacity " +
-        "${Model.player.armies.totalAmount.formatted}/${Model.player.buildings.totalArmyCapacity.formatted}):\n" +
-        Model.player.armies.all.joinToString("\n") {
-            "  ${it.labelPlural.capitalize()}: ${it.amount.formatted}"
-        },
+    additionalContent = "Used capacity: " +
+        "${Model.player.armies.totalAmount.formatted} / ${Model.player.buildings.totalArmyCapacity.formatted}",
     cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
     override fun onCallback(callback: ViewCallback, choice: MilitaryChoice) {
@@ -36,7 +33,10 @@ sealed class MilitaryChoice : Choice {
     }
 
     class Hire(val army: Army) : MilitaryChoice() {
-        override val label = formatLabel(army)
+        override val label = formatLabel(
+            buyable = army,
+            currentAmount = army.amount
+        )
     }
 }
 

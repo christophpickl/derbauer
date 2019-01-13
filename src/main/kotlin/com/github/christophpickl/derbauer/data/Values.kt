@@ -4,11 +4,11 @@ import com.github.christophpickl.derbauer.CHEAT_MODE
 import com.github.christophpickl.derbauer.model.Amount
 
 class ValuesResources {
-    val gold = Amount(if (CHEAT_MODE) 900 else 300)
+    val gold = Amount(if (CHEAT_MODE) 1_500 else 300)
     val foodBuyPrice = Amount(4)
     val foodSellPrice = Amount(2)
-    val food = Amount(if (CHEAT_MODE) 400 else 50)
-    val people = Amount(if (CHEAT_MODE) 10 else 2)
+    val food = Amount(if (CHEAT_MODE) 1_000 else 50)
+    val people = Amount(if (CHEAT_MODE) 50 else 2)
     val land = Amount(if (CHEAT_MODE) 300 else 10)
     val landBuyPrice = Amount(50)
     val landSellPrice = Amount(40)

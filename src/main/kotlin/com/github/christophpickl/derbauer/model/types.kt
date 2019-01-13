@@ -15,6 +15,8 @@ interface MultiLabeled : Labeled {
     @IgnoreStringified
     val labelPlural: String
     override val label get() = labelSingular
+
+    fun labelByAmount(amount: Amount) = if (amount.real == 1L) labelSingular else labelPlural
 }
 
 interface Describable {

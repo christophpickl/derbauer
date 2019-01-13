@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer.ui.view
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.buysell.Buyable
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
+import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Describable
 import com.github.christophpickl.derbauer.model.Labeled
 import com.github.christophpickl.derbauer.ui.Beeper
@@ -67,8 +68,14 @@ interface Choice : Labeled {
 
     fun formatLabel(pre: String, post: String) = "$pre ... $post"
 
-    fun <B> formatLabel(buyable: B) where B : Labeled, B : Buyable, B : Describable =
-        formatLabel(buyable.label.capitalize(), "${buyable.buyDescription} (${buyable.description})")
+    fun <B> formatLabel(
+        buyable: B,
+        currentAmount: Amount? = null
+    ) where B : Labeled, B : Buyable, B : Describable =
+        formatLabel(
+            pre = buyable.label.capitalize() + if (currentAmount != null) " (${currentAmount.formatted})" else "",
+            post = "${buyable.buyDescription} (${buyable.description})"
+        )
 }
 
 class EnumChoice<E : Enum<E>>(

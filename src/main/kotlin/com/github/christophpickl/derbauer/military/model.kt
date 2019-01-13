@@ -29,7 +29,7 @@ data class Armies(
 
     @get:JsonIgnore val all get() = propertiesOfType<Armies, Army>(this).ordered().filterConditional()
     inline fun <reified T : Army> filterAll() = all.filterIsInstance<T>()
-    
+
     val totalAmount get() = all.sumBy { it.amount }
     val armyCapacityLeft get() = Model.player.buildings.totalArmyCapacity - totalAmount
     override val wealth get() = all.sumBy { it.amount * it.buyPrice }
@@ -61,7 +61,8 @@ abstract class AbstractArmy(
     final override var costsPeople = value.costsPeople
     final override val buyDescription
         get() =
-            "${buyPrice.formatted} gold (${upkeep.formatted} upkeep) and ${costsPeople.formatted} people"
+            "${buyPrice.formatted} gold (${upkeep.formatted} upkeep), ${costsPeople.formatted} people"
+    
     final override var upkeep = value.upkeep
 
     companion object {
@@ -77,7 +78,7 @@ class Soldier : AbstractArmy(
     labelPlural = "soldiers",
     value = Values.militaries.soldiers
 ) {
-    override val description get() = "basic unit; attack: $attackModifier"
+    override val description get() = "basic unit"
 }
 
 class Knight : AbstractArmy(
@@ -86,7 +87,7 @@ class Knight : AbstractArmy(
     value = Values.militaries.knights
 ), Conditional {
     override fun checkCondition() = Model.features.military.knights.isEnabled()
-    override val description get() = "allrounder unit; attack: $attackModifier"
+    override val description get() = "strong allrounder"
 }
 
 class Catapult : AbstractArmy(
@@ -95,5 +96,5 @@ class Catapult : AbstractArmy(
     value = Values.militaries.catapults
 ), Conditional {
     override fun checkCondition() = Model.features.military.catapults.isEnabled()
-    override val description get() = "good against buildings; attack: $attackModifier"
+    override val description get() = "smashes buildings"
 }
