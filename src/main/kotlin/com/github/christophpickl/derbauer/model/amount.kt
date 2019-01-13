@@ -39,20 +39,48 @@ data class Amount(
 
         private fun round(type: AmountType, real: Long): Long =
             if (type == AmountType.Single) real
-            else real - (real % type.thousands)
+            else {
+                val rest = real % type.thousands
+                val rawRounded = real - rest
+                val realCut = rawRounded / type.thousands
+                println("ROUND: rest=$rest, realCut=$realCut")
+                val addition = when {
+                    realCut < 10 -> if (rest == 0L) 0 else {
+                        rest.toString().let {
+                            if (real.toString().elementAt(1) == '0') "0$it" else it
+                        }.substring(0, 2).toInt() * 10 * type.thousandsForNext
+                    }
+                    realCut < 100 -> rest.toString().substring(0, 1).toInt() * 100 * type.thousandsForNext
+                    else -> 0
+                }
+                println("ROUND: real=$real, rest=$rest; realCut=$realCut; type.thousandsForNext=${type.thousandsForNext}")
+                println("ROUND: rawRounded=$rawRounded; addition: $addition")
+                rawRounded + addition
+            }
 
-        private fun format(type: AmountType, rounded: Long): String =
+        private fun format(real: Long, type: AmountType, rounded: Long): String =
             if (type == AmountType.Single) {
                 rounded.toString()
             } else {
                 val realCut = rounded / type.thousands
-                "$realCut${type.sign}"
+                val floatPart = when {
+                    realCut < 10 -> { // real=1239; rounded=1230, realCut=1 ===> 1239.substring=239, take2=23 => 1.23
+                        val rest = real.toString().substring(1).take(2)
+                        println("FORMAT: rest=$rest")
+                        ".$rest"
+                    }
+                    realCut < 100 -> // real=12399; realCut=12 ===> realCut.length=2, real.sub(2)=399, first=3 => 12.3
+                        ".${real.toString().substring(2).first()}"
+                    else -> ""
+                }
+                println("FORMAT: rounded=$rounded, real=$real, floatPart=$floatPart; realCut=$realCut")
+                "$realCut$floatPart${type.sign}"
             }
     }
 
     @get:JsonIgnore val type: AmountType = whichType(real)
     @get:JsonIgnore val rounded: Long get() = round(type, real)
-    @get:JsonIgnore val formatted: String get() = format(type, rounded)
+    @get:JsonIgnore val formatted: String get() = format(real, type, rounded)
 
     @get:JsonIgnore val isZero = real == 0L
     @get:JsonIgnore val isNotZero = real != 0L
@@ -129,6 +157,7 @@ enum class AmountType(
 
     val regexp = Regex("""(\d+)($sign)""")
     val thousands = if (thousandFactor == 0) 0 else Math.pow(1_000.0, thousandFactor.toDouble()).toLong()
+    val thousandsForNext = if (thousandFactor == 0) 1 else Math.pow(1_000.0, (thousandFactor - 1).toDouble()).toLong()
     val limit = Math.pow(1_000.0, thousandFactor + 1.0).toLong()
 }
 
