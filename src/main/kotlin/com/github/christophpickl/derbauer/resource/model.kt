@@ -8,6 +8,7 @@ import com.github.christophpickl.derbauer.buysell.LimitedBuyableAmount
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Amountable
+import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Entity
 import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
@@ -41,7 +42,7 @@ data class Resources(
 
 interface Resource : Entity, Amountable, MultiLabeled, Ordered
 
-interface BuyAndSellableResource : Resource, BuyAndSellable {
+interface BuyAndSellableResource : Resource, BuyAndSellable, Conditional {
     val sellPossible: Amount
     var buyPriceModifier: Double
     var sellPriceModifier: Double
@@ -83,6 +84,7 @@ class FoodResource : AbstracteResource(
     override val sellPossible get() = Amount.maxOf(Amount.zero, amount)
     override var buyPriceModifier = 1.0
     override var sellPriceModifier = 1.0
+    override fun checkCondition() = true
     override fun toString() = Stringifier.stringify(this)
 }
 
@@ -116,6 +118,7 @@ class LandResource : AbstracteResource(
     override val sellPossible get() = Model.player.resources.land.unusedAmount
     override var buyPriceModifier = 1.0
     override var sellPriceModifier = 1.0
+    override fun checkCondition() = Model.features.trade.landEnabled.isEnabled()
     override fun toString() = Stringifier.stringify(this)
 }
 

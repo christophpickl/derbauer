@@ -5,6 +5,7 @@ import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.resource.BuyAndSellableResource
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
 import com.github.christophpickl.derbauer.ui.view.Choice
@@ -13,8 +14,11 @@ import com.github.christophpickl.derbauer.ui.view.InputView
 
 class TradeView : ChooseView<TradeableChoice>(
     message = Messages.trade,
-    choices = Model.player.resources.allTradeables.flatMap {
-        listOf(TradeableChoice(it, BuySell.Buy), TradeableChoice(it, BuySell.Sell))
+    choices = Model.player.resources.allTradeables.filterConditional().flatMap {
+        listOf(
+            TradeableChoice(it, BuySell.Buy),
+            TradeableChoice(it, BuySell.Sell)
+        )
     },
     cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {

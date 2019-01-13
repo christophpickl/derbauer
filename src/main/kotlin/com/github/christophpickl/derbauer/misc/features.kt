@@ -5,18 +5,25 @@ import com.github.christophpickl.derbauer.action.ActionFeatures
 import com.github.christophpickl.derbauer.building.BuildingFeatures
 import com.github.christophpickl.derbauer.military.MilitaryFeatures
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.trade.TradeFeatures
 import com.github.christophpickl.derbauer.upgrade.UpgradeFeatures
 import com.github.christophpickl.kpotpourri.common.misc.OncePredicate
 import com.github.christophpickl.kpotpourri.common.misc.OnceResult
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
 class Features {
+    val trade = TradeFeatures()
     val building = BuildingFeatures()
     val military = MilitaryFeatures()
     val upgrade = UpgradeFeatures()
     val action = ActionFeatures()
 
-    @JsonIgnore val all = building.all.plus(military.all).plus(action.all).plus(upgrade.all)
+    @JsonIgnore val all: List<Feature> =
+        trade.all
+            .plus(building.all)
+            .plus(military.all)
+            .plus(upgrade.all)
+            .plus(action.all)
 
     fun checkAndNotifyAll() {
         all.forEach {
