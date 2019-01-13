@@ -42,7 +42,7 @@ class ThroneRoomChoosenView(callback: YesNoCallback) : YesNoChooseView(
 ) {
     companion object {
         fun buildMessage(): String {
-            val visitors = Model.actions.visitorsWaitingInThroneRoom
+            val visitors = Model.actions.throneRoom.visitorsWaiting
             val singular = visitors == 1
             val areVisitors = "${if (singular) "is" else "are"} $visitors visitor${if (singular) "" else "s"}"
             return "There $areVisitors waiting for you.\n" +

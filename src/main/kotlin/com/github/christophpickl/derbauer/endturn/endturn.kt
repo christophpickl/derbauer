@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.endturn
 
+import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomEndTurn
 import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
@@ -15,6 +16,7 @@ class EndTurnExecutor(
 
     private val log = logger {}
     private val resourceEndTurner = ResourceEndTurn()
+    private val throneRoomEndTurner = ThroneRoomEndTurn()
 
     fun execute(): EndTurnReport {
         log.debug { "execute end turn" }
@@ -24,12 +26,11 @@ class EndTurnExecutor(
         Model.people += resourceReport.peopleIncome
 
         Model.global.day++
-        val newVisitors = random.nextInt(0, Math.max(2, (Model.people.real / 100.0).toInt()))
-        Model.actions.visitorsWaitingInThroneRoom += newVisitors
         Model.features.checkAndNotifyAll()
         Model.features.upgrade.menu.checkAndNotify() // do it again, as it itself depends on other upgrades to be enabled
         adjustKarma()
         loseArmyIfGoldNegative(resourceReport.goldIncome)
+        throneRoomEndTurner.onEndTurn()
         Messages.onEndTurn()
 
         return EndTurnReport(

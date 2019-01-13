@@ -35,13 +35,13 @@ class ValuesBuildings {
     val granaryFoodCapacity = Amount(250)
     val barrack = ValueBuilding(
         realAmount = if (CHEAT_MODE) 10 else 0,
-        realLandNeeded = 1,
+        realLandNeeded = 3,
         realBuyPrice = 100
     )
     val barrackArmyCapacity = Amount(10)
     val castles = ValueBuilding(
         realAmount = if (CHEAT_MODE) 1 else 0,
-        realLandNeeded = 4,
+        realLandNeeded = 5,
         realBuyPrice = 300
     )
     val castlePeopleCapacity = Amount(80)
@@ -95,16 +95,17 @@ class ValuesHappenings {
 }
 
 class ValuesActions {
-    val visitorsWaitingInThroneRoom = if (CHEAT_MODE) 5 else 0
     val throneRoom = ValuesThroneRoom()
 }
 
 class ValuesThroneRoom {
-    val generalRewardLandRelativeWealth = 0.001
+    val initialVisitorsWaiting = if (CHEAT_MODE) 5 else 0
+
+    val generalRewardInGoldRelativeToWealth = 0.0025
     val generalMinReward = 200L
 
     val boyDemandsOfRelativeWealth = listOf(0.004, 0.01, 0.03)
-    val boyRewardRelativeWealth = 0.0001
+    val boyRewardLandRelativeToWealth = 0.0001
     val boyMinReward = 5L
 }
 

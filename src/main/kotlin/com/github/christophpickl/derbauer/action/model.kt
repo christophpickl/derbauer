@@ -13,11 +13,10 @@ import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 @Suppress("unused")
 class Actions {
-    val visitThroneRoom: ThroneRoomAction = ThroneRoomAction()
+    val throneRoom: ThroneRoomAction = ThroneRoomAction()
 
     @get:JsonIgnore val all get() = propertiesOfType<Actions, Action>(this).ordered().filterConditional()
 
-    var visitorsWaitingInThroneRoom: Int = Values.actions.visitorsWaitingInThroneRoom
 }
 
 interface Action : Entity, Conditional, Describable, Ordered {
@@ -32,10 +31,17 @@ class ThroneRoomAction(
     override val label: String = "visit throne room"
 ) : Action {
 
+    var visitorsWaiting = Values.actions.throneRoom.initialVisitorsWaiting
+    val maxVisitorsWaiting get() = computeNewVisitors() * 3
+
+    fun computeNewVisitors() = if (Model.player.buildings.castles.amount.isNotZero) {
+        1 + Math.log10(Model.player.buildings.castles.amount.real.toDouble()).toInt()
+    } else 0
+    
     @get:JsonIgnore override val order: Int = 0
     override val description
-        get() = "${Model.actions.visitorsWaitingInThroneRoom} " +
-            "visitor${if (Model.actions.visitorsWaitingInThroneRoom == 1) "" else "s"} waiting"
+        get() = "$visitorsWaiting " +
+            "visitor${if (visitorsWaiting == 1) "" else "s"} waiting"
 
     override fun checkCondition() = Model.features.action.throneRoomEnabled.isEnabled()
     override fun onSpecificAction(on: OnSpecificAction) {

@@ -97,7 +97,6 @@ class BarrackBuilding : AbstractBuilding(
 ), ArmyCapacityBuilding, Conditional {
     override var armyCapacity = Values.buildings.barrackArmyCapacity
     override fun checkCondition() = Model.features.military.menu.isEnabled()
-    override val additionalDescription = "enables new army type"
 }
 
 class CastleBuilding : AbstractBuilding(

@@ -12,6 +12,7 @@ import com.github.christophpickl.derbauer.model.History
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.Player
 import mu.KotlinLogging.logger
+import org.assertj.core.api.AbstractDoubleAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.ObjectAssert
 import org.testng.ITestResult
@@ -77,3 +78,7 @@ fun ObjectAssert<Amount>.isAmountEqualTo(expected: Long) {
         assertThat(it.real).isEqualTo(expected)
     }
 }
+
+fun assertAverage(captor: () -> Int): AbstractDoubleAssert<*> = assertThat(1.rangeTo(1_000).map {
+    captor()
+}.average())

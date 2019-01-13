@@ -1,9 +1,6 @@
 
 # TODO
 
-* throne room visitors growth DRASTISCH runter
-    - max capacity depends on castle, aber niemals mehr als 1-2 dutzend
-    - meist < 5, spaeter dann evtl sogar 10-15
 * affordable amount schon in uebersicht anzeigen, nicht erst in sub view
 * when warning overlay (gruenes glasspane) ++ go other screen fast => immediate! close (cancel the timeout)
 * !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)

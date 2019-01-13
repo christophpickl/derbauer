@@ -9,8 +9,10 @@ import com.github.christophpickl.derbauer.ui.view.YesNoCallback
 import mu.KotlinLogging.logger
 
 class ThroneRoomController : YesNoCallback {
-    private val log = logger {}
 
+    private val log = logger {}
+    private val throneRoom get () = Model.actions.throneRoom
+    
     private val possibleVisitors: List<ThroneRoomVisitor<out ThroneRoomChoice>> = listOf(
         PoorBoyVisitor(),
         GeneralVisitor()
@@ -18,12 +20,12 @@ class ThroneRoomController : YesNoCallback {
 
     fun enter() {
         log.debug { "enter()" }
-        val visitorsWaiting = Model.actions.visitorsWaitingInThroneRoom
+        val visitorsWaiting = throneRoom.visitorsWaiting
         if (visitorsWaiting == 0) {
             Model.currentView = ThroneRoomEmptyView()
             return
         }
-        Model.actions.visitorsWaitingInThroneRoom--
+        throneRoom.visitorsWaiting--
 
         val visitor = possibleVisitors.filter { it.condition() }.random()
 
@@ -34,7 +36,7 @@ class ThroneRoomController : YesNoCallback {
         val response = visitor.choose(choice) ?: return
         Model.global.karma += choice.karmaEffect
         Model.currentView = FeedbackView(response) {
-            if (Model.actions.visitorsWaitingInThroneRoom == 0) {
+            if (throneRoom.visitorsWaiting == 0) {
                 Model.currentView = ThroneRoomEmptyView()
             } else {
                 Model.currentView = ThroneRoomChoosenView(this)

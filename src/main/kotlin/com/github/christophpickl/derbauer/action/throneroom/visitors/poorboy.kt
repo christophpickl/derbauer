@@ -20,8 +20,6 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
 
     private val goldAmounts = buildGoldAmounts()
 
-    override fun condition() = true
-
     override val message = "A poor boy enters carefully the room and begs for ${goldAmounts[0].formatted} gold.\n\n" +
         "How do you feel about that boy, my lord?"
 
@@ -35,6 +33,8 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
         PoorBoyChoice(PoorBoyDecision.SendAwayDecision, karmaEffect = Values.karma.throneRoom.boySendAway),
         PoorBoyChoice(PoorBoyDecision.ThrowDungeonDecision, karmaEffect = Values.karma.throneRoom.boyThrowDungeon)
     )
+
+    override fun condition() = true
 
     override fun choose(choice: PoorBoyChoice) =
         when (choice.decision) {
@@ -65,8 +65,8 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
         } + KMath.max(Model.global.karma / 10, 0.2)
 
         return if (Random.nextDouble() < probabilityReward) {
-            val reward = Amount(KMath.min(Values.actions.throneRoom.boyMinReward,
-                Model.player.relativeWealthBy(Values.actions.throneRoom.boyRewardRelativeWealth).real))
+            val reward = Amount(KMath.max(Values.actions.throneRoom.boyMinReward,
+                Model.player.relativeWealthBy(Values.actions.throneRoom.boyRewardLandRelativeToWealth).real))
             Model.land += reward
             "Because of your generosity you get ${reward.formatted} land for free."
         } else {
