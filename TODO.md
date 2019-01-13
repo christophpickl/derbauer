@@ -1,10 +1,10 @@
 
 # TODO
 
-* keine 2 titles! zb im home screen, sondern nur einen!
 * escape enabled (mit enter) irgendwo erklaeren
     - immer im prompt unten, rechtsbuendig
     - evtl zusaetzlich ESC unterstuetzen (?)
+* keine 2 titles! zb im home screen, sondern nur einen!
 * throne room visitors growth DRASTISCH runter
     - max capacity depends on castle, aber niemals mehr als 1-2 dutzend
     - meist < 5, spaeter dann evtl sogar 10-15
