@@ -97,7 +97,7 @@ class BarrackBuilding : AbstractBuilding(
 ), ArmyCapacityBuilding, Conditional {
     override var armyCapacity = Values.buildings.barrackArmyCapacity
     override fun checkCondition() = Model.features.military.menu.isEnabled()
-    override val additionalDescription = "enables new units"
+    override val additionalDescription = "enables new army type"
 }
 
 class CastleBuilding : AbstractBuilding(
@@ -138,6 +138,6 @@ abstract class AbstractBuilding(
             }
         }.joinToString(" and ")
 
-    override val buyDescription get() = "${buyPrice.formatted} gold and ${landNeeded.formatted} land"
+    override val buyDescription get() = "${buyPrice.formatted} gold, ${landNeeded.formatted} land"
     override fun toString() = Stringifier.stringify(this)
 }

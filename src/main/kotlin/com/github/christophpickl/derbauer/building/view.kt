@@ -14,9 +14,6 @@ class BuildView : ChooseView<BuildChoice>(
     choices = Model.player.buildings.all.map {
         BuildChoice(it)
     },
-    additionalContent = "You've got:\n${Model.player.buildings.all.joinToString("\n") {
-        "  ${it.labelPlural.capitalize()}: ${it.amount.formatted}"
-    }}",
     cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {
     override fun onCallback(callback: ViewCallback, choice: BuildChoice) {
@@ -27,7 +24,10 @@ class BuildView : ChooseView<BuildChoice>(
 data class BuildChoice(
     val building: Building
 ) : Choice {
-    override val label = formatLabel(building)
+    override val label = formatLabel(
+        buyable = building,
+        currentAmount = building.amount
+    )
 }
 
 interface BuildCallback {

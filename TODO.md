@@ -1,10 +1,15 @@
 
 # TODO
 
-* ad render: kosten anzeige auch mit k/m/g ... suffix amount
-* present amount (a la "you've got") nicht drunter als eigene sektion, sondern selbe zeile mit item anzeigen
-    zb: "[2] Farm (17) ... 14 Gold, 2 Land (Food production +2)"
-* render resource.label.capitalize (in top overview bar)
+* keine 2 titles! zb im home screen, sondern nur einen!
+* escape enabled (mit enter) irgendwo erklaeren
+    - immer im prompt unten, rechtsbuendig
+    - evtl zusaetzlich ESC unterstuetzen (?)
+* throne room visitors growth DRASTISCH runter
+    - max capacity depends on castle, aber niemals mehr als 1-2 dutzend
+    - meist < 5, spaeter dann evtl sogar 10-15
+* affordable amount schon in uebersicht anzeigen, nicht erst in sub view
+* when warning overlay (gruenes glasspane) ++ go other screen fast => immediate! close (cancel the timeout)
 
 # UP NEXT
 
@@ -30,18 +35,9 @@
 # Mit Rene
 
 ## LIL
-
+    
 * randomize food consumption
-* keine 2 titles! zb im home screen, sondern nur einen!
 * castle attraktiver machen; guenstigere baukosten
-* escape enabled (mit enter) irgendwo erklaeren
-    - immer im prompt unten, rechtsbuendig
-    - evtl zusaetzlich ESC unterstuetzen (?)
-* throne room visitors growth DRASTISCH runter
-    - max capacity depends on castle, aber niemals mehr als 1-2 dutzend
-    - meist < 5, spaeter dann evtl sogar 10-15
-* affordable amount schon in uebersicht anzeigen, nicht erst in sub view
-* when warning overlay (gruenes glasspane) ++ go other screen fast => immediate! close (cancel the timeout)
 * end attack view: layout armies lost so wie end turn report (genau sehen welche wieviel verloren)
 * food.production *= random modifier
 * gold income DRASTISCH rauf, +30%
