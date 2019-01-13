@@ -13,16 +13,17 @@
 
 # UP NEXT
 
-* (6) MILIATRY: attack target: { wildlings, the empire }
-* (4) ! MILIATRY: getting attacked end of turn
-* (2) gausche glocken kurve research+einbauen, see KRand
-* (3) + TRADE: je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
-* ATTACK TARGETS:
+* (6) MILITARY: attack target:
+    - targets: wildlings, village, town, city, country, nation, empire
     * when attack won, there should be at least some loot, but never 0
     * loot DRASTISCH!!! erhoehen
         - depends on specific target
         - aufjedenfall so massig mehr GOLD rauskommen!! (land passt so halbwegs)
         - gibt als loot: gold/food/land spaeter fuer higher targets sogar: people/armies/upgrades?
+* (4) ! MILITARY: getting attacked end of turn
+* (2) gausche glocken kurve research+einbauen, see KRand
+* (3) + TRADE: je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
+* ATTACK TARGETS:
 * ad HAPPENING
     * new happening: random people/army join; make happening#condition() .. check whether player good capacity/necessary features
     * increase gold bag happening amount (oder eh schon durch wealth gemacht?!)
