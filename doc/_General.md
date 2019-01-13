@@ -1,4 +1,9 @@
 
+# Core Values
+
+* "esoterische perspektive" => alles hat auswirkung aufeinander, jede entscheidung hat eine auswirkung
+* "weniger ist mehr" => konzepte (zum player hin sichtbare) gering halten, wenig auswahl, logik dahinter komplex
+
 # Motivator
 
 * build shiny castle (a la civilisation), something "for the eye"

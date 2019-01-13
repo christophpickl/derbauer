@@ -46,6 +46,7 @@
 
 # Ideas
 
+* people act as worker, types e.g.: ingenieur, schmied, heiler
 * new resource types:
     - wood:
         * for adv. buildings
@@ -56,3 +57,10 @@
     - metal:
         * for adv. buildings
         * for (certain) armies
+    - food types: meat, fish, apples
+* resource types can be used in different "areas":
+    - building
+    - military (build units/weapons)
+    - luxury (people happyness)
+    - some resources used in several areas, eg metal for building big buildings and forging weapons
+    

@@ -62,3 +62,10 @@ Properties:
 * concept of heroes
 * give free money to army (increase temp. props)
 * when lose land => building destoryed
+* from rene:
+    - waffenarten: schwert, axt, ...
+    - typen: nahkampf, fernkampf, magisch
+    - special resources: metal, pferde
+    - spione: enemy stats reveal
+    - on attacks:
+        * weakened for some turns, after military interaction

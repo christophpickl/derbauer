@@ -35,6 +35,7 @@
 
 * can be destroyed/sold?
 * build multiple buildings at once?
+* bsp: kaserne, schmiede, universitaet, farm, castle
 
 ## Examples
 

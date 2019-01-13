@@ -1,18 +1,19 @@
 
 # ideas
 
+* es gibt sowas wie "epochen"; zb: renessaince, ...
 * change data model: buyable is generic; concrete is: tradable, buildable, hirable, upgradable, ...
-* concept of karma (good/bad decisions); aka "global luck" (e.g. for good/bad happenings, random calc)
-* concept of wealth: count all land/building/units
 * mittelalterliche BG music
 * very detailed end-turn report (was weg/was dazu, warum/woher)
     - aus verschiedene bereiche/sectioned (economic, military, ...)
     - gibt stats aus ueber production/upcome/.../achievements/...
 * feedback bei aktion (zb gebaeude gebaut)
-* cancel aktion (mit gleich enter) irgendwo erklaeren
 * gebaeude abreissen: kostet gold
 * rename "people" => "peasants"
-
+* komplexe charaktere wahl (rasse, nation/fraktion, geschlecht, ...)
+    - mittelalter theme beibehalten: galier, roemer, griechen, egypter
+    - effects: military, forschung, trade, production, prices, ...
+    
 ## I/O
 
 * immediate print result of action; e.g.: bought farm => total food production increase from X to Y
