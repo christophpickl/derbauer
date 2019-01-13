@@ -20,3 +20,5 @@ data class InfiniteList<T>(
     }
 
 }
+
+fun StackTraceElement.toLabel() = "$className#$methodName():$lineNumber"
