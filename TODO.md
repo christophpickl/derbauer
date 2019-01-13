@@ -5,7 +5,6 @@
 
 # UP NEXT
 
-* display version number in frame title
 * make window NOT resizable
 * amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
 * (6) MILITARY: attack target:

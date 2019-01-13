@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.ui
 
+import com.github.christophpickl.derbauer.currentVersion
 import mu.KotlinLogging.logger
 import java.awt.BorderLayout
 import java.awt.Color
@@ -16,7 +17,7 @@ class MainFrame : JFrame() {
     private val log = logger {}
 
     init {
-        title = "Der Bauer"
+        title = "Der Bauer v$currentVersion"
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     }
 

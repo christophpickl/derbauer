@@ -1,2 +1,4 @@
 * display text: "(Hit ENTER to cancel)" ... explaining how to "cancel a view"
-* 
+* adapt throne room visitors production and capacity
+* introduction of new concepts: karma, wealth
+* trading land is conditional
