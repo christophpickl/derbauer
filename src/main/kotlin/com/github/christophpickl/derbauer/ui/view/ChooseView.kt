@@ -13,8 +13,7 @@ import com.github.christophpickl.derbauer.ui.RealBeeper
 
 
 abstract class ChooseView<C : Choice>(
-    messages: List<String>,
-    choosePrompt: String,
+    message: String,
     private val choices: List<C>,
     val additionalContent: String? = null,
     private val beeper: Beeper = RealBeeper,
@@ -36,8 +35,7 @@ abstract class ChooseView<C : Choice>(
     private var choiceCounter = 1
 
     override val renderContent =
-        "${messages.random()}\n\n" +
-            "$choosePrompt\n\n" +
+        "$message\n\n" +
             choices.joinToString("\n") { c -> "  [${if (c.isZeroChoice()) 0 else choiceCounter++}] ${c.label}" } +
             if (additionalContent != null) "\n\n$additionalContent" else ""
 

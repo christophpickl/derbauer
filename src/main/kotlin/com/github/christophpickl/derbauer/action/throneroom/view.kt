@@ -13,8 +13,7 @@ import com.github.christophpickl.derbauer.ui.view.YesNoChooseView
 class ThroneRoomView<C : ThroneRoomChoice>(
     private val visitor: ThroneRoomVisitor<C>
 ) : ChooseView<C>(
-    choosePrompt = visitor.choosePrompt,
-    messages = listOf(visitor.message),
+    message = visitor.message,
     choices = visitor.choices,
     cancelSupport = CancelSupport.Disabled
 ) {

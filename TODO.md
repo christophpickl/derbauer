@@ -1,18 +1,17 @@
 
 # TODO
 
-* escape enabled (mit enter) irgendwo erklaeren
-    - immer im prompt unten, rechtsbuendig
-    - evtl zusaetzlich ESC unterstuetzen (?)
-* keine 2 titles! zb im home screen, sondern nur einen!
 * throne room visitors growth DRASTISCH runter
     - max capacity depends on castle, aber niemals mehr als 1-2 dutzend
     - meist < 5, spaeter dann evtl sogar 10-15
 * affordable amount schon in uebersicht anzeigen, nicht erst in sub view
 * when warning overlay (gruenes glasspane) ++ go other screen fast => immediate! close (cancel the timeout)
+* !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)
+* idee: trade is related to "marketplace"
 
 # UP NEXT
 
+* amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
 * (6) MILITARY: attack target:
     - targets: wildlings, village, town, city, country, nation, empire
     * when attack won, there should be at least some loot, but never 0

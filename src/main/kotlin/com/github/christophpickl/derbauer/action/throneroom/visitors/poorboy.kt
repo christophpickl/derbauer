@@ -19,9 +19,11 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
     }
 
     private val goldAmounts = buildGoldAmounts()
+
     override fun condition() = true
-    override val message = "A poor boy enters carefully the room and begs for ${goldAmounts[0].formatted} gold."
-    override val choosePrompt = "How do you feel about that boy, my lord?"
+
+    override val message = "A poor boy enters carefully the room and begs for ${goldAmounts[0].formatted} gold.\n\n" +
+        "How do you feel about that boy, my lord?"
 
     override val choices = listOf(
         PoorBoyChoice(PoorBoyDecision.GiveMoneyDecision(goldAmounts[0], PoorBoyMoneySize.Little),
@@ -53,7 +55,7 @@ class PoorBoyVisitor : ThroneRoomVisitor<PoorBoyChoice> {
             Alert.show(AlertType.NotEnoughGold)
             return null
         }
-        
+
         Model.gold -= decision.amount
 
         val probabilityReward = when (decision.size) {

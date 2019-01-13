@@ -103,8 +103,7 @@ private class TestableChooseView(
     cancelSupport: CancelSupport,
     beeper: Beeper
 ) : ChooseView<TestableChoice>(
-    choosePrompt = "",
-    messages = listOf("message"),
+    message = "message",
     choices = choices,
     cancelSupport = cancelSupport,
     beeper = beeper

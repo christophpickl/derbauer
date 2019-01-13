@@ -2,7 +2,7 @@ package com.github.christophpickl.derbauer.trade
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.buysell.BuySell
-import com.github.christophpickl.derbauer.data.Texts
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.resource.BuyAndSellableResource
@@ -12,8 +12,7 @@ import com.github.christophpickl.derbauer.ui.view.ChooseView
 import com.github.christophpickl.derbauer.ui.view.InputView
 
 class TradeView : ChooseView<TradeableChoice>(
-    choosePrompt = "What do you want to trade?",
-    messages = Texts.tradeMessages,
+    message = Messages.trade,
     choices = Model.player.resources.allTradeables.flatMap {
         listOf(TradeableChoice(it, BuySell.Buy), TradeableChoice(it, BuySell.Sell))
     },

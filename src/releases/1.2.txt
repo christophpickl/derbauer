@@ -1,0 +1,2 @@
+* additional label in prompt row, on how to "cancel a view" (which is, by pressing ENTER)
+* 

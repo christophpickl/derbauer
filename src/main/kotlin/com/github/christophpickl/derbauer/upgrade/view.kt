@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.upgrade
 
 import com.github.christophpickl.derbauer.ViewCallback
-import com.github.christophpickl.derbauer.data.Texts
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Labeled
 import com.github.christophpickl.derbauer.model.Model
@@ -10,8 +10,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class UpgradeView : ChooseView<UpgradeChoice>(
-    choosePrompt = "What do you want to upgrade?",
-    messages = Texts.upgradeMessages,
+    message = Messages.upgrade,
     choices = Model.player.upgrades.all.map {
         UpgradeChoice(it)
     },

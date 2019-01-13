@@ -10,8 +10,8 @@ import kotlin.random.Random
 
 class GeneralVisitor : ThroneRoomVisitor<GeneralChoice> {
     override fun condition() = Model.player.armies.soldiers.amount > 0
-    override val message = "A general enters, demanding a soldier to join his personal guard."
-    override val choosePrompt = "Do you agree with his wish?"
+    override val message = "A general enters, demanding a soldier to join his personal guard.\n\n" +
+        "Do you agree with his wish?"
     override val choices = listOf(
         GeneralChoice(GeneralDecision.Agree, karmaEffect = Values.karma.throneRoom.generalAgree),
         GeneralChoice(GeneralDecision.Decline, karmaEffect = Values.karma.throneRoom.generalDecline)

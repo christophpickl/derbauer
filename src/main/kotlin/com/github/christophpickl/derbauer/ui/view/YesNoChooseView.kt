@@ -6,8 +6,7 @@ open class YesNoChooseView(
     private val yesNoCallback: YesNoCallback,
     message: String
 ) : ChooseView<YesNoChoice>(
-    choosePrompt = "Please confirm:",
-    messages = listOf(message),
+    message = message,
     choices = listOf(EnumChoice(YesNo.Yes, "Yes"), EnumChoice(YesNo.No, "No")),
     cancelSupport = CancelSupport.Disabled
 ) {

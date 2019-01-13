@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.military
 
 import com.github.christophpickl.derbauer.ViewCallback
-import com.github.christophpickl.derbauer.data.Texts
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
@@ -11,8 +11,7 @@ import com.github.christophpickl.derbauer.ui.view.ChooseView
 import com.github.christophpickl.derbauer.ui.view.InputView
 
 class MilitaryView : ChooseView<MilitaryChoice>(
-    choosePrompt = "Whom to attack today?",
-    messages = Texts.militaryMessages,
+    message = Messages.military,
     choices = mutableListOf<MilitaryChoice>(
         MilitaryChoice.Attack
     ).apply {

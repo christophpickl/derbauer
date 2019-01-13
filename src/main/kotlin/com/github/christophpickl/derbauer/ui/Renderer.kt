@@ -29,7 +29,14 @@ class RendererImpl(
 
         val board = Board()
         board.printHeader("Day: ${Model.global.day}", info)
-        promptText?.let { board.printPrompt(it) } // first prompt, then content!
+
+        // CAVE: first prompt, then content!
+        promptText?.let { prompt ->
+            board.printPrompt(
+                textLeft = prompt,
+                textRight = if (Model.currentView.isCancelEnabled) "(ENTER to cancel)" else ""
+            )
+        }
         board.printContent(content)
         text.text = board.convertAndReset()
     }
@@ -75,9 +82,17 @@ private class Board {
         rows[1].writeHr()
     }
 
-    fun printPrompt(text: String) {
+    fun printPrompt(textLeft: String, textRight: String = "") {
         rows[rows.lastIndex - 1].writeHr()
-        rows[rows.lastIndex].write(text)
+        val lastRow = rows[rows.lastIndex]
+
+        lastRow.write(textLeft)
+        if (textRight.isNotEmpty()) {
+            val rightPosStart = width - textRight.length
+            textRight.forEachIndexed { index, c ->
+                lastRow[rightPosStart + index] = c
+            }
+        }
     }
 
     private fun reset() {

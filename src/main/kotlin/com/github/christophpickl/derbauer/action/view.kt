@@ -3,7 +3,7 @@ package com.github.christophpickl.derbauer.action
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomChoice
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
-import com.github.christophpickl.derbauer.data.Texts
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
@@ -11,8 +11,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class ActionView : ChooseView<ActionChoice>(
-    choosePrompt = "What do you want to do?",
-    messages = Texts.actionMessages,
+    message = Messages.action,
     choices = Model.actions.all.map { ActionChoice(it) },
     cancelSupport = CancelSupport.Enabled { HomeView() }
 ) {

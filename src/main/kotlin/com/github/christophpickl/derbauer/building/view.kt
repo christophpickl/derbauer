@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.building
 
 import com.github.christophpickl.derbauer.ViewCallback
-import com.github.christophpickl.derbauer.data.Texts
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
@@ -9,8 +9,7 @@ import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
 
 class BuildView : ChooseView<BuildChoice>(
-    choosePrompt = "What do you want to build?",
-    messages = Texts.buildMessages,
+    message = Messages.build,
     choices = Model.player.buildings.all.map {
         BuildChoice(it)
     },
