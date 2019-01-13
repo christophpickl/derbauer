@@ -2,6 +2,7 @@ package com.github.christophpickl.derbauer.endturn
 
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.AsciiArt
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.ui.PromptInput
@@ -12,7 +13,7 @@ import com.github.christophpickl.kpotpourri.common.string.times
 class EndTurnView(report: EndTurnReport) : InfoView(buildMessage(report)) {
     companion object {
         private fun buildMessage(report: EndTurnReport): String {
-            return "So, this is what happened over night:\n\n" +
+            return Messages.dailyReport + "\n\n" +
                 formatGrowth("Gold income    ", report.gold) + "\n" +
                 formatGrowth("Food production", report.food) + "\n" +
                 formatGrowth("People growth  ", report.people)

@@ -6,6 +6,10 @@ data class InfiniteList<T>(
     val elements: List<T>
 ) : List<T> by elements {
 
+    init {
+        require(elements.isNotEmpty()) { "Given elements must not be empty." }
+    }
+
     private var iterator = elements.iterator()
 
     fun nextInfinite(): T {

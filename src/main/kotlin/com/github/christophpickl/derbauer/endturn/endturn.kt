@@ -1,5 +1,6 @@
 package com.github.christophpickl.derbauer.endturn
 
+import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
@@ -29,6 +30,7 @@ class EndTurnExecutor(
         Model.features.upgrade.menu.checkAndNotify() // do it again, as it itself depends on other upgrades to be enabled
         adjustKarma()
         loseArmyIfGoldNegative(resourceReport.goldIncome)
+        Messages.onEndTurn()
 
         return EndTurnReport(
             goldIncome = resourceReport.goldIncome,
