@@ -1,10 +1,7 @@
 
 # TODO
 
-* affordable amount schon in uebersicht anzeigen, nicht erst in sub view
-* when warning overlay (gruenes glasspane) ++ go other screen fast => immediate! close (cancel the timeout)
 * !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)
-* idee: trade is related to "marketplace"
 
 # UP NEXT
 

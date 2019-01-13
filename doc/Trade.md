@@ -14,3 +14,9 @@
 * armies
     - high requirements (buildings, upgrades, achievements)
     - very expensive
+
+## Ideas
+
+* trade is related to the term "marketplace" (a new building?!)
+    - faster "regeneration" (more to buy/sell)
+    - better prices (far not as much as achievement though)
