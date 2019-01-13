@@ -8,7 +8,7 @@ import com.github.christophpickl.derbauer.misc.AbstractFeature
 import com.github.christophpickl.derbauer.misc.Feature
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.model.realAmountSum
+import com.github.christophpickl.derbauer.model.amount.realAmountSum
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 
 class UpgradeFeatures {

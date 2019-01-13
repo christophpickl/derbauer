@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.military.attack
 
 import com.github.christophpickl.derbauer.military.Army
-import com.github.christophpickl.derbauer.model.Amount
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 import java.util.*
 

@@ -6,18 +6,18 @@ import com.github.christophpickl.derbauer.buysell.BuyAndSellable
 import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.buysell.LimitedBuyableAmount
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.model.Amount
-import com.github.christophpickl.derbauer.model.Amountable
 import com.github.christophpickl.derbauer.model.Conditional
 import com.github.christophpickl.derbauer.model.Entity
-import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.MultiLabeled
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.PlayerEntity
 import com.github.christophpickl.derbauer.model.UsableEntity
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.Amountable
+import com.github.christophpickl.derbauer.model.amount.LimitedAmount
+import com.github.christophpickl.derbauer.model.amount.sumBy
 import com.github.christophpickl.derbauer.model.ordered
-import com.github.christophpickl.derbauer.model.sumBy
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 

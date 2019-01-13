@@ -1,4 +1,4 @@
-package com.github.christophpickl.derbauer.model
+package com.github.christophpickl.derbauer.model.amount
 
 import com.github.christophpickl.derbauer.DEV_MODE_PROPERTY
 import mu.KotlinLogging.logger

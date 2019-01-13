@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer.ui
 
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
-import com.github.christophpickl.derbauer.model.AmountType
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.AmountType
 import com.github.christophpickl.kpotpourri.common.misc.Dispatcher
 import com.github.christophpickl.kpotpourri.common.misc.DispatcherListener
 

@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.model.amount.Amount
 
 data class Global(
     var day: Int = 1,

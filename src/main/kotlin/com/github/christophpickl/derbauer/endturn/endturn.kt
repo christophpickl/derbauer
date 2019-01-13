@@ -3,8 +3,8 @@ package com.github.christophpickl.derbauer.endturn
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomEndTurn
 import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.resource.ResourceEndTurn
 import com.github.christophpickl.kpotpourri.common.random.RandomService
 import com.github.christophpickl.kpotpourri.common.random.RealRandomService
@@ -41,7 +41,7 @@ class EndTurnExecutor(
     }
 
     private fun loseArmyIfGoldNegative(goldIncome: Amount) {
-        if (Model.gold.real < 0 && Model.player.armies.totalAmount.isNotZero) {
+        if (Model.gold.isNegative && Model.player.armies.totalAmount.isNotZero) {
             val armyType = Model.player.armies.all.filter { it.amount.isNotZero }.random()
             val countRunAway = Amount(Math.min(armyType.amount.real, Math.max(1,
                 // restore 25% of negative income by army upkeep

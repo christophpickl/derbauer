@@ -4,8 +4,8 @@ import com.github.christophpickl.derbauer.TestModelListener
 import com.github.christophpickl.derbauer.building.foodCapacityAmountToZero
 import com.github.christophpickl.derbauer.building.foodProducerAmountToZero
 import com.github.christophpickl.derbauer.isAmountEqualTo
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.random.RandomServiceAlwaysMinimum
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners

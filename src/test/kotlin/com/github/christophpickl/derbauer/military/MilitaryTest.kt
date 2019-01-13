@@ -4,8 +4,8 @@ import com.github.christophpickl.derbauer.TestModelListener
 import com.github.christophpickl.derbauer.building.ArmyCapacityBuilding
 import com.github.christophpickl.derbauer.hasSameAmountAs
 import com.github.christophpickl.derbauer.isAmountEqualTo
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.Renderer
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat

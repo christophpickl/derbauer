@@ -4,10 +4,10 @@ import com.github.christophpickl.derbauer.buysell.BuySell
 import com.github.christophpickl.derbauer.misc.ChoiceValidation
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.validateChoice
-import com.github.christophpickl.derbauer.model.Amount
-import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.UsableEntity
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.LimitedAmount
 import com.github.christophpickl.derbauer.ui.AlertType
 import mu.KotlinLogging.logger
 

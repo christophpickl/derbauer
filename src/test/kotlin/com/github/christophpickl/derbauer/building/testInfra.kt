@@ -1,6 +1,6 @@
 package com.github.christophpickl.derbauer.building
 
-import com.github.christophpickl.derbauer.model.Amount
+import com.github.christophpickl.derbauer.model.amount.Amount
 
 fun Buildings.foodProducerAmountToZero() {
     filterAll<FoodProducingBuilding>().forEach { it.amount = Amount.zero }

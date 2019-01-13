@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer.action.throneroom
 
 import com.github.christophpickl.derbauer.assertAverage
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test

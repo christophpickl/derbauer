@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.resource
 
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.random.RandomService
 import com.github.christophpickl.kpotpourri.common.random.RealRandomService
 import mu.KotlinLogging.logger

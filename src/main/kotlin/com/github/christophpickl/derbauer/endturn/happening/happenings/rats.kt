@@ -3,8 +3,8 @@ package com.github.christophpickl.derbauer.endturn.happening.happenings
 import com.github.christophpickl.derbauer.data.AsciiArt
 import com.github.christophpickl.derbauer.endturn.happening.BaseHappening
 import com.github.christophpickl.derbauer.endturn.happening.HappeningNature
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
 import mu.KotlinLogging.logger
 

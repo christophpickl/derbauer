@@ -5,12 +5,12 @@ import com.github.christophpickl.derbauer.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.misc.Features
 import com.github.christophpickl.derbauer.misc.Notifications
-import com.github.christophpickl.derbauer.model.Amount
-import com.github.christophpickl.derbauer.model.Amountable
 import com.github.christophpickl.derbauer.model.Global
 import com.github.christophpickl.derbauer.model.History
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.Player
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.Amountable
 import mu.KotlinLogging.logger
 import org.assertj.core.api.AbstractDoubleAssert
 import org.assertj.core.api.Assertions.assertThat

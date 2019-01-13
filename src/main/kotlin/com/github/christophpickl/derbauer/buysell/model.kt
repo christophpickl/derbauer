@@ -1,8 +1,8 @@
 package com.github.christophpickl.derbauer.buysell
 
-import com.github.christophpickl.derbauer.model.Amount
-import com.github.christophpickl.derbauer.model.LimitedAmount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.LimitedAmount
 
 interface Buyable {
     val buyDescription: String

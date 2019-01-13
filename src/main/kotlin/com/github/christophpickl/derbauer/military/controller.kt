@@ -8,8 +8,8 @@ import com.github.christophpickl.derbauer.military.attack.PrepareAttackView
 import com.github.christophpickl.derbauer.misc.SimpleChoiceValidation
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.misc.validateChoice
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.Alert
 import com.github.christophpickl.derbauer.ui.AlertType
 import com.github.christophpickl.derbauer.ui.Renderer

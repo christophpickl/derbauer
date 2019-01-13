@@ -1,7 +1,7 @@
 package com.github.christophpickl.derbauer.data
 
 import com.github.christophpickl.derbauer.CHEAT_MODE
-import com.github.christophpickl.derbauer.model.Amount
+import com.github.christophpickl.derbauer.model.amount.Amount
 
 class ValuesResources {
     val gold = Amount(if (CHEAT_MODE) 1_500 else 300)

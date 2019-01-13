@@ -3,8 +3,8 @@ package com.github.christophpickl.derbauer.endturn
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.AsciiArt
 import com.github.christophpickl.derbauer.data.Messages
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.PromptInput
 import com.github.christophpickl.derbauer.ui.PromptMode
 import com.github.christophpickl.derbauer.ui.view.InfoView

@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
 import com.github.christophpickl.derbauer.TestModelListener
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.nullify
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.DataProvider

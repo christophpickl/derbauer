@@ -1,5 +1,7 @@
 package com.github.christophpickl.derbauer.model
 
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.Amountable
 import com.github.christophpickl.kpotpourri.common.string.IgnoreStringified
 
 

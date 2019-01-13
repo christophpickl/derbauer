@@ -3,8 +3,8 @@ package com.github.christophpickl.derbauer.military
 import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
 import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView

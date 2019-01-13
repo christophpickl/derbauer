@@ -3,8 +3,8 @@ package com.github.christophpickl.derbauer.action.throneroom.visitors
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomChoice
 import com.github.christophpickl.derbauer.action.throneroom.ThroneRoomVisitor
 import com.github.christophpickl.derbauer.data.Values
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.Alert
 import com.github.christophpickl.derbauer.ui.AlertType
 import com.github.christophpickl.kpotpourri.common.math.KMath

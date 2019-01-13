@@ -5,14 +5,14 @@ import com.github.christophpickl.derbauer.building.FarmProductivityUpgrade
 import com.github.christophpickl.derbauer.buysell.Buyable
 import com.github.christophpickl.derbauer.data.Values
 import com.github.christophpickl.derbauer.military.MilitaryUpgrade
-import com.github.christophpickl.derbauer.model.Amount
 import com.github.christophpickl.derbauer.model.Describable
 import com.github.christophpickl.derbauer.model.Entity
 import com.github.christophpickl.derbauer.model.Ordered
 import com.github.christophpickl.derbauer.model.PlayerEntity
+import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.sumBy
 import com.github.christophpickl.derbauer.model.filterConditional
 import com.github.christophpickl.derbauer.model.ordered
-import com.github.christophpickl.derbauer.model.sumBy
 import com.github.christophpickl.kpotpourri.common.reflection.propertiesOfType
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 
