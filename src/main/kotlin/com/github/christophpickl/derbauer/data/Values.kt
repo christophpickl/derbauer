@@ -82,7 +82,7 @@ class ValuesUpgrades {
 }
 
 class ValuesAchievements {
-    val trade1HistoryNeed = 10
+    val trade1HistoryNeed = if (CHEAT_MODE) 2 else 10
     val trade1PriceModifier = 0.08
     val trade1GoldReward = Amount(300)
     val attack1HistoryNeed = 5

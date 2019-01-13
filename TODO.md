@@ -1,7 +1,6 @@
 
 # TODO
 
-* BUG: trade view zeigt ohne modifier an, zb statt 46 gold die basis von 50 gold (trade land)
 * ad render: kosten anzeige auch mit k/m/g ... suffix amount
 * present amount (a la "you've got") nicht drunter als eigene sektion, sondern selbe zeile mit item anzeigen
     zb: "[2] Farm (17) ... 14 Gold, 2 Land (Food production +2)"

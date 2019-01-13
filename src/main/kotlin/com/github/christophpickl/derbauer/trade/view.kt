@@ -50,7 +50,7 @@ class ExecuteTradeView(
                 BuySell.Buy -> "costs"
                 BuySell.Sell -> "brings"
             }
-            val price = choice.resource.priceFor(choice.buySell)
+            val price = choice.resource.effectivePriceFor(choice.buySell)
             return "How much ${choice.resource.labelPlural} do you wanna ${choice.buySell.label}?\n\n" +
                 "1 ${choice.resource.labelSingular} $verb ${price.formatted} gold.\n\n" +
                 info
