@@ -15,8 +15,8 @@ class AttackThread(
     private val log = logger {}
     private val calculator = AttackCalculator(context)
 
-    private val delayInMs = Math.max(2, (Values.military.attackBattleLastsMs /
-        Math.min(context.enemies.real, context.armies.values.summed())).toInt())
+    private val delayInMs = Math.min(500, Math.max(2, (Values.military.attackBattleLastsMs /
+        Math.min(context.enemies.real, context.armies.values.summed())).toInt()))
 
     init {
         log.trace { "attack delay: ${delayInMs}ms" }

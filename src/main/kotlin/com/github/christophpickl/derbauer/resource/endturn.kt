@@ -69,7 +69,7 @@ class ResourceEndTurn(
         } else {
             // regular reproduction
             var reproduced = Model.people * Model.global.reproductionRate
-            reproduced *= random.nextDouble(0.7, 1.2)
+            reproduced *= random.nextDouble(0.4, 1.0)
             calc += reproduced
         }
 

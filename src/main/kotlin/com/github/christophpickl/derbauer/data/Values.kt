@@ -46,7 +46,7 @@ class ValuesBuildings {
 
     val castles = ValueBuilding(
         realAmount = if (CHEAT_MODE) 1 else 0,
-        realLandNeeded = 5,
+        realLandNeeded = 16,
         realBuyPrice = 300
     )
     val castlePeopleCapacity = Amount(80)
@@ -70,14 +70,14 @@ class ValuesArmies {
     val knights = ValueArmy(
         realAmount = if (CHEAT_MODE) 2_000 else 0,
         realBuyPrice = 30,
-        attackModifier = 1.2,
+        attackModifier = 1.1,
         realCostsPeople = 1,
         realUpkeep = 2
     )
     val catapults = ValueArmy(
         realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 50,
-        attackModifier = 1.4,
+        attackModifier = 1.2,
         realCostsPeople = 3,
         realUpkeep = 4
     )
@@ -89,7 +89,7 @@ class ValuesTargets {
         loot = ValuesAttackLoot(
             // no gold
             food = AmountDistribution(30, 0.8, 2.5),
-            land = AmountDistribution(1, 0.3, 1.0)
+            land = AmountDistribution(1, 0.2, 0.5)
         )
     )
     val village = ValuesAttackTarget(
@@ -97,7 +97,7 @@ class ValuesTargets {
         loot = ValuesAttackLoot(
             gold = AmountDistribution(10, 0.6, 1.2),
             food = AmountDistribution(20, 0.8, 2.0),
-            land = AmountDistribution(1, 0.6, 1.5)
+            land = AmountDistribution(1, 0.4, 0.6)
         )
     )
     val town = ValuesAttackTarget(
@@ -105,7 +105,7 @@ class ValuesTargets {
         loot = ValuesAttackLoot(
             gold = AmountDistribution(15, 0.6, 1.2),
             food = AmountDistribution(15, 0.8, 1.6),
-            land = AmountDistribution(1, 0.6, 1.0)
+            land = AmountDistribution(1, 0.6, 0.8)
         )
     )
     val city = ValuesAttackTarget(
@@ -175,8 +175,8 @@ class ValuesFeatures {
 }
 
 class ValuesGlobals {
-    val reproductionRate: Double = 0.1
-    val peopleGoldRate: Double = 0.9
+    val initReproductionRate: Double = 0.06
+    val initPeopleGoldRate: Double = 0.9
 }
 
 class ValuesKarma {

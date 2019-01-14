@@ -5,8 +5,8 @@ import com.github.christophpickl.derbauer.model.amount.Amount
 
 data class Global(
     var day: Int = 1,
-    var reproductionRate: Double = Values.globals.reproductionRate,
-    var peopleGoldRate: Double = Values.globals.peopleGoldRate,
+    var reproductionRate: Double = Values.globals.initReproductionRate,
+    var peopleGoldRate: Double = Values.globals.initPeopleGoldRate,
     var karma: Double = Values.karma.initial
 )
 

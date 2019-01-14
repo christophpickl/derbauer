@@ -32,7 +32,6 @@
 
 ## LIL
 
-* end attack view: layout armies lost so wie end turn report (genau sehen welche wieviel verloren)
 * randomize food consumption and production
 * castle attraktiver machen; guenstigere baukosten
 * unbedingt TAX rate konzept einfuehren (modifier * people.count * random)
@@ -59,8 +58,7 @@
 * building.upkeep += people
     - render overview bar as "2 / 6 / 10", 2 used, 6 living, 10 max cap. (6-2 = 4 available)
     - oder doch nicht, da zu komplex?!? gold upkeep enough?
-* reproduction rate DRASTISCH runter
-    - sowas sogar 40% runter
+* ad reproduction rate:
     * death rate hoeher (vor allem on food shortage)
     * abhaengig machen von happiness (actions, social buildings) und karma
 * split people rates into: A) birth rate und B) death rate
@@ -71,6 +69,7 @@
 
 ## BIG
 
+* idea ad action: can hire manager delegate, which will for example: auto trade sell food if capacity at 80%
 * ad military: wenn army hiren, dann werden sie zu "SHADOW PEOPLE"
     - kosten food, und alles was halt sonst people machen
     - bringen aber kein geld/tax income

@@ -11,7 +11,7 @@ class GoldBagHappening : BaseHappening(
     nature = HappeningNature.Positive
 ) {
 
-    private val goldAmounts = listOf(0.01, 0.02, 0.03).map { Model.player.relativeWealthBy(it) }
+    private val goldAmounts = listOf(0.03, 0.06, 0.1).map { Model.player.relativeWealthBy(it) }
     private val randomGoldAmounts = randomListOf(
         goldAmounts[0] to 50,
         goldAmounts[1] to 35,
