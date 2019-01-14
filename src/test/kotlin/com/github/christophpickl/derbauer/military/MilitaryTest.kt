@@ -6,19 +6,16 @@ import com.github.christophpickl.derbauer.hasSameAmountAs
 import com.github.christophpickl.derbauer.isAmountEqualTo
 import com.github.christophpickl.derbauer.model.Model
 import com.github.christophpickl.derbauer.model.amount.Amount
-import com.github.christophpickl.derbauer.ui.Renderer
-import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
 
 abstract class BaseMilitaryTest {
-    private val renderer = mock<Renderer>()
 
     protected val unit get() = Model.player.armies.soldiers
 
     protected fun hire(toHire: Army, amount: Long) {
-        MilitaryController(renderer).doHire(toHire, amount)
+        MilitaryController().doHire(toHire, amount)
     }
 
     protected fun ensureEnoughGoldPeopleCapacityAndUpgrade(army: Army) {

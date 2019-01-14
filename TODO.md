@@ -1,7 +1,6 @@
 
 # TODO
 
-* attack battle time ist "nearly" konstant (dauer: 2 bis max 10 sek)
 * amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
     - [x] Amount format (incl rounding)
     - [x] use rounded value on buy/trade/build/hire
