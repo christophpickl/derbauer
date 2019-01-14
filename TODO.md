@@ -3,9 +3,9 @@
 
 * make window NOT resizable
 * amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
-    - Amount format
-    - Amount parse (by input)
-    - use rounded value on buy/trade/build/hire
+    - [x] Amount format (incl rounding)
+    - [ ] Amount parse (by input)
+    - [ ] use rounded value on buy/trade/build/hire
 * gold income DRASTISCH rauf, +30%
 
 # UP NEXT
