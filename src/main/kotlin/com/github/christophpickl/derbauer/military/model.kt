@@ -76,7 +76,7 @@ abstract class AbstractArmy(
 class Soldier : AbstractArmy(
     labelSingular = "soldier",
     labelPlural = "soldiers",
-    value = Values.militaries.soldiers
+    value = Values.military.armies.soldiers
 ) {
     override val description get() = "basic unit"
 }
@@ -84,7 +84,7 @@ class Soldier : AbstractArmy(
 class Knight : AbstractArmy(
     labelSingular = "knight",
     labelPlural = "knights",
-    value = Values.militaries.knights
+    value = Values.military.armies.knights
 ), Conditional {
     override fun checkCondition() = Model.features.military.knights.isEnabled()
     override val description get() = "strong allrounder"
@@ -93,7 +93,7 @@ class Knight : AbstractArmy(
 class Catapult : AbstractArmy(
     labelSingular = "catapult",
     labelPlural = "catapults",
-    value = Values.militaries.catapults
+    value = Values.military.armies.catapults
 ), Conditional {
     override fun checkCondition() = Model.features.military.catapults.isEnabled()
     override val description get() = "smashes buildings"

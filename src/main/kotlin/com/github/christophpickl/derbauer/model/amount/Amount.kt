@@ -3,12 +3,16 @@ package com.github.christophpickl.derbauer.model.amount
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.christophpickl.derbauer.DEV_MODE
 import com.github.christophpickl.derbauer.misc.restrictMethodUsage
+import com.github.christophpickl.kpotpourri.common.random.RealRandomService
 import kotlin.math.roundToLong
 
 @Suppress("TooManyFunctions")
 data class Amount(
     val real: Long
 ) {
+
+    constructor(real: Int) : this(real.toLong())
+
     companion object :
         AmountRounder by AmountRounderImpl,
         AmountFormatter by AmountFormatterImpl {
@@ -60,5 +64,25 @@ data class Amount(
         }
         return real.toString()
     }
+
+}
+
+fun Collection<Amount>.summed(): Long = sumBy { it }.real
+
+
+private val random = RealRandomService
+
+data class AmountDistribution(
+    val multiplyBy: Int,
+    val randLower: Double,
+    val randUpper: Double
+) {
+
+    companion object {
+        val zero = AmountDistribution(0, 0.0, 0.0)
+    }
+
+    fun compute(base: Amount) = if (base.isZero || this === zero) Amount.zero else
+        Amount(random.randomize(base.real * multiplyBy, randLower, randUpper))
 
 }

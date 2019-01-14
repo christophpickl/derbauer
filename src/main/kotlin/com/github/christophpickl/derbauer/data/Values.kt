@@ -2,14 +2,15 @@ package com.github.christophpickl.derbauer.data
 
 import com.github.christophpickl.derbauer.CHEAT_MODE
 import com.github.christophpickl.derbauer.model.amount.Amount
+import com.github.christophpickl.derbauer.model.amount.AmountDistribution
 
 class ValuesResources {
-    val gold = Amount(if (CHEAT_MODE) 1_500 else 300)
+    val gold = Amount(if (CHEAT_MODE) 50_000 else 300)
     val foodBuyPrice = Amount(4)
     val foodSellPrice = Amount(2)
-    val food = Amount(if (CHEAT_MODE) 1_000 else 50)
+    val food = Amount(if (CHEAT_MODE) 5_000 else 50)
     val people = Amount(if (CHEAT_MODE) 50 else 2)
-    val land = Amount(if (CHEAT_MODE) 300 else 10)
+    val land = Amount(if (CHEAT_MODE) 800 else 10)
     val landBuyPrice = Amount(50)
     val landSellPrice = Amount(40)
 }
@@ -21,24 +22,28 @@ class ValuesBuildings {
         realBuyPrice = 40
     )
     val housePeopleCapacity = Amount(10)
+
     val farms = ValueBuilding(
         realAmount = if (CHEAT_MODE) 10 else 1,
         realLandNeeded = 2,
         realBuyPrice = 70
     )
     val farmFoodProduction = Amount(4)
+
     val granaries = ValueBuilding(
         realAmount = if (CHEAT_MODE) 20 else 1,
         realLandNeeded = 1,
         realBuyPrice = 50
     )
     val granaryFoodCapacity = Amount(250)
+
     val barrack = ValueBuilding(
-        realAmount = if (CHEAT_MODE) 10 else 0,
+        realAmount = if (CHEAT_MODE) 200 else 0,
         realLandNeeded = 3,
         realBuyPrice = 100
     )
     val barrackArmyCapacity = Amount(10)
+
     val castles = ValueBuilding(
         realAmount = if (CHEAT_MODE) 1 else 0,
         realLandNeeded = 5,
@@ -48,16 +53,22 @@ class ValuesBuildings {
     val castleFoodCapacity = Amount(800)
 }
 
-class ValuesMilitaries {
+class ValuesMilitary {
+    var attackBattleLastsMs = if (CHEAT_MODE) 2_000 else 5_000
+    val armies = ValuesArmies()
+    val targets = ValuesTargets()
+}
+
+class ValuesArmies {
     val soldiers = ValueArmy(
-        realAmount = if (CHEAT_MODE) 2 else 0,
+        realAmount = if (CHEAT_MODE) 0 else 0,
         realBuyPrice = 20,
         attackModifier = 1.0,
         realCostsPeople = 1,
         realUpkeep = 1
     )
     val knights = ValueArmy(
-        realAmount = if (CHEAT_MODE) 0 else 0,
+        realAmount = if (CHEAT_MODE) 2_000 else 0,
         realBuyPrice = 30,
         attackModifier = 1.2,
         realCostsPeople = 1,
@@ -70,7 +81,47 @@ class ValuesMilitaries {
         realCostsPeople = 3,
         realUpkeep = 4
     )
-    val attackBattleDelay = if (CHEAT_MODE) 400 else 600
+}
+
+class ValuesTargets {
+    val wildlings = ValuesAttackTarget(
+        enemies = 10,
+        loot = ValuesAttackLoot(
+            // no gold
+            food = AmountDistribution(30, 0.8, 2.5),
+            land = AmountDistribution(1, 0.3, 1.0)
+        )
+    )
+    val village = ValuesAttackTarget(
+        enemies = 25,
+        loot = ValuesAttackLoot(
+            gold = AmountDistribution(10, 0.6, 1.2),
+            food = AmountDistribution(20, 0.8, 2.0),
+            land = AmountDistribution(1, 0.6, 1.5)
+        )
+    )
+    val town = ValuesAttackTarget(
+        enemies = 100,
+        loot = ValuesAttackLoot(
+            gold = AmountDistribution(15, 0.6, 1.2),
+            food = AmountDistribution(15, 0.8, 1.6),
+            land = AmountDistribution(1, 0.6, 1.0)
+        )
+    )
+    val city = ValuesAttackTarget(
+        enemies = 500,
+        loot = ValuesAttackLoot(
+            gold = AmountDistribution(20, 0.8, 1.4),
+            land = AmountDistribution(1, 0.8, 1.2)
+        )
+    )
+    val empire = ValuesAttackTarget(
+        enemies = 1_000,
+        loot = ValuesAttackLoot(
+            gold = AmountDistribution(20, 0.8, 1.4),
+            land = AmountDistribution(2, 0.8, 1.2)
+        )
+    )
 }
 
 class ValuesUpgrades {
@@ -150,7 +201,7 @@ class ValuesKarmaThroneRoom {
 object Values {
     val resources = ValuesResources()
     val buildings = ValuesBuildings()
-    val militaries = ValuesMilitaries()
+    val military = ValuesMilitary()
     val upgrades = ValuesUpgrades()
     val achievements = ValuesAchievements()
     val happenings = ValuesHappenings()
@@ -182,3 +233,14 @@ class ValueArmy(
     val costsPeople = Amount(realCostsPeople)
     val upkeep = Amount(realUpkeep)
 }
+
+data class ValuesAttackLoot(
+    val gold: AmountDistribution = AmountDistribution.zero,
+    val food: AmountDistribution = AmountDistribution.zero,
+    val land: AmountDistribution = AmountDistribution.zero
+)
+
+data class ValuesAttackTarget(
+    val enemies: Int,
+    val loot: ValuesAttackLoot
+)

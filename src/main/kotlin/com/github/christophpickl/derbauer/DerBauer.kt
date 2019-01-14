@@ -58,6 +58,12 @@ object DerBauer {
         prompt.dispatcher.add(engine)
 
         renderer.render()
+
+        if (CHEAT_MODE) {
+            log.info { "CHEAT MODE enabling all features." }
+            Model.features.all.forEach { it.enableCheat() }
+        }
+        
         SwingUtilities.invokeLater {
             log.debug { "Showing user interface." }
             Thread.currentThread().uncaughtExceptionHandler = exceptionHandler

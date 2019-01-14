@@ -1,13 +1,20 @@
 package com.github.christophpickl.derbauer.military.attack
 
 import com.github.christophpickl.derbauer.military.Army
+import com.github.christophpickl.derbauer.military.attack.target.AttackTarget
+import com.github.christophpickl.derbauer.military.attack.target.Targets
 import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.string.Stringifier
 import java.util.*
 
+data class Military(
+    val targets: Targets = Targets()
+)
+
 data class PrepareAttackContext(
     val armies: LinkedHashMap<Army, Amount?>
 ) {
+
     private val iterator = armies.iterator()
     private var _current = iterator.next()
     val current get() = _current
@@ -26,24 +33,18 @@ data class PrepareAttackContext(
 
 class AttackContext(
     armies: Map<Army, Amount>,
+    val target: AttackTarget,
     var enemies: Amount
 ) {
+    var message = ""
+    
     val armies: MutableMap<Army, Amount> = IdentityHashMap(armies)
     val originalEnemies = enemies
-    var message = ""
-    var attackOver = false
+    val isAttackOver get() = allArmiesDead || allEnemiesDead
+    val isBattleWon get() = allEnemiesDead
 
-    val allArmiesDead get() = armies.all { it.value.isZero }
-    val allEnemiesDead get() = enemies.isZero
+    private val allArmiesDead get() = armies.all { it.value.isZero }
+    private val allEnemiesDead get() = enemies.isZero
 
     override fun toString() = Stringifier.stringify(this)
-}
-
-sealed class AttackResult {
-    class Won(
-        val goldEarning: Amount,
-        val landEarning: Amount
-    ) : AttackResult()
-
-    object Lost : AttackResult()
 }

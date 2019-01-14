@@ -4,7 +4,6 @@ import com.github.christophpickl.derbauer.ViewCallback
 import com.github.christophpickl.derbauer.data.Messages
 import com.github.christophpickl.derbauer.home.HomeView
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.derbauer.ui.view.CancelSupport
 import com.github.christophpickl.derbauer.ui.view.Choice
 import com.github.christophpickl.derbauer.ui.view.ChooseView
@@ -41,10 +40,9 @@ sealed class MilitaryChoice : Choice {
 
 interface MilitaryCallback {
     fun onMilitary(choice: MilitaryChoice)
-    fun doHire(army: Army, amount: Long)
-    fun executeAttack(chosenArmy: Map<Army, Amount>)
-}
 
+    fun doHire(army: Army, amount: Long)
+}
 
 class HireView(
     private val army: Army

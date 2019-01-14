@@ -3,6 +3,7 @@ package com.github.christophpickl.derbauer
 import com.github.christophpickl.derbauer.action.Actions
 import com.github.christophpickl.derbauer.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer.home.HomeView
+import com.github.christophpickl.derbauer.military.attack.Military
 import com.github.christophpickl.derbauer.misc.Features
 import com.github.christophpickl.derbauer.misc.Notifications
 import com.github.christophpickl.derbauer.model.Global
@@ -48,6 +49,7 @@ fun Model.reset() {
     achievements = Achievements()
     actions = Actions()
     notifications = Notifications()
+    military = Military()
 }
 
 fun Model.nullify() {

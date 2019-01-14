@@ -1,6 +1,7 @@
 package com.github.christophpickl.derbauer.misc
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.christophpickl.derbauer.CHEAT_MODE
 import com.github.christophpickl.derbauer.action.ActionFeatures
 import com.github.christophpickl.derbauer.building.BuildingFeatures
 import com.github.christophpickl.derbauer.military.MilitaryFeatures
@@ -37,6 +38,7 @@ class Features {
 interface Feature {
     fun isEnabled(): Boolean
     fun checkAndNotify()
+    fun enableCheat()
 }
 
 open class AbstractFeature(
@@ -46,7 +48,13 @@ open class AbstractFeature(
 
     private val condition = OncePredicate(predicate)
 
-    override fun isEnabled() = condition.enabled
+    private var isCheatEenabled = false
+
+    override fun enableCheat() {
+        isCheatEenabled = true
+    }
+
+    override fun isEnabled() = condition.enabled || (CHEAT_MODE && isCheatEenabled)
 
     override fun checkAndNotify() {
         if (condition.checkAndGet() == OnceResult.ChangedToTrue) {

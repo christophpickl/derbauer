@@ -59,6 +59,7 @@ Properties:
 
 ## Ideas
 
+* attack thread am ende ein ease-out damit's spannend wird
 * concept of heroes
 * give free money to army (increase temp. props)
 * when lose land => building destoryed

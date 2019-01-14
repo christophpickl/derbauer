@@ -1,22 +1,30 @@
 package com.github.christophpickl.derbauer.military.attack
 
 import com.github.christophpickl.derbauer.data.Values
+import com.github.christophpickl.derbauer.model.amount.summed
 import com.github.christophpickl.derbauer.ui.Renderer
-import com.github.christophpickl.derbauer.ui.view.FeedbackView
 import com.github.christophpickl.kpotpourri.common.misc.sleep
 import mu.KotlinLogging.logger
 
 class AttackThread(
     private val context: AttackContext,
+    private val callback: AttackCallback,
     private val renderer: Renderer
 ) : Runnable {
 
     private val log = logger {}
     private val calculator = AttackCalculator(context)
 
+    private val delayInMs = Math.max(2, (Values.military.attackBattleLastsMs /
+        Math.min(context.enemies.real, context.armies.values.summed())).toInt())
+
+    init {
+        log.trace { "attack delay: ${delayInMs}ms" }
+    }
+
     override fun run() {
         log.debug { "attack thread started" }
-        while (!calculator.isAttackOver()) {
+        while (!context.isAttackOver) {
             nextBattle()
         }
         log.debug { "attack is over" }
@@ -25,27 +33,20 @@ class AttackThread(
 
     private fun nextBattle() {
         calculator.fightBattle()
-        context.message = "Ongoing war ...\n\n" +
+        context.message = "You are in battle with: ${context.target.label}\n\n" +
             context.armies.map { "${it.key.labelPlural.capitalize()}: ${it.value.formatted}" }
                 .joinToString("\n") +
             "\n\n" +
             "Enemies: ${context.enemies.formatted}"
 
         renderer.render()
-        sleep(Values.militaries.attackBattleDelay)
+        sleep(delayInMs)
     }
 
     private fun endResult() {
-        val result = calculator.applyEndResult()
-        context.message = FeedbackView.concatMessages(context.message,
-            when (result) {
-                is AttackResult.Won -> "You won! This is your loot:\n\n" +
-                    "Gold stolen: ${result.goldEarning.formatted}\n" +
-                    "Land captured: ${result.landEarning.formatted}"
-                AttackResult.Lost -> "You lost! No loot for you, poor bastard."
-            }
-        )
+        callback.onBattleOver(context)
         renderer.render()
     }
 
 }
+

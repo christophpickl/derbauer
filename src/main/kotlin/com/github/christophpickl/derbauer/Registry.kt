@@ -10,6 +10,8 @@ import com.github.christophpickl.derbauer.home.HomeCallback
 import com.github.christophpickl.derbauer.home.HomeController
 import com.github.christophpickl.derbauer.military.MilitaryCallback
 import com.github.christophpickl.derbauer.military.MilitaryController
+import com.github.christophpickl.derbauer.military.attack.AttackCallback
+import com.github.christophpickl.derbauer.military.attack.AttackController
 import com.github.christophpickl.derbauer.trade.TradeCallback
 import com.github.christophpickl.derbauer.trade.TradeController
 import com.github.christophpickl.derbauer.ui.Renderer
@@ -22,6 +24,7 @@ interface ViewCallback :
     BuildCallback,
     UpgradeCallback,
     MilitaryCallback,
+    AttackCallback,
     ActionCallback,
     EndTurnCallback
 
@@ -31,7 +34,8 @@ class Registry(
     private val tradeController: TradeController = TradeController(),
     private val buildController: BuildController = BuildController(),
     private val upgradeController: UpgradeController = UpgradeController(),
-    private val militaryController: MilitaryController = MilitaryController(renderer),
+    private val militaryController: MilitaryController = MilitaryController(),
+    private val attackController: AttackController = AttackController(renderer),
     private val actionController: ActionController = ActionController(),
     private val endTurnController: EndTurnController = EndTurnController()
 ) : ViewCallback,
@@ -40,5 +44,6 @@ class Registry(
     BuildCallback by buildController,
     UpgradeCallback by upgradeController,
     MilitaryCallback by militaryController,
+    AttackCallback by attackController,
     ActionCallback by actionController,
     EndTurnCallback by endTurnController

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.christophpickl.derbauer.action.Actions
 import com.github.christophpickl.derbauer.endturn.achievement.Achievements
 import com.github.christophpickl.derbauer.home.HomeView
+import com.github.christophpickl.derbauer.military.attack.Military
 import com.github.christophpickl.derbauer.misc.Features
 import com.github.christophpickl.derbauer.misc.Notifications
 import com.github.christophpickl.derbauer.resource.ResourceHolder
@@ -20,13 +21,14 @@ object Model : ResourceHolder {
 
     lateinit var currentView: View
 
-    var player: Player = Player()
-    var global: Global = Global()
-    var history: History = History()
-    var features: Features = Features()
-    var achievements: Achievements = Achievements()
-    var actions: Actions = Actions()
-    var notifications: Notifications = Notifications()
+    var player = Player()
+    var global = Global()
+    var history = History()
+    var achievements = Achievements()
+    var actions = Actions()
+    var notifications = Notifications()
+    var military = Military()
+    var features = Features() // goes last, requires other to be initialized first
 
     //<editor-fold desc="Shortcuts">
     val peopleCapacityLeft get() = player.resources.people.capacityLeft
@@ -43,7 +45,7 @@ object Model : ResourceHolder {
     }
 
     fun toJson(): String = mapper.writeValueAsString(this)
-    
+
     override fun toString() = Stringifier.stringify(this)
 
 }

@@ -1,4 +1,16 @@
+# Misc
+
 * display text: "(Hit ENTER to cancel)" ... explaining how to "cancel a view"
-* adapt throne room visitors production and capacity
-* introduction of new concepts: karma, wealth
+* introduction of new concepts: karma and wealth
+
+# Actions
+
+* change throne room visitors production and capacity
+
+# Military
+
+* introduction of (different) attack targets
+
+# Trade
+
 * trading land is conditional

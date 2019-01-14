@@ -1,23 +1,22 @@
 
 # TODO
 
-* make window NOT resizable
+* attack battle time ist "nearly" konstant (dauer: 2 bis max 10 sek)
 * amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
     - [x] Amount format (incl rounding)
+    - [x] use rounded value on buy/trade/build/hire
     - [ ] Amount parse (by input)
-    - [ ] use rounded value on buy/trade/build/hire
 * gold income DRASTISCH rauf, +30%
-
+* mehr achievements:
+    * achievements bringen gold
+    * time-based achievements: alle 7 tage, 100 tage, 365 tage (=1jahr) ... free gold/food/land/buildings (when land available)
+* render "1.00k" as "1k", and "1.10k" as "1.1k"
+    
 # UP NEXT
 
+* attack target: split enemies into soldiers/knights, ... themselves too
+* make window NOT resizable
 * !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)
-* (6) MILITARY: attack target:
-    - targets: wildlings, village, town, city, country, nation, empire
-    * when attack won, there should be at least some loot, but never 0
-    * loot DRASTISCH!!! erhoehen
-        - depends on specific target
-        - aufjedenfall so massig mehr GOLD rauskommen!! (land passt so halbwegs)
-        - gibt als loot: gold/food/land spaeter fuer higher targets sogar: people/armies/upgrades?
 * (4) ! MILITARY: getting attacked end of turn
 * (2) gausche glocken kurve research+einbauen, see KRand (ad doku: log10, log, ...)
 * (3) + TRADE: je mehr buy, desto teurer wirds, mit cooldown; vice versa sell
@@ -47,10 +46,7 @@
     
 ## MED
 
-* mehr achievements:
-    * achievements bringen gold
-    * time-based achievements: alle 7 tage, 100 tage, 365 tage (=1jahr) ... free gold/food/land/buildings (when land available)
-        - render in top bar die tage als "1 year 112 days"
+- render in top bar die tage als "1 year 112 days"
 * upgrade / raufleveln!!! das motiviert :)
     * verschiedenste sachen rauf-level-bar
     * UPGRADES unendlich hoch upgradebar!
@@ -69,8 +65,6 @@
     * death rate hoeher (vor allem on food shortage)
     * abhaengig machen von happiness (actions, social buildings) und karma
 * split people rates into: A) birth rate und B) death rate
-* attack battle time ist "nearly" konstant (dauer: 2 bis max 10 sek)
-    - am ende ein ease-out damit's spannend wird
 * introduce game preferences (persisted)
     - alert type: { off, beep, visual } // weil der beep sound kann super laestig werden!
     - visual != AlertGlasspane ... sondern eher nur ein kurzer flash
