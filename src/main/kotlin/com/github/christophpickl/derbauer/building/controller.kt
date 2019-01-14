@@ -9,14 +9,15 @@ import mu.KotlinLogging.logger
 class BuildController : BuildCallback {
 
     private val log = logger {}
-    
-    override fun doBuild(choice: BuildChoice) {
+
+    override fun doBuild(choice: BuildChoice): Boolean {
         log.debug { "try building: $choice" }
-        if (isValid(choice)) {
+        return if (isValid(choice)) {
             choice.building.amount++
             Model.gold -= choice.building.buyPrice.rounded
             Model.currentView = BuildView()
-        }
+            true
+        } else false
     }
 
     private fun isValid(choice: BuildChoice) = validateChoice(listOf(

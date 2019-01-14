@@ -13,3 +13,7 @@ fun Buildings.foodCapacityAmountToZero() {
 fun Buildings.peopleCapacityAmountToZero() {
     filterAll<PeopleCapacityBuilding>().forEach { it.amount = Amount.zero }
 }
+
+fun Buildings.allAmountToZero() {
+    all.forEach { it.amount = Amount.zero }
+}

@@ -15,6 +15,7 @@ data class Amount(
 
         val zero = Amount(0)
         val one = Amount(1)
+        val two = Amount(2)
 
         fun minOf(first: Amount, second: Amount, vararg more: Amount) =
             listOf(first, second).plus(more.toList()).minBy { it.real }!!

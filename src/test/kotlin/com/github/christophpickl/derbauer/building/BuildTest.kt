@@ -14,69 +14,73 @@ import org.testng.annotations.Test
 class BuildTest {
 
     fun `Given enough gold and land When build Then succeed`() {
+        Model.player.buildings.allAmountToZero()
         Model.gold = building.buyPrice
         Model.land = building.landNeeded
 
-        build(building)
+        val wasBuilt = build(building)
 
+        assertThat(wasBuilt).isEqualTo(true)
         building hasSameAmountAs 1
         assertThat(Model.gold).isAmountEqualTo(0)
-        assertThat(Model.land).isEqualTo(building.landNeeded)
-        assertThat(Model.player.resources.land.usedAmount).isEqualTo(building.landNeeded)
+        assertThat(Model.player.resources.land.unusedAmount).isEqualTo(Amount.zero)
+        assertThat(Model.player.resources.land.usedAmount).isEqualTo(Model.land)
     }
 
     fun `Given no gold When build Then dont build`() {
         Model.gold = Amount.zero
 
-        build(building)
+        val wasBuilt = build(building)
 
-        building hasSameAmountAs 0
+        assertThat(wasBuilt).isEqualTo(false)
     }
 
     fun `Given no land When build Then dont build`() {
         Model.land = Amount.zero
 
-        build(building)
+        val wasBuilt = build(building)
 
-        building hasSameAmountAs 0
+        assertThat(wasBuilt).isEqualTo(false)
     }
 
     fun `Given enough gold but not enough unused land When build Then dont build`() {
+        Model.player.buildings.allAmountToZero()
         building.amount = Amount(1)
         Model.land = building.landNeeded
         Model.gold = building.buyPrice
-        println(building.amount)
 
-        build(building)
+        val wasBuilt = build(building)
 
-        building hasSameAmountAs 1
+        assertThat(wasBuilt).isEqualTo(false)
     }
 
     fun `Given not really enough gold When build Then succeed because rounded price used`() {
+        Model.player.buildings.allAmountToZero()
         Model.land = building.landNeeded
         building.buyPrice = Amount(1_999)
-        Model.gold = Amount(1_000)
+        Model.gold = Amount(1_990)
 
-        build(building)
+        val wasBuilt = build(building)
 
+        assertThat(wasBuilt).isEqualTo(true)
         building hasSameAmountAs 1
         assertThat(Model.gold.real).isEqualTo(0)
     }
 
-    fun `Given a bit more gold than needed When build Then some gold left because rounded price is used`() {
-        Model.land = building.landNeeded
+    fun `Given a bit more gold than needed When build Then succeed and some gold left because rounded price is used`() {
+        Model.land += building.landNeeded
         building.buyPrice = Amount(1_010)
-        Model.gold = Amount(1_042)
+        Model.gold = Amount(1_017)
 
-        build(building)
+        val wasBuilt = build(building)
 
-        assertThat(Model.gold.real).isEqualTo(42)
+        assertThat(wasBuilt).isEqualTo(true)
+        assertThat(Model.gold.real).isEqualTo(7)
     }
 
     private val building get() = Model.player.buildings.houses
 
-    private fun build(building: Building) {
+    private fun build(building: Building) =
         BuildController().doBuild(BuildChoice(building))
-    }
 
 }

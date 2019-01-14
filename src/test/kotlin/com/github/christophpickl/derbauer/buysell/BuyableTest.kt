@@ -12,16 +12,16 @@ import org.testng.annotations.Test
 class BuyableTest {
 
     fun `Given not really enough gold When get buy possible amount Then return 1 as rounded price is used`() {
-        Model.gold = Amount(1_000)
         val buyable = TestBuyable(buyPrice = Amount(1_042))
+        Model.gold = Amount(1_040)
 
         assertThat(buyable.buyPossibleAmount.real).isEqualTo(1)
     }
 
     fun `Given not really enough gold When get effective buy possible amount Then return 1 as rounded price is used`() {
-        Model.gold = Amount(1_000)
         val buyable = TestBuyable(buyPrice = Amount(1_042))
-
+        Model.gold = Amount(1_040)
+        
         assertThat(buyable.effectiveBuyPossibleAmount.real).isEqualTo(1)
     }
 

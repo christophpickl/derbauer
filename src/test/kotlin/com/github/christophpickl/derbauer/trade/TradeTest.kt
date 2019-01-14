@@ -47,7 +47,7 @@ class TradeTest {
 
     fun `Given not really enough gold When buy food Then succeed because rounded price used`() {
         Model.player.resources.food.buyPrice = Amount(1_999)
-        Model.gold = Amount(1_000)
+        Model.gold = Amount(1_990)
         Model.player.buildings.granaries.amount = Amount.one
 
         tradeFood(BuySell.Buy, 1)
@@ -58,13 +58,13 @@ class TradeTest {
 
     fun `Given a bit more gold than needed When buy food Then some gold left because rounded price is used`() {
         Model.player.resources.food.buyPrice = Amount(1_010)
-        Model.gold = Amount(1_042)
+        Model.gold = Amount(1_017)
         Model.player.buildings.granaries.amount = Amount.one
 
         tradeFood(BuySell.Buy, 1)
 
         assertThat(Model.food).isAmountEqualTo(1)
-        assertThat(Model.gold).isAmountEqualTo(42)
+        assertThat(Model.gold).isAmountEqualTo(7)
     }
 
     fun `Given enough food When sell Then sold and gold income with rounded price`() {
@@ -75,7 +75,7 @@ class TradeTest {
         tradeFood(BuySell.Sell, 1)
 
         assertThat(Model.food).isAmountEqualTo(0)
-        assertThat(Model.gold).isAmountEqualTo(1_000)
+        assertThat(Model.gold).isAmountEqualTo(1_040)
     }
     
     private fun tradeFood(buySell: BuySell, amount: Long) {

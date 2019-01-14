@@ -13,7 +13,7 @@ class UpgradeTest {
 
     fun `Given not really enough gold When upgrade Then succeed because rounded price used`() {
         upgrade.buyPrice = Amount(1_999)
-        Model.gold = Amount(1_000)
+        Model.gold = Amount(1_990)
 
         doUpgrade(upgrade)
 
@@ -23,12 +23,12 @@ class UpgradeTest {
 
     fun `Given a bit more gold than needed When upgrade Then some gold left because rounded price is used`() {
         upgrade.buyPrice = Amount(1_010)
-        Model.gold = Amount(1_042)
+        Model.gold = Amount(1_017)
 
         doUpgrade(upgrade)
 
         assertThat(upgrade.currentLevel).isEqualTo(1)
-        assertThat(Model.gold.real).isEqualTo(42)
+        assertThat(Model.gold.real).isEqualTo(7)
     }
 
     private val upgrade get() = Model.player.upgrades.farmProductivity

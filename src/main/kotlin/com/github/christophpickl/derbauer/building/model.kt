@@ -122,7 +122,13 @@ abstract class AbstractBuilding(
     final override var amount = values.amount
     final override var landNeeded = values.landNeeded
     final override var buyPrice = values.buyPrice
+    override val effectiveBuyPossibleAmount
+        get() = Amount.minOf(buyPossibleAmount,
+            Model.player.resources.land.unusedAmount / landNeeded
+        )
+    
     protected open val additionalDescription: String? = null
+    override val buyDescription get() = "${buyPrice.formatted} gold, ${landNeeded.formatted} land"
     final override val description
         get() = listOfNotNull(
             if (this is FoodCapacityBuilding) "stores +${foodCapacity.formatted} food" else null,
@@ -137,6 +143,6 @@ abstract class AbstractBuilding(
             }
         }.joinToString(" and ")
 
-    override val buyDescription get() = "${buyPrice.formatted} gold, ${landNeeded.formatted} land"
+
     override fun toString() = Stringifier.stringify(this)
 }

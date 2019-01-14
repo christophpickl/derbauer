@@ -8,6 +8,7 @@ interface Buyable {
     val buyDescription: String
     var buyPrice: Amount
     val buyPossibleAmount get() = Amount.maxOf(Amount.zero, Model.gold / buyPrice.rounded)
+    /** Can be overridden, e.g. for other resource costs or limitted amounts. */
     val effectiveBuyPossibleAmount get() = buyPossibleAmount
 }
 

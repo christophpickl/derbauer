@@ -62,7 +62,7 @@ class MilitaryTest : BaseMilitaryTest() {
     fun `Given not really enough gold When hire Then succeed because rounded price used`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
         unit.buyPrice = Amount(1_999)
-        Model.gold = Amount(1_000)
+        Model.gold = Amount(1_990)
 
         hire(unit, 1)
 
@@ -72,18 +72,18 @@ class MilitaryTest : BaseMilitaryTest() {
 
     fun `Given a bit more gold than needed When build Then some gold left because rounded price is used`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
-        unit.buyPrice = Amount(1_000)
-        Model.gold = Amount(1_042)
+        unit.buyPrice = Amount(1_010)
+        Model.gold = Amount(1_017)
 
         hire(unit, 1)
 
-        assertThat(Model.gold.real).isEqualTo(42)
+        assertThat(Model.gold.real).isEqualTo(7)
     }
 
     fun `Given not really enough people When hire Then succeed because rounded people used`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
         unit.costsPeople = Amount(1_999)
-        Model.people = Amount(1_000)
+        Model.people = Amount(1_990)
 
         hire(unit, 1)
 
@@ -94,11 +94,11 @@ class MilitaryTest : BaseMilitaryTest() {
     fun `Given a bit more people than needed When build Then some people left because rounded people is used`() {
         ensureEnoughGoldPeopleCapacityAndUpgrade(unit)
         unit.costsPeople = Amount(1_010)
-        Model.people = Amount(1_042)
+        Model.people = Amount(1_017)
 
         hire(unit, 1)
 
-        assertThat(Model.people.real).isEqualTo(42)
+        assertThat(Model.people.real).isEqualTo(7)
     }
 
 }

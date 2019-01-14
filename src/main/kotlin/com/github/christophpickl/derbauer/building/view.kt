@@ -30,5 +30,5 @@ data class BuildChoice(
 }
 
 interface BuildCallback {
-    fun doBuild(choice: BuildChoice)
+    fun doBuild(choice: BuildChoice): Boolean
 }
