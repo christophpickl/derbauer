@@ -106,7 +106,7 @@ private data class InputContext<C : Choice>(
                 endIndex = choices.size - 1
                 additionalBeep = ", or 0 for zeroChoice"
                 lookupChoice = {
-                    if (input.number.toInt() == 0) {
+                    if (input.number == 0L) {
                         zeroChoice
                     } else {
                         defaultLookupChoice()

@@ -14,6 +14,7 @@ data class Amount(
     constructor(real: Int) : this(real.toLong())
 
     companion object :
+        AmountParser by AmountParserImpl,
         AmountRounder by AmountRounderImpl,
         AmountFormatter by AmountFormatterImpl {
 

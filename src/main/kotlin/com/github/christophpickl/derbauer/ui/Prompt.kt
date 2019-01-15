@@ -2,7 +2,7 @@ package com.github.christophpickl.derbauer.ui
 
 import com.github.christophpickl.derbauer.misc.enforceWhenBranches
 import com.github.christophpickl.derbauer.model.Model
-import com.github.christophpickl.derbauer.model.amount.AmountType
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.misc.Dispatcher
 import com.github.christophpickl.kpotpourri.common.misc.DispatcherListener
 
@@ -77,23 +77,11 @@ sealed class RawPromptInput {
         fun by(text: String): RawPromptInput = if (text.isEmpty()) {
             Empty
         } else {
-            parse(text)?.let {
-                Number(it)
+            Amount.parse(text)?.let {
+                Number(it.real)
             } ?: Invalid(text)
         }
 
-        private fun parse(text: String): Long? {
-            text.toLongOrNull()?.let {
-                return it
-            }
-            return AmountType.valuesButSingle.mapNotNull { type ->
-                type.regexp.matchEntire(text)?.let {
-                    type to it
-                }
-            }.firstOrNull()?.let { (type, match) ->
-                match.groupValues[1].toLong() * type.thousands
-            }
-        }
 
     }
 

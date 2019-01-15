@@ -45,7 +45,7 @@ enum class AmountType(
         val valuesButSingle get() = values().drop(1)
     }
 
-    val regexp = Regex("""(\d+)($sign)""")
+    val regexp = Regex("""(\d+)(\.\d+)?($sign)""")
     val thousands = if (thousandFactor == 0) 0 else Math.pow(1_000.0, thousandFactor.toDouble()).toLong()
     val thousandsForNext = if (thousandFactor == 0) 1 else Math.pow(1_000.0, (thousandFactor - 1).toDouble()).toLong()
     val limit = Math.pow(1_000.0, thousandFactor + 1.0).toLong()
