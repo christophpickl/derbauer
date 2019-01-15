@@ -1,15 +1,11 @@
 
 # TODO
 
-* amount decimal formatten: "1,23k" ... "15,0k" ... "241k" ... "1,23g"
-    - [x] Amount format (incl rounding)
-    - [x] use rounded value on buy/trade/build/hire
-    - [ ] Amount parse (by input)
+* render "1.00k" as "1k", and "1.10k" as "1.1k"
 * gold income DRASTISCH rauf, +30%
 * mehr achievements:
     * achievements bringen gold
     * time-based achievements: alle 7 tage, 100 tage, 365 tage (=1jahr) ... free gold/food/land/buildings (when land available)
-* render "1.00k" as "1k", and "1.10k" as "1.1k"
     
 # UP NEXT
 
