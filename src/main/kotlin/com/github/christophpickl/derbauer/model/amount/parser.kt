@@ -7,7 +7,6 @@ interface AmountParser {
 
 object AmountParserImpl : AmountParser {
     override fun parse(text: String): Amount? {
-        println("text=$text")
         text.toLongOrNull()?.let {
             return Amount(it)
         }
@@ -23,7 +22,6 @@ object AmountParserImpl : AmountParser {
                 "0$floatString".toDouble()
             }
             val properFloat = (floatDouble * type.thousands).toLong()
-            println("f=$properFloat, floatDouble=$floatDouble, type=$type (thousands=${type.thousands})")
             Amount(match.groupValues[1].toLong() * type.thousands + properFloat)
         }
     }

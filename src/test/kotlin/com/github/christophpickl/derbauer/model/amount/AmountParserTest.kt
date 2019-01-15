@@ -9,7 +9,9 @@ class AmountParserTest {
 
     @DataProvider
     fun invalidTexts() = listOf(
-        "", ".", "x"
+        "", ".", "x",
+        "1K", "1.1",
+        "1.", "1.k", ".k", ".1k", "1..1k", "1.1.k"
     ).map { arrayOf(it) }.toTypedArray()
 
     @Test(dataProvider = "invalidTexts")

@@ -10,6 +10,8 @@ import com.github.christophpickl.derbauer.ui.MainFrame
 import com.github.christophpickl.derbauer.ui.MainTextArea
 import com.github.christophpickl.derbauer.ui.Prompt
 import com.github.christophpickl.derbauer.ui.RendererImpl
+import com.github.christophpickl.derbauer.ui.isDigit
+import com.github.christophpickl.derbauer.ui.isLowercaseLetter
 import com.github.christophpickl.kpotpourri.common.version.Version2
 import com.github.christophpickl.kpotpourri.logback4k.Logback4k
 import com.github.christophpickl.kpotpourri.swing.AbortingExceptionHandler
@@ -47,7 +49,9 @@ object DerBauer {
 
         val prompt = Prompt()
         val text = MainTextArea()
-        val keyboard = Keyboard()
+        val keyboard = Keyboard { e ->
+            e.isDigit || e.isLowercaseLetter || e.keyChar == '.'
+        }
 
         val renderer = RendererImpl(text, prompt)
         val engine = Router(renderer)

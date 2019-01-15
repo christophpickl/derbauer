@@ -5,7 +5,9 @@ import com.github.christophpickl.kpotpourri.common.misc.DispatcherListener
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 
-class Keyboard : KeyAdapter() {
+class Keyboard(
+    private val allowedToType: (KeyEvent) -> Boolean
+) : KeyAdapter() {
 
     val dispatcher = Dispatcher<KeyboardListener>()
 
@@ -18,7 +20,7 @@ class Keyboard : KeyAdapter() {
     }
 
     override fun keyTyped(e: KeyEvent) {
-        if (e.isDigit || e.isLowercaseLetter) {
+        if (allowedToType(e)) {
             dispatcher.dispatch { onKeyboard(KeyboardEvent.Input(e.keyChar)) }
         }
     }
@@ -34,5 +36,5 @@ sealed class KeyboardEvent {
     class Input(val digit: Char) : KeyboardEvent()
 }
 
-private val KeyEvent.isDigit get() = keyChar.category == CharCategory.DECIMAL_DIGIT_NUMBER
-private val KeyEvent.isLowercaseLetter get() = keyChar.category == CharCategory.LOWERCASE_LETTER
+val KeyEvent.isDigit get() = keyChar.category == CharCategory.DECIMAL_DIGIT_NUMBER
+val KeyEvent.isLowercaseLetter get() = keyChar.category == CharCategory.LOWERCASE_LETTER
