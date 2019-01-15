@@ -93,8 +93,8 @@ class ResourceEndTurnTest {
 
         val report = execute()
 
-        // 8 ... no food, 2 ... over capacity, 2 ... random kills
-        assertThat(report.peopleIncome).isAmountEqualTo(-(8 + 2 + 2))
+        // 8 ... no food, 2 ... over capacity, 1 ... random kills
+        assertThat(report.peopleIncome).isAmountEqualTo(-(8 + 2 + 1))
     }
 
     // GOLD ============================================================================================================
