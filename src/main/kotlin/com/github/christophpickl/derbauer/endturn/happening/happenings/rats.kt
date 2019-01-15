@@ -14,21 +14,25 @@ class RatsHappening : BaseHappening(
 ) {
 
     private val log = logger {}
-    private val eatenSizes = listOf(0.01, 0.02, 0.04).map { Model.player.relativeWealthBy(it) }
-    private val randomEatenSizes = randomListOf(
-        eatenSizes[0] to 60,
-        eatenSizes[1] to 30,
-        eatenSizes[2] to 10
-    )
+    private val minimumFoodEaten = Amount(20L)
 
     override fun additionalProbability(): Double {
         val probabilityBasedOnFoodRation = Model.foodCapacityRation.value * 2.0
         log.trace { "probabilityBasedOnFoodRation: $probabilityBasedOnFoodRation (food capacity ration: ${Model.foodCapacityRation})" }
         return probabilityBasedOnFoodRation
     }
-    
+
+    private fun computeEatenFood() =
+        randomListOf(
+            Model.food.percentageOf(0.1) to 60,
+            Model.food.percentageOf(0.2) to 30,
+            Model.food.percentageOf(0.4) to 10
+        ).randomElement().coerceBetween(
+            lower = minimumFoodEaten,
+            upper = Model.food
+        )
+
     override fun internalExecute(): String {
-        val eatenProposal = randomEatenSizes.randomElement()
         val (message, foodEaten) = if (Model.food <= 0) {
             """
                 Lucky you, although there were some rats,
@@ -41,7 +45,7 @@ class RatsHappening : BaseHappening(
                 Oh noes!!!
                 
                 Some of those nasty rats ate some of your food!
-            """.trimIndent() to Amount.minOf(eatenProposal, Model.food)
+            """.trimIndent() to computeEatenFood()
         }
 
         Model.food -= foodEaten

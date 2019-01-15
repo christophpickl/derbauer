@@ -4,22 +4,24 @@ import com.github.christophpickl.derbauer.data.AsciiArt
 import com.github.christophpickl.derbauer.endturn.happening.BaseHappening
 import com.github.christophpickl.derbauer.endturn.happening.HappeningNature
 import com.github.christophpickl.derbauer.model.Model
+import com.github.christophpickl.derbauer.model.amount.Amount
 import com.github.christophpickl.kpotpourri.common.random.randomListOf
 
 class GoldBagHappening : BaseHappening(
     totalCooldownDays = 7,
     nature = HappeningNature.Positive
 ) {
+    private val minimumGoldBagSize = Amount(100L)
 
-    private val goldAmounts = listOf(0.03, 0.06, 0.1).map { Model.player.relativeWealthBy(it) }
-    private val randomGoldAmounts = randomListOf(
-        goldAmounts[0] to 50,
-        goldAmounts[1] to 35,
-        goldAmounts[2] to 15
-    )
-
+    private fun computeGoldBagSize() =
+        Amount.maxOf(minimumGoldBagSize, randomListOf(
+            Model.player.relativeWealthBy(0.03) to 50,
+            Model.player.relativeWealthBy(0.06) to 35,
+            Model.player.relativeWealthBy(0.1) to 15
+        ).randomElement())
+    
     override fun internalExecute(): String {
-        val bagSize = randomGoldAmounts.randomElement()
+        val bagSize = computeGoldBagSize()
         Model.gold += bagSize
         val message = """
             You were lucky.

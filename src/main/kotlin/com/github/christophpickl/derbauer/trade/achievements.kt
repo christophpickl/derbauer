@@ -14,7 +14,6 @@ class TradeAchievements {
     @get:JsonIgnore val all get() = propertiesOfType<TradeAchievements, Achievement>(this)
 }
 
-
 class Trade1Achievement : AbstractAchievement(
     label = "Trade Mastery I: Better rates at market place and +${Values.achievements.trade1GoldReward.formatted} gold"
 ) {

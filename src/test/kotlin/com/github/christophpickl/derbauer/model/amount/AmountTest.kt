@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
+import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
 @Test
@@ -46,6 +47,22 @@ class AmountTest {
         var logSucceeded = false
         log.debug { Amount(1).toString(); logSucceeded = true; "" }
         assertThat(logSucceeded).isTrue()
+    }
+
+    @DataProvider
+    fun provideCoerceBetween() = arrayOf(
+        arrayOf(3, 4, 6, 4),
+        arrayOf(4, 4, 6, 4),
+        arrayOf(5, 4, 6, 5),
+        arrayOf(6, 4, 6, 6),
+        arrayOf(7, 4, 6, 6),
+        arrayOf(0, 6, 4, 4),
+        arrayOf(8, 6, 4, 4)
+    )
+
+    @Test(dataProvider = "provideCoerceBetween")
+    fun `When coerce between Then proper result`(amount: Long, lower: Long, upper: Long, expected: Long) {
+        assertThat(Amount(amount).coerceBetween(Amount(lower), Amount(upper)).real).isEqualTo(expected)
     }
 
 }

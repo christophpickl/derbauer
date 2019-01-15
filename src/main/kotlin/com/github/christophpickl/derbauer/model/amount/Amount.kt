@@ -56,6 +56,12 @@ data class Amount(
     operator fun div(divisor: Long) = Amount(real / divisor)
     operator fun unaryMinus() = Amount(-real)
 
+    fun percentageOf(percent: Double) = Amount((real / 100.0 * percent).toLong())
+
+    /** Upper wins over lower. */
+    fun coerceBetween(lower: Amount, upper: Amount) =
+        Amount.minOf(upper, Amount.maxOf(lower, this))
+    
     override fun toString(): String {
         if (DEV_MODE) {
             restrictMethodUsage(
