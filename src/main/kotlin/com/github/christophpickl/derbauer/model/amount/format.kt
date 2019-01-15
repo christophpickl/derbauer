@@ -24,7 +24,7 @@ object AmountFormatterImpl : AmountFormatter {
                     ".${absReal.toString().substring(2).take(1)}"
                 }
                 else -> ""
-            }
+            }.trimEnd('0').let { if (it == ".") "" else it }
             "$realCut$floatPart${type.sign}"
         }
 

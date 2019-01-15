@@ -1,7 +1,6 @@
 
 # TODO
 
-* render "1.00k" as "1k", and "1.10k" as "1.1k"
 * gold income DRASTISCH rauf, +30%
 * mehr achievements:
     * achievements bringen gold
