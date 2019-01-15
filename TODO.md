@@ -1,6 +1,7 @@
 
 # UP NEXT
 
+* intro screen (skip if in DEV mode)
 * when bad happening happens & karma is negative => karma++ (da schuld abgetan hat)
 * attack is a one-turn thing only: send armies, on endturn see the battle; disable menu item "attack" when already attack ordered 
 * make window NOT resizable
@@ -11,6 +12,7 @@
 
 # LATER
 
+* ad debug view: summary von wichtigsten interna (karma, wealth, ...)
 * attack target: split enemies into soldiers/knights
 * TAX rate konzept einfuehren (modifier * people.count * random)
 * nur "schoene" zahlen als limits verwenden, damit fuer den user klarer ersichtlich, also 100/250/500/1000/....

@@ -2,7 +2,6 @@ package com.github.christophpickl.derbauer.model
 
 import mu.KotlinLogging.logger
 
-// TODO use it more often
 data class Percent(
     val value: Double
 ) : Comparable<Percent> {

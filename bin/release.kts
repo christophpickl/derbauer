@@ -4,18 +4,20 @@
 import java.io.File
 import com.github.christophpickl.kpotpourri.build.*
 
+
 build4k {
     title = "DerBauer Release"
     val versionFile = File("src/main/resources/derbauer/version.txt")
     val artifactId = "DerBauer"
 
+    val currentVersion = readFromFile<Version2>(versionFile)
+    val nextVersion = chooseVersion(currentVersion.incrementPart2())
+    val releaseNotes = File("src/releases/${nextVersion}.txt").readText()
+    println()
+
     verifyGitStatus()
     println()
     
-    val currentVersion = readFromFile<Version2>(versionFile)
-    val nextVersion = chooseVersion(currentVersion.incrementPart2())
-
-    println()
     println("Current version: $currentVersion")
     println("Next version:    $nextVersion")
     println()
@@ -34,11 +36,12 @@ build4k {
 
     gitTagPush(nextVersion)
 
-    createGitHubRelease(nextVersion, jarFile)
+    createGitHubRelease(nextVersion, jarFile, releaseNotes)
 
     displayNotification("Release build succeeded ✅")
     say("Hey you! The release build finished successfully.")
 }
+
 
 fun Build4k.verifyGitStatus() {
     git("status")
@@ -66,7 +69,7 @@ fun Build4k.gitTagPush(nextVersion: Version<*>) {
     git("push", "origin", "--tags")
 }
 
-fun Build4k.createGitHubRelease(version: Version<*>, uploadFile: File) {
+fun Build4k.createGitHubRelease(version: Version<*>, uploadFile: File, releaseNotes: String) {
     printHeader("GitHub Upload")
     requireGitTagExists(version.toString())
     github(
@@ -76,7 +79,7 @@ fun Build4k.createGitHubRelease(version: Version<*>, uploadFile: File) {
     ) {
         val uploadUrl = createRelease(
             tagName = version.toString(),
-            releaseBody = "Click on the link pointing to the JAR file above, right beneath the Assets title."
+            releaseBody = releaseNotes
         )
         uploadArtifact(
             uploadUrl = uploadUrl,
