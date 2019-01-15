@@ -17,7 +17,7 @@ class DailyAchievement : Achievement {
 
     private var currentLevel = 1
     private val upcomingDay get() = Model.global.day + 1
-    private val eachXDays = 5
+    private val eachXDays = 50
     private val minimumReward = Amount(100L)
     private val rewardSizeRelativeToWealth = 0.1
 

@@ -34,3 +34,8 @@
     - e.g.: blessing from farm good increases farm productivity for X turns
     - affects: income, prod, efficiency, military
 * when land is lost, building(s) will be destroyed if not enough free land
+* reisender gibt schriftrolle fuer free upgrade
+* new happening: random people/army join; make happening#condition() .. check whether player good capacity/necessary features
+- people die (murder/crime/krankheit)
+- free food
+- some people/armies join

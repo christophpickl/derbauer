@@ -36,6 +36,9 @@
 * can be destroyed/sold?
 * build multiple buildings at once?
 * bsp: kaserne, schmiede, universitaet, farm, castle
+* building.upkeep += people
+    - render overview bar as "2 / 6 / 10", 2 used, 6 living, 10 max cap. (6-2 = 4 available)
+    - oder doch nicht, da zu komplex?!? gold upkeep enough?
 
 ## Examples
 

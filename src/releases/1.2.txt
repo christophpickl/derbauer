@@ -4,3 +4,4 @@
 * change throne room visitors production and capacity
 * introducing (different) attack targets
 * attack duration is now an absolute time constant (not relative to army size anymore)
+* daily achievement each X days

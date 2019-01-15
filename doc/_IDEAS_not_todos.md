@@ -13,6 +13,11 @@
 * komplexe charaktere wahl (rasse, nation/fraktion, geschlecht, ...)
     - mittelalter theme beibehalten: galier, roemer, griechen, egypter
     - effects: military, forschung, trade, production, prices, ...
+* idea ad action: can hire manager delegate, which will for example: auto trade sell food if capacity at 80%
+* NICE: a la fugger: marry - birth - replay
+    - sterbe rate von player steigt mit steigendem alter drastisch
+    - auf wieviele jahre beschraenken? wie hundejahre * 7 zb... also nach 10 jahren ist todeswahrscheinlichkeit schon sehr hoch
+* highscore
 
 ## I/O
 
@@ -24,3 +29,4 @@
     - will man das denn ueberhaupt?! sonst geht evtl (unabsichtlich) der screen schnell weg bevor gelesen
 * * affordable amount schon in uebersicht anzeigen, nicht erst in sub view
     - will man das denn ueberhaupt?! zuviele (irrelevante) daten aufeinmal
+* IDEE: colored output
