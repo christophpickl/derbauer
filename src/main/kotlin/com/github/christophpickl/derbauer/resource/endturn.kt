@@ -87,14 +87,14 @@ class ResourceEndTurn(
         var result = calc
         // if only a few, add some random people
         if (Model.people < 20 && Model.food.isNotZero && random.nextDouble(0.0, 1.0) < 0.3) {
-            val randomAdded = random.nextLong(2, 5)
+            val randomAdded = random.nextLong(1, 4)
             log.trace { "people randomly added: $randomAdded" }
             result += randomAdded
         }
 
         // if more than a few, kill some random people
         if (Model.people > 10 && random.nextDouble(0.0, 1.0) < 0.1) {
-            val randomKills = random.nextLong(2, 6)
+            val randomKills = (Model.people.real / 100.0 * random.nextDouble(1.0, 4.0)).toLong()
             log.trace { "people randomly killed: $randomKills" }
             result -= randomKills
         }

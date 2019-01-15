@@ -49,6 +49,7 @@ class AttackController(
         Model.history.attacked++
 
         val message = if (context.isBattleWon) {
+            Model.history.attacksWon++
             var additionalMessage = ""
             context.target.enableNextTarget()?.let { target ->
                 additionalMessage = "New attack target available: ${target.label}"

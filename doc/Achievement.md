@@ -3,7 +3,9 @@
 
 See "Upgrade" and "History". Is some kind of "XP reward".
 
-Happens when lots of:
+* get free gold/food/land/buildings (when land available)
+
+## Triggered by
 
 * resources: total produced/owned
 * buildings: total build/owned

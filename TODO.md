@@ -1,13 +1,13 @@
 
 # TODO
 
-* gold income DRASTISCH rauf, +30%
 * mehr achievements:
     * achievements bringen gold
-    * time-based achievements: alle 7 tage, 100 tage, 365 tage (=1jahr) ... free gold/food/land/buildings (when land available)
+    * time-based achievements: alle 7 tage, 100 tage, 365 tage (=1jahr) ... 
     
 # UP NEXT
 
+* attack is a one-turn thing only: send armies, on endturn see the battle; disable menu item "attack" when already attack ordered 
 * attack target: split enemies into soldiers/knights, ... themselves too
 * make window NOT resizable
 * !! enhance release script: use src/releases/1.x.txt to generate github release text (keeping track manually)

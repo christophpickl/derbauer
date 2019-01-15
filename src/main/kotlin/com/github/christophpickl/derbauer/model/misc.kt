@@ -12,6 +12,7 @@ data class Global(
 
 data class History(
     var attacked: Int = 0,
+    var attacksWon: Int = 0,
     var traded: Int = 0
 )
 
